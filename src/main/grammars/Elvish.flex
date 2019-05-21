@@ -15,7 +15,8 @@ import com.intellij.psi.TokenType;
 %unicode
 
 LINE =                          [^\n]*
-COMMENT =                       "#"{LINE}
+LINE_COMMENT =                  "#"{LINE}
+COMMENT =                       {LINE_COMMENT}{EOL}*
 
 BAREWORD=[a-zA-Z0-9\-_:%+,\.\/@!]+
 EOL="\r"|"\n"|"\r\n"

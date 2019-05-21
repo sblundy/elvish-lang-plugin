@@ -1,3 +1,2 @@
 Elvish File
-  ElvishLineImpl(LINE)
-    PsiElement(ElvishTokenType.COMMENT)('# Test comment')
+  PsiComment(ElvishTokenType.COMMENT)('# Test comment')

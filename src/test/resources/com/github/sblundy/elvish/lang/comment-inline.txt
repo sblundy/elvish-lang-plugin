@@ -9,5 +9,4 @@ Elvish File
           ElvishArgumentImpl(ARGUMENT)
             PsiElement(ElvishTokenType.bareword)('test')
   PsiWhiteSpace(' ')
-  ElvishLineImpl(LINE)
-    PsiElement(ElvishTokenType.COMMENT)('# Test comment')
+  PsiComment(ElvishTokenType.COMMENT)('# Test comment')

@@ -1,8 +1,5 @@
 Elvish File
-  ElvishLineImpl(LINE)
-    PsiElement(ElvishTokenType.COMMENT)('# Test comment')
-    ElvishLineTerminatorImpl(LINE_TERMINATOR)
-      PsiElement(ElvishTokenType.EOL)('\n')
+  PsiComment(ElvishTokenType.COMMENT)('# Test comment\n')
   ElvishLineImpl(LINE)
     ElvishCommandImpl(COMMAND)
       ElvishOrdinaryCommandImpl(ORDINARY_COMMAND)

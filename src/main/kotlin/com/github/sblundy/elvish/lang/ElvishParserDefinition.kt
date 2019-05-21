@@ -25,9 +25,10 @@ class ElvishParserDefinition: ParserDefinition {
     override fun getStringLiteralElements(): TokenSet = TokenSet.EMPTY
     override fun getFileNodeType(): IFileElementType = FILE
     override fun createElement(node: ASTNode?): PsiElement = ElvishTypes.Factory.createElement(node)
-    override fun getCommentTokens(): TokenSet = TokenSet.EMPTY
+    override fun getCommentTokens(): TokenSet = COMMENT
 
     companion object {
         val FILE = IFileElementType(ElvishLanguage.INSTANCE)
+        val COMMENT = TokenSet.create(ElvishTypes.COMMENT)
     }
 }

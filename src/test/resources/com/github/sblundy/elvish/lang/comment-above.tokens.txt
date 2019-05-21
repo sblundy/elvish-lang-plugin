@@ -1,5 +1,4 @@
-ElvishTokenType.COMMENT ('# Test comment')
-ElvishTokenType.EOL ('\n')
+ElvishTokenType.COMMENT ('# Test comment\n')
 ElvishTokenType.bareword ('echo')
 WHITE_SPACE (' ')
 ElvishTokenType.bareword ('test')
