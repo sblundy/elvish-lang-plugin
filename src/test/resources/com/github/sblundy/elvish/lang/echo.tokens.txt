@@ -1,0 +1,3 @@
+ElvishTokenType.bareword ('echo')
+WHITE_SPACE (' ')
+ElvishTokenType.bareword ('test')

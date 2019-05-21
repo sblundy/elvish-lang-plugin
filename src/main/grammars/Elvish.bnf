@@ -1,0 +1,38 @@
+{
+  parserClass="com.github.sblundy.elvish.lang.ElvishParser"
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Elvish"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.github.sblundy.elvish.psi"
+  psiImplPackage="com.github.sblundy.elvish.psi.impl"
+
+  elementTypeHolderClass="com.github.sblundy.elvish.psi.ElvishTypes"
+  elementTypeClass="com.github.sblundy.elvish.psi.ElvishElementType"
+  tokenTypeClass="com.github.sblundy.elvish.psi.ElvishTokenType"
+
+  tokens=[
+    COMMENT='regexp://.*'
+    LEFT_BRACE="{"
+    RIGHT_BRACE="}"
+    LEFT_BRACKET="["
+    RIGHT_BRACKET="]"
+    LEFT_PAREN="("
+    RIGHT_PAREN=")"
+    SINGE_QUOTE="'"
+    DOUBLE_QUOTE="\""
+    AMPERSAND="&"
+    TILDA="~"
+    INLINE_WHITESPACE="regexp:[ \t]+"
+    EOL="regexp:\r|\n|\r\n"
+  ]
+}
+
+script ::= line* <<eof>>
+line ::= (command COMMENT line_terminator) | (command line_terminator) | (COMMENT line_terminator) | line_terminator | command | COMMENT
+command ::= (ordinary_command)
+ordinary_command ::= head argument_list
+argument_list ::= argument*
+argument ::= bareword
+head ::= bareword
+line_terminator ::= EOL+

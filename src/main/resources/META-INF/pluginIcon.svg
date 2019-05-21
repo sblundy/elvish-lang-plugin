@@ -1,0 +1,22 @@
+<svg id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="400"
+     viewBox="0, 0, 400,400">
+    <circle id="background-circle" cx="200" cy="200" r="200 " fill="#040404"/>
+    <path id="letter" stroke="#54bb54" fill="#54bb54" stroke-width="1"
+          d="M 126,69
+             h 30
+             c 30,0 60,10 78,60
+             l 77,224
+             H 257
+             L 217,235
+             L 216,234
+             L 215,235
+             L 169,353
+             H 115
+             L 190,156
+             L 181,130
+             c -6,-15 -20,-19 -28,-19
+             L 126,110
+             Z
+             "/>
+    <circle id="letter-dot" cx="97" cy="87" r="31" fill="#f8f8f8"/>
+</svg>

@@ -1,0 +1,7 @@
+ElvishTokenType.bareword ('echo')
+WHITE_SPACE (' ')
+ElvishTokenType.bareword ('test')
+ElvishTokenType.EOL ('\n')
+ElvishTokenType.bareword ('cat')
+WHITE_SPACE (' ')
+ElvishTokenType.bareword ('test.txt')

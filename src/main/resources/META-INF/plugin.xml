@@ -1,0 +1,22 @@
+<idea-plugin>
+    <id>com.github.sblundy.elivish-lang-plugin</id>
+    <name>Elivish Shell Language</name>
+    <vendor email="el_gonzzo@hotmail.com" url="https://github.com/sblundy/">Steve Blundy</vendor>
+
+    <description><![CDATA[
+    Support editing files for the <a href="https://elv.sh/">Elvish Shell</a> language.
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileTypeFactory implementation="com.github.sblundy.elvish.ElvishFileTypeFactory"/>
+        <lang.parserDefinition language="Elvish" implementationClass="com.github.sblundy.elvish.lang.ElvishParserDefinition"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>

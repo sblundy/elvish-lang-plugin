@@ -1,0 +1,3 @@
+Elvish File
+  ElvishLineImpl(LINE)
+    PsiElement(ElvishTokenType.COMMENT)('# Test comment')
