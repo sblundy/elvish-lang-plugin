@@ -23,6 +23,7 @@
     DOUBLE_QUOTE="\""
     AMPERSAND="&"
     TILDA="~"
+    EQUALS="="
     INLINE_WHITESPACE="regexp:[ \t]+"
     EOL="regexp:\r|\n|\r\n"
     TEXT="."
@@ -31,11 +32,14 @@
 
 script ::= line* <<eof>>
 line ::= (command COMMENT line_terminator) | (command line_terminator) | (COMMENT line_terminator) | line_terminator | command | COMMENT
-command ::= (ordinary_command)
+command ::= assignment | ordinary_command
 ordinary_command ::= head argument_list
 argument_list ::= argument*
 argument ::= bareword | single_quoted_string
 head ::= bareword
+assignment ::= assignment_start single_quoted_string
+assignment_start ::= variable EQUALS
+variable ::= bareword
 string ::= TEXT*
 single_quoted_string ::= SINGLE_QUOTE string SINGLE_QUOTE
 line_terminator ::= EOL+

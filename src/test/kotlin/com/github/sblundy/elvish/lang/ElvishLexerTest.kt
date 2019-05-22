@@ -88,6 +88,16 @@ class ElvishLexerTest {
         doTest("command-with-string")
     }
 
+    @Test
+    fun assignmentSingleQuotedString() {
+        doTest("assignment-single-quoted-string")
+    }
+
+    @Test
+    fun assignmentThenCommand() {
+        doTest("assignment-then-command")
+    }
+
     private fun doTest(baseName: String) {
         val text = loadFile("$baseName.elv")
 

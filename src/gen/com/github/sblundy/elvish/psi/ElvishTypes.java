@@ -10,6 +10,8 @@ public interface ElvishTypes {
 
   IElementType ARGUMENT = new ElvishElementType("ARGUMENT");
   IElementType ARGUMENT_LIST = new ElvishElementType("ARGUMENT_LIST");
+  IElementType ASSIGNMENT = new ElvishElementType("ASSIGNMENT");
+  IElementType ASSIGNMENT_START = new ElvishElementType("ASSIGNMENT_START");
   IElementType COMMAND = new ElvishElementType("COMMAND");
   IElementType HEAD = new ElvishElementType("HEAD");
   IElementType LINE = new ElvishElementType("LINE");
@@ -17,12 +19,14 @@ public interface ElvishTypes {
   IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
   IElementType SINGLE_QUOTED_STRING = new ElvishElementType("SINGLE_QUOTED_STRING");
   IElementType STRING = new ElvishElementType("STRING");
+  IElementType VARIABLE = new ElvishElementType("VARIABLE");
 
   IElementType AMPERSAND = new ElvishTokenType("&");
   IElementType BAREWORD = new ElvishTokenType("bareword");
   IElementType COMMENT = new ElvishTokenType("COMMENT");
   IElementType DOUBLE_QUOTE = new ElvishTokenType("\"");
   IElementType EOL = new ElvishTokenType("EOL");
+  IElementType EQUALS = new ElvishTokenType("=");
   IElementType LEFT_BRACE = new ElvishTokenType("{");
   IElementType LEFT_BRACKET = new ElvishTokenType("[");
   IElementType LEFT_PAREN = new ElvishTokenType("(");
@@ -41,6 +45,12 @@ public interface ElvishTypes {
       }
       else if (type == ARGUMENT_LIST) {
         return new ElvishArgumentListImpl(node);
+      }
+      else if (type == ASSIGNMENT) {
+        return new ElvishAssignmentImpl(node);
+      }
+      else if (type == ASSIGNMENT_START) {
+        return new ElvishAssignmentStartImpl(node);
       }
       else if (type == COMMAND) {
         return new ElvishCommandImpl(node);
@@ -62,6 +72,9 @@ public interface ElvishTypes {
       }
       else if (type == STRING) {
         return new ElvishStringImpl(node);
+      }
+      else if (type == VARIABLE) {
+        return new ElvishVariableImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

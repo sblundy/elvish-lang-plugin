@@ -44,6 +44,7 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   "\""                      { return ElvishTypes.DOUBLE_QUOTE; }
   "&"                       { return ElvishTypes.AMPERSAND; }
   "~"                       { return ElvishTypes.TILDA; }
+  "="                       { return ElvishTypes.EQUALS; }
 
   {BAREWORD}                { return ElvishTypes.BAREWORD; }
   {EOL}                     { return ElvishTypes.EOL; }

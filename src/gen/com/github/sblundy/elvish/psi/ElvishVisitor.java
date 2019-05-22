@@ -15,6 +15,14 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitAssignment(@NotNull ElvishAssignment o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAssignmentStart(@NotNull ElvishAssignmentStart o) {
+    visitPsiElement(o);
+  }
+
   public void visitCommand(@NotNull ElvishCommand o) {
     visitPsiElement(o);
   }
@@ -40,6 +48,10 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitString(@NotNull ElvishString o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariable(@NotNull ElvishVariable o) {
     visitPsiElement(o);
   }
 
