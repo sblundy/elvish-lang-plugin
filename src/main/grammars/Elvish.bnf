@@ -19,12 +19,13 @@
     RIGHT_BRACKET="]"
     LEFT_PAREN="("
     RIGHT_PAREN=")"
-    SINGE_QUOTE="'"
+    SINGLE_QUOTE="'"
     DOUBLE_QUOTE="\""
     AMPERSAND="&"
     TILDA="~"
     INLINE_WHITESPACE="regexp:[ \t]+"
     EOL="regexp:\r|\n|\r\n"
+    TEXT="."
   ]
 }
 
@@ -33,6 +34,8 @@ line ::= (command COMMENT line_terminator) | (command line_terminator) | (COMMEN
 command ::= (ordinary_command)
 ordinary_command ::= head argument_list
 argument_list ::= argument*
-argument ::= bareword
+argument ::= bareword | single_quoted_string
 head ::= bareword
+string ::= TEXT*
+single_quoted_string ::= SINGLE_QUOTE string SINGLE_QUOTE
 line_terminator ::= EOL+

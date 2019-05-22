@@ -83,6 +83,11 @@ class ElvishLexerTest {
         doTest("two-commands")
     }
 
+    @Test
+    fun commandWithString() {
+        doTest("command-with-string")
+    }
+
     private fun doTest(baseName: String) {
         val text = loadFile("$baseName.elv")
 

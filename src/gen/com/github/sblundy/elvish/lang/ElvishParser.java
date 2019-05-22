@@ -38,14 +38,15 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // bareword
+  // bareword | single_quoted_string
   public static boolean argument(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "argument")) return false;
-    if (!nextTokenIs(builder_, BAREWORD)) return false;
+    if (!nextTokenIs(builder_, "<argument>", BAREWORD, SINGLE_QUOTE)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ARGUMENT, "<argument>");
     result_ = consumeToken(builder_, BAREWORD);
-    exit_section_(builder_, marker_, ARGUMENT, result_);
+    if (!result_) result_ = single_quoted_string(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
@@ -187,6 +188,34 @@ public class ElvishParser implements PsiParser, LightPsiParser {
       if (!line(builder_, level_ + 1)) break;
       if (!empty_element_parsed_guard_(builder_, "script_0", pos_)) break;
     }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // SINGLE_QUOTE string SINGLE_QUOTE
+  public static boolean single_quoted_string(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "single_quoted_string")) return false;
+    if (!nextTokenIs(builder_, SINGLE_QUOTE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, SINGLE_QUOTE);
+    result_ = result_ && string(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, SINGLE_QUOTE);
+    exit_section_(builder_, marker_, SINGLE_QUOTED_STRING, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // TEXT*
+  public static boolean string(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "string")) return false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, STRING, "<string>");
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!consumeToken(builder_, TEXT)) break;
+      if (!empty_element_parsed_guard_(builder_, "string", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, true, false, null);
     return true;
   }
 

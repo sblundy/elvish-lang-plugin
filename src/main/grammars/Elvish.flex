@@ -23,6 +23,8 @@ EOL="\r"|"\n"|"\r\n"
 INLINE_WHITESPACE_CHAR=[ \t]
 INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
 
+%xstate IN_SINGLE_QUOTE_STRING
+
 %%
 
 <YYINITIAL> {
@@ -35,13 +37,26 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   "]"                       { return ElvishTypes.RIGHT_BRACKET; }
   "("                       { return ElvishTypes.LEFT_PAREN; }
   ")"                       { return ElvishTypes.RIGHT_PAREN; }
-  "'"                       { return ElvishTypes.SINGE_QUOTE; }
+  "'"                       {
+                                yybegin(IN_SINGLE_QUOTE_STRING);
+                                return ElvishTypes.SINGLE_QUOTE;
+                            }
   "\""                      { return ElvishTypes.DOUBLE_QUOTE; }
   "&"                       { return ElvishTypes.AMPERSAND; }
   "~"                       { return ElvishTypes.TILDA; }
 
   {BAREWORD}                { return ElvishTypes.BAREWORD; }
   {EOL}                     { return ElvishTypes.EOL; }
+}
+
+<IN_SINGLE_QUOTE_STRING> {
+  "'"                       {
+                                yybegin(YYINITIAL);
+                                return ElvishTypes.SINGLE_QUOTE;
+                            }
+  [^]                       {
+                                return ElvishTypes.TEXT;
+                            }
 }
 
 [^]                         { return TokenType.BAD_CHARACTER; }

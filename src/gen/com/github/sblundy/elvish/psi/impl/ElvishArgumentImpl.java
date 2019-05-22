@@ -26,4 +26,10 @@ public class ElvishArgumentImpl extends ASTWrapperPsiElement implements ElvishAr
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public ElvishSingleQuotedString getSingleQuotedString() {
+    return findChildByClass(ElvishSingleQuotedString.class);
+  }
+
 }

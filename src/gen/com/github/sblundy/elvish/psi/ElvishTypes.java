@@ -15,6 +15,8 @@ public interface ElvishTypes {
   IElementType LINE = new ElvishElementType("LINE");
   IElementType LINE_TERMINATOR = new ElvishElementType("LINE_TERMINATOR");
   IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
+  IElementType SINGLE_QUOTED_STRING = new ElvishElementType("SINGLE_QUOTED_STRING");
+  IElementType STRING = new ElvishElementType("STRING");
 
   IElementType AMPERSAND = new ElvishTokenType("&");
   IElementType BAREWORD = new ElvishTokenType("bareword");
@@ -27,7 +29,8 @@ public interface ElvishTypes {
   IElementType RIGHT_BRACE = new ElvishTokenType("}");
   IElementType RIGHT_BRACKET = new ElvishTokenType("]");
   IElementType RIGHT_PAREN = new ElvishTokenType(")");
-  IElementType SINGE_QUOTE = new ElvishTokenType("'");
+  IElementType SINGLE_QUOTE = new ElvishTokenType("'");
+  IElementType TEXT = new ElvishTokenType(".");
   IElementType TILDA = new ElvishTokenType("~");
 
   class Factory {
@@ -53,6 +56,12 @@ public interface ElvishTypes {
       }
       else if (type == ORDINARY_COMMAND) {
         return new ElvishOrdinaryCommandImpl(node);
+      }
+      else if (type == SINGLE_QUOTED_STRING) {
+        return new ElvishSingleQuotedStringImpl(node);
+      }
+      else if (type == STRING) {
+        return new ElvishStringImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

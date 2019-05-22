@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishArgument extends PsiElement {
 
+  @Nullable
+  ElvishSingleQuotedString getSingleQuotedString();
+
 }
