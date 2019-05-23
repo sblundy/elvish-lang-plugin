@@ -2,27 +2,25 @@ package com.github.sblundy.elvish
 
 import com.github.sblundy.elvish.psi.ElvishHead
 import com.github.sblundy.elvish.psi.ElvishSingleQuotedString
+import com.github.sblundy.elvish.psi.ElvishVariable
+import com.github.sblundy.elvish.psi.ElvishVariableRef
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
-import com.intellij.openapi.diagnostic.logger
 import com.intellij.psi.PsiElement
 
 class ElvishAnnotator: Annotator {
-    private val log = logger<ElvishAnnotator>()
-
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        when (element) {
-            is ElvishSingleQuotedString -> {
-                val annotation = holder.createInfoAnnotation(element.textRange, null)
-                annotation.textAttributes = ElvishSyntaxHighlighter.STRING
-            }
-            is ElvishHead -> {
-                val annotation = holder.createInfoAnnotation(element.textRange, null)
-                annotation.textAttributes = ElvishSyntaxHighlighter.COMMAND
-            }
-            else -> {
-                log.info("element type not found:$element")
-            }
+        val attributes = when (element) {
+            is ElvishSingleQuotedString -> ElvishSyntaxHighlighter.STRING
+            is ElvishHead -> ElvishSyntaxHighlighter.COMMAND
+            is ElvishVariable -> ElvishSyntaxHighlighter.VARIABLE
+            is ElvishVariableRef -> ElvishSyntaxHighlighter.VARIABLE_REF
+            else -> null
+        }
+
+        attributes?.let {
+            val annotation = holder.createInfoAnnotation(element.textRange, null)
+            annotation.textAttributes = attributes
         }
     }
 }

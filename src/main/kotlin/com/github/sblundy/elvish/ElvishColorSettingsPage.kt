@@ -24,6 +24,8 @@ class ElvishColorSettingsPage : ColorSettingsPage {
 private val additionalHighlightingTag = Collections.unmodifiableMap(
     mutableMapOf(
         "command" to ElvishSyntaxHighlighter.COMMAND,
+        "variable" to ElvishSyntaxHighlighter.VARIABLE,
+        "variableRef" to ElvishSyntaxHighlighter.VARIABLE_REF,
         "string" to ElvishSyntaxHighlighter.STRING
     )
 )
@@ -31,10 +33,14 @@ private val additionalHighlightingTag = Collections.unmodifiableMap(
 private val elvishAttributesDescriptors = arrayOf(
     AttributesDescriptor("Command", ElvishSyntaxHighlighter.COMMAND),
     AttributesDescriptor("String", ElvishSyntaxHighlighter.STRING),
+    AttributesDescriptor("Variable Declaration", ElvishSyntaxHighlighter.VARIABLE),
+    AttributesDescriptor("Variable Reference", ElvishSyntaxHighlighter.VARIABLE_REF),
     AttributesDescriptor("Comment", ElvishSyntaxHighlighter.COMMENT)
 )
 
 private val sampleElvishScript: String = """
     # Comment
     <command>command</command> -f argument <string>'single quoted string'</string>
+    <variable>x</variable> = <string>'value'</string>
+    put <variableRef>${'$'}x</variableRef>
 """.trimIndent()

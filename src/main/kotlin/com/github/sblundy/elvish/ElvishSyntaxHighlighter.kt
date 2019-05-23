@@ -34,6 +34,8 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
         val COMMAND = createTextAttributesKey("ELVISH_COMMAND", DefaultLanguageHighlighterColors.FUNCTION_CALL)
         val STRING = createTextAttributesKey("ELVISH_STRING", DefaultLanguageHighlighterColors.STRING)
         val COMMENT = createTextAttributesKey("ELVISH_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
+        val VARIABLE = createTextAttributesKey("ELVISH_VARIABLE", DefaultLanguageHighlighterColors.GLOBAL_VARIABLE)
+        val VARIABLE_REF = createTextAttributesKey("ELVISH_VARIABLE_REF", DefaultLanguageHighlighterColors.GLOBAL_VARIABLE)
         val BAD_CHARACTER = createTextAttributesKey("ELVISH_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
 
         private val BAD_CHAR_KEYS = arrayOf(BAD_CHARACTER)
