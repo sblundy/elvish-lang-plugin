@@ -15,6 +15,14 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitArgumentListContinuation(@NotNull ElvishArgumentListContinuation o) {
+    visitPsiElement(o);
+  }
+
+  public void visitArgumentListLine(@NotNull ElvishArgumentListLine o) {
+    visitPsiElement(o);
+  }
+
   public void visitAssignment(@NotNull ElvishAssignment o) {
     visitPsiElement(o);
   }

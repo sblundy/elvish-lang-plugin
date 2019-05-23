@@ -101,6 +101,11 @@ class ElvishParserTest {
         doTest("assignment-then-command")
     }
 
+    @Test
+    fun commandWithContinuation() {
+        doTest("command-continuation")
+    }
+
     private fun doTest(baseName: String) {
         val text = loadFile("$baseName.elv")
         val output = createFile("$baseName.elv", text)

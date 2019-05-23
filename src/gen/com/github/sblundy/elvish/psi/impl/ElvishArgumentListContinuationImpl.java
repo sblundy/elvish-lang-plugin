@@ -11,14 +11,14 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishArgumentListImpl extends ASTWrapperPsiElement implements ElvishArgumentList {
+public class ElvishArgumentListContinuationImpl extends ASTWrapperPsiElement implements ElvishArgumentListContinuation {
 
-  public ElvishArgumentListImpl(@NotNull ASTNode node) {
+  public ElvishArgumentListContinuationImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitArgumentList(this);
+    visitor.visitArgumentListContinuation(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,14 +28,8 @@ public class ElvishArgumentListImpl extends ASTWrapperPsiElement implements Elvi
 
   @Override
   @NotNull
-  public List<ElvishArgumentListContinuation> getArgumentListContinuationList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishArgumentListContinuation.class);
-  }
-
-  @Override
-  @NotNull
-  public ElvishArgumentListLine getArgumentListLine() {
-    return findNotNullChildByClass(ElvishArgumentListLine.class);
+  public List<ElvishArgument> getArgumentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishArgument.class);
   }
 
 }

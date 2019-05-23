@@ -1,0 +1,7 @@
+ElvishTokenType.bareword ('echo')
+WHITE_SPACE (' ')
+ElvishTokenType.bareword ('test')
+WHITE_SPACE (' ')
+ElvishTokenType.continuation ('\\n')
+WHITE_SPACE ('    ')
+ElvishTokenType.bareword ('continuation')

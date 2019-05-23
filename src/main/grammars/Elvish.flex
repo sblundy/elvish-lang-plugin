@@ -18,6 +18,8 @@ LINE =                          [^\n]*
 LINE_COMMENT =                  "#"{LINE}
 COMMENT =                       {LINE_COMMENT}{EOL}*
 
+CONTINUATION =                  [\\]{EOL}
+
 BAREWORD=[a-zA-Z0-9\-_:%+,\.\/@!]+
 EOL="\r"|"\n"|"\r\n"
 INLINE_WHITESPACE_CHAR=[ \t]
@@ -45,6 +47,7 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   "&"                       { return ElvishTypes.AMPERSAND; }
   "~"                       { return ElvishTypes.TILDA; }
   "="                       { return ElvishTypes.EQUALS; }
+  {CONTINUATION}            { return ElvishTypes.CONTINUATION; }
 
   {BAREWORD}                { return ElvishTypes.BAREWORD; }
   {EOL}                     { return ElvishTypes.EOL; }

@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishArgumentList extends PsiElement {
+public interface ElvishArgumentListLine extends PsiElement {
 
   @NotNull
-  List<ElvishArgumentListContinuation> getArgumentListContinuationList();
-
-  @NotNull
-  ElvishArgumentListLine getArgumentListLine();
+  List<ElvishArgument> getArgumentList();
 
 }

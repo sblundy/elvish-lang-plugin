@@ -27,6 +27,7 @@
     INLINE_WHITESPACE="regexp:[ \t]+"
     EOL="regexp:\r|\n|\r\n"
     TEXT="."
+    CONTINUATION="continuation"
   ]
 }
 
@@ -34,7 +35,9 @@ script ::= line* <<eof>>
 line ::= (command COMMENT line_terminator) | (command line_terminator) | (COMMENT line_terminator) | line_terminator | command | COMMENT
 command ::= assignment | ordinary_command
 ordinary_command ::= head argument_list
-argument_list ::= argument*
+argument_list ::= argument_list_line argument_list_continuation*
+argument_list_line ::= argument*
+argument_list_continuation ::= CONTINUATION argument*
 argument ::= bareword | single_quoted_string
 head ::= bareword
 assignment ::= assignment_start single_quoted_string

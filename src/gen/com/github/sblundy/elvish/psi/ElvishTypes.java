@@ -10,6 +10,8 @@ public interface ElvishTypes {
 
   IElementType ARGUMENT = new ElvishElementType("ARGUMENT");
   IElementType ARGUMENT_LIST = new ElvishElementType("ARGUMENT_LIST");
+  IElementType ARGUMENT_LIST_CONTINUATION = new ElvishElementType("ARGUMENT_LIST_CONTINUATION");
+  IElementType ARGUMENT_LIST_LINE = new ElvishElementType("ARGUMENT_LIST_LINE");
   IElementType ASSIGNMENT = new ElvishElementType("ASSIGNMENT");
   IElementType ASSIGNMENT_START = new ElvishElementType("ASSIGNMENT_START");
   IElementType COMMAND = new ElvishElementType("COMMAND");
@@ -24,6 +26,7 @@ public interface ElvishTypes {
   IElementType AMPERSAND = new ElvishTokenType("&");
   IElementType BAREWORD = new ElvishTokenType("bareword");
   IElementType COMMENT = new ElvishTokenType("COMMENT");
+  IElementType CONTINUATION = new ElvishTokenType("continuation");
   IElementType DOUBLE_QUOTE = new ElvishTokenType("\"");
   IElementType EOL = new ElvishTokenType("EOL");
   IElementType EQUALS = new ElvishTokenType("=");
@@ -45,6 +48,12 @@ public interface ElvishTypes {
       }
       else if (type == ARGUMENT_LIST) {
         return new ElvishArgumentListImpl(node);
+      }
+      else if (type == ARGUMENT_LIST_CONTINUATION) {
+        return new ElvishArgumentListContinuationImpl(node);
+      }
+      else if (type == ARGUMENT_LIST_LINE) {
+        return new ElvishArgumentListLineImpl(node);
       }
       else if (type == ASSIGNMENT) {
         return new ElvishAssignmentImpl(node);

@@ -51,14 +51,61 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // argument*
+  // argument_list_line argument_list_continuation*
   public static boolean argument_list(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "argument_list")) return false;
+    boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, ARGUMENT_LIST, "<argument list>");
+    result_ = argument_list_line(builder_, level_ + 1);
+    result_ = result_ && argument_list_1(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // argument_list_continuation*
+  private static boolean argument_list_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "argument_list_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!argument_list_continuation(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "argument_list_1", pos_)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // CONTINUATION argument*
+  public static boolean argument_list_continuation(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "argument_list_continuation")) return false;
+    if (!nextTokenIs(builder_, CONTINUATION)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, CONTINUATION);
+    result_ = result_ && argument_list_continuation_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, ARGUMENT_LIST_CONTINUATION, result_);
+    return result_;
+  }
+
+  // argument*
+  private static boolean argument_list_continuation_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "argument_list_continuation_1")) return false;
     while (true) {
       int pos_ = current_position_(builder_);
       if (!argument(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "argument_list", pos_)) break;
+      if (!empty_element_parsed_guard_(builder_, "argument_list_continuation_1", pos_)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // argument*
+  public static boolean argument_list_line(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "argument_list_line")) return false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ARGUMENT_LIST_LINE, "<argument list line>");
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!argument(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "argument_list_line", pos_)) break;
     }
     exit_section_(builder_, level_, marker_, true, false, null);
     return true;

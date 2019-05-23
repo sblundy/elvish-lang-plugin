@@ -1,5 +1,4 @@
 Elvish File
-  PsiComment(ElvishTokenType.COMMENT)('# Test comment\n')
   ElvishLineImpl(LINE)
     ElvishCommandImpl(COMMAND)
       ElvishOrdinaryCommandImpl(ORDINARY_COMMAND)
@@ -10,3 +9,9 @@ Elvish File
           ElvishArgumentListLineImpl(ARGUMENT_LIST_LINE)
             ElvishArgumentImpl(ARGUMENT)
               PsiElement(ElvishTokenType.bareword)('test')
+          PsiWhiteSpace(' ')
+          ElvishArgumentListContinuationImpl(ARGUMENT_LIST_CONTINUATION)
+            PsiElement(ElvishTokenType.continuation)('\\n')
+            PsiWhiteSpace('    ')
+            ElvishArgumentImpl(ARGUMENT)
+              PsiElement(ElvishTokenType.bareword)('continuation')
