@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishArgument extends PsiElement {
-
-  @Nullable
-  ElvishSingleQuotedString getSingleQuotedString();
-
-  @Nullable
-  ElvishVariableRef getVariableRef();
+public interface ElvishVariableRef extends PsiElement {
 
 }

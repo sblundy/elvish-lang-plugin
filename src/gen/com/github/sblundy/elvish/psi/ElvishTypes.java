@@ -22,6 +22,7 @@ public interface ElvishTypes {
   IElementType SINGLE_QUOTED_STRING = new ElvishElementType("SINGLE_QUOTED_STRING");
   IElementType STRING = new ElvishElementType("STRING");
   IElementType VARIABLE = new ElvishElementType("VARIABLE");
+  IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
 
   IElementType AMPERSAND = new ElvishTokenType("&");
   IElementType BAREWORD = new ElvishTokenType("bareword");
@@ -33,6 +34,7 @@ public interface ElvishTypes {
   IElementType LEFT_BRACE = new ElvishTokenType("{");
   IElementType LEFT_BRACKET = new ElvishTokenType("[");
   IElementType LEFT_PAREN = new ElvishTokenType("(");
+  IElementType REF_MARKER = new ElvishTokenType("$");
   IElementType RIGHT_BRACE = new ElvishTokenType("}");
   IElementType RIGHT_BRACKET = new ElvishTokenType("]");
   IElementType RIGHT_PAREN = new ElvishTokenType(")");
@@ -84,6 +86,9 @@ public interface ElvishTypes {
       }
       else if (type == VARIABLE) {
         return new ElvishVariableImpl(node);
+      }
+      else if (type == VARIABLE_REF) {
+        return new ElvishVariableRefImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

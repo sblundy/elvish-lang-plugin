@@ -106,6 +106,11 @@ class ElvishParserTest {
         doTest("command-continuation")
     }
 
+    @Test
+    fun commandWithVariable() {
+        doTest("command-with-variable")
+    }
+
     private fun doTest(baseName: String) {
         val text = loadFile("$baseName.elv")
         val output = createFile("$baseName.elv", text)

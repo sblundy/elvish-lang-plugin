@@ -103,6 +103,11 @@ class ElvishLexerTest {
         doTest("command-continuation")
     }
 
+    @Test
+    fun commandWithVariable() {
+        doTest("command-with-variable")
+    }
+
     private fun doTest(baseName: String) {
         val text = loadFile("$baseName.elv")
 

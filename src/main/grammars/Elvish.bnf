@@ -28,6 +28,7 @@
     EOL="regexp:\r|\n|\r\n"
     TEXT="."
     CONTINUATION="continuation"
+    REF_MARKER="$"
   ]
 }
 
@@ -38,11 +39,12 @@ ordinary_command ::= head argument_list
 argument_list ::= argument_list_line argument_list_continuation*
 argument_list_line ::= argument*
 argument_list_continuation ::= CONTINUATION argument*
-argument ::= bareword | single_quoted_string
+argument ::= bareword | single_quoted_string | variable_ref
 head ::= bareword
 assignment ::= assignment_start single_quoted_string
 assignment_start ::= variable EQUALS
 variable ::= bareword
+variable_ref ::= REF_MARKER(bareword)
 string ::= TEXT*
 single_quoted_string ::= SINGLE_QUOTE string SINGLE_QUOTE
 line_terminator ::= EOL+
