@@ -14,6 +14,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="com.github.sblundy.elvish.ElvishFileTypeFactory"/>
         <lang.parserDefinition language="Elvish" implementationClass="com.github.sblundy.elvish.lang.ElvishParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishSyntaxHighlighterFactory"/>
+        <annotator language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishAnnotator"/>
+        <colorSettingsPage implementation="com.github.sblundy.elvish.ElvishColorSettingsPage"/>
     </extensions>
 
     <actions>
