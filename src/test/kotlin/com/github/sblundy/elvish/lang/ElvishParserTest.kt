@@ -18,9 +18,11 @@ import org.jetbrains.annotations.NonNls
 import org.junit.Assert
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
 import java.io.File
+import java.util.regex.Pattern
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestDataPath("\$CONTENT_ROOT/src/test/resources/")
@@ -56,62 +58,14 @@ class ElvishParserTest {
         myFixture.tearDown()
     }
 
-    @Test
-    fun simpleEcho() {
-        doTest("echo")
-    }
+    @Suppress("unused")
+    fun fileLister(): List<String> =
+        FileUtil.findFilesByMask(Pattern.compile(".*\\.elv"), File(myFullDataPath)).map { it.nameWithoutExtension }
 
-    @Test
-    fun simpleEchoWithArg() {
-        doTest("echo-n")
-    }
 
-    @Test
-    fun comment() {
-        doTest("comment")
-    }
-
-    @Test
-    fun commentAbove() {
-        doTest("comment-above")
-    }
-
-    @Test
-    fun commentInline() {
-        doTest("comment-inline")
-    }
-
-    @Test
-    fun twoCommands() {
-        doTest("two-commands")
-    }
-
-    @Test
-    fun commandWithString() {
-        doTest("command-with-string")
-    }
-
-    @Test
-    fun assignmentSingleQuotedString() {
-        doTest("assignment-single-quoted-string")
-    }
-
-    @Test
-    fun assignmentThenCommand() {
-        doTest("assignment-then-command")
-    }
-
-    @Test
-    fun commandWithContinuation() {
-        doTest("command-continuation")
-    }
-
-    @Test
-    fun commandWithVariable() {
-        doTest("command-with-variable")
-    }
-
-    private fun doTest(baseName: String) {
+    @ParameterizedTest
+    @MethodSource("fileLister")
+    fun parseTest(baseName: String) {
         val text = loadFile("$baseName.elv")
         val output = createFile("$baseName.elv", text)
 
@@ -122,6 +76,21 @@ class ElvishParserTest {
         runInEdtAndWait {
             ParsingTestCase.doCheckResult(myFullDataPath, output, true, baseName, false, false)
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("fileLister")
+    fun lexerTest(baseName: String) {
+        val text = loadFile("$baseName.elv")
+
+        checkLexer(baseName, text)
+    }
+
+    private fun checkLexer(baseName: String, text: String) {
+        val lexer = ElvishLexerAdapter()
+        val tokens = loadFile("$baseName.tokens.txt")
+        val actual = LexerTestCase.printTokens(text, 0, lexer)
+        Assert.assertEquals(tokens.trimEnd(), actual.trimEnd())
     }
 
     private fun createFile(name: String, text: String): PsiFile? {
