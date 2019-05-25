@@ -48,6 +48,7 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   "~"                       { return ElvishTypes.TILDA; }
   "="                       { return ElvishTypes.EQUALS; }
   "$"                       { return ElvishTypes.REF_MARKER; }
+  "|"                       { return ElvishTypes.PIPE; }
 
   {CONTINUATION}            { return ElvishTypes.CONTINUATION; }
 

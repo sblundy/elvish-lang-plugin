@@ -1,0 +1,1 @@
+echo test | cat test.txt | echo 'end'

@@ -138,13 +138,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // assignment | ordinary_command
+  // assignment | pipeline | ordinary_command
   public static boolean command(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "command")) return false;
     if (!nextTokenIs(builder_, BAREWORD)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = assignment(builder_, level_ + 1);
+    if (!result_) result_ = pipeline(builder_, level_ + 1);
     if (!result_) result_ = ordinary_command(builder_, level_ + 1);
     exit_section_(builder_, marker_, COMMAND, result_);
     return result_;
@@ -239,6 +240,43 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = head(builder_, level_ + 1);
     result_ = result_ && argument_list(builder_, level_ + 1);
     exit_section_(builder_, marker_, ORDINARY_COMMAND, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // pipeline_prv
+  public static boolean pipeline(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "pipeline")) return false;
+    if (!nextTokenIs(builder_, BAREWORD)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = pipeline_prv(builder_, level_ + 1);
+    exit_section_(builder_, marker_, PIPELINE, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // pipeline_prv | ordinary_command
+  static boolean pipeline_head(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "pipeline_head")) return false;
+    if (!nextTokenIs(builder_, BAREWORD)) return false;
+    boolean result_;
+    result_ = pipeline_prv(builder_, level_ + 1);
+    if (!result_) result_ = ordinary_command(builder_, level_ + 1);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // ordinary_command PIPE pipeline_head
+  static boolean pipeline_prv(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "pipeline_prv")) return false;
+    if (!nextTokenIs(builder_, BAREWORD)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = ordinary_command(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, PIPE);
+    result_ = result_ && pipeline_head(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 

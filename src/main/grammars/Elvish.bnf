@@ -29,12 +29,16 @@
     TEXT="."
     CONTINUATION="continuation"
     REF_MARKER="$"
+    PIPE="pipe"
   ]
 }
 
 script ::= line* <<eof>>
 line ::= (command COMMENT line_terminator) | (command line_terminator) | (COMMENT line_terminator) | line_terminator | command | COMMENT
-command ::= assignment | ordinary_command
+pipeline ::= pipeline_prv
+private pipeline_head ::= pipeline_prv | ordinary_command
+private pipeline_prv ::= ordinary_command PIPE pipeline_head
+command ::= assignment | pipeline | ordinary_command
 ordinary_command ::= head argument_list
 argument_list ::= argument_list_line argument_list_continuation*
 argument_list_line ::= argument*

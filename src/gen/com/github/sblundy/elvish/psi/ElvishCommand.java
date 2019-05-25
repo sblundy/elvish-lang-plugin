@@ -13,4 +13,7 @@ public interface ElvishCommand extends PsiElement {
   @Nullable
   ElvishOrdinaryCommand getOrdinaryCommand();
 
+  @Nullable
+  ElvishPipeline getPipeline();
+
 }

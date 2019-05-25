@@ -19,6 +19,7 @@ public interface ElvishTypes {
   IElementType LINE = new ElvishElementType("LINE");
   IElementType LINE_TERMINATOR = new ElvishElementType("LINE_TERMINATOR");
   IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
+  IElementType PIPELINE = new ElvishElementType("PIPELINE");
   IElementType SINGLE_QUOTED_STRING = new ElvishElementType("SINGLE_QUOTED_STRING");
   IElementType STRING = new ElvishElementType("STRING");
   IElementType VARIABLE = new ElvishElementType("VARIABLE");
@@ -34,6 +35,7 @@ public interface ElvishTypes {
   IElementType LEFT_BRACE = new ElvishTokenType("{");
   IElementType LEFT_BRACKET = new ElvishTokenType("[");
   IElementType LEFT_PAREN = new ElvishTokenType("(");
+  IElementType PIPE = new ElvishTokenType("pipe");
   IElementType REF_MARKER = new ElvishTokenType("$");
   IElementType RIGHT_BRACE = new ElvishTokenType("}");
   IElementType RIGHT_BRACKET = new ElvishTokenType("]");
@@ -77,6 +79,9 @@ public interface ElvishTypes {
       }
       else if (type == ORDINARY_COMMAND) {
         return new ElvishOrdinaryCommandImpl(node);
+      }
+      else if (type == PIPELINE) {
+        return new ElvishPipelineImpl(node);
       }
       else if (type == SINGLE_QUOTED_STRING) {
         return new ElvishSingleQuotedStringImpl(node);
