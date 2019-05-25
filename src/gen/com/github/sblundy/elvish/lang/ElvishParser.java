@@ -123,28 +123,41 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // assignment_start single_quoted_string
+  // assignment_left EQUALS assignment_right
   public static boolean assignment(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "assignment")) return false;
     if (!nextTokenIs(builder_, BAREWORD)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = assignment_start(builder_, level_ + 1);
-    result_ = result_ && single_quoted_string(builder_, level_ + 1);
+    result_ = assignment_left(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, EQUALS);
+    result_ = result_ && assignment_right(builder_, level_ + 1);
     exit_section_(builder_, marker_, ASSIGNMENT, result_);
     return result_;
   }
 
   /* ********************************************************** */
-  // variable EQUALS
-  public static boolean assignment_start(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "assignment_start")) return false;
+  // variable
+  public static boolean assignment_left(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "assignment_left")) return false;
     if (!nextTokenIs(builder_, BAREWORD)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = variable(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, EQUALS);
-    exit_section_(builder_, marker_, ASSIGNMENT_START, result_);
+    exit_section_(builder_, marker_, ASSIGNMENT_LEFT, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // output_capture | single_quoted_string | bareword
+  public static boolean assignment_right(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "assignment_right")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ASSIGNMENT_RIGHT, "<assignment right>");
+    result_ = output_capture(builder_, level_ + 1);
+    if (!result_) result_ = single_quoted_string(builder_, level_ + 1);
+    if (!result_) result_ = consumeToken(builder_, BAREWORD);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
@@ -174,12 +187,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // if_statement | assignment | pipeline | ordinary_command
+  // if_statement | while_statement | assignment | pipeline | ordinary_command
   public static boolean command(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "command")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, COMMAND, "<command>");
     result_ = if_statement(builder_, level_ + 1);
+    if (!result_) result_ = while_statement(builder_, level_ + 1);
     if (!result_) result_ = assignment(builder_, level_ + 1);
     if (!result_) result_ = pipeline(builder_, level_ + 1);
     if (!result_) result_ = ordinary_command(builder_, level_ + 1);
@@ -189,8 +203,8 @@ public class ElvishParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // OPEN_PARAN ordinary_command CLOSE_PARAN
-  static boolean command_condition_body(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "command_condition_body")) return false;
+  static boolean command_outpub_body(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "command_outpub_body")) return false;
     if (!nextTokenIs(builder_, OPEN_PARAN)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
@@ -202,15 +216,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // variable_ref | pipeline_condition_body | command_condition_body
+  // variable_ref | output_capture
   public static boolean condition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "condition")) return false;
     if (!nextTokenIs(builder_, "<condition>", OPEN_PARAN, REF_MARKER)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, CONDITION, "<condition>");
     result_ = variable_ref(builder_, level_ + 1);
-    if (!result_) result_ = pipeline_condition_body(builder_, level_ + 1);
-    if (!result_) result_ = command_condition_body(builder_, level_ + 1);
+    if (!result_) result_ = output_capture(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
@@ -382,6 +395,19 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // pipeline_output_body | command_outpub_body
+  public static boolean output_capture(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "output_capture")) return false;
+    if (!nextTokenIs(builder_, OPEN_PARAN)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = pipeline_output_body(builder_, level_ + 1);
+    if (!result_) result_ = command_outpub_body(builder_, level_ + 1);
+    exit_section_(builder_, marker_, OUTPUT_CAPTURE, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // pipeline_prv
   public static boolean pipeline(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "pipeline")) return false;
@@ -394,20 +420,6 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // OPEN_PARAN pipeline CLOSE_PARAN
-  static boolean pipeline_condition_body(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "pipeline_condition_body")) return false;
-    if (!nextTokenIs(builder_, OPEN_PARAN)) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, OPEN_PARAN);
-    result_ = result_ && pipeline(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, CLOSE_PARAN);
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
-  }
-
-  /* ********************************************************** */
   // pipeline_prv | ordinary_command
   static boolean pipeline_head(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "pipeline_head")) return false;
@@ -415,6 +427,20 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     boolean result_;
     result_ = pipeline_prv(builder_, level_ + 1);
     if (!result_) result_ = ordinary_command(builder_, level_ + 1);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // OPEN_PARAN pipeline CLOSE_PARAN
+  static boolean pipeline_output_body(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "pipeline_output_body")) return false;
+    if (!nextTokenIs(builder_, OPEN_PARAN)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, OPEN_PARAN);
+    result_ = result_ && pipeline(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, CLOSE_PARAN);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
@@ -505,6 +531,20 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = consumeToken(builder_, REF_MARKER);
     result_ = result_ && consumeToken(builder_, BAREWORD);
     exit_section_(builder_, marker_, VARIABLE_REF, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // KEYWORD_WHILE condition block
+  public static boolean while_statement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "while_statement")) return false;
+    if (!nextTokenIs(builder_, KEYWORD_WHILE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, KEYWORD_WHILE);
+    result_ = result_ && condition(builder_, level_ + 1);
+    result_ = result_ && block(builder_, level_ + 1);
+    exit_section_(builder_, marker_, WHILE_STATEMENT, result_);
     return result_;
   }
 

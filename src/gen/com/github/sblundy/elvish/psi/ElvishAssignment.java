@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishAssignment extends PsiElement {
 
   @NotNull
-  ElvishAssignmentStart getAssignmentStart();
+  ElvishAssignmentLeft getAssignmentLeft();
 
   @NotNull
-  ElvishSingleQuotedString getSingleQuotedString();
+  ElvishAssignmentRight getAssignmentRight();
 
 }

@@ -27,7 +27,11 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitAssignmentStart(@NotNull ElvishAssignmentStart o) {
+  public void visitAssignmentLeft(@NotNull ElvishAssignmentLeft o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAssignmentRight(@NotNull ElvishAssignmentRight o) {
     visitPsiElement(o);
   }
 
@@ -75,6 +79,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitOutputCapture(@NotNull ElvishOutputCapture o) {
+    visitPsiElement(o);
+  }
+
   public void visitPipeline(@NotNull ElvishPipeline o) {
     visitPsiElement(o);
   }
@@ -92,6 +100,10 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitVariableRef(@NotNull ElvishVariableRef o) {
+    visitPsiElement(o);
+  }
+
+  public void visitWhileStatement(@NotNull ElvishWhileStatement o) {
     visitPsiElement(o);
   }
 

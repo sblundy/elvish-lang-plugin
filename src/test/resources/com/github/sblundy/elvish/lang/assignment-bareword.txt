@@ -1,0 +1,12 @@
+Elvish File
+  ElvishLineImpl(LINE)
+    ElvishCommandImpl(COMMAND)
+      ElvishAssignmentImpl(ASSIGNMENT)
+        ElvishAssignmentLeftImpl(ASSIGNMENT_LEFT)
+          ElvishVariableImpl(VARIABLE)
+            PsiElement(ElvishTokenType.bareword)('x')
+        PsiWhiteSpace(' ')
+        PsiElement(ElvishTokenType.=)('=')
+        PsiWhiteSpace(' ')
+        ElvishAssignmentRightImpl(ASSIGNMENT_RIGHT)
+          PsiElement(ElvishTokenType.bareword)('word')

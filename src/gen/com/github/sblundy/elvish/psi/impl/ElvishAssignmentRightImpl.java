@@ -11,14 +11,14 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishConditionImpl extends ASTWrapperPsiElement implements ElvishCondition {
+public class ElvishAssignmentRightImpl extends ASTWrapperPsiElement implements ElvishAssignmentRight {
 
-  public ElvishConditionImpl(@NotNull ASTNode node) {
+  public ElvishAssignmentRightImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitCondition(this);
+    visitor.visitAssignmentRight(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -34,8 +34,8 @@ public class ElvishConditionImpl extends ASTWrapperPsiElement implements ElvishC
 
   @Override
   @Nullable
-  public ElvishVariableRef getVariableRef() {
-    return findChildByClass(ElvishVariableRef.class);
+  public ElvishSingleQuotedString getSingleQuotedString() {
+    return findChildByClass(ElvishSingleQuotedString.class);
   }
 
 }

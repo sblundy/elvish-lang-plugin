@@ -22,6 +22,7 @@ CONTINUATION =                  [\\]{EOL}
 
 KEYWORD_ELSE = else
 KEYWORD_ELIF = elif
+KEYWORD_WHILE = while
 /*
 KEYWORD_EXCEPT = except
 KEYWORD_FINALLY = finally
@@ -71,6 +72,7 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
 
   {KEYWORD_ELIF}            { return ElvishTypes.KEYWORD_ELIF; }
   {KEYWORD_ELSE}            { return ElvishTypes.KEYWORD_ELSE; }
+  {KEYWORD_WHILE}           { return ElvishTypes.KEYWORD_WHILE; }
 /*
   {KEYWORD_EXCEPT}          { return ElvishTypes.KEYWORD_EXCEPT; }
   {KEYWORD_FINALLY}         { return ElvishTypes.KEYWORD_FINALLY; }

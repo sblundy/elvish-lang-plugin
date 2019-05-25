@@ -28,14 +28,14 @@ public class ElvishAssignmentImpl extends ASTWrapperPsiElement implements Elvish
 
   @Override
   @NotNull
-  public ElvishAssignmentStart getAssignmentStart() {
-    return findNotNullChildByClass(ElvishAssignmentStart.class);
+  public ElvishAssignmentLeft getAssignmentLeft() {
+    return findNotNullChildByClass(ElvishAssignmentLeft.class);
   }
 
   @Override
   @NotNull
-  public ElvishSingleQuotedString getSingleQuotedString() {
-    return findNotNullChildByClass(ElvishSingleQuotedString.class);
+  public ElvishAssignmentRight getAssignmentRight() {
+    return findNotNullChildByClass(ElvishAssignmentRight.class);
   }
 
 }

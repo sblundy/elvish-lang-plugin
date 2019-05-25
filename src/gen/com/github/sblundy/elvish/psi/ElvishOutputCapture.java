@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishAssignmentStart extends PsiElement {
+public interface ElvishOutputCapture extends PsiElement {
 
-  @NotNull
-  ElvishVariable getVariable();
+  @Nullable
+  ElvishOrdinaryCommand getOrdinaryCommand();
+
+  @Nullable
+  ElvishPipeline getPipeline();
 
 }

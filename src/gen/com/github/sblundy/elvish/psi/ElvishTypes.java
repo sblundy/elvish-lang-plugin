@@ -13,7 +13,8 @@ public interface ElvishTypes {
   IElementType ARGUMENT_LIST_CONTINUATION = new ElvishElementType("ARGUMENT_LIST_CONTINUATION");
   IElementType ARGUMENT_LIST_LINE = new ElvishElementType("ARGUMENT_LIST_LINE");
   IElementType ASSIGNMENT = new ElvishElementType("ASSIGNMENT");
-  IElementType ASSIGNMENT_START = new ElvishElementType("ASSIGNMENT_START");
+  IElementType ASSIGNMENT_LEFT = new ElvishElementType("ASSIGNMENT_LEFT");
+  IElementType ASSIGNMENT_RIGHT = new ElvishElementType("ASSIGNMENT_RIGHT");
   IElementType BLOCK = new ElvishElementType("BLOCK");
   IElementType COMMAND = new ElvishElementType("COMMAND");
   IElementType CONDITION = new ElvishElementType("CONDITION");
@@ -25,11 +26,13 @@ public interface ElvishTypes {
   IElementType LINE = new ElvishElementType("LINE");
   IElementType LINE_TERMINATOR = new ElvishElementType("LINE_TERMINATOR");
   IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
+  IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
   IElementType PIPELINE = new ElvishElementType("PIPELINE");
   IElementType SINGLE_QUOTED_STRING = new ElvishElementType("SINGLE_QUOTED_STRING");
   IElementType STRING = new ElvishElementType("STRING");
   IElementType VARIABLE = new ElvishElementType("VARIABLE");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
+  IElementType WHILE_STATEMENT = new ElvishElementType("WHILE_STATEMENT");
 
   IElementType AMPERSAND = new ElvishTokenType("&");
   IElementType BAREWORD = new ElvishTokenType("bareword");
@@ -46,6 +49,7 @@ public interface ElvishTypes {
   IElementType KEYWORD_ELIF = new ElvishTokenType("elif");
   IElementType KEYWORD_ELSE = new ElvishTokenType("else");
   IElementType KEYWORD_IF = new ElvishTokenType("if");
+  IElementType KEYWORD_WHILE = new ElvishTokenType("while");
   IElementType OPEN_BRACE = new ElvishTokenType("open_brace");
   IElementType OPEN_BRACKET = new ElvishTokenType("open_bracket");
   IElementType OPEN_PARAN = new ElvishTokenType("open_paran");
@@ -73,8 +77,11 @@ public interface ElvishTypes {
       else if (type == ASSIGNMENT) {
         return new ElvishAssignmentImpl(node);
       }
-      else if (type == ASSIGNMENT_START) {
-        return new ElvishAssignmentStartImpl(node);
+      else if (type == ASSIGNMENT_LEFT) {
+        return new ElvishAssignmentLeftImpl(node);
+      }
+      else if (type == ASSIGNMENT_RIGHT) {
+        return new ElvishAssignmentRightImpl(node);
       }
       else if (type == BLOCK) {
         return new ElvishBlockImpl(node);
@@ -109,6 +116,9 @@ public interface ElvishTypes {
       else if (type == ORDINARY_COMMAND) {
         return new ElvishOrdinaryCommandImpl(node);
       }
+      else if (type == OUTPUT_CAPTURE) {
+        return new ElvishOutputCaptureImpl(node);
+      }
       else if (type == PIPELINE) {
         return new ElvishPipelineImpl(node);
       }
@@ -123,6 +133,9 @@ public interface ElvishTypes {
       }
       else if (type == VARIABLE_REF) {
         return new ElvishVariableRefImpl(node);
+      }
+      else if (type == WHILE_STATEMENT) {
+        return new ElvishWhileStatementImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

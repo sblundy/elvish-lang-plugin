@@ -50,4 +50,10 @@ public class ElvishCommandImpl extends ASTWrapperPsiElement implements ElvishCom
     return findChildByClass(ElvishPipeline.class);
   }
 
+  @Override
+  @Nullable
+  public ElvishWhileStatement getWhileStatement() {
+    return findChildByClass(ElvishWhileStatement.class);
+  }
+
 }
