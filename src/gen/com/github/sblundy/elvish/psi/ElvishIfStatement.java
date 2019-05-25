@@ -8,9 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface ElvishIfStatement extends PsiElement {
 
   @NotNull
+  ElvishBlock getBlock();
+
+  @NotNull
   ElvishCondition getCondition();
 
   @NotNull
-  List<ElvishLine> getLineList();
+  List<ElvishElifStatement> getElifStatementList();
+
+  @Nullable
+  ElvishElseStatement getElseStatement();
 
 }

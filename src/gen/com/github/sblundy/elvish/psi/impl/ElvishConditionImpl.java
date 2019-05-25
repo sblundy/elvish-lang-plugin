@@ -27,9 +27,15 @@ public class ElvishConditionImpl extends ASTWrapperPsiElement implements ElvishC
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ElvishOrdinaryCommand getOrdinaryCommand() {
-    return findNotNullChildByClass(ElvishOrdinaryCommand.class);
+    return findChildByClass(ElvishOrdinaryCommand.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishPipeline getPipeline() {
+    return findChildByClass(ElvishPipeline.class);
   }
 
 }

@@ -20,7 +20,7 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
             ElvishTypes.COMMENT -> COMMENT_KEYS
             ElvishTypes.SINGLE_QUOTED_STRING -> STRING_KEYS
             ElvishTypes.ESCAPED_SINGLE_QUOTED_TEXT -> ESCAPED_STRING_KEYS
-            ElvishTypes.KEYWORD_IF -> KEYWORD_KEYS
+            ElvishTypes.KEYWORD_IF, ElvishTypes.KEYWORD_ELIF, ElvishTypes.KEYWORD_ELSE -> KEYWORD_KEYS
             ElvishTypes.OPEN_BRACKET, ElvishTypes.CLOSE_BRACKET -> BRACKETS_KEYS
             ElvishTypes.OPEN_PARAN, ElvishTypes.CLOSE_PARAN -> PARENTHESES_KEYS
             ElvishTypes.COMMAND -> COMMAND_KEYS

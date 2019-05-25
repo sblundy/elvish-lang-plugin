@@ -31,11 +31,23 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBlock(@NotNull ElvishBlock o) {
+    visitPsiElement(o);
+  }
+
   public void visitCommand(@NotNull ElvishCommand o) {
     visitPsiElement(o);
   }
 
   public void visitCondition(@NotNull ElvishCondition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitElifStatement(@NotNull ElvishElifStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitElseStatement(@NotNull ElvishElseStatement o) {
     visitPsiElement(o);
   }
 

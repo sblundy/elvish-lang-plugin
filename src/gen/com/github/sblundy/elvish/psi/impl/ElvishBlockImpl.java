@@ -11,14 +11,14 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishIfStatementImpl extends ASTWrapperPsiElement implements ElvishIfStatement {
+public class ElvishBlockImpl extends ASTWrapperPsiElement implements ElvishBlock {
 
-  public ElvishIfStatementImpl(@NotNull ASTNode node) {
+  public ElvishBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitIfStatement(this);
+    visitor.visitBlock(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,26 +28,8 @@ public class ElvishIfStatementImpl extends ASTWrapperPsiElement implements Elvis
 
   @Override
   @NotNull
-  public ElvishBlock getBlock() {
-    return findNotNullChildByClass(ElvishBlock.class);
-  }
-
-  @Override
-  @NotNull
-  public ElvishCondition getCondition() {
-    return findNotNullChildByClass(ElvishCondition.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishElifStatement> getElifStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishElifStatement.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishElseStatement getElseStatement() {
-    return findChildByClass(ElvishElseStatement.class);
+  public List<ElvishLine> getLineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLine.class);
   }
 
 }

@@ -14,8 +14,11 @@ public interface ElvishTypes {
   IElementType ARGUMENT_LIST_LINE = new ElvishElementType("ARGUMENT_LIST_LINE");
   IElementType ASSIGNMENT = new ElvishElementType("ASSIGNMENT");
   IElementType ASSIGNMENT_START = new ElvishElementType("ASSIGNMENT_START");
+  IElementType BLOCK = new ElvishElementType("BLOCK");
   IElementType COMMAND = new ElvishElementType("COMMAND");
   IElementType CONDITION = new ElvishElementType("CONDITION");
+  IElementType ELIF_STATEMENT = new ElvishElementType("ELIF_STATEMENT");
+  IElementType ELSE_STATEMENT = new ElvishElementType("ELSE_STATEMENT");
   IElementType ESCAPED_SEQUENCE = new ElvishElementType("ESCAPED_SEQUENCE");
   IElementType HEAD = new ElvishElementType("HEAD");
   IElementType IF_STATEMENT = new ElvishElementType("IF_STATEMENT");
@@ -40,6 +43,8 @@ public interface ElvishTypes {
   IElementType EOL = new ElvishTokenType("EOL");
   IElementType EQUALS = new ElvishTokenType("=");
   IElementType ESCAPED_SINGLE_QUOTED_TEXT = new ElvishTokenType("\\'");
+  IElementType KEYWORD_ELIF = new ElvishTokenType("elif");
+  IElementType KEYWORD_ELSE = new ElvishTokenType("else");
   IElementType KEYWORD_IF = new ElvishTokenType("if");
   IElementType OPEN_BRACE = new ElvishTokenType("open_brace");
   IElementType OPEN_BRACKET = new ElvishTokenType("open_bracket");
@@ -71,11 +76,20 @@ public interface ElvishTypes {
       else if (type == ASSIGNMENT_START) {
         return new ElvishAssignmentStartImpl(node);
       }
+      else if (type == BLOCK) {
+        return new ElvishBlockImpl(node);
+      }
       else if (type == COMMAND) {
         return new ElvishCommandImpl(node);
       }
       else if (type == CONDITION) {
         return new ElvishConditionImpl(node);
+      }
+      else if (type == ELIF_STATEMENT) {
+        return new ElvishElifStatementImpl(node);
+      }
+      else if (type == ELSE_STATEMENT) {
+        return new ElvishElseStatementImpl(node);
       }
       else if (type == ESCAPED_SEQUENCE) {
         return new ElvishEscapedSequenceImpl(node);

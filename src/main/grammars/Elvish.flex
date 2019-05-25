@@ -19,9 +19,10 @@ LINE_COMMENT =                  "#"{LINE}
 COMMENT =                       {LINE_COMMENT}{EOL}*
 
 CONTINUATION =                  [\\]{EOL}
-/*
+
 KEYWORD_ELSE = else
 KEYWORD_ELIF = elif
+/*
 KEYWORD_EXCEPT = except
 KEYWORD_FINALLY = finally
 KEYWORD_FOR = for //else|elif|except|finally|for|if|try
@@ -68,9 +69,9 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
 
   {CONTINUATION}            { return ElvishTypes.CONTINUATION; }
 
-/*
   {KEYWORD_ELIF}            { return ElvishTypes.KEYWORD_ELIF; }
   {KEYWORD_ELSE}            { return ElvishTypes.KEYWORD_ELSE; }
+/*
   {KEYWORD_EXCEPT}          { return ElvishTypes.KEYWORD_EXCEPT; }
   {KEYWORD_FINALLY}         { return ElvishTypes.KEYWORD_FINALLY; }
   {KEYWORD_FOR}             { return ElvishTypes.KEYWORD_FOR; }

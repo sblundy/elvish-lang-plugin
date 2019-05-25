@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishCondition extends PsiElement {
+public interface ElvishBlock extends PsiElement {
 
-  @Nullable
-  ElvishOrdinaryCommand getOrdinaryCommand();
-
-  @Nullable
-  ElvishPipeline getPipeline();
+  @NotNull
+  List<ElvishLine> getLineList();
 
 }
