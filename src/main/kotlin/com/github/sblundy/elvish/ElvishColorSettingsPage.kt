@@ -34,9 +34,11 @@ private val additionalHighlightingTag = Collections.unmodifiableMap(
 
 private val elvishAttributesDescriptors = arrayOf(
     AttributesDescriptor("Command", ElvishSyntaxHighlighter.COMMAND),
+    AttributesDescriptor("Keyword", ElvishSyntaxHighlighter.KEYWORD),
     AttributesDescriptor("Built In", ElvishSyntaxHighlighter.BUILTIN),
     AttributesDescriptor("String", ElvishSyntaxHighlighter.STRING),
     AttributesDescriptor("Bracket", ElvishSyntaxHighlighter.BRACKETS),
+    AttributesDescriptor("Brace", ElvishSyntaxHighlighter.BRACES),
     AttributesDescriptor("Parenthesis", ElvishSyntaxHighlighter.PARENTHESES),
     AttributesDescriptor("Escape Sequence", ElvishSyntaxHighlighter.ESCAPED_STRING),
     AttributesDescriptor("Variable Declaration", ElvishSyntaxHighlighter.VARIABLE),
@@ -52,5 +54,4 @@ private val sampleElvishScript: String = """
     if (<builtIn>has-suffix</builtIn> <variableRef>${'$'}fname</variableRef> .go) {
         <builtIn>echo</builtIn> <variableRef>${'$'}fname</variableRef> 'is go file'
     }
-}
 """.trimIndent()
