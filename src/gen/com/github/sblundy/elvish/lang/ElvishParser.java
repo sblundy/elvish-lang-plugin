@@ -152,7 +152,6 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   // if_statement | assignment | pipeline | ordinary_command
   public static boolean command(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "command")) return false;
-    if (!nextTokenIs(builder_, "<command>", BAREWORD, KEYWORD_IF)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, COMMAND, "<command>");
     result_ = if_statement(builder_, level_ + 1);
@@ -190,14 +189,15 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // bareword
+  // bareword | BUILTIN_OPERATOR_FN
   public static boolean head(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "head")) return false;
-    if (!nextTokenIs(builder_, BAREWORD)) return false;
+    if (!nextTokenIs(builder_, "<head>", BAREWORD, BUILTIN_OPERATOR_FN)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, HEAD, "<head>");
     result_ = consumeToken(builder_, BAREWORD);
-    exit_section_(builder_, marker_, HEAD, result_);
+    if (!result_) result_ = consumeToken(builder_, BUILTIN_OPERATOR_FN);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
@@ -299,12 +299,12 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   // head argument_list
   public static boolean ordinary_command(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "ordinary_command")) return false;
-    if (!nextTokenIs(builder_, BAREWORD)) return false;
+    if (!nextTokenIs(builder_, "<ordinary command>", BAREWORD, BUILTIN_OPERATOR_FN)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ORDINARY_COMMAND, "<ordinary command>");
     result_ = head(builder_, level_ + 1);
     result_ = result_ && argument_list(builder_, level_ + 1);
-    exit_section_(builder_, marker_, ORDINARY_COMMAND, result_);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
@@ -312,11 +312,11 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   // pipeline_prv
   public static boolean pipeline(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "pipeline")) return false;
-    if (!nextTokenIs(builder_, BAREWORD)) return false;
+    if (!nextTokenIs(builder_, "<pipeline>", BAREWORD, BUILTIN_OPERATOR_FN)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, PIPELINE, "<pipeline>");
     result_ = pipeline_prv(builder_, level_ + 1);
-    exit_section_(builder_, marker_, PIPELINE, result_);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
@@ -324,7 +324,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   // pipeline_prv | ordinary_command
   static boolean pipeline_head(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "pipeline_head")) return false;
-    if (!nextTokenIs(builder_, BAREWORD)) return false;
+    if (!nextTokenIs(builder_, "", BAREWORD, BUILTIN_OPERATOR_FN)) return false;
     boolean result_;
     result_ = pipeline_prv(builder_, level_ + 1);
     if (!result_) result_ = ordinary_command(builder_, level_ + 1);
@@ -335,7 +335,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   // ordinary_command PIPE pipeline_head
   static boolean pipeline_prv(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "pipeline_prv")) return false;
-    if (!nextTokenIs(builder_, BAREWORD)) return false;
+    if (!nextTokenIs(builder_, "", BAREWORD, BUILTIN_OPERATOR_FN)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = ordinary_command(builder_, level_ + 1);

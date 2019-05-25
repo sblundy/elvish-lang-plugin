@@ -26,4 +26,10 @@ public class ElvishHeadImpl extends ASTWrapperPsiElement implements ElvishHead {
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getBuiltinOperatorFn() {
+    return findChildByType(BUILTIN_OPERATOR_FN);
+  }
+
 }

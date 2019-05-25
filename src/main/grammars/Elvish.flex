@@ -19,13 +19,20 @@ LINE_COMMENT =                  "#"{LINE}
 COMMENT =                       {LINE_COMMENT}{EOL}*
 
 CONTINUATION =                  [\\]{EOL}
+/*
 KEYWORD_ELSE = else
 KEYWORD_ELIF = elif
 KEYWORD_EXCEPT = except
 KEYWORD_FINALLY = finally
 KEYWORD_FOR = for //else|elif|except|finally|for|if|try
+ */
 KEYWORD_IF = if
+/*
 KEYWORD_TRY = try
+ */
+STRING_CMP_BUILTINS=(([<>=!]=)|[<>])s
+NUMERIC_CMP_BUILTINS=(([<>=!]=)|[<>])
+NUMERIC_BUILTINS=\+|-|\*|\/|%|\^
 BAREWORD=[a-zA-Z0-9\-_:%+,\.\/@!]+
 EOL="\r"|"\n"|"\r\n"
 INLINE_WHITESPACE_CHAR=[ \t]
@@ -49,6 +56,9 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
                                 yybegin(IN_SINGLE_QUOTE_STRING);
                                 return ElvishTypes.SINGLE_QUOTE;
                             }
+  {STRING_CMP_BUILTINS}     { return ElvishTypes.BUILTIN_OPERATOR_FN; }
+  {NUMERIC_CMP_BUILTINS}    { return ElvishTypes.BUILTIN_OPERATOR_FN; }
+  {NUMERIC_BUILTINS}        { return ElvishTypes.BUILTIN_OPERATOR_FN; }
   "\""                      { return ElvishTypes.DOUBLE_QUOTE; }
   "&"                       { return ElvishTypes.AMPERSAND; }
   "~"                       { return ElvishTypes.TILDA; }

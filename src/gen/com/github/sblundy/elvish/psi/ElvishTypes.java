@@ -30,6 +30,7 @@ public interface ElvishTypes {
 
   IElementType AMPERSAND = new ElvishTokenType("&");
   IElementType BAREWORD = new ElvishTokenType("bareword");
+  IElementType BUILTIN_OPERATOR_FN = new ElvishTokenType("BUILTIN_OPERATOR_FN");
   IElementType CLOSE_BRACE = new ElvishTokenType("close_brace");
   IElementType CLOSE_BRACKET = new ElvishTokenType("close_bracket");
   IElementType CLOSE_PARAN = new ElvishTokenType("close_paran");

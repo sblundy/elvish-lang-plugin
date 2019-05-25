@@ -34,6 +34,10 @@ class ElvishAnnotator : Annotator {
 }
 
 private val builtins = setOf(
+    "!=",
+    "*",
+    "+",
+    "-",
     "-gc",
     "-ifaddrs",
     "-is-dir",
@@ -42,6 +46,13 @@ private val builtins = setOf(
     "-source",
     "-stack",
     "-time",
+    "/",
+    "<",
+    "<=",
+    "==",
+    ">",
+    ">=",
+    "^",
     "all",
     "assoc",
     "base",

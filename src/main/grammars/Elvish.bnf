@@ -32,6 +32,7 @@
     CONTINUATION="continuation"
     REF_MARKER="$"
     PIPE="pipe"
+    BUILTIN_OPERATOR_FN
   ]
 }
 
@@ -46,7 +47,7 @@ argument_list ::= argument_list_line argument_list_continuation*
 argument_list_line ::= argument*
 argument_list_continuation ::= CONTINUATION argument*
 argument ::= bareword | single_quoted_string | variable_ref
-head ::= bareword
+head ::= bareword | BUILTIN_OPERATOR_FN
 assignment ::= assignment_start single_quoted_string
 assignment_start ::= variable EQUALS
 variable ::= bareword
