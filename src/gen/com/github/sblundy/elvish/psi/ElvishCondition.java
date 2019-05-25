@@ -13,4 +13,7 @@ public interface ElvishCondition extends PsiElement {
   @Nullable
   ElvishPipeline getPipeline();
 
+  @Nullable
+  ElvishVariableRef getVariableRef();
+
 }

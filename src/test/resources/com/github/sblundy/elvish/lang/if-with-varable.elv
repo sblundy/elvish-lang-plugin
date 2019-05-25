@@ -1,0 +1,3 @@
+if $fname {
+    echo ok
+}

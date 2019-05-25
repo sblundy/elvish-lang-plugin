@@ -38,4 +38,10 @@ public class ElvishConditionImpl extends ASTWrapperPsiElement implements ElvishC
     return findChildByClass(ElvishPipeline.class);
   }
 
+  @Override
+  @Nullable
+  public ElvishVariableRef getVariableRef() {
+    return findChildByClass(ElvishVariableRef.class);
+  }
+
 }

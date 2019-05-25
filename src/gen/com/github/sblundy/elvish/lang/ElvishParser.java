@@ -188,27 +188,30 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // OPEN_PARAN condition_body CLOSE_PARAN
-  public static boolean condition(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "condition")) return false;
+  // OPEN_PARAN ordinary_command CLOSE_PARAN
+  static boolean command_condition_body(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "command_condition_body")) return false;
     if (!nextTokenIs(builder_, OPEN_PARAN)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, OPEN_PARAN);
-    result_ = result_ && condition_body(builder_, level_ + 1);
+    result_ = result_ && ordinary_command(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, CLOSE_PARAN);
-    exit_section_(builder_, marker_, CONDITION, result_);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
   /* ********************************************************** */
-  // ordinary_command | pipeline
-  static boolean condition_body(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "condition_body")) return false;
-    if (!nextTokenIs(builder_, "", BAREWORD, BUILTIN_OPERATOR_FN)) return false;
+  // variable_ref | pipeline_condition_body | command_condition_body
+  public static boolean condition(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "condition")) return false;
+    if (!nextTokenIs(builder_, "<condition>", OPEN_PARAN, REF_MARKER)) return false;
     boolean result_;
-    result_ = ordinary_command(builder_, level_ + 1);
-    if (!result_) result_ = pipeline(builder_, level_ + 1);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, CONDITION, "<condition>");
+    result_ = variable_ref(builder_, level_ + 1);
+    if (!result_) result_ = pipeline_condition_body(builder_, level_ + 1);
+    if (!result_) result_ = command_condition_body(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
@@ -387,6 +390,20 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_, level_, _NONE_, PIPELINE, "<pipeline>");
     result_ = pipeline_prv(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // OPEN_PARAN pipeline CLOSE_PARAN
+  static boolean pipeline_condition_body(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "pipeline_condition_body")) return false;
+    if (!nextTokenIs(builder_, OPEN_PARAN)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, OPEN_PARAN);
+    result_ = result_ && pipeline(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, CLOSE_PARAN);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
