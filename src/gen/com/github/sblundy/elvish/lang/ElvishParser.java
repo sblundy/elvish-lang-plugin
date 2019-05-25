@@ -535,7 +535,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_WHILE condition block
+  // KEYWORD_WHILE condition block else_statement?
   public static boolean while_statement(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "while_statement")) return false;
     if (!nextTokenIs(builder_, KEYWORD_WHILE)) return false;
@@ -544,8 +544,16 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = consumeToken(builder_, KEYWORD_WHILE);
     result_ = result_ && condition(builder_, level_ + 1);
     result_ = result_ && block(builder_, level_ + 1);
+    result_ = result_ && while_statement_3(builder_, level_ + 1);
     exit_section_(builder_, marker_, WHILE_STATEMENT, result_);
     return result_;
+  }
+
+  // else_statement?
+  private static boolean while_statement_3(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "while_statement_3")) return false;
+    else_statement(builder_, level_ + 1);
+    return true;
   }
 
 }

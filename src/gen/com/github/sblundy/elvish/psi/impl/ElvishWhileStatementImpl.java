@@ -38,4 +38,10 @@ public class ElvishWhileStatementImpl extends ASTWrapperPsiElement implements El
     return findNotNullChildByClass(ElvishCondition.class);
   }
 
+  @Override
+  @Nullable
+  public ElvishElseStatement getElseStatement() {
+    return findChildByClass(ElvishElseStatement.class);
+  }
+
 }

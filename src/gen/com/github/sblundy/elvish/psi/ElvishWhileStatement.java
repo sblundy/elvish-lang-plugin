@@ -13,4 +13,7 @@ public interface ElvishWhileStatement extends PsiElement {
   @NotNull
   ElvishCondition getCondition();
 
+  @Nullable
+  ElvishElseStatement getElseStatement();
+
 }
