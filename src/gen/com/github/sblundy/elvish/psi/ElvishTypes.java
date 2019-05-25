@@ -32,6 +32,7 @@ public interface ElvishTypes {
   IElementType DOUBLE_QUOTE = new ElvishTokenType("\"");
   IElementType EOL = new ElvishTokenType("EOL");
   IElementType EQUALS = new ElvishTokenType("=");
+  IElementType ESCAPED_SINGLE_QUOTED_TEXT = new ElvishTokenType("\\'");
   IElementType LEFT_BRACE = new ElvishTokenType("{");
   IElementType LEFT_BRACKET = new ElvishTokenType("[");
   IElementType LEFT_PAREN = new ElvishTokenType("(");

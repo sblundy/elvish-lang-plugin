@@ -38,6 +38,17 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // TEXT | ESCAPED_SINGLE_QUOTED_TEXT
+  static boolean TEXT_CHR(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "TEXT_CHR")) return false;
+    if (!nextTokenIs(builder_, "", ESCAPED_SINGLE_QUOTED_TEXT, TEXT)) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, TEXT);
+    if (!result_) result_ = consumeToken(builder_, ESCAPED_SINGLE_QUOTED_TEXT);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // bareword | single_quoted_string | variable_ref
   public static boolean argument(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "argument")) return false;
@@ -318,13 +329,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TEXT*
+  // TEXT_CHR*
   public static boolean string(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "string")) return false;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, STRING, "<string>");
     while (true) {
       int pos_ = current_position_(builder_);
-      if (!consumeToken(builder_, TEXT)) break;
+      if (!TEXT_CHR(builder_, level_ + 1)) break;
       if (!empty_element_parsed_guard_(builder_, "string", pos_)) break;
     }
     exit_section_(builder_, level_, marker_, true, false, null);

@@ -27,6 +27,7 @@
     INLINE_WHITESPACE="regexp:[ \t]+"
     EOL="regexp:\r|\n|\r\n"
     TEXT="."
+    ESCAPED_SINGLE_QUOTED_TEXT="\\'"
     CONTINUATION="continuation"
     REF_MARKER="$"
     PIPE="pipe"
@@ -49,6 +50,7 @@ assignment ::= assignment_start single_quoted_string
 assignment_start ::= variable EQUALS
 variable ::= bareword
 variable_ref ::= REF_MARKER(bareword)
-string ::= TEXT*
+private TEXT_CHR ::= TEXT | ESCAPED_SINGLE_QUOTED_TEXT
+string ::= TEXT_CHR*
 single_quoted_string ::= SINGLE_QUOTE string SINGLE_QUOTE
 line_terminator ::= EOL+

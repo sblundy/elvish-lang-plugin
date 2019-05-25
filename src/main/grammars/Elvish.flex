@@ -57,6 +57,9 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
 }
 
 <IN_SINGLE_QUOTE_STRING> {
+  "''"                      {
+                                return ElvishTypes.ESCAPED_SINGLE_QUOTED_TEXT;
+                            }
   "'"                       {
                                 yybegin(YYINITIAL);
                                 return ElvishTypes.SINGLE_QUOTE;
