@@ -15,6 +15,7 @@ public interface ElvishTypes {
   IElementType ASSIGNMENT = new ElvishElementType("ASSIGNMENT");
   IElementType ASSIGNMENT_START = new ElvishElementType("ASSIGNMENT_START");
   IElementType COMMAND = new ElvishElementType("COMMAND");
+  IElementType ESCAPED_SEQUENCE = new ElvishElementType("ESCAPED_SEQUENCE");
   IElementType HEAD = new ElvishElementType("HEAD");
   IElementType LINE = new ElvishElementType("LINE");
   IElementType LINE_TERMINATOR = new ElvishElementType("LINE_TERMINATOR");
@@ -68,6 +69,9 @@ public interface ElvishTypes {
       }
       else if (type == COMMAND) {
         return new ElvishCommandImpl(node);
+      }
+      else if (type == ESCAPED_SEQUENCE) {
+        return new ElvishEscapedSequenceImpl(node);
       }
       else if (type == HEAD) {
         return new ElvishHeadImpl(node);
