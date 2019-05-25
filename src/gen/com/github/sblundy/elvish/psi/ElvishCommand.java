@@ -23,6 +23,9 @@ public interface ElvishCommand extends PsiElement {
   ElvishPipeline getPipeline();
 
   @Nullable
+  ElvishTryStatement getTryStatement();
+
+  @Nullable
   ElvishWhileStatement getWhileStatement();
 
 }

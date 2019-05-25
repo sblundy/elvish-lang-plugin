@@ -22,6 +22,10 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
             ElvishTypes.ESCAPED_SINGLE_QUOTED_TEXT -> ESCAPED_STRING_KEYS
             ElvishTypes.KEYWORD_IF,
                 ElvishTypes.KEYWORD_ELIF,
+                ElvishTypes.KEYWORD_EXCEPT,
+                ElvishTypes.KEYWORD_TRY,
+                ElvishTypes.KEYWORD_FINALLY,
+                ElvishTypes.KEYWORD_FOR,
                 ElvishTypes.KEYWORD_ELSE,
                 ElvishTypes.KEYWORD_WHILE -> KEYWORD_KEYS
             ElvishTypes.OPEN_BRACKET, ElvishTypes.CLOSE_BRACKET -> BRACKETS_KEYS

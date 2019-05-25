@@ -54,10 +54,11 @@ class ElvishLexer implements FlexLexer {
 
   /* The ZZ_CMAP_A table has 256 entries */
   static final char ZZ_CMAP_A[] = zzUnpackCMap(
-    "\11\0\1\24\1\1\2\0\1\23\22\0\1\24\1\15\1\34\1\2\1\37\1\20\1\35\1\33\1\31\1"+
-    "\32\1\21\1\20\1\22\1\20\1\22\1\20\13\22\1\0\1\17\1\16\1\17\1\0\33\22\1\27"+
-    "\1\3\1\30\1\21\1\22\1\0\4\22\1\4\1\10\1\22\1\12\1\7\2\22\1\5\2\22\1\13\2\22"+
-    "\1\14\1\6\3\22\1\11\3\22\1\25\1\40\1\26\1\36\201\0");
+    "\11\0\1\33\1\1\2\0\1\32\22\0\1\33\1\24\1\43\1\2\1\46\1\27\1\44\1\42\1\40\1"+
+    "\41\1\30\1\27\1\31\1\27\1\31\1\27\13\31\1\0\1\26\1\25\1\26\1\0\33\31\1\36"+
+    "\1\3\1\37\1\30\1\31\1\0\1\20\1\31\1\14\1\31\1\4\1\10\1\31\1\12\1\7\2\31\1"+
+    "\5\1\31\1\17\1\22\1\15\1\31\1\23\1\6\1\16\2\31\1\11\1\13\1\21\1\31\1\34\1"+
+    "\47\1\35\1\45\201\0");
 
   /** 
    * Translates DFA states to action switch labels.
@@ -65,14 +66,15 @@ class ElvishLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\1\1\1\2\1\3\1\1\6\4\1\5\3\6"+
+    "\2\0\1\1\1\2\1\3\1\1\7\4\1\5\3\6"+
     "\1\2\1\7\1\10\1\11\1\12\1\13\1\14\1\15"+
     "\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25"+
-    "\1\3\2\26\1\4\1\27\2\4\1\6\1\30\2\4"+
-    "\1\31\1\4\1\32\1\33\1\4\1\34";
+    "\1\3\2\26\2\4\1\27\4\4\1\6\1\30\4\4"+
+    "\1\31\1\4\1\32\1\33\1\34\5\4\1\35\1\36"+
+    "\1\4\1\37";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[49];
+    int [] result = new int[63];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -97,16 +99,17 @@ class ElvishLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\41\0\102\0\102\0\143\0\204\0\245\0\306"+
-    "\0\347\0\u0108\0\u0129\0\u014a\0\u016b\0\u018c\0\306\0\102"+
-    "\0\u01ad\0\u01ce\0\102\0\102\0\102\0\102\0\102\0\102"+
-    "\0\102\0\102\0\102\0\102\0\102\0\102\0\102\0\u01ef"+
-    "\0\u0210\0\102\0\u0231\0\u0252\0\306\0\u0273\0\u0294\0\u02b5"+
-    "\0\102\0\u02d6\0\u02f7\0\306\0\u0318\0\306\0\306\0\u0339"+
-    "\0\306";
+    "\0\0\0\50\0\120\0\120\0\170\0\240\0\310\0\360"+
+    "\0\u0118\0\u0140\0\u0168\0\u0190\0\u01b8\0\u01e0\0\u0208\0\360"+
+    "\0\120\0\u0230\0\u0258\0\120\0\120\0\120\0\120\0\120"+
+    "\0\120\0\120\0\120\0\120\0\120\0\120\0\120\0\120"+
+    "\0\u0280\0\u02a8\0\120\0\u02d0\0\u02f8\0\u0320\0\360\0\u0348"+
+    "\0\u0370\0\u0398\0\u03c0\0\u03e8\0\120\0\u0410\0\u0438\0\u0460"+
+    "\0\u0488\0\360\0\u04b0\0\360\0\360\0\360\0\u04d8\0\u0500"+
+    "\0\u0528\0\u0550\0\u0578\0\360\0\360\0\u05a0\0\360";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[49];
+    int [] result = new int[63];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -130,29 +133,40 @@ class ElvishLexer implements FlexLexer {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\3\1\4\1\5\1\6\1\7\2\10\1\11\1\12"+
-    "\1\13\3\10\1\14\1\15\1\16\1\17\1\20\1\10"+
-    "\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1\30"+
-    "\1\31\1\32\1\33\1\34\1\35\1\36\33\37\1\40"+
-    "\5\37\41\0\1\5\1\41\37\5\1\0\1\42\21\0"+
-    "\1\43\21\0\1\10\1\44\10\10\2\0\1\10\1\0"+
-    "\1\10\22\0\12\10\2\0\1\10\1\0\1\10\22\0"+
-    "\4\10\1\45\5\10\2\0\1\10\1\0\1\10\22\0"+
-    "\7\10\1\46\2\10\2\0\1\10\1\0\1\10\22\0"+
-    "\6\10\1\47\3\10\2\0\1\10\1\0\1\10\22\0"+
-    "\12\10\1\50\1\0\1\10\1\0\1\10\34\0\1\50"+
-    "\30\0\1\20\7\0\1\50\23\0\1\4\63\0\1\22"+
-    "\47\0\1\51\6\0\1\41\21\0\1\41\16\0\1\42"+
-    "\43\0\2\10\1\52\1\53\6\10\2\0\1\10\1\0"+
-    "\1\10\22\0\10\10\1\54\1\10\2\0\1\10\1\0"+
-    "\1\10\22\0\3\10\1\55\6\10\2\0\1\10\1\0"+
-    "\1\10\24\0\1\20\36\0\1\56\11\10\2\0\1\10"+
-    "\1\0\1\10\22\0\4\10\1\57\5\10\2\0\1\10"+
-    "\1\0\1\10\22\0\1\10\1\60\10\10\2\0\1\10"+
-    "\1\0\1\10\22\0\1\61\11\10\2\0\1\10\1\0"+
-    "\1\10\16\0";
+    "\1\13\4\10\1\14\5\10\1\15\1\16\1\17\1\20"+
+    "\1\21\1\10\1\22\1\23\1\24\1\25\1\26\1\27"+
+    "\1\30\1\31\1\32\1\33\1\34\1\35\1\36\1\37"+
+    "\42\40\1\41\5\40\50\0\1\5\1\42\46\5\1\0"+
+    "\1\43\30\0\1\44\21\0\1\10\1\45\5\10\1\46"+
+    "\11\10\2\0\1\10\1\0\1\10\22\0\21\10\2\0"+
+    "\1\10\1\0\1\10\22\0\4\10\1\47\14\10\2\0"+
+    "\1\10\1\0\1\10\22\0\3\10\1\50\12\10\1\51"+
+    "\2\10\2\0\1\10\1\0\1\10\22\0\6\10\1\52"+
+    "\12\10\2\0\1\10\1\0\1\10\22\0\17\10\1\53"+
+    "\1\10\2\0\1\10\1\0\1\10\22\0\21\10\1\54"+
+    "\1\0\1\10\1\0\1\10\43\0\1\54\30\0\1\21"+
+    "\16\0\1\54\23\0\1\4\101\0\1\23\56\0\1\55"+
+    "\6\0\1\42\30\0\1\42\16\0\1\43\52\0\2\10"+
+    "\1\56\1\57\15\10\2\0\1\10\1\0\1\10\22\0"+
+    "\10\10\1\60\10\10\2\0\1\10\1\0\1\10\22\0"+
+    "\13\10\1\61\5\10\2\0\1\10\1\0\1\10\22\0"+
+    "\17\10\1\62\1\10\2\0\1\10\1\0\1\10\22\0"+
+    "\3\10\1\63\15\10\2\0\1\10\1\0\1\10\22\0"+
+    "\15\10\1\64\3\10\2\0\1\10\1\0\1\10\24\0"+
+    "\1\21\45\0\1\65\20\10\2\0\1\10\1\0\1\10"+
+    "\22\0\4\10\1\66\14\10\2\0\1\10\1\0\1\10"+
+    "\22\0\1\67\20\10\2\0\1\10\1\0\1\10\22\0"+
+    "\14\10\1\70\4\10\2\0\1\10\1\0\1\10\22\0"+
+    "\1\10\1\71\17\10\2\0\1\10\1\0\1\10\22\0"+
+    "\11\10\1\72\7\10\2\0\1\10\1\0\1\10\22\0"+
+    "\1\10\1\73\17\10\2\0\1\10\1\0\1\10\22\0"+
+    "\1\74\20\10\2\0\1\10\1\0\1\10\22\0\12\10"+
+    "\1\75\6\10\2\0\1\10\1\0\1\10\22\0\1\10"+
+    "\1\76\17\10\2\0\1\10\1\0\1\10\22\0\15\10"+
+    "\1\77\3\10\2\0\1\10\1\0\1\10\16\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[858];
+    int [] result = new int[1480];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -190,11 +204,11 @@ class ElvishLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\2\11\13\1\1\11\2\1\15\11\2\1\1\11"+
-    "\6\1\1\11\10\1";
+    "\2\0\2\11\14\1\1\11\2\1\15\11\2\1\1\11"+
+    "\11\1\1\11\22\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[49];
+    int [] result = new int[63];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -500,144 +514,159 @@ class ElvishLexer implements FlexLexer {
             { return TokenType.BAD_CHARACTER;
             } 
             // fall through
-          case 29: break;
+          case 32: break;
           case 2: 
             { return ElvishTypes.EOL;
             } 
             // fall through
-          case 30: break;
+          case 33: break;
           case 3: 
             { return ElvishTypes.COMMENT;
             } 
             // fall through
-          case 31: break;
+          case 34: break;
           case 4: 
             { return ElvishTypes.BAREWORD;
             } 
             // fall through
-          case 32: break;
+          case 35: break;
           case 5: 
             { return ElvishTypes.EQUALS;
             } 
             // fall through
-          case 33: break;
+          case 36: break;
           case 6: 
             { return ElvishTypes.BUILTIN_OPERATOR_FN;
             } 
             // fall through
-          case 34: break;
+          case 37: break;
           case 7: 
             { return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 35: break;
+          case 38: break;
           case 8: 
             { return ElvishTypes.OPEN_BRACE;
             } 
             // fall through
-          case 36: break;
+          case 39: break;
           case 9: 
             { return ElvishTypes.CLOSE_BRACE;
             } 
             // fall through
-          case 37: break;
+          case 40: break;
           case 10: 
             { return ElvishTypes.OPEN_BRACKET;
             } 
             // fall through
-          case 38: break;
+          case 41: break;
           case 11: 
             { return ElvishTypes.CLOSE_BRACKET;
             } 
             // fall through
-          case 39: break;
+          case 42: break;
           case 12: 
             { return ElvishTypes.OPEN_PARAN;
             } 
             // fall through
-          case 40: break;
+          case 43: break;
           case 13: 
             { return ElvishTypes.CLOSE_PARAN;
             } 
             // fall through
-          case 41: break;
+          case 44: break;
           case 14: 
             { yybegin(IN_SINGLE_QUOTE_STRING);
                                 return ElvishTypes.SINGLE_QUOTE;
             } 
             // fall through
-          case 42: break;
+          case 45: break;
           case 15: 
             { return ElvishTypes.DOUBLE_QUOTE;
             } 
             // fall through
-          case 43: break;
+          case 46: break;
           case 16: 
             { return ElvishTypes.AMPERSAND;
             } 
             // fall through
-          case 44: break;
+          case 47: break;
           case 17: 
             { return ElvishTypes.TILDA;
             } 
             // fall through
-          case 45: break;
+          case 48: break;
           case 18: 
             { return ElvishTypes.REF_MARKER;
             } 
             // fall through
-          case 46: break;
+          case 49: break;
           case 19: 
             { return ElvishTypes.PIPE;
             } 
             // fall through
-          case 47: break;
+          case 50: break;
           case 20: 
             { return ElvishTypes.TEXT;
             } 
             // fall through
-          case 48: break;
+          case 51: break;
           case 21: 
             { yybegin(YYINITIAL);
                                 return ElvishTypes.SINGLE_QUOTE;
             } 
             // fall through
-          case 49: break;
+          case 52: break;
           case 22: 
             { return ElvishTypes.CONTINUATION;
             } 
             // fall through
-          case 50: break;
+          case 53: break;
           case 23: 
             { return ElvishTypes.KEYWORD_IF;
             } 
             // fall through
-          case 51: break;
+          case 54: break;
           case 24: 
             { return ElvishTypes.ESCAPED_SINGLE_QUOTED_TEXT;
             } 
             // fall through
-          case 52: break;
+          case 55: break;
           case 25: 
             { return ElvishTypes.KEYWORD_FOR;
             } 
             // fall through
-          case 53: break;
+          case 56: break;
           case 26: 
+            { return ElvishTypes.KEYWORD_TRY;
+            } 
+            // fall through
+          case 57: break;
+          case 27: 
             { return ElvishTypes.KEYWORD_ELSE;
             } 
             // fall through
-          case 54: break;
-          case 27: 
+          case 58: break;
+          case 28: 
             { return ElvishTypes.KEYWORD_ELIF;
             } 
             // fall through
-          case 55: break;
-          case 28: 
+          case 59: break;
+          case 29: 
             { return ElvishTypes.KEYWORD_WHILE;
             } 
             // fall through
-          case 56: break;
+          case 60: break;
+          case 30: 
+            { return ElvishTypes.KEYWORD_EXCEPT;
+            } 
+            // fall through
+          case 61: break;
+          case 31: 
+            { return ElvishTypes.KEYWORD_FINALLY;
+            } 
+            // fall through
+          case 62: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

@@ -58,6 +58,12 @@ public class ElvishCommandImpl extends ASTWrapperPsiElement implements ElvishCom
 
   @Override
   @Nullable
+  public ElvishTryStatement getTryStatement() {
+    return findChildByClass(ElvishTryStatement.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishWhileStatement getWhileStatement() {
     return findChildByClass(ElvishWhileStatement.class);
   }

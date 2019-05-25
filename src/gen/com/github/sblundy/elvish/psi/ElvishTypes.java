@@ -22,6 +22,8 @@ public interface ElvishTypes {
   IElementType ELIF_STATEMENT = new ElvishElementType("ELIF_STATEMENT");
   IElementType ELSE_STATEMENT = new ElvishElementType("ELSE_STATEMENT");
   IElementType ESCAPED_SEQUENCE = new ElvishElementType("ESCAPED_SEQUENCE");
+  IElementType EXCEPT_STATEMENT = new ElvishElementType("EXCEPT_STATEMENT");
+  IElementType FINALLY_STATEMENT = new ElvishElementType("FINALLY_STATEMENT");
   IElementType FOR_STATEMENT = new ElvishElementType("FOR_STATEMENT");
   IElementType HEAD = new ElvishElementType("HEAD");
   IElementType IF_STATEMENT = new ElvishElementType("IF_STATEMENT");
@@ -32,6 +34,7 @@ public interface ElvishTypes {
   IElementType PIPELINE = new ElvishElementType("PIPELINE");
   IElementType SINGLE_QUOTED_STRING = new ElvishElementType("SINGLE_QUOTED_STRING");
   IElementType STRING = new ElvishElementType("STRING");
+  IElementType TRY_STATEMENT = new ElvishElementType("TRY_STATEMENT");
   IElementType VARIABLE = new ElvishElementType("VARIABLE");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
   IElementType WHILE_STATEMENT = new ElvishElementType("WHILE_STATEMENT");
@@ -50,8 +53,11 @@ public interface ElvishTypes {
   IElementType ESCAPED_SINGLE_QUOTED_TEXT = new ElvishTokenType("\\'");
   IElementType KEYWORD_ELIF = new ElvishTokenType("elif");
   IElementType KEYWORD_ELSE = new ElvishTokenType("else");
+  IElementType KEYWORD_EXCEPT = new ElvishTokenType("except");
+  IElementType KEYWORD_FINALLY = new ElvishTokenType("finally");
   IElementType KEYWORD_FOR = new ElvishTokenType("for");
   IElementType KEYWORD_IF = new ElvishTokenType("if");
+  IElementType KEYWORD_TRY = new ElvishTokenType("try");
   IElementType KEYWORD_WHILE = new ElvishTokenType("while");
   IElementType OPEN_BRACE = new ElvishTokenType("open_brace");
   IElementType OPEN_BRACKET = new ElvishTokenType("open_bracket");
@@ -107,6 +113,12 @@ public interface ElvishTypes {
       else if (type == ESCAPED_SEQUENCE) {
         return new ElvishEscapedSequenceImpl(node);
       }
+      else if (type == EXCEPT_STATEMENT) {
+        return new ElvishExceptStatementImpl(node);
+      }
+      else if (type == FINALLY_STATEMENT) {
+        return new ElvishFinallyStatementImpl(node);
+      }
       else if (type == FOR_STATEMENT) {
         return new ElvishForStatementImpl(node);
       }
@@ -136,6 +148,9 @@ public interface ElvishTypes {
       }
       else if (type == STRING) {
         return new ElvishStringImpl(node);
+      }
+      else if (type == TRY_STATEMENT) {
+        return new ElvishTryStatementImpl(node);
       }
       else if (type == VARIABLE) {
         return new ElvishVariableImpl(node);

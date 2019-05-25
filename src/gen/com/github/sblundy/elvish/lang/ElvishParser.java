@@ -200,7 +200,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // if_statement | while_statement | for_statement| assignment | pipeline | ordinary_command
+  // if_statement | while_statement | for_statement | try_statement | assignment | pipeline | ordinary_command
   public static boolean command(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "command")) return false;
     boolean result_;
@@ -208,6 +208,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = if_statement(builder_, level_ + 1);
     if (!result_) result_ = while_statement(builder_, level_ + 1);
     if (!result_) result_ = for_statement(builder_, level_ + 1);
+    if (!result_) result_ = try_statement(builder_, level_ + 1);
     if (!result_) result_ = assignment(builder_, level_ + 1);
     if (!result_) result_ = pipeline(builder_, level_ + 1);
     if (!result_) result_ = ordinary_command(builder_, level_ + 1);
@@ -278,6 +279,33 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, ESCAPED_SINGLE_QUOTED_TEXT);
     exit_section_(builder_, marker_, ESCAPED_SEQUENCE, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // KEYWORD_EXCEPT variable block
+  public static boolean except_statement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "except_statement")) return false;
+    if (!nextTokenIs(builder_, KEYWORD_EXCEPT)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, KEYWORD_EXCEPT);
+    result_ = result_ && variable(builder_, level_ + 1);
+    result_ = result_ && block(builder_, level_ + 1);
+    exit_section_(builder_, marker_, EXCEPT_STATEMENT, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // KEYWORD_FINALLY block
+  public static boolean finally_statement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "finally_statement")) return false;
+    if (!nextTokenIs(builder_, KEYWORD_FINALLY)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, KEYWORD_FINALLY);
+    result_ = result_ && block(builder_, level_ + 1);
+    exit_section_(builder_, marker_, FINALLY_STATEMENT, result_);
     return result_;
   }
 
@@ -543,6 +571,43 @@ public class ElvishParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(builder_, "string", pos_)) break;
     }
     exit_section_(builder_, level_, marker_, true, false, null);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // KEYWORD_TRY block except_statement? else_statement? finally_statement?
+  public static boolean try_statement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "try_statement")) return false;
+    if (!nextTokenIs(builder_, KEYWORD_TRY)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, KEYWORD_TRY);
+    result_ = result_ && block(builder_, level_ + 1);
+    result_ = result_ && try_statement_2(builder_, level_ + 1);
+    result_ = result_ && try_statement_3(builder_, level_ + 1);
+    result_ = result_ && try_statement_4(builder_, level_ + 1);
+    exit_section_(builder_, marker_, TRY_STATEMENT, result_);
+    return result_;
+  }
+
+  // except_statement?
+  private static boolean try_statement_2(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "try_statement_2")) return false;
+    except_statement(builder_, level_ + 1);
+    return true;
+  }
+
+  // else_statement?
+  private static boolean try_statement_3(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "try_statement_3")) return false;
+    else_statement(builder_, level_ + 1);
+    return true;
+  }
+
+  // finally_statement?
+  private static boolean try_statement_4(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "try_statement_4")) return false;
+    finally_statement(builder_, level_ + 1);
     return true;
   }
 

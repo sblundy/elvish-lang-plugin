@@ -63,6 +63,14 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitExceptStatement(@NotNull ElvishExceptStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFinallyStatement(@NotNull ElvishFinallyStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitForStatement(@NotNull ElvishForStatement o) {
     visitPsiElement(o);
   }
@@ -100,6 +108,10 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitString(@NotNull ElvishString o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTryStatement(@NotNull ElvishTryStatement o) {
     visitPsiElement(o);
   }
 

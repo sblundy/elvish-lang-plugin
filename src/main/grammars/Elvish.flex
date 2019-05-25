@@ -23,15 +23,11 @@ CONTINUATION =                  [\\]{EOL}
 KEYWORD_ELSE = else
 KEYWORD_ELIF = elif
 KEYWORD_WHILE = while
-/*
 KEYWORD_EXCEPT = except
 KEYWORD_FINALLY = finally
- */
 KEYWORD_FOR = for
 KEYWORD_IF = if
-/*
 KEYWORD_TRY = try
- */
 STRING_CMP_BUILTINS=(([<>=!]=)|[<>])s
 NUMERIC_CMP_BUILTINS=(([<>=!]=)|[<>])
 NUMERIC_BUILTINS=\+|-|\*|\/|%|\^
@@ -73,15 +69,11 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   {KEYWORD_ELIF}            { return ElvishTypes.KEYWORD_ELIF; }
   {KEYWORD_ELSE}            { return ElvishTypes.KEYWORD_ELSE; }
   {KEYWORD_WHILE}           { return ElvishTypes.KEYWORD_WHILE; }
-/*
   {KEYWORD_EXCEPT}          { return ElvishTypes.KEYWORD_EXCEPT; }
   {KEYWORD_FINALLY}         { return ElvishTypes.KEYWORD_FINALLY; }
- */
   {KEYWORD_FOR}             { return ElvishTypes.KEYWORD_FOR; }
   {KEYWORD_IF}              { return ElvishTypes.KEYWORD_IF; }
-/*
   {KEYWORD_TRY}             { return ElvishTypes.KEYWORD_TRY; }
- */
   {BAREWORD}                { return ElvishTypes.BAREWORD; }
   {EOL}                     { return ElvishTypes.EOL; }
 }
