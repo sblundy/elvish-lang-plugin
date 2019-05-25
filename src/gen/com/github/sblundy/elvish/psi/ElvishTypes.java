@@ -15,8 +15,10 @@ public interface ElvishTypes {
   IElementType ASSIGNMENT = new ElvishElementType("ASSIGNMENT");
   IElementType ASSIGNMENT_START = new ElvishElementType("ASSIGNMENT_START");
   IElementType COMMAND = new ElvishElementType("COMMAND");
+  IElementType CONDITION = new ElvishElementType("CONDITION");
   IElementType ESCAPED_SEQUENCE = new ElvishElementType("ESCAPED_SEQUENCE");
   IElementType HEAD = new ElvishElementType("HEAD");
+  IElementType IF_STATEMENT = new ElvishElementType("IF_STATEMENT");
   IElementType LINE = new ElvishElementType("LINE");
   IElementType LINE_TERMINATOR = new ElvishElementType("LINE_TERMINATOR");
   IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
@@ -28,20 +30,21 @@ public interface ElvishTypes {
 
   IElementType AMPERSAND = new ElvishTokenType("&");
   IElementType BAREWORD = new ElvishTokenType("bareword");
+  IElementType CLOSE_BRACE = new ElvishTokenType("close_brace");
+  IElementType CLOSE_BRACKET = new ElvishTokenType("close_bracket");
+  IElementType CLOSE_PARAN = new ElvishTokenType("close_paran");
   IElementType COMMENT = new ElvishTokenType("COMMENT");
   IElementType CONTINUATION = new ElvishTokenType("continuation");
   IElementType DOUBLE_QUOTE = new ElvishTokenType("\"");
   IElementType EOL = new ElvishTokenType("EOL");
   IElementType EQUALS = new ElvishTokenType("=");
   IElementType ESCAPED_SINGLE_QUOTED_TEXT = new ElvishTokenType("\\'");
-  IElementType LEFT_BRACE = new ElvishTokenType("{");
-  IElementType LEFT_BRACKET = new ElvishTokenType("[");
-  IElementType LEFT_PAREN = new ElvishTokenType("(");
+  IElementType KEYWORD_IF = new ElvishTokenType("if");
+  IElementType OPEN_BRACE = new ElvishTokenType("open_brace");
+  IElementType OPEN_BRACKET = new ElvishTokenType("open_bracket");
+  IElementType OPEN_PARAN = new ElvishTokenType("open_paran");
   IElementType PIPE = new ElvishTokenType("pipe");
   IElementType REF_MARKER = new ElvishTokenType("$");
-  IElementType RIGHT_BRACE = new ElvishTokenType("}");
-  IElementType RIGHT_BRACKET = new ElvishTokenType("]");
-  IElementType RIGHT_PAREN = new ElvishTokenType(")");
   IElementType SINGLE_QUOTE = new ElvishTokenType("'");
   IElementType TEXT = new ElvishTokenType(".");
   IElementType TILDA = new ElvishTokenType("~");
@@ -70,11 +73,17 @@ public interface ElvishTypes {
       else if (type == COMMAND) {
         return new ElvishCommandImpl(node);
       }
+      else if (type == CONDITION) {
+        return new ElvishConditionImpl(node);
+      }
       else if (type == ESCAPED_SEQUENCE) {
         return new ElvishEscapedSequenceImpl(node);
       }
       else if (type == HEAD) {
         return new ElvishHeadImpl(node);
+      }
+      else if (type == IF_STATEMENT) {
+        return new ElvishIfStatementImpl(node);
       }
       else if (type == LINE) {
         return new ElvishLineImpl(node);

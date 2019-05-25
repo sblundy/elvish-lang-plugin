@@ -35,11 +35,19 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCondition(@NotNull ElvishCondition o) {
+    visitPsiElement(o);
+  }
+
   public void visitEscapedSequence(@NotNull ElvishEscapedSequence o) {
     visitPsiElement(o);
   }
 
   public void visitHead(@NotNull ElvishHead o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIfStatement(@NotNull ElvishIfStatement o) {
     visitPsiElement(o);
   }
 

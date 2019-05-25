@@ -11,14 +11,14 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishCommandImpl extends ASTWrapperPsiElement implements ElvishCommand {
+public class ElvishConditionImpl extends ASTWrapperPsiElement implements ElvishCondition {
 
-  public ElvishCommandImpl(@NotNull ASTNode node) {
+  public ElvishConditionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitCommand(this);
+    visitor.visitCondition(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,27 +27,9 @@ public class ElvishCommandImpl extends ASTWrapperPsiElement implements ElvishCom
   }
 
   @Override
-  @Nullable
-  public ElvishAssignment getAssignment() {
-    return findChildByClass(ElvishAssignment.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishIfStatement getIfStatement() {
-    return findChildByClass(ElvishIfStatement.class);
-  }
-
-  @Override
-  @Nullable
+  @NotNull
   public ElvishOrdinaryCommand getOrdinaryCommand() {
-    return findChildByClass(ElvishOrdinaryCommand.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishPipeline getPipeline() {
-    return findChildByClass(ElvishPipeline.class);
+    return findNotNullChildByClass(ElvishOrdinaryCommand.class);
   }
 
 }

@@ -65,6 +65,14 @@ class ElvishParserTest {
 
     @ParameterizedTest
     @MethodSource("fileLister")
+    fun lexerTest(baseName: String) {
+        val text = loadFile("$baseName.elv")
+
+        checkLexer(baseName, text)
+    }
+
+    @ParameterizedTest
+    @MethodSource("fileLister")
     fun parseTest(baseName: String) {
         val text = loadFile("$baseName.elv")
         val output = createFile("$baseName.elv", text)
@@ -76,14 +84,6 @@ class ElvishParserTest {
         runInEdtAndWait {
             ParsingTestCase.doCheckResult(myFullDataPath, output, true, baseName, false, false)
         }
-    }
-
-    @ParameterizedTest
-    @MethodSource("fileLister")
-    fun lexerTest(baseName: String) {
-        val text = loadFile("$baseName.elv")
-
-        checkLexer(baseName, text)
     }
 
     private fun checkLexer(baseName: String, text: String) {

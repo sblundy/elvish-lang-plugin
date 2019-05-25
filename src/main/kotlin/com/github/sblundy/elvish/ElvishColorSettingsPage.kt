@@ -36,6 +36,8 @@ private val elvishAttributesDescriptors = arrayOf(
     AttributesDescriptor("Command", ElvishSyntaxHighlighter.COMMAND),
     AttributesDescriptor("Built In", ElvishSyntaxHighlighter.BUILTIN),
     AttributesDescriptor("String", ElvishSyntaxHighlighter.STRING),
+    AttributesDescriptor("Bracket", ElvishSyntaxHighlighter.BRACKETS),
+    AttributesDescriptor("Parenthesis", ElvishSyntaxHighlighter.PARENTHESES),
     AttributesDescriptor("Escape Sequence", ElvishSyntaxHighlighter.ESCAPED_STRING),
     AttributesDescriptor("Variable Declaration", ElvishSyntaxHighlighter.VARIABLE),
     AttributesDescriptor("Variable Reference", ElvishSyntaxHighlighter.VARIABLE_REF),
@@ -47,4 +49,8 @@ private val sampleElvishScript: String = """
     <command>command</command> -f argument <string>'single quoted string'</string>
     <variable>x</variable> = <string>'value<escapedSequence>''</escapedSequence>s'</string>
     <builtIn>put</builtIn> <variableRef>${'$'}x</variableRef>
+    if (<builtIn>has-suffix</builtIn> <variableRef>${'$'}fname</variableRef> .go) {
+        <builtIn>echo</builtIn> <variableRef>${'$'}fname</variableRef> 'is go file'
+    }
+}
 """.trimIndent()

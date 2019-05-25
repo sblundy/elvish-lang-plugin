@@ -20,6 +20,9 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
             ElvishTypes.COMMENT -> COMMENT_KEYS
             ElvishTypes.SINGLE_QUOTED_STRING -> STRING_KEYS
             ElvishTypes.ESCAPED_SINGLE_QUOTED_TEXT -> ESCAPED_STRING_KEYS
+            ElvishTypes.KEYWORD_IF -> KEYWORD_KEYS
+            ElvishTypes.OPEN_BRACKET, ElvishTypes.CLOSE_BRACKET -> BRACKETS_KEYS
+            ElvishTypes.OPEN_PARAN, ElvishTypes.CLOSE_PARAN -> PARENTHESES_KEYS
             ElvishTypes.COMMAND -> COMMAND_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
             else -> {
@@ -35,6 +38,9 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
         val COMMAND = createTextAttributesKey("ELVISH_COMMAND", DefaultLanguageHighlighterColors.FUNCTION_CALL)
         val BUILTIN = createTextAttributesKey("ELVISH_BUILTIN", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL)
         val STRING = createTextAttributesKey("ELVISH_STRING", DefaultLanguageHighlighterColors.STRING)
+        val KEYWORD = createTextAttributesKey("ELVISH_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
+        val BRACKETS = createTextAttributesKey("ELVISH_BRACKETS", DefaultLanguageHighlighterColors.BRACKETS)
+        val PARENTHESES = createTextAttributesKey("ELVISH_PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES)
         val ESCAPED_STRING = createTextAttributesKey("ELVISH_ESCAPED_STRING", DefaultLanguageHighlighterColors.VALID_STRING_ESCAPE)
         val COMMENT = createTextAttributesKey("ELVISH_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
         val VARIABLE = createTextAttributesKey("ELVISH_VARIABLE", DefaultLanguageHighlighterColors.GLOBAL_VARIABLE)
@@ -44,6 +50,9 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
         private val BAD_CHAR_KEYS = arrayOf(BAD_CHARACTER)
         private val COMMAND_KEYS = arrayOf(COMMAND)
         private val STRING_KEYS = arrayOf(STRING)
+        private val KEYWORD_KEYS = arrayOf(KEYWORD)
+        private val BRACKETS_KEYS = arrayOf(BRACKETS)
+        private val PARENTHESES_KEYS = arrayOf(PARENTHESES)
         private val ESCAPED_STRING_KEYS = arrayOf(STRING)
         private val COMMENT_KEYS = arrayOf(COMMENT)
         private val EMPTY_KEYS = emptyArray<TextAttributesKey>()
