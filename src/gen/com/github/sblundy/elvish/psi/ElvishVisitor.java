@@ -39,6 +39,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCollection(@NotNull ElvishCollection o) {
+    visitPsiElement(o);
+  }
+
   public void visitCommand(@NotNull ElvishCommand o) {
     visitPsiElement(o);
   }
@@ -56,6 +60,10 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitEscapedSequence(@NotNull ElvishEscapedSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitForStatement(@NotNull ElvishForStatement o) {
     visitPsiElement(o);
   }
 

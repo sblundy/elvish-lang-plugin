@@ -26,8 +26,8 @@ KEYWORD_WHILE = while
 /*
 KEYWORD_EXCEPT = except
 KEYWORD_FINALLY = finally
-KEYWORD_FOR = for //else|elif|except|finally|for|if|try
  */
+KEYWORD_FOR = for
 KEYWORD_IF = if
 /*
 KEYWORD_TRY = try
@@ -76,8 +76,8 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
 /*
   {KEYWORD_EXCEPT}          { return ElvishTypes.KEYWORD_EXCEPT; }
   {KEYWORD_FINALLY}         { return ElvishTypes.KEYWORD_FINALLY; }
-  {KEYWORD_FOR}             { return ElvishTypes.KEYWORD_FOR; }
  */
+  {KEYWORD_FOR}             { return ElvishTypes.KEYWORD_FOR; }
   {KEYWORD_IF}              { return ElvishTypes.KEYWORD_IF; }
 /*
   {KEYWORD_TRY}             { return ElvishTypes.KEYWORD_TRY; }

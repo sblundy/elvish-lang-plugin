@@ -16,11 +16,13 @@ public interface ElvishTypes {
   IElementType ASSIGNMENT_LEFT = new ElvishElementType("ASSIGNMENT_LEFT");
   IElementType ASSIGNMENT_RIGHT = new ElvishElementType("ASSIGNMENT_RIGHT");
   IElementType BLOCK = new ElvishElementType("BLOCK");
+  IElementType COLLECTION = new ElvishElementType("COLLECTION");
   IElementType COMMAND = new ElvishElementType("COMMAND");
   IElementType CONDITION = new ElvishElementType("CONDITION");
   IElementType ELIF_STATEMENT = new ElvishElementType("ELIF_STATEMENT");
   IElementType ELSE_STATEMENT = new ElvishElementType("ELSE_STATEMENT");
   IElementType ESCAPED_SEQUENCE = new ElvishElementType("ESCAPED_SEQUENCE");
+  IElementType FOR_STATEMENT = new ElvishElementType("FOR_STATEMENT");
   IElementType HEAD = new ElvishElementType("HEAD");
   IElementType IF_STATEMENT = new ElvishElementType("IF_STATEMENT");
   IElementType LINE = new ElvishElementType("LINE");
@@ -48,6 +50,7 @@ public interface ElvishTypes {
   IElementType ESCAPED_SINGLE_QUOTED_TEXT = new ElvishTokenType("\\'");
   IElementType KEYWORD_ELIF = new ElvishTokenType("elif");
   IElementType KEYWORD_ELSE = new ElvishTokenType("else");
+  IElementType KEYWORD_FOR = new ElvishTokenType("for");
   IElementType KEYWORD_IF = new ElvishTokenType("if");
   IElementType KEYWORD_WHILE = new ElvishTokenType("while");
   IElementType OPEN_BRACE = new ElvishTokenType("open_brace");
@@ -86,6 +89,9 @@ public interface ElvishTypes {
       else if (type == BLOCK) {
         return new ElvishBlockImpl(node);
       }
+      else if (type == COLLECTION) {
+        return new ElvishCollectionImpl(node);
+      }
       else if (type == COMMAND) {
         return new ElvishCommandImpl(node);
       }
@@ -100,6 +106,9 @@ public interface ElvishTypes {
       }
       else if (type == ESCAPED_SEQUENCE) {
         return new ElvishEscapedSequenceImpl(node);
+      }
+      else if (type == FOR_STATEMENT) {
+        return new ElvishForStatementImpl(node);
       }
       else if (type == HEAD) {
         return new ElvishHeadImpl(node);

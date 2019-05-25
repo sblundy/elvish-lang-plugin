@@ -11,6 +11,9 @@ public interface ElvishCommand extends PsiElement {
   ElvishAssignment getAssignment();
 
   @Nullable
+  ElvishForStatement getForStatement();
+
+  @Nullable
   ElvishIfStatement getIfStatement();
 
   @Nullable
