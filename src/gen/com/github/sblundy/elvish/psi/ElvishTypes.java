@@ -12,6 +12,7 @@ public interface ElvishTypes {
   IElementType ASSIGNMENT = new ElvishElementType("ASSIGNMENT");
   IElementType BLOCK = new ElvishElementType("BLOCK");
   IElementType COLLECTION = new ElvishElementType("COLLECTION");
+  IElementType COMPOUND_EXPRESSION = new ElvishElementType("COMPOUND_EXPRESSION");
   IElementType CONDITION = new ElvishElementType("CONDITION");
   IElementType DELETE_STATEMENT = new ElvishElementType("DELETE_STATEMENT");
   IElementType DOUBLE_QUOTED_STRING = new ElvishElementType("DOUBLE_QUOTED_STRING");
@@ -79,6 +80,9 @@ public interface ElvishTypes {
       }
       else if (type == COLLECTION) {
         return new ElvishCollectionImpl(node);
+      }
+      else if (type == COMPOUND_EXPRESSION) {
+        return new ElvishCompoundExpressionImpl(node);
       }
       else if (type == CONDITION) {
         return new ElvishConditionImpl(node);

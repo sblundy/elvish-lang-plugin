@@ -56,11 +56,19 @@ ordinary_command ::= head argument_list
 private argument_list ::= argument_list_line argument_list_continuation*
 private argument_list_line ::= argument*
 private argument_list_continuation ::= CONTINUATION argument*
-argument ::= bareword | single_quoted_string | double_quoted_string | variable_ref
+argument ::= assignable_string
 head ::= bareword | BUILTIN_OPERATOR_FN
 assignment ::= assignment_left EQUALS assignment_right
-private assignment_right ::= output_capture | single_quoted_string | double_quoted_string | bareword
+private assignment_right ::= output_capture | assignable_string
 private assignment_left ::= variable_name(variable_index)?
+
+// strings
+
+private assignable_string ::= compound_expression | variable_ref | single_quoted_string | double_quoted_string | bareword
+compound_expression ::= compound_expression_var | compound_expression_single_quoted | compound_expression_double_quoted
+private compound_expression_var ::= variable_ref(compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | single_quoted_string | double_quoted_string | variable_ref)
+private compound_expression_single_quoted ::= single_quoted_string(compound_expression_double_quoted | compound_expression_var | double_quoted_string | variable_ref)
+private compound_expression_double_quoted ::= double_quoted_string(compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | single_quoted_string | double_quoted_string | variable_ref)
 escaped_sequence ::= ESCAPED_QUOTED_TEXT
 invalid_escape_sequence ::= INVALID_ESCAPED_QUOTED_TEXT
 private TEXT_CHR ::= TEXT | invalid_escape_sequence | escaped_sequence
@@ -68,6 +76,9 @@ private string ::= TEXT_CHR*
 single_quoted_string ::= SINGLE_QUOTE string SINGLE_QUOTE
 double_quoted_string ::= DOUBLE_QUOTE string DOUBLE_QUOTE
 line_terminator ::= EOL+
+
+// captures
+
 output_capture ::= pipeline_output_body | command_outpub_body
 private command_outpub_body ::= OPEN_PARAN ordinary_command CLOSE_PARAN
 private pipeline_output_body ::= OPEN_PARAN pipeline CLOSE_PARAN

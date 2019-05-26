@@ -24,6 +24,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCompoundExpression(@NotNull ElvishCompoundExpression o) {
+    visitPsiElement(o);
+  }
+
   public void visitCondition(@NotNull ElvishCondition o) {
     visitPsiElement(o);
   }

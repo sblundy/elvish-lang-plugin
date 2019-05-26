@@ -11,14 +11,14 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishArgumentImpl extends ASTWrapperPsiElement implements ElvishArgument {
+public class ElvishCompoundExpressionImpl extends ASTWrapperPsiElement implements ElvishCompoundExpression {
 
-  public ElvishArgumentImpl(@NotNull ASTNode node) {
+  public ElvishCompoundExpressionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitArgument(this);
+    visitor.visitCompoundExpression(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,27 +27,21 @@ public class ElvishArgumentImpl extends ASTWrapperPsiElement implements ElvishAr
   }
 
   @Override
-  @Nullable
-  public ElvishCompoundExpression getCompoundExpression() {
-    return findChildByClass(ElvishCompoundExpression.class);
+  @NotNull
+  public List<ElvishDoubleQuotedString> getDoubleQuotedStringList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishDoubleQuotedString.class);
   }
 
   @Override
-  @Nullable
-  public ElvishDoubleQuotedString getDoubleQuotedString() {
-    return findChildByClass(ElvishDoubleQuotedString.class);
+  @NotNull
+  public List<ElvishSingleQuotedString> getSingleQuotedStringList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishSingleQuotedString.class);
   }
 
   @Override
-  @Nullable
-  public ElvishSingleQuotedString getSingleQuotedString() {
-    return findChildByClass(ElvishSingleQuotedString.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishVariableRef getVariableRef() {
-    return findChildByClass(ElvishVariableRef.class);
+  @NotNull
+  public List<ElvishVariableRef> getVariableRefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableRef.class);
   }
 
 }

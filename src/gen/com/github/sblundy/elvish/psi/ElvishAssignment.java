@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishAssignment extends PsiElement {
 
   @Nullable
+  ElvishCompoundExpression getCompoundExpression();
+
+  @Nullable
   ElvishDoubleQuotedString getDoubleQuotedString();
 
   @Nullable
@@ -15,5 +18,8 @@ public interface ElvishAssignment extends PsiElement {
 
   @Nullable
   ElvishSingleQuotedString getSingleQuotedString();
+
+  @Nullable
+  ElvishVariableRef getVariableRef();
 
 }

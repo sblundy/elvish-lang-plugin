@@ -28,6 +28,12 @@ public class ElvishAssignmentImpl extends ASTWrapperPsiElement implements Elvish
 
   @Override
   @Nullable
+  public ElvishCompoundExpression getCompoundExpression() {
+    return findChildByClass(ElvishCompoundExpression.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishDoubleQuotedString getDoubleQuotedString() {
     return findChildByClass(ElvishDoubleQuotedString.class);
   }
@@ -42,6 +48,12 @@ public class ElvishAssignmentImpl extends ASTWrapperPsiElement implements Elvish
   @Nullable
   public ElvishSingleQuotedString getSingleQuotedString() {
     return findChildByClass(ElvishSingleQuotedString.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishVariableRef getVariableRef() {
+    return findChildByClass(ElvishVariableRef.class);
   }
 
 }

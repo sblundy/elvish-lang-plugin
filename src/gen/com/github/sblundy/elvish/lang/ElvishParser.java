@@ -49,15 +49,12 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // bareword | single_quoted_string | double_quoted_string | variable_ref
+  // assignable_string
   public static boolean argument(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "argument")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, ARGUMENT, "<argument>");
-    result_ = consumeToken(builder_, BAREWORD);
-    if (!result_) result_ = single_quoted_string(builder_, level_ + 1);
-    if (!result_) result_ = double_quoted_string(builder_, level_ + 1);
-    if (!result_) result_ = variable_ref(builder_, level_ + 1);
+    result_ = assignable_string(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
@@ -122,6 +119,19 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // compound_expression | variable_ref | single_quoted_string | double_quoted_string | bareword
+  static boolean assignable_string(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "assignable_string")) return false;
+    boolean result_;
+    result_ = compound_expression(builder_, level_ + 1);
+    if (!result_) result_ = variable_ref(builder_, level_ + 1);
+    if (!result_) result_ = single_quoted_string(builder_, level_ + 1);
+    if (!result_) result_ = double_quoted_string(builder_, level_ + 1);
+    if (!result_) result_ = consumeToken(builder_, BAREWORD);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // assignment_left EQUALS assignment_right
   public static boolean assignment(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "assignment")) return false;
@@ -166,14 +176,12 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // output_capture | single_quoted_string | double_quoted_string | bareword
+  // output_capture | assignable_string
   static boolean assignment_right(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "assignment_right")) return false;
     boolean result_;
     result_ = output_capture(builder_, level_ + 1);
-    if (!result_) result_ = single_quoted_string(builder_, level_ + 1);
-    if (!result_) result_ = double_quoted_string(builder_, level_ + 1);
-    if (!result_) result_ = consumeToken(builder_, BAREWORD);
+    if (!result_) result_ = assignable_string(builder_, level_ + 1);
     return result_;
   }
 
@@ -242,6 +250,95 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = result_ && ordinary_command(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, CLOSE_PARAN);
     exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // compound_expression_var | compound_expression_single_quoted | compound_expression_double_quoted
+  public static boolean compound_expression(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "compound_expression")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, COMPOUND_EXPRESSION, "<compound expression>");
+    result_ = compound_expression_var(builder_, level_ + 1);
+    if (!result_) result_ = compound_expression_single_quoted(builder_, level_ + 1);
+    if (!result_) result_ = compound_expression_double_quoted(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // double_quoted_string(compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | single_quoted_string | double_quoted_string | variable_ref)
+  static boolean compound_expression_double_quoted(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "compound_expression_double_quoted")) return false;
+    if (!nextTokenIs(builder_, DOUBLE_QUOTE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = double_quoted_string(builder_, level_ + 1);
+    result_ = result_ && compound_expression_double_quoted_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | single_quoted_string | double_quoted_string | variable_ref
+  private static boolean compound_expression_double_quoted_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "compound_expression_double_quoted_1")) return false;
+    boolean result_;
+    result_ = compound_expression_single_quoted(builder_, level_ + 1);
+    if (!result_) result_ = compound_expression_double_quoted(builder_, level_ + 1);
+    if (!result_) result_ = compound_expression_var(builder_, level_ + 1);
+    if (!result_) result_ = single_quoted_string(builder_, level_ + 1);
+    if (!result_) result_ = double_quoted_string(builder_, level_ + 1);
+    if (!result_) result_ = variable_ref(builder_, level_ + 1);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // single_quoted_string(compound_expression_double_quoted | compound_expression_var | double_quoted_string | variable_ref)
+  static boolean compound_expression_single_quoted(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "compound_expression_single_quoted")) return false;
+    if (!nextTokenIs(builder_, SINGLE_QUOTE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = single_quoted_string(builder_, level_ + 1);
+    result_ = result_ && compound_expression_single_quoted_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // compound_expression_double_quoted | compound_expression_var | double_quoted_string | variable_ref
+  private static boolean compound_expression_single_quoted_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "compound_expression_single_quoted_1")) return false;
+    boolean result_;
+    result_ = compound_expression_double_quoted(builder_, level_ + 1);
+    if (!result_) result_ = compound_expression_var(builder_, level_ + 1);
+    if (!result_) result_ = double_quoted_string(builder_, level_ + 1);
+    if (!result_) result_ = variable_ref(builder_, level_ + 1);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // variable_ref(compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | single_quoted_string | double_quoted_string | variable_ref)
+  static boolean compound_expression_var(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "compound_expression_var")) return false;
+    if (!nextTokenIs(builder_, REF_MARKER)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = variable_ref(builder_, level_ + 1);
+    result_ = result_ && compound_expression_var_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | single_quoted_string | double_quoted_string | variable_ref
+  private static boolean compound_expression_var_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "compound_expression_var_1")) return false;
+    boolean result_;
+    result_ = compound_expression_single_quoted(builder_, level_ + 1);
+    if (!result_) result_ = compound_expression_double_quoted(builder_, level_ + 1);
+    if (!result_) result_ = compound_expression_var(builder_, level_ + 1);
+    if (!result_) result_ = single_quoted_string(builder_, level_ + 1);
+    if (!result_) result_ = double_quoted_string(builder_, level_ + 1);
+    if (!result_) result_ = variable_ref(builder_, level_ + 1);
     return result_;
   }
 
