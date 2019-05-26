@@ -34,6 +34,12 @@ public class ElvishCompoundExpressionImpl extends ASTWrapperPsiElement implement
 
   @Override
   @NotNull
+  public List<ElvishOutputCapture> getOutputCaptureList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishOutputCapture.class);
+  }
+
+  @Override
+  @NotNull
   public List<ElvishSingleQuotedString> getSingleQuotedStringList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishSingleQuotedString.class);
   }

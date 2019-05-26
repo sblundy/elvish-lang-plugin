@@ -11,6 +11,9 @@ public interface ElvishCompoundExpression extends PsiElement {
   List<ElvishDoubleQuotedString> getDoubleQuotedStringList();
 
   @NotNull
+  List<ElvishOutputCapture> getOutputCaptureList();
+
+  @NotNull
   List<ElvishSingleQuotedString> getSingleQuotedStringList();
 
   @NotNull

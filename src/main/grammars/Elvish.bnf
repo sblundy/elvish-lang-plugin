@@ -65,10 +65,11 @@ private assignment_left ::= variable_name(variable_index)?
 // strings
 
 private assignable_string ::= compound_expression | variable_ref | single_quoted_string | double_quoted_string | bareword
-compound_expression ::= compound_expression_var | compound_expression_single_quoted | compound_expression_double_quoted
-private compound_expression_var ::= variable_ref(compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | single_quoted_string | double_quoted_string | variable_ref)
-private compound_expression_single_quoted ::= single_quoted_string(compound_expression_double_quoted | compound_expression_var | double_quoted_string | variable_ref)
-private compound_expression_double_quoted ::= double_quoted_string(compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | single_quoted_string | double_quoted_string | variable_ref)
+compound_expression ::= compound_expression_capture | compound_expression_var | compound_expression_single_quoted | compound_expression_double_quoted
+private compound_expression_var ::= variable_ref(compound_expression_capture | compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | output_capture | single_quoted_string | double_quoted_string | variable_ref)
+private compound_expression_single_quoted ::= single_quoted_string(compound_expression_capture | compound_expression_double_quoted | compound_expression_var | output_capture | double_quoted_string | variable_ref)
+private compound_expression_double_quoted ::= double_quoted_string(compound_expression_capture | compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | output_capture | single_quoted_string | double_quoted_string | variable_ref)
+private compound_expression_capture ::= output_capture(compound_expression_capture | compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | output_capture | single_quoted_string | double_quoted_string | variable_ref)
 escaped_sequence ::= ESCAPED_QUOTED_TEXT
 invalid_escape_sequence ::= INVALID_ESCAPED_QUOTED_TEXT
 private TEXT_CHR ::= TEXT | invalid_escape_sequence | escaped_sequence
