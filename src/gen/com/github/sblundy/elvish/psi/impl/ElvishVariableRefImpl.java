@@ -28,14 +28,14 @@ public class ElvishVariableRefImpl extends ASTWrapperPsiElement implements Elvis
 
   @Override
   @Nullable
-  public ElvishIndexedVariable getIndexedVariable() {
-    return findChildByClass(ElvishIndexedVariable.class);
+  public ElvishVariableIndex getVariableIndex() {
+    return findChildByClass(ElvishVariableIndex.class);
   }
 
   @Override
-  @Nullable
-  public ElvishVariable getVariable() {
-    return findChildByClass(ElvishVariable.class);
+  @NotNull
+  public ElvishVariableName getVariableName() {
+    return findNotNullChildByClass(ElvishVariableName.class);
   }
 
 }

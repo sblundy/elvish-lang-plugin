@@ -11,31 +11,19 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishAssignmentLeftImpl extends ASTWrapperPsiElement implements ElvishAssignmentLeft {
+public class ElvishVariableIndexImpl extends ASTWrapperPsiElement implements ElvishVariableIndex {
 
-  public ElvishAssignmentLeftImpl(@NotNull ASTNode node) {
+  public ElvishVariableIndexImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitAssignmentLeft(this);
+    visitor.visitVariableIndex(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public ElvishVariableIndex getVariableIndex() {
-    return findChildByClass(ElvishVariableIndex.class);
-  }
-
-  @Override
-  @NotNull
-  public ElvishVariableName getVariableName() {
-    return findNotNullChildByClass(ElvishVariableName.class);
   }
 
 }

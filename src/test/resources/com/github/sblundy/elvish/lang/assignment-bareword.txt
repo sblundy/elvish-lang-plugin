@@ -3,7 +3,7 @@ Elvish File
     ElvishCommandImpl(COMMAND)
       ElvishAssignmentImpl(ASSIGNMENT)
         ElvishAssignmentLeftImpl(ASSIGNMENT_LEFT)
-          ElvishVariableImpl(VARIABLE)
+          ElvishVariableNameImpl(VARIABLE_NAME)
             PsiElement(ElvishTokenType.bareword)('x')
         PsiWhiteSpace(' ')
         PsiElement(ElvishTokenType.=)('=')

@@ -28,6 +28,7 @@ KEYWORD_FINALLY = finally
 KEYWORD_FOR = for
 KEYWORD_IF = if
 KEYWORD_TRY = try
+KEYWORD_DEL = del
 STRING_CMP_BUILTINS=(([<>=!]=)|[<>])s
 NUMERIC_CMP_BUILTINS=(([<>=!]=)|[<>])
 NUMERIC_BUILTINS=\+|-|\*|\/|%|\^
@@ -74,6 +75,7 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   {KEYWORD_FOR}             { return ElvishTypes.KEYWORD_FOR; }
   {KEYWORD_IF}              { return ElvishTypes.KEYWORD_IF; }
   {KEYWORD_TRY}             { return ElvishTypes.KEYWORD_TRY; }
+  {KEYWORD_DEL}             { return ElvishTypes.KEYWORD_DEL; }
   {BAREWORD}                { return ElvishTypes.BAREWORD; }
   {EOL}                     { return ElvishTypes.EOL; }
 }

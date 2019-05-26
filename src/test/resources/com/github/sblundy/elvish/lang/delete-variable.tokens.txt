@@ -1,0 +1,3 @@
+ElvishTokenType.del ('del')
+WHITE_SPACE (' ')
+ElvishTokenType.bareword ('x')

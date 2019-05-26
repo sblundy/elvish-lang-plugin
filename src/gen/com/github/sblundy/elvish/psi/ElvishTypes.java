@@ -19,6 +19,7 @@ public interface ElvishTypes {
   IElementType COLLECTION = new ElvishElementType("COLLECTION");
   IElementType COMMAND = new ElvishElementType("COMMAND");
   IElementType CONDITION = new ElvishElementType("CONDITION");
+  IElementType DELETE_STATEMENT = new ElvishElementType("DELETE_STATEMENT");
   IElementType ELIF_STATEMENT = new ElvishElementType("ELIF_STATEMENT");
   IElementType ELSE_STATEMENT = new ElvishElementType("ELSE_STATEMENT");
   IElementType ESCAPED_SEQUENCE = new ElvishElementType("ESCAPED_SEQUENCE");
@@ -27,7 +28,6 @@ public interface ElvishTypes {
   IElementType FOR_STATEMENT = new ElvishElementType("FOR_STATEMENT");
   IElementType HEAD = new ElvishElementType("HEAD");
   IElementType IF_STATEMENT = new ElvishElementType("IF_STATEMENT");
-  IElementType INDEXED_VARIABLE = new ElvishElementType("INDEXED_VARIABLE");
   IElementType LINE = new ElvishElementType("LINE");
   IElementType LINE_TERMINATOR = new ElvishElementType("LINE_TERMINATOR");
   IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
@@ -36,7 +36,9 @@ public interface ElvishTypes {
   IElementType SINGLE_QUOTED_STRING = new ElvishElementType("SINGLE_QUOTED_STRING");
   IElementType STRING = new ElvishElementType("STRING");
   IElementType TRY_STATEMENT = new ElvishElementType("TRY_STATEMENT");
-  IElementType VARIABLE = new ElvishElementType("VARIABLE");
+  IElementType VARIABLE_DECLARATION = new ElvishElementType("VARIABLE_DECLARATION");
+  IElementType VARIABLE_INDEX = new ElvishElementType("VARIABLE_INDEX");
+  IElementType VARIABLE_NAME = new ElvishElementType("VARIABLE_NAME");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
   IElementType WHILE_STATEMENT = new ElvishElementType("WHILE_STATEMENT");
 
@@ -52,6 +54,7 @@ public interface ElvishTypes {
   IElementType EOL = new ElvishTokenType("EOL");
   IElementType EQUALS = new ElvishTokenType("=");
   IElementType ESCAPED_SINGLE_QUOTED_TEXT = new ElvishTokenType("\\'");
+  IElementType KEYWORD_DEL = new ElvishTokenType("del");
   IElementType KEYWORD_ELIF = new ElvishTokenType("elif");
   IElementType KEYWORD_ELSE = new ElvishTokenType("else");
   IElementType KEYWORD_EXCEPT = new ElvishTokenType("except");
@@ -105,6 +108,9 @@ public interface ElvishTypes {
       else if (type == CONDITION) {
         return new ElvishConditionImpl(node);
       }
+      else if (type == DELETE_STATEMENT) {
+        return new ElvishDeleteStatementImpl(node);
+      }
       else if (type == ELIF_STATEMENT) {
         return new ElvishElifStatementImpl(node);
       }
@@ -128,9 +134,6 @@ public interface ElvishTypes {
       }
       else if (type == IF_STATEMENT) {
         return new ElvishIfStatementImpl(node);
-      }
-      else if (type == INDEXED_VARIABLE) {
-        return new ElvishIndexedVariableImpl(node);
       }
       else if (type == LINE) {
         return new ElvishLineImpl(node);
@@ -156,8 +159,14 @@ public interface ElvishTypes {
       else if (type == TRY_STATEMENT) {
         return new ElvishTryStatementImpl(node);
       }
-      else if (type == VARIABLE) {
-        return new ElvishVariableImpl(node);
+      else if (type == VARIABLE_DECLARATION) {
+        return new ElvishVariableDeclarationImpl(node);
+      }
+      else if (type == VARIABLE_INDEX) {
+        return new ElvishVariableIndexImpl(node);
+      }
+      else if (type == VARIABLE_NAME) {
+        return new ElvishVariableNameImpl(node);
       }
       else if (type == VARIABLE_REF) {
         return new ElvishVariableRefImpl(node);

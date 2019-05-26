@@ -35,6 +35,7 @@
     KEYWORD_FOR="for"
     KEYWORD_IF="if"
     KEYWORD_TRY="try"
+    KEYWORD_DEL="del"
     ESCAPED_SINGLE_QUOTED_TEXT="\\'"
     CONTINUATION="continuation"
     REF_MARKER="$"
@@ -48,7 +49,7 @@ line ::= (command COMMENT line_terminator) | (command line_terminator) | (COMMEN
 pipeline ::= pipeline_prv
 private pipeline_head ::= pipeline_prv | ordinary_command
 private pipeline_prv ::= ordinary_command PIPE pipeline_head
-command ::= if_statement | while_statement | for_statement | try_statement | assignment | pipeline | ordinary_command
+command ::= delete_statement | if_statement | while_statement | for_statement | try_statement | assignment | pipeline | ordinary_command
 ordinary_command ::= head argument_list
 argument_list ::= argument_list_line argument_list_continuation*
 argument_list_line ::= argument*
@@ -56,27 +57,37 @@ argument_list_continuation ::= CONTINUATION argument*
 argument ::= bareword | single_quoted_string | variable_ref
 head ::= bareword | BUILTIN_OPERATOR_FN
 assignment ::= assignment_left EQUALS assignment_right
-assignment_left ::= indexed_variable | variable
-indexed_variable ::= variable(OPEN_BRACKET)bareword(CLOSE_BRACKET)
 assignment_right ::= output_capture | single_quoted_string | bareword
-variable ::= bareword
-variable_ref ::= REF_MARKER(indexed_variable | variable)
+assignment_left ::= variable_name(variable_index)?
 escaped_sequence ::= ESCAPED_SINGLE_QUOTED_TEXT
 private TEXT_CHR ::= TEXT | escaped_sequence
 string ::= TEXT_CHR*
 single_quoted_string ::= SINGLE_QUOTE string SINGLE_QUOTE
 line_terminator ::= EOL+
-condition ::= variable_ref | output_capture
-if_statement ::= KEYWORD_IF condition block elif_statement* else_statement?
-elif_statement ::= KEYWORD_ELIF condition block
-else_statement ::= KEYWORD_ELSE block
-while_statement ::= KEYWORD_WHILE condition block else_statement?
-for_statement ::= KEYWORD_FOR variable collection block else_statement?
-collection ::= variable_ref | output_capture
-block ::= OPEN_BRACE line* CLOSE_BRACE
 output_capture ::= pipeline_output_body | command_outpub_body
 private command_outpub_body ::= OPEN_PARAN ordinary_command CLOSE_PARAN
 private pipeline_output_body ::= OPEN_PARAN pipeline CLOSE_PARAN
+
+// statements
+
+if_statement ::= KEYWORD_IF condition block elif_statement* else_statement?
 try_statement ::= KEYWORD_TRY block except_statement? else_statement? finally_statement?
-except_statement ::= KEYWORD_EXCEPT variable block
+while_statement ::= KEYWORD_WHILE condition block else_statement?
+for_statement ::= KEYWORD_FOR variable_declaration collection block else_statement?
+delete_statement ::= KEYWORD_DEL variable_name(variable_index)?
+
+elif_statement ::= KEYWORD_ELIF condition block
+else_statement ::= KEYWORD_ELSE block
+except_statement ::= KEYWORD_EXCEPT variable_declaration block
 finally_statement ::= KEYWORD_FINALLY block
+
+condition ::= variable_ref | output_capture
+collection ::= variable_ref | output_capture
+block ::= OPEN_BRACE line* CLOSE_BRACE
+
+// variables
+
+variable_declaration ::= variable_name
+variable_ref ::= (REF_MARKER)variable_name(variable_index)?
+variable_index ::= (OPEN_BRACKET)bareword(CLOSE_BRACKET)
+variable_name ::= bareword

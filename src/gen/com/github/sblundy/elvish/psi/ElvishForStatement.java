@@ -17,6 +17,6 @@ public interface ElvishForStatement extends PsiElement {
   ElvishElseStatement getElseStatement();
 
   @NotNull
-  ElvishVariable getVariable();
+  ElvishVariableDeclaration getVariableDeclaration();
 
 }

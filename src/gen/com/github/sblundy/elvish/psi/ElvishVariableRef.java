@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishVariableRef extends PsiElement {
 
   @Nullable
-  ElvishIndexedVariable getIndexedVariable();
+  ElvishVariableIndex getVariableIndex();
 
-  @Nullable
-  ElvishVariable getVariable();
+  @NotNull
+  ElvishVariableName getVariableName();
 
 }

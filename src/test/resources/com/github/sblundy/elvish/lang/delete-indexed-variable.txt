@@ -1,0 +1,12 @@
+Elvish File
+  ElvishLineImpl(LINE)
+    ElvishCommandImpl(COMMAND)
+      ElvishDeleteStatementImpl(DELETE_STATEMENT)
+        PsiElement(ElvishTokenType.del)('del')
+        PsiWhiteSpace(' ')
+        ElvishVariableNameImpl(VARIABLE_NAME)
+          PsiElement(ElvishTokenType.bareword)('x')
+        ElvishVariableIndexImpl(VARIABLE_INDEX)
+          PsiElement(ElvishTokenType.open_bracket)('[')
+          PsiElement(ElvishTokenType.bareword)('1')
+          PsiElement(ElvishTokenType.close_bracket)(']')

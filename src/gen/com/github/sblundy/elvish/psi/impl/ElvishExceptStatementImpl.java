@@ -34,8 +34,8 @@ public class ElvishExceptStatementImpl extends ASTWrapperPsiElement implements E
 
   @Override
   @NotNull
-  public ElvishVariable getVariable() {
-    return findNotNullChildByClass(ElvishVariable.class);
+  public ElvishVariableDeclaration getVariableDeclaration() {
+    return findNotNullChildByClass(ElvishVariableDeclaration.class);
   }
 
 }

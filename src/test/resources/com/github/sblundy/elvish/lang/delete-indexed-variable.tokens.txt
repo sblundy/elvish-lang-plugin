@@ -1,0 +1,6 @@
+ElvishTokenType.del ('del')
+WHITE_SPACE (' ')
+ElvishTokenType.bareword ('x')
+ElvishTokenType.open_bracket ('[')
+ElvishTokenType.bareword ('1')
+ElvishTokenType.close_bracket (']')

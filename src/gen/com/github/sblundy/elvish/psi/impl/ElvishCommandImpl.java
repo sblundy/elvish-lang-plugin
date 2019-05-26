@@ -34,6 +34,12 @@ public class ElvishCommandImpl extends ASTWrapperPsiElement implements ElvishCom
 
   @Override
   @Nullable
+  public ElvishDeleteStatement getDeleteStatement() {
+    return findChildByClass(ElvishDeleteStatement.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishForStatement getForStatement() {
     return findChildByClass(ElvishForStatement.class);
   }

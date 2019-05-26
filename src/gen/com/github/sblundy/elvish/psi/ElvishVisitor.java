@@ -51,6 +51,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDeleteStatement(@NotNull ElvishDeleteStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitElifStatement(@NotNull ElvishElifStatement o) {
     visitPsiElement(o);
   }
@@ -80,10 +84,6 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitIfStatement(@NotNull ElvishIfStatement o) {
-    visitPsiElement(o);
-  }
-
-  public void visitIndexedVariable(@NotNull ElvishIndexedVariable o) {
     visitPsiElement(o);
   }
 
@@ -119,7 +119,15 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitVariable(@NotNull ElvishVariable o) {
+  public void visitVariableDeclaration(@NotNull ElvishVariableDeclaration o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariableIndex(@NotNull ElvishVariableIndex o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariableName(@NotNull ElvishVariableName o) {
     visitPsiElement(o);
   }
 

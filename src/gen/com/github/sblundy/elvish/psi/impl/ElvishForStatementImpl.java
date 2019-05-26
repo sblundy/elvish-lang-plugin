@@ -46,8 +46,8 @@ public class ElvishForStatementImpl extends ASTWrapperPsiElement implements Elvi
 
   @Override
   @NotNull
-  public ElvishVariable getVariable() {
-    return findNotNullChildByClass(ElvishVariable.class);
+  public ElvishVariableDeclaration getVariableDeclaration() {
+    return findNotNullChildByClass(ElvishVariableDeclaration.class);
   }
 
 }

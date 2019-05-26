@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishExceptStatement extends PsiElement {
-
-  @NotNull
-  ElvishBlock getBlock();
-
-  @NotNull
-  ElvishVariableDeclaration getVariableDeclaration();
+public interface ElvishVariableIndex extends PsiElement {
 
 }

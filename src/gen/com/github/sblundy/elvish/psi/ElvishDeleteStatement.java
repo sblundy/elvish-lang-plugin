@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishExceptStatement extends PsiElement {
+public interface ElvishDeleteStatement extends PsiElement {
+
+  @Nullable
+  ElvishVariableIndex getVariableIndex();
 
   @NotNull
-  ElvishBlock getBlock();
-
-  @NotNull
-  ElvishVariableDeclaration getVariableDeclaration();
+  ElvishVariableName getVariableName();
 
 }
