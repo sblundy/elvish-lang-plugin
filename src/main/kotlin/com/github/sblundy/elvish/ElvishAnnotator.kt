@@ -17,7 +17,7 @@ class ElvishAnnotator : Annotator {
             is ElvishSingleQuotedString -> STRING
             is ElvishEscapedSequence -> ESCAPED_STRING
             is ElvishHead -> if (isBuiltin(element)) { BUILTIN } else { COMMAND }
-            is ElvishVariable -> VARIABLE
+            is ElvishVariable, is ElvishIndexedVariable -> VARIABLE
             is ElvishVariableRef -> VARIABLE_REF
             else -> null
         }

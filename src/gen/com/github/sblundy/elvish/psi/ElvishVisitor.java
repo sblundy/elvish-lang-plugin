@@ -83,6 +83,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitIndexedVariable(@NotNull ElvishIndexedVariable o) {
+    visitPsiElement(o);
+  }
+
   public void visitLine(@NotNull ElvishLine o) {
     visitPsiElement(o);
   }

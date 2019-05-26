@@ -27,9 +27,15 @@ public class ElvishAssignmentLeftImpl extends ASTWrapperPsiElement implements El
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public ElvishIndexedVariable getIndexedVariable() {
+    return findChildByClass(ElvishIndexedVariable.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishVariable getVariable() {
-    return findNotNullChildByClass(ElvishVariable.class);
+    return findChildByClass(ElvishVariable.class);
   }
 
 }

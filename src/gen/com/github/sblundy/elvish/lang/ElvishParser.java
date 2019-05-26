@@ -137,13 +137,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // variable
+  // indexed_variable | variable
   public static boolean assignment_left(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "assignment_left")) return false;
     if (!nextTokenIs(builder_, BAREWORD)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = variable(builder_, level_ + 1);
+    result_ = indexed_variable(builder_, level_ + 1);
+    if (!result_) result_ = variable(builder_, level_ + 1);
     exit_section_(builder_, marker_, ASSIGNMENT_LEFT, result_);
     return result_;
   }
@@ -377,6 +378,21 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(builder_, level_, "if_statement_4")) return false;
     else_statement(builder_, level_ + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // variable(OPEN_BRACKET)bareword(CLOSE_BRACKET)
+  public static boolean indexed_variable(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "indexed_variable")) return false;
+    if (!nextTokenIs(builder_, BAREWORD)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = variable(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, OPEN_BRACKET);
+    result_ = result_ && consumeToken(builder_, BAREWORD);
+    result_ = result_ && consumeToken(builder_, CLOSE_BRACKET);
+    exit_section_(builder_, marker_, INDEXED_VARIABLE, result_);
+    return result_;
   }
 
   /* ********************************************************** */

@@ -1,0 +1,8 @@
+ElvishTokenType.bareword ('x')
+ElvishTokenType.open_bracket ('[')
+ElvishTokenType.bareword ('1')
+ElvishTokenType.close_bracket (']')
+WHITE_SPACE (' ')
+ElvishTokenType.= ('=')
+WHITE_SPACE (' ')
+ElvishTokenType.bareword ('word')

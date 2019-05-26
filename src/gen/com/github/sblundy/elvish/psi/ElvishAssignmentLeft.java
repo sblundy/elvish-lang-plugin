@@ -7,7 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishAssignmentLeft extends PsiElement {
 
-  @NotNull
+  @Nullable
+  ElvishIndexedVariable getIndexedVariable();
+
+  @Nullable
   ElvishVariable getVariable();
 
 }
