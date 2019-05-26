@@ -11,31 +11,19 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishStringImpl extends ASTWrapperPsiElement implements ElvishString {
+public class ElvishInvalidEscapeSequenceImpl extends ASTWrapperPsiElement implements ElvishInvalidEscapeSequence {
 
-  public ElvishStringImpl(@NotNull ASTNode node) {
+  public ElvishInvalidEscapeSequenceImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitString(this);
+    visitor.visitInvalidEscapeSequence(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishEscapedSequence> getEscapedSequenceList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishEscapedSequence.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishInvalidEscapeSequence> getInvalidEscapeSequenceList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishInvalidEscapeSequence.class);
   }
 
 }

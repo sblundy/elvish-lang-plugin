@@ -37,6 +37,7 @@
     KEYWORD_TRY="try"
     KEYWORD_DEL="del"
     ESCAPED_QUOTED_TEXT="escaped_sequence"
+    INVALID_ESCAPED_QUOTED_TEXT="invalid_escaped_sequence"
     CONTINUATION="continuation"
     REF_MARKER="$"
     PIPE="pipe"
@@ -60,7 +61,8 @@ assignment ::= assignment_left EQUALS assignment_right
 assignment_right ::= output_capture | single_quoted_string | double_quoted_string |bareword
 assignment_left ::= variable_name(variable_index)?
 escaped_sequence ::= ESCAPED_QUOTED_TEXT
-private TEXT_CHR ::= TEXT | escaped_sequence
+invalid_escape_sequence ::= INVALID_ESCAPED_QUOTED_TEXT
+private TEXT_CHR ::= TEXT | invalid_escape_sequence | escaped_sequence
 string ::= TEXT_CHR*
 single_quoted_string ::= SINGLE_QUOTE string SINGLE_QUOTE
 double_quoted_string ::= DOUBLE_QUOTE string DOUBLE_QUOTE

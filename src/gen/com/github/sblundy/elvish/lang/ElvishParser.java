@@ -38,12 +38,12 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TEXT | escaped_sequence
+  // TEXT | invalid_escape_sequence | escaped_sequence
   static boolean TEXT_CHR(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "TEXT_CHR")) return false;
-    if (!nextTokenIs(builder_, "", ESCAPED_QUOTED_TEXT, TEXT)) return false;
     boolean result_;
     result_ = consumeToken(builder_, TEXT);
+    if (!result_) result_ = invalid_escape_sequence(builder_, level_ + 1);
     if (!result_) result_ = escaped_sequence(builder_, level_ + 1);
     return result_;
   }
@@ -443,6 +443,18 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(builder_, level_, "if_statement_4")) return false;
     else_statement(builder_, level_ + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // INVALID_ESCAPED_QUOTED_TEXT
+  public static boolean invalid_escape_sequence(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "invalid_escape_sequence")) return false;
+    if (!nextTokenIs(builder_, INVALID_ESCAPED_QUOTED_TEXT)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, INVALID_ESCAPED_QUOTED_TEXT);
+    exit_section_(builder_, marker_, INVALID_ESCAPE_SEQUENCE, result_);
+    return result_;
   }
 
   /* ********************************************************** */

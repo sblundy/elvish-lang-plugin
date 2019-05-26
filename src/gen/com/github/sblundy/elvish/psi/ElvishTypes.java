@@ -29,6 +29,7 @@ public interface ElvishTypes {
   IElementType FOR_STATEMENT = new ElvishElementType("FOR_STATEMENT");
   IElementType HEAD = new ElvishElementType("HEAD");
   IElementType IF_STATEMENT = new ElvishElementType("IF_STATEMENT");
+  IElementType INVALID_ESCAPE_SEQUENCE = new ElvishElementType("INVALID_ESCAPE_SEQUENCE");
   IElementType LINE = new ElvishElementType("LINE");
   IElementType LINE_TERMINATOR = new ElvishElementType("LINE_TERMINATOR");
   IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
@@ -55,6 +56,7 @@ public interface ElvishTypes {
   IElementType EOL = new ElvishTokenType("EOL");
   IElementType EQUALS = new ElvishTokenType("=");
   IElementType ESCAPED_QUOTED_TEXT = new ElvishTokenType("escaped_sequence");
+  IElementType INVALID_ESCAPED_QUOTED_TEXT = new ElvishTokenType("invalid_escaped_sequence");
   IElementType KEYWORD_DEL = new ElvishTokenType("del");
   IElementType KEYWORD_ELIF = new ElvishTokenType("elif");
   IElementType KEYWORD_ELSE = new ElvishTokenType("else");
@@ -138,6 +140,9 @@ public interface ElvishTypes {
       }
       else if (type == IF_STATEMENT) {
         return new ElvishIfStatementImpl(node);
+      }
+      else if (type == INVALID_ESCAPE_SEQUENCE) {
+        return new ElvishInvalidEscapeSequenceImpl(node);
       }
       else if (type == LINE) {
         return new ElvishLineImpl(node);

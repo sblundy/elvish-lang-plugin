@@ -3,6 +3,7 @@ package com.github.sblundy.elvish
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.BUILTIN
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.COMMAND
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.ESCAPED_STRING
+import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.INVALID_ESCAPED_STRING
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.STRING
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.VARIABLE
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.VARIABLE_REF
@@ -16,6 +17,7 @@ class ElvishAnnotator : Annotator {
         val attributes = when (element) {
             is ElvishSingleQuotedString, is ElvishDoubleQuotedString -> STRING
             is ElvishEscapedSequence -> ESCAPED_STRING
+            is ElvishInvalidEscapeSequence -> INVALID_ESCAPED_STRING
             is ElvishHead -> if (isBuiltin(element)) { BUILTIN } else { COMMAND }
             is ElvishVariableDeclaration -> VARIABLE
             is ElvishVariableRef -> VARIABLE_REF

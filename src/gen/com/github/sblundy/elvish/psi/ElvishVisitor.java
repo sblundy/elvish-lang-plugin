@@ -91,6 +91,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitInvalidEscapeSequence(@NotNull ElvishInvalidEscapeSequence o) {
+    visitPsiElement(o);
+  }
+
   public void visitLine(@NotNull ElvishLine o) {
     visitPsiElement(o);
   }

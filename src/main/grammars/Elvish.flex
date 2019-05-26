@@ -129,6 +129,9 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
                                 yybegin(YYINITIAL);
                                 return ElvishTypes.DOUBLE_QUOTE;
                             }
+  [\\].                     {
+                                return ElvishTypes.INVALID_ESCAPED_QUOTED_TEXT;
+                            }
   [^]                       {
                                 return ElvishTypes.TEXT;
                             }
