@@ -1,0 +1,7 @@
+ElvishTokenType.bareword ('echo')
+WHITE_SPACE (' ')
+ElvishTokenType.$ ('$')
+ElvishTokenType.bareword ('test')
+ElvishTokenType.open_bracket ('[')
+ElvishTokenType.bareword ('1')
+ElvishTokenType.close_bracket (']')

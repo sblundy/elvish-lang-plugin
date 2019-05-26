@@ -640,15 +640,24 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // REF_MARKER(bareword)
+  // REF_MARKER(indexed_variable | variable)
   public static boolean variable_ref(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "variable_ref")) return false;
     if (!nextTokenIs(builder_, REF_MARKER)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, REF_MARKER);
-    result_ = result_ && consumeToken(builder_, BAREWORD);
+    result_ = result_ && variable_ref_1(builder_, level_ + 1);
     exit_section_(builder_, marker_, VARIABLE_REF, result_);
+    return result_;
+  }
+
+  // indexed_variable | variable
+  private static boolean variable_ref_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "variable_ref_1")) return false;
+    boolean result_;
+    result_ = indexed_variable(builder_, level_ + 1);
+    if (!result_) result_ = variable(builder_, level_ + 1);
     return result_;
   }
 

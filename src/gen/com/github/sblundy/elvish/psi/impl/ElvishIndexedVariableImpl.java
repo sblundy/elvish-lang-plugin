@@ -11,14 +11,14 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishVariableRefImpl extends ASTWrapperPsiElement implements ElvishVariableRef {
+public class ElvishIndexedVariableImpl extends ASTWrapperPsiElement implements ElvishIndexedVariable {
 
-  public ElvishVariableRefImpl(@NotNull ASTNode node) {
+  public ElvishIndexedVariableImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitVariableRef(this);
+    visitor.visitIndexedVariable(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,15 +27,9 @@ public class ElvishVariableRefImpl extends ASTWrapperPsiElement implements Elvis
   }
 
   @Override
-  @Nullable
-  public ElvishIndexedVariable getIndexedVariable() {
-    return findChildByClass(ElvishIndexedVariable.class);
-  }
-
-  @Override
-  @Nullable
+  @NotNull
   public ElvishVariable getVariable() {
-    return findChildByClass(ElvishVariable.class);
+    return findNotNullChildByClass(ElvishVariable.class);
   }
 
 }

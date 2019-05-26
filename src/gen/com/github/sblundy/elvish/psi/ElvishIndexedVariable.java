@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishVariableRef extends PsiElement {
+public interface ElvishIndexedVariable extends PsiElement {
 
-  @Nullable
-  ElvishIndexedVariable getIndexedVariable();
-
-  @Nullable
+  @NotNull
   ElvishVariable getVariable();
 
 }
