@@ -20,6 +20,7 @@ COMMENT =                       {LINE_COMMENT}{EOL}*
 
 CONTINUATION =                  [\\]{EOL}
 
+CONTROL_STRING_ESCAPES = [\\][c\^][@-_]
 BASIC_STRING_ESCAPES = [\\][abefnrtv\\]
 
 KEYWORD_ELSE = else
@@ -64,7 +65,6 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   {STRING_CMP_BUILTINS}     { return ElvishTypes.BUILTIN_OPERATOR_FN; }
   {NUMERIC_CMP_BUILTINS}    { return ElvishTypes.BUILTIN_OPERATOR_FN; }
   {NUMERIC_BUILTINS}        { return ElvishTypes.BUILTIN_OPERATOR_FN; }
-  "\""                      { return ElvishTypes.DOUBLE_QUOTE; }
   "&"                       { return ElvishTypes.AMPERSAND; }
   "~"                       { return ElvishTypes.TILDA; }
   "="                       { return ElvishTypes.EQUALS; }
@@ -100,6 +100,9 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
 }
 
 <IN_DOUBLE_QUOTE_STRING> {
+  {CONTROL_STRING_ESCAPES}  {
+                                return ElvishTypes.ESCAPED_QUOTED_TEXT;
+                            }
   {BASIC_STRING_ESCAPES}    {
                                 return ElvishTypes.ESCAPED_QUOTED_TEXT;
                             }
