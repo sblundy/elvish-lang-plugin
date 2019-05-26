@@ -20,6 +20,10 @@ COMMENT =                       {LINE_COMMENT}{EOL}*
 
 CONTINUATION =                  [\\]{EOL}
 
+ARBITRARY_8CHAR_STRING_ESCAPES = [\\]U[0-9a-fA-F]{8}
+ARBITRARY_4CHAR_STRING_ESCAPES = [\\]u[0-9a-fA-F]{4}
+ARBITRARY_3CHAR_STRING_ESCAPES = [\\][0-7]{3}
+ARBITRARY_2CHAR_STRING_ESCAPES = [\\]x[0-9a-fA-F]{2}
 CONTROL_STRING_ESCAPES = [\\][c\^][@-_]
 BASIC_STRING_ESCAPES = [\\][abefnrtv\\]
 
@@ -100,6 +104,18 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
 }
 
 <IN_DOUBLE_QUOTE_STRING> {
+  {ARBITRARY_8CHAR_STRING_ESCAPES}  {
+                                return ElvishTypes.ESCAPED_QUOTED_TEXT;
+                            }
+  {ARBITRARY_4CHAR_STRING_ESCAPES}  {
+                                return ElvishTypes.ESCAPED_QUOTED_TEXT;
+                            }
+  {ARBITRARY_3CHAR_STRING_ESCAPES}  {
+                                return ElvishTypes.ESCAPED_QUOTED_TEXT;
+                            }
+  {ARBITRARY_2CHAR_STRING_ESCAPES}  {
+                                return ElvishTypes.ESCAPED_QUOTED_TEXT;
+                            }
   {CONTROL_STRING_ESCAPES}  {
                                 return ElvishTypes.ESCAPED_QUOTED_TEXT;
                             }
