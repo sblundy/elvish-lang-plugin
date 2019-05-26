@@ -43,23 +43,24 @@
     PIPE="pipe"
     BUILTIN_OPERATOR_FN
   ]
+  mixin("variable_declaration")="com.github.sblundy.elvish.psi.ElvishVariableDeclarationMixin"
 }
 
 script ::= line* <<eof>>
-line ::= (command COMMENT line_terminator) | (command line_terminator) | (COMMENT line_terminator) | line_terminator | command | COMMENT
+private line ::= (command COMMENT line_terminator) | (command line_terminator) | (COMMENT line_terminator) | line_terminator | command | COMMENT
 pipeline ::= pipeline_prv
 private pipeline_head ::= pipeline_prv | ordinary_command
 private pipeline_prv ::= ordinary_command PIPE pipeline_head
-command ::= delete_statement | if_statement | while_statement | for_statement | try_statement | assignment | pipeline | ordinary_command
+private command ::= delete_statement | if_statement | while_statement | for_statement | try_statement | assignment | pipeline | ordinary_command
 ordinary_command ::= head argument_list
-argument_list ::= argument_list_line argument_list_continuation*
-argument_list_line ::= argument*
-argument_list_continuation ::= CONTINUATION argument*
+private argument_list ::= argument_list_line argument_list_continuation*
+private argument_list_line ::= argument*
+private argument_list_continuation ::= CONTINUATION argument*
 argument ::= bareword | single_quoted_string | double_quoted_string | variable_ref
 head ::= bareword | BUILTIN_OPERATOR_FN
 assignment ::= assignment_left EQUALS assignment_right
-assignment_right ::= output_capture | single_quoted_string | double_quoted_string |bareword
-assignment_left ::= variable_name(variable_index)?
+private assignment_right ::= output_capture | single_quoted_string | double_quoted_string | bareword
+private assignment_left ::= variable_name(variable_index)?
 escaped_sequence ::= ESCAPED_QUOTED_TEXT
 invalid_escape_sequence ::= INVALID_ESCAPED_QUOTED_TEXT
 private TEXT_CHR ::= TEXT | invalid_escape_sequence | escaped_sequence
@@ -90,7 +91,9 @@ block ::= OPEN_BRACE line* CLOSE_BRACE
 
 // variables
 
-variable_declaration ::= variable_name
+variable_declaration ::= variable_name {
+    implements="com.intellij.psi.PsiNamedElement"
+}
 variable_ref ::= (REF_MARKER)variable_name(variable_index)?
-variable_index ::= (OPEN_BRACKET)bareword(CLOSE_BRACKET)
-variable_name ::= bareword
+private variable_index ::= (OPEN_BRACKET)bareword(CLOSE_BRACKET)
+private variable_name ::= bareword

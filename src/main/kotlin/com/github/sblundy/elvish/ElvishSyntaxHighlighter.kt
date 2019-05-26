@@ -30,7 +30,7 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
             ElvishTypes.OPEN_BRACKET, ElvishTypes.CLOSE_BRACKET -> BRACKETS_KEYS
             ElvishTypes.OPEN_BRACE, ElvishTypes.CLOSE_BRACE -> BRACES_KEYS
             ElvishTypes.OPEN_PARAN, ElvishTypes.CLOSE_PARAN -> PARENTHESES_KEYS
-            ElvishTypes.COMMAND -> COMMAND_KEYS
+            ElvishTypes.HEAD -> COMMAND_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
             else -> {
                 tokenType?.let { log.info("token type not found:$tokenType") }

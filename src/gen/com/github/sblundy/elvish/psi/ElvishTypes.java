@@ -9,15 +9,9 @@ import com.github.sblundy.elvish.psi.impl.*;
 public interface ElvishTypes {
 
   IElementType ARGUMENT = new ElvishElementType("ARGUMENT");
-  IElementType ARGUMENT_LIST = new ElvishElementType("ARGUMENT_LIST");
-  IElementType ARGUMENT_LIST_CONTINUATION = new ElvishElementType("ARGUMENT_LIST_CONTINUATION");
-  IElementType ARGUMENT_LIST_LINE = new ElvishElementType("ARGUMENT_LIST_LINE");
   IElementType ASSIGNMENT = new ElvishElementType("ASSIGNMENT");
-  IElementType ASSIGNMENT_LEFT = new ElvishElementType("ASSIGNMENT_LEFT");
-  IElementType ASSIGNMENT_RIGHT = new ElvishElementType("ASSIGNMENT_RIGHT");
   IElementType BLOCK = new ElvishElementType("BLOCK");
   IElementType COLLECTION = new ElvishElementType("COLLECTION");
-  IElementType COMMAND = new ElvishElementType("COMMAND");
   IElementType CONDITION = new ElvishElementType("CONDITION");
   IElementType DELETE_STATEMENT = new ElvishElementType("DELETE_STATEMENT");
   IElementType DOUBLE_QUOTED_STRING = new ElvishElementType("DOUBLE_QUOTED_STRING");
@@ -30,7 +24,6 @@ public interface ElvishTypes {
   IElementType HEAD = new ElvishElementType("HEAD");
   IElementType IF_STATEMENT = new ElvishElementType("IF_STATEMENT");
   IElementType INVALID_ESCAPE_SEQUENCE = new ElvishElementType("INVALID_ESCAPE_SEQUENCE");
-  IElementType LINE = new ElvishElementType("LINE");
   IElementType LINE_TERMINATOR = new ElvishElementType("LINE_TERMINATOR");
   IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
   IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
@@ -39,8 +32,6 @@ public interface ElvishTypes {
   IElementType STRING = new ElvishElementType("STRING");
   IElementType TRY_STATEMENT = new ElvishElementType("TRY_STATEMENT");
   IElementType VARIABLE_DECLARATION = new ElvishElementType("VARIABLE_DECLARATION");
-  IElementType VARIABLE_INDEX = new ElvishElementType("VARIABLE_INDEX");
-  IElementType VARIABLE_NAME = new ElvishElementType("VARIABLE_NAME");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
   IElementType WHILE_STATEMENT = new ElvishElementType("WHILE_STATEMENT");
 
@@ -81,32 +72,14 @@ public interface ElvishTypes {
       if (type == ARGUMENT) {
         return new ElvishArgumentImpl(node);
       }
-      else if (type == ARGUMENT_LIST) {
-        return new ElvishArgumentListImpl(node);
-      }
-      else if (type == ARGUMENT_LIST_CONTINUATION) {
-        return new ElvishArgumentListContinuationImpl(node);
-      }
-      else if (type == ARGUMENT_LIST_LINE) {
-        return new ElvishArgumentListLineImpl(node);
-      }
       else if (type == ASSIGNMENT) {
         return new ElvishAssignmentImpl(node);
-      }
-      else if (type == ASSIGNMENT_LEFT) {
-        return new ElvishAssignmentLeftImpl(node);
-      }
-      else if (type == ASSIGNMENT_RIGHT) {
-        return new ElvishAssignmentRightImpl(node);
       }
       else if (type == BLOCK) {
         return new ElvishBlockImpl(node);
       }
       else if (type == COLLECTION) {
         return new ElvishCollectionImpl(node);
-      }
-      else if (type == COMMAND) {
-        return new ElvishCommandImpl(node);
       }
       else if (type == CONDITION) {
         return new ElvishConditionImpl(node);
@@ -144,9 +117,6 @@ public interface ElvishTypes {
       else if (type == INVALID_ESCAPE_SEQUENCE) {
         return new ElvishInvalidEscapeSequenceImpl(node);
       }
-      else if (type == LINE) {
-        return new ElvishLineImpl(node);
-      }
       else if (type == LINE_TERMINATOR) {
         return new ElvishLineTerminatorImpl(node);
       }
@@ -170,12 +140,6 @@ public interface ElvishTypes {
       }
       else if (type == VARIABLE_DECLARATION) {
         return new ElvishVariableDeclarationImpl(node);
-      }
-      else if (type == VARIABLE_INDEX) {
-        return new ElvishVariableIndexImpl(node);
-      }
-      else if (type == VARIABLE_NAME) {
-        return new ElvishVariableNameImpl(node);
       }
       else if (type == VARIABLE_REF) {
         return new ElvishVariableRefImpl(node);

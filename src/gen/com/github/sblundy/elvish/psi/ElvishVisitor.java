@@ -4,6 +4,7 @@ package com.github.sblundy.elvish.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiNamedElement;
 
 public class ElvishVisitor extends PsiElementVisitor {
 
@@ -11,27 +12,7 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitArgumentList(@NotNull ElvishArgumentList o) {
-    visitPsiElement(o);
-  }
-
-  public void visitArgumentListContinuation(@NotNull ElvishArgumentListContinuation o) {
-    visitPsiElement(o);
-  }
-
-  public void visitArgumentListLine(@NotNull ElvishArgumentListLine o) {
-    visitPsiElement(o);
-  }
-
   public void visitAssignment(@NotNull ElvishAssignment o) {
-    visitPsiElement(o);
-  }
-
-  public void visitAssignmentLeft(@NotNull ElvishAssignmentLeft o) {
-    visitPsiElement(o);
-  }
-
-  public void visitAssignmentRight(@NotNull ElvishAssignmentRight o) {
     visitPsiElement(o);
   }
 
@@ -40,10 +21,6 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitCollection(@NotNull ElvishCollection o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCommand(@NotNull ElvishCommand o) {
     visitPsiElement(o);
   }
 
@@ -95,10 +72,6 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitLine(@NotNull ElvishLine o) {
-    visitPsiElement(o);
-  }
-
   public void visitLineTerminator(@NotNull ElvishLineTerminator o) {
     visitPsiElement(o);
   }
@@ -128,15 +101,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitVariableDeclaration(@NotNull ElvishVariableDeclaration o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVariableIndex(@NotNull ElvishVariableIndex o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVariableName(@NotNull ElvishVariableName o) {
-    visitPsiElement(o);
+    visitPsiNamedElement(o);
   }
 
   public void visitVariableRef(@NotNull ElvishVariableRef o) {
@@ -145,6 +110,10 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitWhileStatement(@NotNull ElvishWhileStatement o) {
     visitPsiElement(o);
+  }
+
+  public void visitPsiNamedElement(@NotNull PsiNamedElement o) {
+    visitElement(o);
   }
 
   public void visitPsiElement(@NotNull PsiElement o) {

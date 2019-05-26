@@ -26,16 +26,4 @@ public class ElvishDeleteStatementImpl extends ASTWrapperPsiElement implements E
     else super.accept(visitor);
   }
 
-  @Override
-  @Nullable
-  public ElvishVariableIndex getVariableIndex() {
-    return findChildByClass(ElvishVariableIndex.class);
-  }
-
-  @Override
-  @NotNull
-  public ElvishVariableName getVariableName() {
-    return findNotNullChildByClass(ElvishVariableName.class);
-  }
-
 }

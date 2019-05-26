@@ -28,8 +28,56 @@ public class ElvishBlockImpl extends ASTWrapperPsiElement implements ElvishBlock
 
   @Override
   @NotNull
-  public List<ElvishLine> getLineList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLine.class);
+  public List<ElvishAssignment> getAssignmentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishAssignment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishDeleteStatement> getDeleteStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishDeleteStatement.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishForStatement> getForStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishForStatement.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishIfStatement> getIfStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIfStatement.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishLineTerminator> getLineTerminatorList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLineTerminator.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishOrdinaryCommand> getOrdinaryCommandList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishOrdinaryCommand.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishPipeline> getPipelineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishPipeline.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishTryStatement> getTryStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishTryStatement.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishWhileStatement> getWhileStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishWhileStatement.class);
   }
 
 }

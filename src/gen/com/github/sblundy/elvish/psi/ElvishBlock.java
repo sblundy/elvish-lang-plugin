@@ -8,6 +8,30 @@ import com.intellij.psi.PsiElement;
 public interface ElvishBlock extends PsiElement {
 
   @NotNull
-  List<ElvishLine> getLineList();
+  List<ElvishAssignment> getAssignmentList();
+
+  @NotNull
+  List<ElvishDeleteStatement> getDeleteStatementList();
+
+  @NotNull
+  List<ElvishForStatement> getForStatementList();
+
+  @NotNull
+  List<ElvishIfStatement> getIfStatementList();
+
+  @NotNull
+  List<ElvishLineTerminator> getLineTerminatorList();
+
+  @NotNull
+  List<ElvishOrdinaryCommand> getOrdinaryCommandList();
+
+  @NotNull
+  List<ElvishPipeline> getPipelineList();
+
+  @NotNull
+  List<ElvishTryStatement> getTryStatementList();
+
+  @NotNull
+  List<ElvishWhileStatement> getWhileStatementList();
 
 }

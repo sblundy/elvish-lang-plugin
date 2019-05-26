@@ -7,10 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishAssignment extends PsiElement {
 
-  @NotNull
-  ElvishAssignmentLeft getAssignmentLeft();
+  @Nullable
+  ElvishDoubleQuotedString getDoubleQuotedString();
 
-  @NotNull
-  ElvishAssignmentRight getAssignmentRight();
+  @Nullable
+  ElvishOutputCapture getOutputCapture();
+
+  @Nullable
+  ElvishSingleQuotedString getSingleQuotedString();
 
 }

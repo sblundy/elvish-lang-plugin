@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface ElvishOrdinaryCommand extends PsiElement {
 
   @NotNull
-  ElvishArgumentList getArgumentList();
+  List<ElvishArgument> getArgumentList();
 
   @NotNull
   ElvishHead getHead();

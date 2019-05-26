@@ -7,10 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishVariableRef extends PsiElement {
 
-  @Nullable
-  ElvishVariableIndex getVariableIndex();
-
-  @NotNull
-  ElvishVariableName getVariableName();
-
 }
