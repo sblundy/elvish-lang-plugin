@@ -28,8 +28,14 @@ public class ElvishDoubleQuotedStringImpl extends ASTWrapperPsiElement implement
 
   @Override
   @NotNull
-  public ElvishString getString() {
-    return findNotNullChildByClass(ElvishString.class);
+  public List<ElvishEscapedSequence> getEscapedSequenceList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishEscapedSequence.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishInvalidEscapeSequence> getInvalidEscapeSequenceList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishInvalidEscapeSequence.class);
   }
 
 }

@@ -634,15 +634,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // TEXT_CHR*
-  public static boolean string(PsiBuilder builder_, int level_) {
+  static boolean string(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "string")) return false;
-    Marker marker_ = enter_section_(builder_, level_, _NONE_, STRING, "<string>");
     while (true) {
       int pos_ = current_position_(builder_);
       if (!TEXT_CHR(builder_, level_ + 1)) break;
       if (!empty_element_parsed_guard_(builder_, "string", pos_)) break;
     }
-    exit_section_(builder_, level_, marker_, true, false, null);
     return true;
   }
 
@@ -684,13 +682,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // bareword
+  // variable_name
   public static boolean variable_declaration(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "variable_declaration")) return false;
     if (!nextTokenIs(builder_, BAREWORD)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, BAREWORD);
+    result_ = variable_name(builder_, level_ + 1);
     exit_section_(builder_, marker_, VARIABLE_DECLARATION, result_);
     return result_;
   }
@@ -716,14 +714,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (REF_MARKER)bareword(variable_index)?
+  // (REF_MARKER)variable_name(variable_index)?
   public static boolean variable_ref(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "variable_ref")) return false;
     if (!nextTokenIs(builder_, REF_MARKER)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, REF_MARKER);
-    result_ = result_ && consumeToken(builder_, BAREWORD);
+    result_ = result_ && variable_name(builder_, level_ + 1);
     result_ = result_ && variable_ref_2(builder_, level_ + 1);
     exit_section_(builder_, marker_, VARIABLE_REF, result_);
     return result_;

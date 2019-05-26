@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishSingleQuotedString extends PsiElement {
 
   @NotNull
-  ElvishString getString();
+  List<ElvishEscapedSequence> getEscapedSequenceList();
+
+  @NotNull
+  List<ElvishInvalidEscapeSequence> getInvalidEscapeSequenceList();
 
 }

@@ -29,7 +29,6 @@ public interface ElvishTypes {
   IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
   IElementType PIPELINE = new ElvishElementType("PIPELINE");
   IElementType SINGLE_QUOTED_STRING = new ElvishElementType("SINGLE_QUOTED_STRING");
-  IElementType STRING = new ElvishElementType("STRING");
   IElementType TRY_STATEMENT = new ElvishElementType("TRY_STATEMENT");
   IElementType VARIABLE_DECLARATION = new ElvishElementType("VARIABLE_DECLARATION");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
@@ -131,9 +130,6 @@ public interface ElvishTypes {
       }
       else if (type == SINGLE_QUOTED_STRING) {
         return new ElvishSingleQuotedStringImpl(node);
-      }
-      else if (type == STRING) {
-        return new ElvishStringImpl(node);
       }
       else if (type == TRY_STATEMENT) {
         return new ElvishTryStatementImpl(node);
