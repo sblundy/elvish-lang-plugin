@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishArgument extends PsiElement {
 
   @Nullable
+  ElvishDoubleQuotedString getDoubleQuotedString();
+
+  @Nullable
   ElvishSingleQuotedString getSingleQuotedString();
 
   @Nullable

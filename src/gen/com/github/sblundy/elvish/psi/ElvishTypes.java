@@ -20,6 +20,7 @@ public interface ElvishTypes {
   IElementType COMMAND = new ElvishElementType("COMMAND");
   IElementType CONDITION = new ElvishElementType("CONDITION");
   IElementType DELETE_STATEMENT = new ElvishElementType("DELETE_STATEMENT");
+  IElementType DOUBLE_QUOTED_STRING = new ElvishElementType("DOUBLE_QUOTED_STRING");
   IElementType ELIF_STATEMENT = new ElvishElementType("ELIF_STATEMENT");
   IElementType ELSE_STATEMENT = new ElvishElementType("ELSE_STATEMENT");
   IElementType ESCAPED_SEQUENCE = new ElvishElementType("ESCAPED_SEQUENCE");
@@ -110,6 +111,9 @@ public interface ElvishTypes {
       }
       else if (type == DELETE_STATEMENT) {
         return new ElvishDeleteStatementImpl(node);
+      }
+      else if (type == DOUBLE_QUOTED_STRING) {
+        return new ElvishDoubleQuotedStringImpl(node);
       }
       else if (type == ELIF_STATEMENT) {
         return new ElvishElifStatementImpl(node);

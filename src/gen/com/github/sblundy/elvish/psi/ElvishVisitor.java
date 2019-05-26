@@ -55,6 +55,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDoubleQuotedString(@NotNull ElvishDoubleQuotedString o) {
+    visitPsiElement(o);
+  }
+
   public void visitElifStatement(@NotNull ElvishElifStatement o) {
     visitPsiElement(o);
   }

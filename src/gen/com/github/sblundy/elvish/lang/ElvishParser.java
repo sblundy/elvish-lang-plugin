@@ -49,13 +49,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // bareword | single_quoted_string | variable_ref
+  // bareword | single_quoted_string | double_quoted_string | variable_ref
   public static boolean argument(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "argument")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, ARGUMENT, "<argument>");
     result_ = consumeToken(builder_, BAREWORD);
     if (!result_) result_ = single_quoted_string(builder_, level_ + 1);
+    if (!result_) result_ = double_quoted_string(builder_, level_ + 1);
     if (!result_) result_ = variable_ref(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
@@ -167,13 +168,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // output_capture | single_quoted_string | bareword
+  // output_capture | single_quoted_string | double_quoted_string |bareword
   public static boolean assignment_right(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "assignment_right")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, ASSIGNMENT_RIGHT, "<assignment right>");
     result_ = output_capture(builder_, level_ + 1);
     if (!result_) result_ = single_quoted_string(builder_, level_ + 1);
+    if (!result_) result_ = double_quoted_string(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, BAREWORD);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
@@ -290,6 +292,20 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = variable_index(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // DOUBLE_QUOTE string DOUBLE_QUOTE
+  public static boolean double_quoted_string(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "double_quoted_string")) return false;
+    if (!nextTokenIs(builder_, DOUBLE_QUOTE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, DOUBLE_QUOTE);
+    result_ = result_ && string(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, DOUBLE_QUOTE);
+    exit_section_(builder_, marker_, DOUBLE_QUOTED_STRING, result_);
     return result_;
   }
 

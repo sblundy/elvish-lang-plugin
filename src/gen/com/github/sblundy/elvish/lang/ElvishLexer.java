@@ -24,6 +24,7 @@ class ElvishLexer implements FlexLexer {
   /** lexical states */
   public static final int YYINITIAL = 0;
   public static final int IN_SINGLE_QUOTE_STRING = 2;
+  public static final int IN_DOUBLE_QUOTE_STRING = 4;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -32,7 +33,7 @@ class ElvishLexer implements FlexLexer {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = { 
-     0,  0,  1, 1
+     0,  0,  1,  1,  2, 2
   };
 
   /** 
@@ -66,15 +67,15 @@ class ElvishLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\1\1\1\2\1\3\1\1\10\4\1\5\3\6"+
+    "\3\0\1\1\1\2\1\3\1\1\10\4\1\5\3\6"+
     "\1\2\1\7\1\10\1\11\1\12\1\13\1\14\1\15"+
     "\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25"+
-    "\1\3\2\26\2\4\1\27\5\4\1\6\1\30\4\4"+
-    "\1\31\1\4\1\32\1\33\1\34\1\35\5\4\1\36"+
-    "\1\37\1\4\1\40";
+    "\1\26\1\3\2\27\2\4\1\30\5\4\1\6\1\31"+
+    "\4\4\1\32\1\4\1\33\1\34\1\35\1\36\5\4"+
+    "\1\37\1\40\1\4\1\41";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[66];
+    int [] result = new int[68];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -99,18 +100,18 @@ class ElvishLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\51\0\122\0\122\0\173\0\244\0\315\0\366"+
+    "\0\0\0\51\0\122\0\173\0\173\0\244\0\315\0\366"+
     "\0\u011f\0\u0148\0\u0171\0\u019a\0\u01c3\0\u01ec\0\u0215\0\u023e"+
-    "\0\366\0\122\0\u0267\0\u0290\0\122\0\122\0\122\0\122"+
-    "\0\122\0\122\0\122\0\122\0\122\0\122\0\122\0\122"+
-    "\0\122\0\u02b9\0\u02e2\0\122\0\u030b\0\u0334\0\u035d\0\366"+
-    "\0\u0386\0\u03af\0\u03d8\0\u0401\0\u042a\0\u0453\0\122\0\u047c"+
-    "\0\u04a5\0\u04ce\0\u04f7\0\366\0\u0520\0\366\0\366\0\366"+
-    "\0\366\0\u0549\0\u0572\0\u059b\0\u05c4\0\u05ed\0\366\0\366"+
-    "\0\u0616\0\366";
+    "\0\u0267\0\u011f\0\173\0\u0290\0\u02b9\0\173\0\173\0\173"+
+    "\0\173\0\173\0\173\0\173\0\173\0\173\0\173\0\173"+
+    "\0\173\0\173\0\u02e2\0\173\0\u030b\0\173\0\u0334\0\u035d"+
+    "\0\u0386\0\u011f\0\u03af\0\u03d8\0\u0401\0\u042a\0\u0453\0\u047c"+
+    "\0\173\0\u04a5\0\u04ce\0\u04f7\0\u0520\0\u011f\0\u0549\0\u011f"+
+    "\0\u011f\0\u011f\0\u011f\0\u0572\0\u059b\0\u05c4\0\u05ed\0\u0616"+
+    "\0\u011f\0\u011f\0\u063f\0\u011f";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[66];
+    int [] result = new int[68];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -133,43 +134,44 @@ class ElvishLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\3\1\4\1\5\1\6\1\7\2\10\1\11\1\12"+
-    "\1\13\4\10\1\14\5\10\1\15\1\16\1\17\1\20"+
-    "\1\21\1\22\1\10\1\23\1\24\1\25\1\26\1\27"+
-    "\1\30\1\31\1\32\1\33\1\34\1\35\1\36\1\37"+
-    "\1\40\43\41\1\42\5\41\51\0\1\5\1\43\47\5"+
-    "\1\0\1\44\31\0\1\45\21\0\1\10\1\46\5\10"+
-    "\1\47\12\10\2\0\1\10\1\0\1\10\22\0\22\10"+
-    "\2\0\1\10\1\0\1\10\22\0\4\10\1\50\15\10"+
-    "\2\0\1\10\1\0\1\10\22\0\3\10\1\51\12\10"+
-    "\1\52\3\10\2\0\1\10\1\0\1\10\22\0\6\10"+
-    "\1\53\13\10\2\0\1\10\1\0\1\10\22\0\17\10"+
-    "\1\54\2\10\2\0\1\10\1\0\1\10\22\0\1\55"+
-    "\21\10\2\0\1\10\1\0\1\10\22\0\22\10\1\56"+
-    "\1\0\1\10\1\0\1\10\44\0\1\56\30\0\1\22"+
-    "\17\0\1\56\23\0\1\4\103\0\1\24\57\0\1\57"+
-    "\6\0\1\43\31\0\1\43\16\0\1\44\53\0\2\10"+
-    "\1\60\1\61\16\10\2\0\1\10\1\0\1\10\22\0"+
-    "\10\10\1\62\11\10\2\0\1\10\1\0\1\10\22\0"+
-    "\13\10\1\63\6\10\2\0\1\10\1\0\1\10\22\0"+
-    "\17\10\1\64\2\10\2\0\1\10\1\0\1\10\22\0"+
-    "\3\10\1\65\16\10\2\0\1\10\1\0\1\10\22\0"+
-    "\15\10\1\66\4\10\2\0\1\10\1\0\1\10\22\0"+
-    "\1\10\1\67\20\10\2\0\1\10\1\0\1\10\24\0"+
-    "\1\22\46\0\1\70\21\10\2\0\1\10\1\0\1\10"+
-    "\22\0\4\10\1\71\15\10\2\0\1\10\1\0\1\10"+
-    "\22\0\1\72\21\10\2\0\1\10\1\0\1\10\22\0"+
-    "\14\10\1\73\5\10\2\0\1\10\1\0\1\10\22\0"+
-    "\1\10\1\74\20\10\2\0\1\10\1\0\1\10\22\0"+
-    "\11\10\1\75\10\10\2\0\1\10\1\0\1\10\22\0"+
-    "\1\10\1\76\20\10\2\0\1\10\1\0\1\10\22\0"+
-    "\1\77\21\10\2\0\1\10\1\0\1\10\22\0\12\10"+
-    "\1\100\7\10\2\0\1\10\1\0\1\10\22\0\1\10"+
-    "\1\101\20\10\2\0\1\10\1\0\1\10\22\0\15\10"+
-    "\1\102\4\10\2\0\1\10\1\0\1\10\16\0";
+    "\1\4\1\5\1\6\1\7\1\10\2\11\1\12\1\13"+
+    "\1\14\4\11\1\15\5\11\1\16\1\17\1\20\1\21"+
+    "\1\22\1\23\1\11\1\24\1\25\1\26\1\27\1\30"+
+    "\1\31\1\32\1\33\1\34\1\35\1\36\1\37\1\40"+
+    "\1\41\43\42\1\43\51\42\1\44\4\42\51\0\1\6"+
+    "\1\45\47\6\1\0\1\46\31\0\1\47\21\0\1\11"+
+    "\1\50\5\11\1\51\12\11\2\0\1\11\1\0\1\11"+
+    "\22\0\22\11\2\0\1\11\1\0\1\11\22\0\4\11"+
+    "\1\52\15\11\2\0\1\11\1\0\1\11\22\0\3\11"+
+    "\1\53\12\11\1\54\3\11\2\0\1\11\1\0\1\11"+
+    "\22\0\6\11\1\55\13\11\2\0\1\11\1\0\1\11"+
+    "\22\0\17\11\1\56\2\11\2\0\1\11\1\0\1\11"+
+    "\22\0\1\57\21\11\2\0\1\11\1\0\1\11\22\0"+
+    "\22\11\1\60\1\0\1\11\1\0\1\11\44\0\1\60"+
+    "\30\0\1\23\17\0\1\60\23\0\1\5\103\0\1\25"+
+    "\57\0\1\61\6\0\1\45\31\0\1\45\16\0\1\46"+
+    "\53\0\2\11\1\62\1\63\16\11\2\0\1\11\1\0"+
+    "\1\11\22\0\10\11\1\64\11\11\2\0\1\11\1\0"+
+    "\1\11\22\0\13\11\1\65\6\11\2\0\1\11\1\0"+
+    "\1\11\22\0\17\11\1\66\2\11\2\0\1\11\1\0"+
+    "\1\11\22\0\3\11\1\67\16\11\2\0\1\11\1\0"+
+    "\1\11\22\0\15\11\1\70\4\11\2\0\1\11\1\0"+
+    "\1\11\22\0\1\11\1\71\20\11\2\0\1\11\1\0"+
+    "\1\11\24\0\1\23\46\0\1\72\21\11\2\0\1\11"+
+    "\1\0\1\11\22\0\4\11\1\73\15\11\2\0\1\11"+
+    "\1\0\1\11\22\0\1\74\21\11\2\0\1\11\1\0"+
+    "\1\11\22\0\14\11\1\75\5\11\2\0\1\11\1\0"+
+    "\1\11\22\0\1\11\1\76\20\11\2\0\1\11\1\0"+
+    "\1\11\22\0\11\11\1\77\10\11\2\0\1\11\1\0"+
+    "\1\11\22\0\1\11\1\100\20\11\2\0\1\11\1\0"+
+    "\1\11\22\0\1\101\21\11\2\0\1\11\1\0\1\11"+
+    "\22\0\12\11\1\102\7\11\2\0\1\11\1\0\1\11"+
+    "\22\0\1\11\1\103\20\11\2\0\1\11\1\0\1\11"+
+    "\22\0\15\11\1\104\4\11\2\0\1\11\1\0\1\11"+
+    "\16\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[1599];
+    int [] result = new int[1640];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -207,11 +209,11 @@ class ElvishLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\2\11\15\1\1\11\2\1\15\11\2\1\1\11"+
-    "\12\1\1\11\23\1";
+    "\3\0\2\11\15\1\1\11\2\1\15\11\1\1\1\11"+
+    "\1\1\1\11\12\1\1\11\23\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[66];
+    int [] result = new int[68];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -517,164 +519,171 @@ class ElvishLexer implements FlexLexer {
             { return TokenType.BAD_CHARACTER;
             } 
             // fall through
-          case 33: break;
+          case 34: break;
           case 2: 
             { return ElvishTypes.EOL;
             } 
             // fall through
-          case 34: break;
+          case 35: break;
           case 3: 
             { return ElvishTypes.COMMENT;
             } 
             // fall through
-          case 35: break;
+          case 36: break;
           case 4: 
             { return ElvishTypes.BAREWORD;
             } 
             // fall through
-          case 36: break;
+          case 37: break;
           case 5: 
             { return ElvishTypes.EQUALS;
             } 
             // fall through
-          case 37: break;
+          case 38: break;
           case 6: 
             { return ElvishTypes.BUILTIN_OPERATOR_FN;
             } 
             // fall through
-          case 38: break;
+          case 39: break;
           case 7: 
             { return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 39: break;
+          case 40: break;
           case 8: 
             { return ElvishTypes.OPEN_BRACE;
             } 
             // fall through
-          case 40: break;
+          case 41: break;
           case 9: 
             { return ElvishTypes.CLOSE_BRACE;
             } 
             // fall through
-          case 41: break;
+          case 42: break;
           case 10: 
             { return ElvishTypes.OPEN_BRACKET;
             } 
             // fall through
-          case 42: break;
+          case 43: break;
           case 11: 
             { return ElvishTypes.CLOSE_BRACKET;
             } 
             // fall through
-          case 43: break;
+          case 44: break;
           case 12: 
             { return ElvishTypes.OPEN_PARAN;
             } 
             // fall through
-          case 44: break;
+          case 45: break;
           case 13: 
             { return ElvishTypes.CLOSE_PARAN;
             } 
             // fall through
-          case 45: break;
+          case 46: break;
           case 14: 
             { yybegin(IN_SINGLE_QUOTE_STRING);
                                 return ElvishTypes.SINGLE_QUOTE;
             } 
             // fall through
-          case 46: break;
+          case 47: break;
           case 15: 
-            { return ElvishTypes.DOUBLE_QUOTE;
+            { yybegin(IN_DOUBLE_QUOTE_STRING);
+                                return ElvishTypes.DOUBLE_QUOTE;
             } 
             // fall through
-          case 47: break;
+          case 48: break;
           case 16: 
             { return ElvishTypes.AMPERSAND;
             } 
             // fall through
-          case 48: break;
+          case 49: break;
           case 17: 
             { return ElvishTypes.TILDA;
             } 
             // fall through
-          case 49: break;
+          case 50: break;
           case 18: 
             { return ElvishTypes.REF_MARKER;
             } 
             // fall through
-          case 50: break;
+          case 51: break;
           case 19: 
             { return ElvishTypes.PIPE;
             } 
             // fall through
-          case 51: break;
+          case 52: break;
           case 20: 
             { return ElvishTypes.TEXT;
             } 
             // fall through
-          case 52: break;
+          case 53: break;
           case 21: 
             { yybegin(YYINITIAL);
                                 return ElvishTypes.SINGLE_QUOTE;
             } 
             // fall through
-          case 53: break;
-          case 22: 
-            { return ElvishTypes.CONTINUATION;
-            } 
-            // fall through
           case 54: break;
-          case 23: 
-            { return ElvishTypes.KEYWORD_IF;
+          case 22: 
+            { yybegin(YYINITIAL);
+                                return ElvishTypes.DOUBLE_QUOTE;
             } 
             // fall through
           case 55: break;
-          case 24: 
-            { return ElvishTypes.ESCAPED_SINGLE_QUOTED_TEXT;
+          case 23: 
+            { return ElvishTypes.CONTINUATION;
             } 
             // fall through
           case 56: break;
-          case 25: 
-            { return ElvishTypes.KEYWORD_FOR;
+          case 24: 
+            { return ElvishTypes.KEYWORD_IF;
             } 
             // fall through
           case 57: break;
-          case 26: 
-            { return ElvishTypes.KEYWORD_TRY;
+          case 25: 
+            { return ElvishTypes.ESCAPED_SINGLE_QUOTED_TEXT;
             } 
             // fall through
           case 58: break;
-          case 27: 
-            { return ElvishTypes.KEYWORD_DEL;
+          case 26: 
+            { return ElvishTypes.KEYWORD_FOR;
             } 
             // fall through
           case 59: break;
-          case 28: 
-            { return ElvishTypes.KEYWORD_ELSE;
+          case 27: 
+            { return ElvishTypes.KEYWORD_TRY;
             } 
             // fall through
           case 60: break;
-          case 29: 
-            { return ElvishTypes.KEYWORD_ELIF;
+          case 28: 
+            { return ElvishTypes.KEYWORD_DEL;
             } 
             // fall through
           case 61: break;
-          case 30: 
-            { return ElvishTypes.KEYWORD_WHILE;
+          case 29: 
+            { return ElvishTypes.KEYWORD_ELSE;
             } 
             // fall through
           case 62: break;
-          case 31: 
-            { return ElvishTypes.KEYWORD_EXCEPT;
+          case 30: 
+            { return ElvishTypes.KEYWORD_ELIF;
             } 
             // fall through
           case 63: break;
-          case 32: 
-            { return ElvishTypes.KEYWORD_FINALLY;
+          case 31: 
+            { return ElvishTypes.KEYWORD_WHILE;
             } 
             // fall through
           case 64: break;
+          case 32: 
+            { return ElvishTypes.KEYWORD_EXCEPT;
+            } 
+            // fall through
+          case 65: break;
+          case 33: 
+            { return ElvishTypes.KEYWORD_FINALLY;
+            } 
+            // fall through
+          case 66: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

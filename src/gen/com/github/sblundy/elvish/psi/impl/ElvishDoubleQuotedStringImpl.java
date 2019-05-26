@@ -11,14 +11,14 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishArgumentImpl extends ASTWrapperPsiElement implements ElvishArgument {
+public class ElvishDoubleQuotedStringImpl extends ASTWrapperPsiElement implements ElvishDoubleQuotedString {
 
-  public ElvishArgumentImpl(@NotNull ASTNode node) {
+  public ElvishDoubleQuotedStringImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitArgument(this);
+    visitor.visitDoubleQuotedString(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,21 +27,9 @@ public class ElvishArgumentImpl extends ASTWrapperPsiElement implements ElvishAr
   }
 
   @Override
-  @Nullable
-  public ElvishDoubleQuotedString getDoubleQuotedString() {
-    return findChildByClass(ElvishDoubleQuotedString.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishSingleQuotedString getSingleQuotedString() {
-    return findChildByClass(ElvishSingleQuotedString.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishVariableRef getVariableRef() {
-    return findChildByClass(ElvishVariableRef.class);
+  @NotNull
+  public ElvishString getString() {
+    return findNotNullChildByClass(ElvishString.class);
   }
 
 }

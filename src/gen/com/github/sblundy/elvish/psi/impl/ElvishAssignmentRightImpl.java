@@ -28,6 +28,12 @@ public class ElvishAssignmentRightImpl extends ASTWrapperPsiElement implements E
 
   @Override
   @Nullable
+  public ElvishDoubleQuotedString getDoubleQuotedString() {
+    return findChildByClass(ElvishDoubleQuotedString.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishOutputCapture getOutputCapture() {
     return findChildByClass(ElvishOutputCapture.class);
   }

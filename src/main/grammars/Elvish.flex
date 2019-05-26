@@ -37,7 +37,7 @@ EOL="\r"|"\n"|"\r\n"
 INLINE_WHITESPACE_CHAR=[ \t]
 INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
 
-%xstate IN_SINGLE_QUOTE_STRING
+%xstate IN_SINGLE_QUOTE_STRING IN_DOUBLE_QUOTE_STRING
 
 %%
 
@@ -54,6 +54,10 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   "'"                       {
                                 yybegin(IN_SINGLE_QUOTE_STRING);
                                 return ElvishTypes.SINGLE_QUOTE;
+                            }
+  "\""                       {
+                                yybegin(IN_DOUBLE_QUOTE_STRING);
+                                return ElvishTypes.DOUBLE_QUOTE;
                             }
   {STRING_CMP_BUILTINS}     { return ElvishTypes.BUILTIN_OPERATOR_FN; }
   {NUMERIC_CMP_BUILTINS}    { return ElvishTypes.BUILTIN_OPERATOR_FN; }
@@ -87,6 +91,16 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   "'"                       {
                                 yybegin(YYINITIAL);
                                 return ElvishTypes.SINGLE_QUOTE;
+                            }
+  [^]                       {
+                                return ElvishTypes.TEXT;
+                            }
+}
+
+<IN_DOUBLE_QUOTE_STRING> {
+  "\""                       {
+                                yybegin(YYINITIAL);
+                                return ElvishTypes.DOUBLE_QUOTE;
                             }
   [^]                       {
                                 return ElvishTypes.TEXT;
