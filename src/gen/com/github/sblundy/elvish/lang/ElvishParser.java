@@ -41,7 +41,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   // TEXT | escaped_sequence
   static boolean TEXT_CHR(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "TEXT_CHR")) return false;
-    if (!nextTokenIs(builder_, "", ESCAPED_SINGLE_QUOTED_TEXT, TEXT)) return false;
+    if (!nextTokenIs(builder_, "", ESCAPED_QUOTED_TEXT, TEXT)) return false;
     boolean result_;
     result_ = consumeToken(builder_, TEXT);
     if (!result_) result_ = escaped_sequence(builder_, level_ + 1);
@@ -337,13 +337,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ESCAPED_SINGLE_QUOTED_TEXT
+  // ESCAPED_QUOTED_TEXT
   public static boolean escaped_sequence(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "escaped_sequence")) return false;
-    if (!nextTokenIs(builder_, ESCAPED_SINGLE_QUOTED_TEXT)) return false;
+    if (!nextTokenIs(builder_, ESCAPED_QUOTED_TEXT)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, ESCAPED_SINGLE_QUOTED_TEXT);
+    result_ = consumeToken(builder_, ESCAPED_QUOTED_TEXT);
     exit_section_(builder_, marker_, ESCAPED_SEQUENCE, result_);
     return result_;
   }

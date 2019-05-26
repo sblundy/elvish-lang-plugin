@@ -54,7 +54,7 @@ public interface ElvishTypes {
   IElementType DOUBLE_QUOTE = new ElvishTokenType("\"");
   IElementType EOL = new ElvishTokenType("EOL");
   IElementType EQUALS = new ElvishTokenType("=");
-  IElementType ESCAPED_SINGLE_QUOTED_TEXT = new ElvishTokenType("\\'");
+  IElementType ESCAPED_QUOTED_TEXT = new ElvishTokenType("escaped_sequence");
   IElementType KEYWORD_DEL = new ElvishTokenType("del");
   IElementType KEYWORD_ELIF = new ElvishTokenType("elif");
   IElementType KEYWORD_ELSE = new ElvishTokenType("else");

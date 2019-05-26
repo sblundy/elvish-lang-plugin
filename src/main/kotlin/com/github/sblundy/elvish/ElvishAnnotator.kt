@@ -14,7 +14,7 @@ import com.intellij.psi.PsiElement
 class ElvishAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         val attributes = when (element) {
-            is ElvishSingleQuotedString -> STRING
+            is ElvishSingleQuotedString, is ElvishDoubleQuotedString -> STRING
             is ElvishEscapedSequence -> ESCAPED_STRING
             is ElvishHead -> if (isBuiltin(element)) { BUILTIN } else { COMMAND }
             is ElvishVariableDeclaration -> VARIABLE

@@ -20,6 +20,8 @@ COMMENT =                       {LINE_COMMENT}{EOL}*
 
 CONTINUATION =                  [\\]{EOL}
 
+BASIC_STRING_ESCAPES = [\\][abefnrtv\\]
+
 KEYWORD_ELSE = else
 KEYWORD_ELIF = elif
 KEYWORD_WHILE = while
@@ -86,7 +88,7 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
 
 <IN_SINGLE_QUOTE_STRING> {
   "''"                      {
-                                return ElvishTypes.ESCAPED_SINGLE_QUOTED_TEXT;
+                                return ElvishTypes.ESCAPED_QUOTED_TEXT;
                             }
   "'"                       {
                                 yybegin(YYINITIAL);
@@ -98,6 +100,12 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
 }
 
 <IN_DOUBLE_QUOTE_STRING> {
+  {BASIC_STRING_ESCAPES}    {
+                                return ElvishTypes.ESCAPED_QUOTED_TEXT;
+                            }
+  "\\\"" {
+                                return ElvishTypes.ESCAPED_QUOTED_TEXT;
+                            }
   "\""                       {
                                 yybegin(YYINITIAL);
                                 return ElvishTypes.DOUBLE_QUOTE;

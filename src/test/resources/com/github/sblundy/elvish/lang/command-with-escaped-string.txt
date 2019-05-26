@@ -16,7 +16,7 @@ Elvish File
                   PsiElement(ElvishTokenType..)('s')
                   PsiElement(ElvishTokenType..)('t')
                   ElvishEscapedSequenceImpl(ESCAPED_SEQUENCE)
-                    PsiElement(ElvishTokenType.\')('''')
+                    PsiElement(ElvishTokenType.escaped_sequence)('''')
                   PsiElement(ElvishTokenType..)('s')
                   PsiElement(ElvishTokenType..)(' ')
                   PsiElement(ElvishTokenType..)('s')
