@@ -26,10 +26,7 @@ private val additionalHighlightingTag = Collections.unmodifiableMap(
         "builtIn" to ElvishSyntaxHighlighter.BUILTIN,
         "command" to ElvishSyntaxHighlighter.COMMAND,
         "variable" to ElvishSyntaxHighlighter.VARIABLE,
-        "variableRef" to ElvishSyntaxHighlighter.VARIABLE_REF,
-        "escapedSequence" to ElvishSyntaxHighlighter.ESCAPED_STRING,
-        "invalidEscapeSequence" to ElvishSyntaxHighlighter.INVALID_ESCAPED_STRING,
-        "string" to ElvishSyntaxHighlighter.STRING
+        "variableRef" to ElvishSyntaxHighlighter.VARIABLE_REF
     )
 )
 
@@ -41,8 +38,8 @@ private val elvishAttributesDescriptors = arrayOf(
     AttributesDescriptor("Bracket", ElvishSyntaxHighlighter.BRACKETS),
     AttributesDescriptor("Brace", ElvishSyntaxHighlighter.BRACES),
     AttributesDescriptor("Parenthesis", ElvishSyntaxHighlighter.PARENTHESES),
-    AttributesDescriptor("Escape Sequence", ElvishSyntaxHighlighter.ESCAPED_STRING),
-    AttributesDescriptor("Invalid Escape Sequence", ElvishSyntaxHighlighter.INVALID_ESCAPED_STRING),
+    AttributesDescriptor("Escape Sequence", ElvishSyntaxHighlighter.ESCAPE_SEQUENCE),
+    AttributesDescriptor("Invalid Escape Sequence", ElvishSyntaxHighlighter.INVALID_ESCAPE_SEQUENCE),
     AttributesDescriptor("Variable Declaration", ElvishSyntaxHighlighter.VARIABLE),
     AttributesDescriptor("Variable Reference", ElvishSyntaxHighlighter.VARIABLE_REF),
     AttributesDescriptor("Comment", ElvishSyntaxHighlighter.COMMENT)
@@ -50,10 +47,10 @@ private val elvishAttributesDescriptors = arrayOf(
 
 private val sampleElvishScript: String = """
     # Comment
-    <command>command</command> -f argument <string>'single quoted string'</string>
-    <variable>x</variable> = <string>'value<escapedSequence>''</escapedSequence>s'</string>
+    <command>command</command> -f argument 'single quoted string'
+    <variable>x</variable> = '''s'
     <builtIn>put</builtIn> <variableRef>${'$'}x</variableRef>
     if (<builtIn>has-suffix</builtIn> <variableRef>${'$'}fname</variableRef> .go) {
-        <builtIn>echo</builtIn> <variableRef>${'$'}fname</variableRef> <string>"is go f<invalidEscapeSequence>\i</invalidEscapeSequence>le"</string>
+        <builtIn>echo</builtIn> <variableRef>${'$'}fname</variableRef> "is go f\ile"
     }
 """.trimIndent()

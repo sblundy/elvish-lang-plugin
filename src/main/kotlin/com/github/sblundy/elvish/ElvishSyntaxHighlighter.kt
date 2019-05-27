@@ -18,7 +18,9 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
     override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
         return when (tokenType) {
             ElvishTypes.COMMENT -> COMMENT_KEYS
-            ElvishTypes.SINGLE_QUOTED_STRING, ElvishTypes.DOUBLE_QUOTED_STRING -> STRING_KEYS
+            ElvishTypes.SINGLE_QUOTED_STRING, ElvishTypes.DOUBLE_QUOTED_STRING, ElvishTypes.TEXT -> STRING_KEYS
+            ElvishTypes.ESCAPED_QUOTED_TEXT -> ESCAPED_STRING_KEYS
+            ElvishTypes.INVALID_ESCAPED_QUOTED_TEXT -> INVALID_ESCAPE_SEQUENCE_KEYS
             ElvishTypes.KEYWORD_IF,
                 ElvishTypes.KEYWORD_ELIF,
                 ElvishTypes.KEYWORD_EXCEPT,
@@ -49,8 +51,8 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
         val BRACKETS = createTextAttributesKey("ELVISH_BRACKETS", DefaultLanguageHighlighterColors.BRACKETS)
         val BRACES = createTextAttributesKey("ELVISH_BRACES", DefaultLanguageHighlighterColors.BRACKETS)
         val PARENTHESES = createTextAttributesKey("ELVISH_PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES)
-        val ESCAPED_STRING = createTextAttributesKey("ELVISH_ESCAPED_STRING", DefaultLanguageHighlighterColors.VALID_STRING_ESCAPE)
-        val INVALID_ESCAPED_STRING = createTextAttributesKey("ELVISH_INVALID_ESCAPED_STRING", DefaultLanguageHighlighterColors.INVALID_STRING_ESCAPE)
+        val ESCAPE_SEQUENCE = createTextAttributesKey("ELVISH_ESCAPE_SEQUENCE", DefaultLanguageHighlighterColors.VALID_STRING_ESCAPE)
+        val INVALID_ESCAPE_SEQUENCE = createTextAttributesKey("ELVISH_INVALID_ESCAPE_SEQUENCE", DefaultLanguageHighlighterColors.INVALID_STRING_ESCAPE)
         val COMMENT = createTextAttributesKey("ELVISH_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
         val VARIABLE = createTextAttributesKey("ELVISH_VARIABLE", DefaultLanguageHighlighterColors.GLOBAL_VARIABLE)
         val VARIABLE_REF = createTextAttributesKey("ELVISH_VARIABLE_REF", DefaultLanguageHighlighterColors.GLOBAL_VARIABLE)
@@ -59,6 +61,8 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
         private val BAD_CHAR_KEYS = arrayOf(BAD_CHARACTER)
         private val COMMAND_KEYS = arrayOf(COMMAND)
         private val STRING_KEYS = arrayOf(STRING)
+        private val ESCAPED_STRING_KEYS = arrayOf(ESCAPE_SEQUENCE)
+        private val INVALID_ESCAPE_SEQUENCE_KEYS = arrayOf(INVALID_ESCAPE_SEQUENCE)
         private val KEYWORD_KEYS = arrayOf(KEYWORD)
         private val BRACKETS_KEYS = arrayOf(BRACKETS)
         private val BRACES_KEYS = arrayOf(BRACES)
