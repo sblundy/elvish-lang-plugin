@@ -49,6 +49,42 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // OPEN_BRACKET parameter* CLOSE_BRACKET(no_arg_lambda)
+  static boolean arg_lambda(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "arg_lambda")) return false;
+    if (!nextTokenIs(builder_, OPEN_BRACKET)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, OPEN_BRACKET);
+    result_ = result_ && arg_lambda_1(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, CLOSE_BRACKET);
+    result_ = result_ && arg_lambda_3(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // parameter*
+  private static boolean arg_lambda_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "arg_lambda_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!parameter(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "arg_lambda_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // (no_arg_lambda)
+  private static boolean arg_lambda_3(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "arg_lambda_3")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = no_arg_lambda(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // assignable_string
   public static boolean argument(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "argument")) return false;
@@ -176,11 +212,12 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // output_capture | assignable_string
+  // output_capture | lambda | assignable_string
   static boolean assignment_right(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "assignment_right")) return false;
     boolean result_;
     result_ = output_capture(builder_, level_ + 1);
+    if (!result_) result_ = lambda(builder_, level_ + 1);
     if (!result_) result_ = assignable_string(builder_, level_ + 1);
     return result_;
   }
@@ -584,6 +621,19 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // arg_lambda | no_arg_lambda
+  public static boolean lambda(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "lambda")) return false;
+    if (!nextTokenIs(builder_, "<lambda>", OPEN_BRACE, OPEN_BRACKET)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, LAMBDA, "<lambda>");
+    result_ = arg_lambda(builder_, level_ + 1);
+    if (!result_) result_ = no_arg_lambda(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // (command COMMENT line_terminator) | (command line_terminator) | (COMMENT line_terminator) | line_terminator | command | COMMENT
   static boolean line(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "line")) return false;
@@ -651,6 +701,31 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // OPEN_BRACE line* CLOSE_BRACE
+  static boolean no_arg_lambda(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "no_arg_lambda")) return false;
+    if (!nextTokenIs(builder_, OPEN_BRACE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, OPEN_BRACE);
+    result_ = result_ && no_arg_lambda_1(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, CLOSE_BRACE);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // line*
+  private static boolean no_arg_lambda_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "no_arg_lambda_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!line(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "no_arg_lambda_1", pos_)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
   // head argument_list
   public static boolean ordinary_command(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "ordinary_command")) return false;
@@ -674,6 +749,12 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     if (!result_) result_ = command_outpub_body(builder_, level_ + 1);
     exit_section_(builder_, marker_, OUTPUT_CAPTURE, result_);
     return result_;
+  }
+
+  /* ********************************************************** */
+  // bareword
+  static boolean parameter(PsiBuilder builder_, int level_) {
+    return consumeToken(builder_, BAREWORD);
   }
 
   /* ********************************************************** */

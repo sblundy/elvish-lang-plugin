@@ -59,7 +59,7 @@ private argument_list_continuation ::= CONTINUATION argument*
 argument ::= assignable_string
 head ::= bareword | BUILTIN_OPERATOR_FN
 assignment ::= assignment_left EQUALS assignment_right
-private assignment_right ::= output_capture | assignable_string
+private assignment_right ::= output_capture | lambda | assignable_string
 private assignment_left ::= variable_name(variable_index)?
 
 // strings
@@ -109,3 +109,10 @@ variable_declaration ::= variable_name {
 variable_ref ::= (REF_MARKER)variable_name(variable_index)?
 private variable_index ::= (OPEN_BRACKET)bareword(CLOSE_BRACKET)
 private variable_name ::= bareword
+
+// lambdas
+
+lambda ::= arg_lambda | no_arg_lambda
+private parameter ::= bareword
+private arg_lambda ::= OPEN_BRACKET parameter* CLOSE_BRACKET(no_arg_lambda)
+private no_arg_lambda ::= OPEN_BRACE line* CLOSE_BRACE

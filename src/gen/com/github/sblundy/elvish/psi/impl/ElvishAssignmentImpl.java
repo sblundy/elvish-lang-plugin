@@ -40,6 +40,12 @@ public class ElvishAssignmentImpl extends ASTWrapperPsiElement implements Elvish
 
   @Override
   @Nullable
+  public ElvishLambda getLambda() {
+    return findChildByClass(ElvishLambda.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishOutputCapture getOutputCapture() {
     return findChildByClass(ElvishOutputCapture.class);
   }

@@ -76,6 +76,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitLambda(@NotNull ElvishLambda o) {
+    visitPsiElement(o);
+  }
+
   public void visitLineTerminator(@NotNull ElvishLineTerminator o) {
     visitPsiElement(o);
   }
