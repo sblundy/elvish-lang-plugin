@@ -25,6 +25,7 @@ private val additionalHighlightingTag = Collections.unmodifiableMap(
     mutableMapOf(
         "builtIn" to ElvishSyntaxHighlighter.BUILTIN,
         "command" to ElvishSyntaxHighlighter.COMMAND,
+        "parameter" to ElvishSyntaxHighlighter.PARAMETER,
         "variable" to ElvishSyntaxHighlighter.VARIABLE,
         "variableRef" to ElvishSyntaxHighlighter.VARIABLE_REF
     )
@@ -38,6 +39,7 @@ private val elvishAttributesDescriptors = arrayOf(
     AttributesDescriptor("Bracket", ElvishSyntaxHighlighter.BRACKETS),
     AttributesDescriptor("Brace", ElvishSyntaxHighlighter.BRACES),
     AttributesDescriptor("Parenthesis", ElvishSyntaxHighlighter.PARENTHESES),
+    AttributesDescriptor("Parameter", ElvishSyntaxHighlighter.PARAMETER),
     AttributesDescriptor("Escape Sequence", ElvishSyntaxHighlighter.ESCAPE_SEQUENCE),
     AttributesDescriptor("Invalid Escape Sequence", ElvishSyntaxHighlighter.INVALID_ESCAPE_SEQUENCE),
     AttributesDescriptor("Variable Declaration", ElvishSyntaxHighlighter.VARIABLE),
@@ -53,4 +55,5 @@ private val sampleElvishScript: String = """
     if (<builtIn>has-suffix</builtIn> <variableRef>${'$'}fname</variableRef> .go) {
         <builtIn>echo</builtIn> <variableRef>${'$'}fname</variableRef> "is go f\ile"
     }
+    y = [<parameter>x</parameter> <parameter>@y</parameter>]{ echo ${'$'}x }
 """.trimIndent()

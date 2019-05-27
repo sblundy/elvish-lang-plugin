@@ -64,6 +64,12 @@ public class ElvishLambdaImpl extends ASTWrapperPsiElement implements ElvishLamb
 
   @Override
   @NotNull
+  public List<ElvishParameter> getParameterList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishParameter.class);
+  }
+
+  @Override
+  @NotNull
   public List<ElvishPipeline> getPipelineList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishPipeline.class);
   }

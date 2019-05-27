@@ -29,6 +29,7 @@ public interface ElvishTypes {
   IElementType LINE_TERMINATOR = new ElvishElementType("LINE_TERMINATOR");
   IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
   IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
+  IElementType PARAMETER = new ElvishElementType("PARAMETER");
   IElementType PIPELINE = new ElvishElementType("PIPELINE");
   IElementType SINGLE_QUOTED_STRING = new ElvishElementType("SINGLE_QUOTED_STRING");
   IElementType TRY_STATEMENT = new ElvishElementType("TRY_STATEMENT");
@@ -134,6 +135,9 @@ public interface ElvishTypes {
       }
       else if (type == OUTPUT_CAPTURE) {
         return new ElvishOutputCaptureImpl(node);
+      }
+      else if (type == PARAMETER) {
+        return new ElvishParameterImpl(node);
       }
       else if (type == PIPELINE) {
         return new ElvishPipelineImpl(node);

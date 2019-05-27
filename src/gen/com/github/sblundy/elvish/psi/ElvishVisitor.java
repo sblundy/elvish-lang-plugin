@@ -92,6 +92,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitParameter(@NotNull ElvishParameter o) {
+    visitPsiElement(o);
+  }
+
   public void visitPipeline(@NotNull ElvishPipeline o) {
     visitPsiElement(o);
   }

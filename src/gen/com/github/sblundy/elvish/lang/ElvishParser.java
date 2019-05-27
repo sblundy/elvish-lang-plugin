@@ -768,9 +768,16 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // bareword
-  static boolean parameter(PsiBuilder builder_, int level_) {
-    return bareword(builder_, level_ + 1);
+  // VARIABLE | AT_VARIABLE
+  public static boolean parameter(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "parameter")) return false;
+    if (!nextTokenIs(builder_, "<parameter>", AT_VARIABLE, VARIABLE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, PARAMETER, "<parameter>");
+    result_ = consumeToken(builder_, VARIABLE);
+    if (!result_) result_ = consumeToken(builder_, AT_VARIABLE);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
   }
 
   /* ********************************************************** */

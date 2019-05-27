@@ -2,6 +2,7 @@ package com.github.sblundy.elvish
 
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.BUILTIN
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.COMMAND
+import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.PARAMETER
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.VARIABLE
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.VARIABLE_REF
 import com.github.sblundy.elvish.psi.*
@@ -15,6 +16,7 @@ class ElvishAnnotator : Annotator {
             is ElvishHead -> if (isBuiltin(element)) { BUILTIN } else { COMMAND }
             is ElvishVariableDeclaration -> VARIABLE
             is ElvishVariableRef -> VARIABLE_REF
+            is ElvishParameter -> PARAMETER
             else -> null
         }
 

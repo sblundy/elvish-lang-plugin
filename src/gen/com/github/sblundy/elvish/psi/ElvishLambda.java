@@ -26,6 +26,9 @@ public interface ElvishLambda extends PsiElement {
   List<ElvishOrdinaryCommand> getOrdinaryCommandList();
 
   @NotNull
+  List<ElvishParameter> getParameterList();
+
+  @NotNull
   List<ElvishPipeline> getPipelineList();
 
   @NotNull

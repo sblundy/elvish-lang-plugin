@@ -116,6 +116,6 @@ private variable_index ::= (OPEN_BRACKET)bareword(CLOSE_BRACKET)
 // lambdas
 
 lambda ::= arg_lambda | no_arg_lambda
-private parameter ::= bareword
+parameter ::= VARIABLE | AT_VARIABLE
 private arg_lambda ::= OPEN_BRACKET parameter* AT_VARIABLE? CLOSE_BRACKET(no_arg_lambda)
 private no_arg_lambda ::= OPEN_BRACE line* CLOSE_BRACE

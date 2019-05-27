@@ -51,6 +51,7 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
         val BRACKETS = createTextAttributesKey("ELVISH_BRACKETS", DefaultLanguageHighlighterColors.BRACKETS)
         val BRACES = createTextAttributesKey("ELVISH_BRACES", DefaultLanguageHighlighterColors.BRACKETS)
         val PARENTHESES = createTextAttributesKey("ELVISH_PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES)
+        var PARAMETER = createTextAttributesKey("ELVISH_PARAMETER", DefaultLanguageHighlighterColors.PARAMETER)
         val ESCAPE_SEQUENCE = createTextAttributesKey("ELVISH_ESCAPE_SEQUENCE", DefaultLanguageHighlighterColors.VALID_STRING_ESCAPE)
         val INVALID_ESCAPE_SEQUENCE = createTextAttributesKey("ELVISH_INVALID_ESCAPE_SEQUENCE", DefaultLanguageHighlighterColors.INVALID_STRING_ESCAPE)
         val COMMENT = createTextAttributesKey("ELVISH_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
