@@ -63,9 +63,14 @@ private argument_list_continuation ::= CONTINUATION argument*
 argument ::= assignable_string
 head ::= bareword | BUILTIN_OPERATOR_FN
 assignment ::= assignment_left EQUALS assignment_right
-private assignment_right ::= output_capture | lambda | assignable_string
+private assignment_right ::= output_capture | lambda | map_or_list | assignable_string
 private assignment_left ::= VARIABLE(variable_index)?
 
+// maps and lists
+
+map_or_list ::= OPEN_BRACKET item* CLOSE_BRACKET
+private item ::= assignment_right | map_entry
+map_entry ::= AMPERSAND(bareword)EQUALS(assignment_right)?
 // strings
 
 private assignable_string ::= compound_expression | variable_ref | single_quoted_string | double_quoted_string | bareword
@@ -116,6 +121,7 @@ private variable_index ::= (OPEN_BRACKET)bareword(CLOSE_BRACKET)
 // lambdas
 
 lambda ::= arg_lambda | no_arg_lambda
-parameter ::= VARIABLE | AT_VARIABLE
+parameter ::= VARIABLE | AT_VARIABLE | option
+private option ::= AMPERSAND(bareword)EQUALS(bareword)
 private arg_lambda ::= OPEN_BRACKET parameter* AT_VARIABLE? CLOSE_BRACKET(no_arg_lambda)
 private no_arg_lambda ::= OPEN_BRACE line* CLOSE_BRACE

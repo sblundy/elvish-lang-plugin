@@ -1,0 +1,12 @@
+Elvish File
+  ElvishAssignmentImpl(ASSIGNMENT)
+    PsiElement(ElvishTokenType.VARIABLE)('x')
+    PsiWhiteSpace(' ')
+    PsiElement(ElvishTokenType.=)('=')
+    PsiWhiteSpace(' ')
+    ElvishMapOrListImpl(MAP_OR_LIST)
+      PsiElement(ElvishTokenType.open_bracket)('[')
+      PsiElement(ElvishTokenType.VARIABLE)('y')
+      PsiWhiteSpace(' ')
+      PsiElement(ElvishTokenType.VARIABLE)('z')
+      PsiElement(ElvishTokenType.close_bracket)(']')

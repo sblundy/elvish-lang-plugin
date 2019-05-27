@@ -27,6 +27,8 @@ public interface ElvishTypes {
   IElementType INVALID_ESCAPE_SEQUENCE = new ElvishElementType("INVALID_ESCAPE_SEQUENCE");
   IElementType LAMBDA = new ElvishElementType("LAMBDA");
   IElementType LINE_TERMINATOR = new ElvishElementType("LINE_TERMINATOR");
+  IElementType MAP_ENTRY = new ElvishElementType("MAP_ENTRY");
+  IElementType MAP_OR_LIST = new ElvishElementType("MAP_OR_LIST");
   IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
   IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
   IElementType PARAMETER = new ElvishElementType("PARAMETER");
@@ -129,6 +131,12 @@ public interface ElvishTypes {
       }
       else if (type == LINE_TERMINATOR) {
         return new ElvishLineTerminatorImpl(node);
+      }
+      else if (type == MAP_ENTRY) {
+        return new ElvishMapEntryImpl(node);
+      }
+      else if (type == MAP_OR_LIST) {
+        return new ElvishMapOrListImpl(node);
       }
       else if (type == ORDINARY_COMMAND) {
         return new ElvishOrdinaryCommandImpl(node);

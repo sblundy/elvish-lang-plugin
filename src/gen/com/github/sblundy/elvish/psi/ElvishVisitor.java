@@ -84,6 +84,14 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitMapEntry(@NotNull ElvishMapEntry o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMapOrList(@NotNull ElvishMapOrList o) {
+    visitPsiElement(o);
+  }
+
   public void visitOrdinaryCommand(@NotNull ElvishOrdinaryCommand o) {
     visitPsiElement(o);
   }

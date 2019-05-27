@@ -11,14 +11,14 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishAssignmentImpl extends ASTWrapperPsiElement implements ElvishAssignment {
+public class ElvishMapEntryImpl extends ASTWrapperPsiElement implements ElvishMapEntry {
 
-  public ElvishAssignmentImpl(@NotNull ASTNode node) {
+  public ElvishMapEntryImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitAssignment(this);
+    visitor.visitMapEntry(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
