@@ -19,4 +19,10 @@ public interface ElvishArgument extends PsiElement {
   @Nullable
   ElvishVariableRef getVariableRef();
 
+  @Nullable
+  PsiElement getBareword();
+
+  @Nullable
+  PsiElement getVariable();
+
 }

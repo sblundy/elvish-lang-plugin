@@ -50,4 +50,16 @@ public class ElvishArgumentImpl extends ASTWrapperPsiElement implements ElvishAr
     return findChildByClass(ElvishVariableRef.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getBareword() {
+    return findChildByType(BAREWORD);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getVariable() {
+    return findChildByType(VARIABLE);
+  }
+
 }

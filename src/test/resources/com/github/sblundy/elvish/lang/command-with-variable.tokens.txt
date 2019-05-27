@@ -1,4 +1,4 @@
-ElvishTokenType.bareword ('echo')
+ElvishTokenType.VARIABLE ('echo')
 WHITE_SPACE (' ')
 ElvishTokenType.$ ('$')
-ElvishTokenType.bareword ('test')
+ElvishTokenType.VARIABLE ('test')

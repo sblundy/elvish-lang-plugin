@@ -26,4 +26,10 @@ public class ElvishDeleteStatementImpl extends ASTWrapperPsiElement implements E
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getBareword() {
+    return findChildByType(BAREWORD);
+  }
+
 }

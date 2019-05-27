@@ -2,8 +2,10 @@ package com.github.sblundy.elvish.lang;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
-import com.github.sblundy.elvish.psi.ElvishTypes;
 import com.intellij.psi.TokenType;
+import com.intellij.util.containers.IntArrayList;
+
+import com.github.sblundy.elvish.psi.ElvishTypes;
 
 %%
 
@@ -13,6 +15,20 @@ import com.intellij.psi.TokenType;
 %function advance
 %type IElementType
 %unicode
+
+%{
+  final IntArrayList states = new IntArrayList();
+
+  private void yyPushState(int newState) {
+      states.add(yystate());
+      yybegin(newState);
+  }
+
+  private void yyPopState() {
+      int prevState = states.remove(states.size() - 1);
+      yybegin(prevState);
+  }
+%}
 
 LINE =                          [^\n]*
 LINE_COMMENT =                  "#"{LINE}
@@ -39,7 +55,11 @@ KEYWORD_DEL = del
 STRING_CMP_BUILTINS=(([<>=!]=)|[<>])s
 NUMERIC_CMP_BUILTINS=(([<>=!]=)|[<>])
 NUMERIC_BUILTINS=\+|-|\*|\/|%|\^
-BAREWORD=[a-zA-Z0-9\-_:%+,\.\/@!]+
+VARIABLE_CHAR=[[0-9a-zA-Z\-_:~]||[[\u0080-\uFFFF]&&\p{Print}]] // see parse/parse.go:713 (allowedInVariableName())
+BAREWORD_CHAR=[\.\/@%+!]|{VARIABLE_CHAR}
+LHS_BAREWORD_CHAR=[=]
+BRACED_BAREWORD_CHAR=[,]
+COMMAND_BAREWORD_CHAR=[<>*\^]
 EOL="\r"|"\n"|"\r\n"
 INLINE_WHITESPACE_CHAR=[ \t]
 INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
@@ -59,11 +79,11 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   "("                       { return ElvishTypes.OPEN_PARAN; }
   ")"                       { return ElvishTypes.CLOSE_PARAN; }
   "'"                       {
-                                yybegin(IN_SINGLE_QUOTE_STRING);
+                                yyPushState(IN_SINGLE_QUOTE_STRING);
                                 return ElvishTypes.SINGLE_QUOTE;
                             }
   "\""                       {
-                                yybegin(IN_DOUBLE_QUOTE_STRING);
+                                yyPushState(IN_DOUBLE_QUOTE_STRING);
                                 return ElvishTypes.DOUBLE_QUOTE;
                             }
   {STRING_CMP_BUILTINS}     { return ElvishTypes.BUILTIN_OPERATOR_FN; }
@@ -86,7 +106,9 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   {KEYWORD_IF}              { return ElvishTypes.KEYWORD_IF; }
   {KEYWORD_TRY}             { return ElvishTypes.KEYWORD_TRY; }
   {KEYWORD_DEL}             { return ElvishTypes.KEYWORD_DEL; }
-  {BAREWORD}                { return ElvishTypes.BAREWORD; }
+  {VARIABLE_CHAR}+          { return ElvishTypes.VARIABLE; }
+  "@"{VARIABLE_CHAR}+       { return ElvishTypes.AT_VARIABLE; }
+  {BAREWORD_CHAR}+          { return ElvishTypes.BAREWORD; }
   {EOL}                     { return ElvishTypes.EOL; }
 }
 
@@ -95,10 +117,10 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
                                 return ElvishTypes.ESCAPED_QUOTED_TEXT;
                             }
   "'"                       {
-                                yybegin(YYINITIAL);
+                                yyPopState();
                                 return ElvishTypes.SINGLE_QUOTE;
                             }
-  [^]                       {
+  [^']+                       {
                                 return ElvishTypes.TEXT;
                             }
 }
@@ -126,13 +148,13 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
                                 return ElvishTypes.ESCAPED_QUOTED_TEXT;
                             }
   "\""                       {
-                                yybegin(YYINITIAL);
+                                yyPopState();
                                 return ElvishTypes.DOUBLE_QUOTE;
                             }
   [\\].                     {
                                 return ElvishTypes.INVALID_ESCAPED_QUOTED_TEXT;
                             }
-  [^]                       {
+  [^\"\\]+                       {
                                 return ElvishTypes.TEXT;
                             }
 }

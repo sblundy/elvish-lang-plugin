@@ -1,10 +1,10 @@
 Elvish File
   ElvishAssignmentImpl(ASSIGNMENT)
-    PsiElement(ElvishTokenType.bareword)('x')
+    PsiElement(ElvishTokenType.VARIABLE)('x')
     PsiElement(ElvishTokenType.open_bracket)('[')
-    PsiElement(ElvishTokenType.bareword)('1')
+    PsiElement(ElvishTokenType.VARIABLE)('1')
     PsiElement(ElvishTokenType.close_bracket)(']')
     PsiWhiteSpace(' ')
     PsiElement(ElvishTokenType.=)('=')
     PsiWhiteSpace(' ')
-    PsiElement(ElvishTokenType.bareword)('word')
+    PsiElement(ElvishTokenType.VARIABLE)('word')

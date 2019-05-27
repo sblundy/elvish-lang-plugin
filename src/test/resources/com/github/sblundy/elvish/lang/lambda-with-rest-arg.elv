@@ -1,0 +1,1 @@
+x = [y @rest]{ echo $y $rest }

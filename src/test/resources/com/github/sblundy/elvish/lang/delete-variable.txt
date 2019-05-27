@@ -2,4 +2,4 @@ Elvish File
   ElvishDeleteStatementImpl(DELETE_STATEMENT)
     PsiElement(ElvishTokenType.del)('del')
     PsiWhiteSpace(' ')
-    PsiElement(ElvishTokenType.bareword)('x')
+    PsiElement(ElvishTokenType.VARIABLE)('x')

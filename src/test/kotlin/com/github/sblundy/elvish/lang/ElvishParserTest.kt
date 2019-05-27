@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NonNls
 import org.junit.Assert
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -72,11 +73,13 @@ class ElvishParserTest {
     }
 
     @ParameterizedTest
+//    @Disabled
     @MethodSource("fileLister")
     fun parseTest(baseName: String) {
         val text = loadFile("$baseName.elv")
         val output = createFile("$baseName.elv", text)
 
+        println("$baseName.txt")
         Assert.assertNotNull(output)
         output!!.accept(PsiElementVisitor.EMPTY_VISITOR)
         Assert.assertEquals(text, output.text)
@@ -112,7 +115,7 @@ class ElvishParserTest {
 
     private fun loadFileDefault(dir: String, name: String): String {
         val file = File(dir, name)
-        println(file.absolutePath)
+//        println(file.name)
         return FileUtil.loadFile(file, CharsetToolkit.UTF8, true).trim { it <= ' ' }
     }
 }

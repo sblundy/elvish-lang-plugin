@@ -1,4 +1,4 @@
-ElvishTokenType.bareword ('x')
+ElvishTokenType.VARIABLE ('x')
 WHITE_SPACE (' ')
 ElvishTokenType.= ('=')
 WHITE_SPACE (' ')

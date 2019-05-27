@@ -37,7 +37,8 @@ public interface ElvishTypes {
   IElementType WHILE_STATEMENT = new ElvishElementType("WHILE_STATEMENT");
 
   IElementType AMPERSAND = new ElvishTokenType("&");
-  IElementType BAREWORD = new ElvishTokenType("bareword");
+  IElementType AT_VARIABLE = new ElvishTokenType("@VARIABLE");
+  IElementType BAREWORD = new ElvishTokenType("BAREWORD");
   IElementType BUILTIN_OPERATOR_FN = new ElvishTokenType("BUILTIN_OPERATOR_FN");
   IElementType CLOSE_BRACE = new ElvishTokenType("close_brace");
   IElementType CLOSE_BRACKET = new ElvishTokenType("close_bracket");
@@ -66,6 +67,7 @@ public interface ElvishTypes {
   IElementType SINGLE_QUOTE = new ElvishTokenType("'");
   IElementType TEXT = new ElvishTokenType(".");
   IElementType TILDA = new ElvishTokenType("~");
+  IElementType VARIABLE = new ElvishTokenType("VARIABLE");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {

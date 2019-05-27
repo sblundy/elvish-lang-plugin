@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishDeleteStatement extends PsiElement {
 
+  @Nullable
+  PsiElement getBareword();
+
 }

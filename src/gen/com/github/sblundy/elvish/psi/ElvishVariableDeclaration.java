@@ -8,4 +8,7 @@ import com.intellij.psi.PsiNamedElement;
 
 public interface ElvishVariableDeclaration extends PsiNamedElement {
 
+  @NotNull
+  PsiElement getVariable();
+
 }

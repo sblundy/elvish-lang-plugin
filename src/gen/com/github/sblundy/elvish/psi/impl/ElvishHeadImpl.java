@@ -28,8 +28,20 @@ public class ElvishHeadImpl extends ASTWrapperPsiElement implements ElvishHead {
 
   @Override
   @Nullable
+  public PsiElement getBareword() {
+    return findChildByType(BAREWORD);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getBuiltinOperatorFn() {
     return findChildByType(BUILTIN_OPERATOR_FN);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getVariable() {
+    return findChildByType(VARIABLE);
   }
 
 }

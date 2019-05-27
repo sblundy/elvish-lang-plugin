@@ -42,11 +42,15 @@
     REF_MARKER="$"
     PIPE="pipe"
     BUILTIN_OPERATOR_FN
+    BAREWORD
+    VARIABLE
+    AT_VARIABLE="@VARIABLE"
   ]
   mixin("variable_declaration")="com.github.sblundy.elvish.psi.ElvishVariableDeclarationMixin"
 }
 
 script ::= line* <<eof>>
+private bareword ::= AT_VARIABLE | VARIABLE | BAREWORD
 private line ::= (command COMMENT line_terminator) | (command line_terminator) | (COMMENT line_terminator) | line_terminator | command | COMMENT
 pipeline ::= pipeline_prv
 private pipeline_head ::= pipeline_prv | ordinary_command
@@ -60,7 +64,7 @@ argument ::= assignable_string
 head ::= bareword | BUILTIN_OPERATOR_FN
 assignment ::= assignment_left EQUALS assignment_right
 private assignment_right ::= output_capture | lambda | assignable_string
-private assignment_left ::= variable_name(variable_index)?
+private assignment_left ::= VARIABLE(variable_index)?
 
 // strings
 
@@ -90,7 +94,7 @@ if_statement ::= KEYWORD_IF condition block elif_statement* else_statement?
 try_statement ::= KEYWORD_TRY block except_statement? else_statement? finally_statement?
 while_statement ::= KEYWORD_WHILE condition block else_statement?
 for_statement ::= KEYWORD_FOR variable_declaration collection block else_statement?
-delete_statement ::= KEYWORD_DEL variable_name(variable_index)?
+delete_statement ::= KEYWORD_DEL VARIABLE(variable_index)?
 
 elif_statement ::= KEYWORD_ELIF condition block
 else_statement ::= KEYWORD_ELSE block
@@ -103,16 +107,15 @@ block ::= OPEN_BRACE line* CLOSE_BRACE
 
 // variables
 
-variable_declaration ::= variable_name {
+variable_declaration ::= VARIABLE {
     implements="com.intellij.psi.PsiNamedElement"
 }
-variable_ref ::= (REF_MARKER)variable_name(variable_index)?
+variable_ref ::= (REF_MARKER)VARIABLE(variable_index)?
 private variable_index ::= (OPEN_BRACKET)bareword(CLOSE_BRACKET)
-private variable_name ::= bareword
 
 // lambdas
 
 lambda ::= arg_lambda | no_arg_lambda
 private parameter ::= bareword
-private arg_lambda ::= OPEN_BRACKET parameter* CLOSE_BRACKET(no_arg_lambda)
+private arg_lambda ::= OPEN_BRACKET parameter* AT_VARIABLE? CLOSE_BRACKET(no_arg_lambda)
 private no_arg_lambda ::= OPEN_BRACE line* CLOSE_BRACE

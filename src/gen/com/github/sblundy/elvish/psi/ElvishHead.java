@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface ElvishHead extends PsiElement {
 
   @Nullable
+  PsiElement getBareword();
+
+  @Nullable
   PsiElement getBuiltinOperatorFn();
+
+  @Nullable
+  PsiElement getVariable();
 
 }

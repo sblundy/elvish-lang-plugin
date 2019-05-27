@@ -26,4 +26,10 @@ public class ElvishVariableDeclarationImpl extends ElvishVariableDeclarationMixi
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getVariable() {
+    return findNotNullChildByType(VARIABLE);
+  }
+
 }
