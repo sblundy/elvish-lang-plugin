@@ -40,6 +40,12 @@ public class ElvishBlockImpl extends ASTWrapperPsiElement implements ElvishBlock
 
   @Override
   @NotNull
+  public List<ElvishFnStatement> getFnStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishFnStatement.class);
+  }
+
+  @Override
+  @NotNull
   public List<ElvishForStatement> getForStatementList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishForStatement.class);
   }

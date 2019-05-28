@@ -21,6 +21,7 @@ public interface ElvishTypes {
   IElementType ESCAPED_SEQUENCE = new ElvishElementType("ESCAPED_SEQUENCE");
   IElementType EXCEPT_STATEMENT = new ElvishElementType("EXCEPT_STATEMENT");
   IElementType FINALLY_STATEMENT = new ElvishElementType("FINALLY_STATEMENT");
+  IElementType FN_STATEMENT = new ElvishElementType("FN_STATEMENT");
   IElementType FOR_STATEMENT = new ElvishElementType("FOR_STATEMENT");
   IElementType HEAD = new ElvishElementType("HEAD");
   IElementType IF_STATEMENT = new ElvishElementType("IF_STATEMENT");
@@ -58,6 +59,7 @@ public interface ElvishTypes {
   IElementType KEYWORD_ELSE = new ElvishTokenType("else");
   IElementType KEYWORD_EXCEPT = new ElvishTokenType("except");
   IElementType KEYWORD_FINALLY = new ElvishTokenType("finally");
+  IElementType KEYWORD_FN = new ElvishTokenType("fn");
   IElementType KEYWORD_FOR = new ElvishTokenType("for");
   IElementType KEYWORD_IF = new ElvishTokenType("if");
   IElementType KEYWORD_TRY = new ElvishTokenType("try");
@@ -113,6 +115,9 @@ public interface ElvishTypes {
       }
       else if (type == FINALLY_STATEMENT) {
         return new ElvishFinallyStatementImpl(node);
+      }
+      else if (type == FN_STATEMENT) {
+        return new ElvishFnStatementImpl(node);
       }
       else if (type == FOR_STATEMENT) {
         return new ElvishForStatementImpl(node);

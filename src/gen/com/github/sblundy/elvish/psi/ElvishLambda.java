@@ -14,6 +14,9 @@ public interface ElvishLambda extends PsiElement {
   List<ElvishDeleteStatement> getDeleteStatementList();
 
   @NotNull
+  List<ElvishFnStatement> getFnStatementList();
+
+  @NotNull
   List<ElvishForStatement> getForStatementList();
 
   @NotNull

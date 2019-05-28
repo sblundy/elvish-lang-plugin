@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishBlock extends PsiElement {
+public interface ElvishFnStatement extends PsiElement {
 
   @NotNull
   List<ElvishAssignment> getAssignmentList();
@@ -29,6 +29,9 @@ public interface ElvishBlock extends PsiElement {
   List<ElvishOrdinaryCommand> getOrdinaryCommandList();
 
   @NotNull
+  List<ElvishParameter> getParameterList();
+
+  @NotNull
   List<ElvishPipeline> getPipelineList();
 
   @NotNull
@@ -36,5 +39,8 @@ public interface ElvishBlock extends PsiElement {
 
   @NotNull
   List<ElvishWhileStatement> getWhileStatementList();
+
+  @NotNull
+  PsiElement getVariable();
 
 }

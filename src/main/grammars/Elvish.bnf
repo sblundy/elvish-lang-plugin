@@ -36,6 +36,7 @@
     KEYWORD_IF="if"
     KEYWORD_TRY="try"
     KEYWORD_DEL="del"
+    KEYWORD_FN="fn"
     ESCAPED_QUOTED_TEXT="escaped_sequence"
     INVALID_ESCAPED_QUOTED_TEXT="invalid_escaped_sequence"
     CONTINUATION="continuation"
@@ -51,17 +52,22 @@
 
 script ::= line* <<eof>>
 private bareword ::= AT_VARIABLE | VARIABLE | BAREWORD
+
+// commands
+
 private line ::= (command COMMENT line_terminator) | (command line_terminator) | (COMMENT line_terminator) | line_terminator | command | COMMENT
 pipeline ::= pipeline_prv
 private pipeline_head ::= pipeline_prv | ordinary_command
 private pipeline_prv ::= ordinary_command PIPE pipeline_head
-private command ::= delete_statement | if_statement | while_statement | for_statement | try_statement | assignment | pipeline | ordinary_command
+private command ::= special_command | assignment | pipeline | ordinary_command
+
 ordinary_command ::= head argument_list
 private argument_list ::= argument_list_line argument_list_continuation*
 private argument_list_line ::= argument*
 private argument_list_continuation ::= CONTINUATION argument*
 argument ::= assignable_string
 head ::= bareword | BUILTIN_OPERATOR_FN
+
 assignment ::= assignment_left EQUALS assignment_right
 private assignment_right ::= output_capture | lambda | map_or_list | assignable_string
 private assignment_left ::= VARIABLE(variable_index)?
@@ -93,13 +99,15 @@ output_capture ::= pipeline_output_body | command_outpub_body
 private command_outpub_body ::= OPEN_PARAN ordinary_command CLOSE_PARAN
 private pipeline_output_body ::= OPEN_PARAN pipeline CLOSE_PARAN
 
-// statements
+// special commands
 
+private special_command ::= fn_statement | delete_statement | if_statement | while_statement | for_statement | try_statement
 if_statement ::= KEYWORD_IF condition block elif_statement* else_statement?
 try_statement ::= KEYWORD_TRY block except_statement? else_statement? finally_statement?
 while_statement ::= KEYWORD_WHILE condition block else_statement?
 for_statement ::= KEYWORD_FOR variable_declaration collection block else_statement?
 delete_statement ::= KEYWORD_DEL VARIABLE(variable_index)?
+fn_statement ::= KEYWORD_FN VARIABLE (no_arg_lambda | arg_lambda)
 
 elif_statement ::= KEYWORD_ELIF condition block
 else_statement ::= KEYWORD_ELSE block

@@ -60,6 +60,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFnStatement(@NotNull ElvishFnStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitForStatement(@NotNull ElvishForStatement o) {
     visitPsiElement(o);
   }

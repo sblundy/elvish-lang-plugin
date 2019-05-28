@@ -11,14 +11,14 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishLambdaImpl extends ASTWrapperPsiElement implements ElvishLambda {
+public class ElvishFnStatementImpl extends ASTWrapperPsiElement implements ElvishFnStatement {
 
-  public ElvishLambdaImpl(@NotNull ASTNode node) {
+  public ElvishFnStatementImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitLambda(this);
+    visitor.visitFnStatement(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -90,6 +90,12 @@ public class ElvishLambdaImpl extends ASTWrapperPsiElement implements ElvishLamb
   @NotNull
   public List<ElvishWhileStatement> getWhileStatementList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishWhileStatement.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getVariable() {
+    return findNotNullChildByType(VARIABLE);
   }
 
 }

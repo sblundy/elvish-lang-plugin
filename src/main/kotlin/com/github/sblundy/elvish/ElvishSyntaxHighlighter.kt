@@ -21,14 +21,16 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
             ElvishTypes.SINGLE_QUOTED_STRING, ElvishTypes.DOUBLE_QUOTED_STRING, ElvishTypes.TEXT -> STRING_KEYS
             ElvishTypes.ESCAPED_QUOTED_TEXT -> ESCAPED_STRING_KEYS
             ElvishTypes.INVALID_ESCAPED_QUOTED_TEXT -> INVALID_ESCAPE_SEQUENCE_KEYS
+            ElvishTypes.KEYWORD_DEL,
+            ElvishTypes.KEYWORD_ELIF,
+            ElvishTypes.KEYWORD_ELSE,
+            ElvishTypes.KEYWORD_EXCEPT,
+            ElvishTypes.KEYWORD_FINALLY,
+            ElvishTypes.KEYWORD_FN,
+            ElvishTypes.KEYWORD_FOR,
             ElvishTypes.KEYWORD_IF,
-                ElvishTypes.KEYWORD_ELIF,
-                ElvishTypes.KEYWORD_EXCEPT,
-                ElvishTypes.KEYWORD_TRY,
-                ElvishTypes.KEYWORD_FINALLY,
-                ElvishTypes.KEYWORD_FOR,
-                ElvishTypes.KEYWORD_ELSE,
-                ElvishTypes.KEYWORD_WHILE -> KEYWORD_KEYS
+            ElvishTypes.KEYWORD_TRY,
+            ElvishTypes.KEYWORD_WHILE -> KEYWORD_KEYS
             ElvishTypes.OPEN_BRACKET, ElvishTypes.CLOSE_BRACKET -> BRACKETS_KEYS
             ElvishTypes.OPEN_BRACE, ElvishTypes.CLOSE_BRACE -> BRACES_KEYS
             ElvishTypes.OPEN_PARAN, ElvishTypes.CLOSE_PARAN -> PARENTHESES_KEYS
