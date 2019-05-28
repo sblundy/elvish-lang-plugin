@@ -123,7 +123,7 @@ block ::= OPEN_BRACE line* CLOSE_BRACE
 variable_declaration ::= VARIABLE {
     implements="com.intellij.psi.PsiNamedElement"
 }
-variable_ref ::= (REF_MARKER)VARIABLE(variable_index)?
+variable_ref ::= (REF_MARKER)(AT_VARIABLE|VARIABLE)(variable_index)?
 private variable_index ::= (OPEN_BRACKET)bareword(CLOSE_BRACKET)
 
 // lambdas
