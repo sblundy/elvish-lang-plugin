@@ -65,7 +65,7 @@ ordinary_command ::= head argument_list
 private argument_list ::= argument_list_line argument_list_continuation*
 private argument_list_line ::= argument*
 private argument_list_continuation ::= CONTINUATION argument*
-argument ::= assignable_string
+argument ::= assignment_right
 head ::= bareword | BUILTIN_OPERATOR_FN
 
 assignment ::= assignment_left EQUALS assignment_right

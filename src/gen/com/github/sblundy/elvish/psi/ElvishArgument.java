@@ -14,6 +14,15 @@ public interface ElvishArgument extends PsiElement {
   ElvishDoubleQuotedString getDoubleQuotedString();
 
   @Nullable
+  ElvishLambda getLambda();
+
+  @Nullable
+  ElvishMapOrList getMapOrList();
+
+  @Nullable
+  ElvishOutputCapture getOutputCapture();
+
+  @Nullable
   ElvishSingleQuotedString getSingleQuotedString();
 
   @Nullable

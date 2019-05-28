@@ -40,6 +40,24 @@ public class ElvishArgumentImpl extends ASTWrapperPsiElement implements ElvishAr
 
   @Override
   @Nullable
+  public ElvishLambda getLambda() {
+    return findChildByClass(ElvishLambda.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishMapOrList getMapOrList() {
+    return findChildByClass(ElvishMapOrList.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishOutputCapture getOutputCapture() {
+    return findChildByClass(ElvishOutputCapture.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishSingleQuotedString getSingleQuotedString() {
     return findChildByClass(ElvishSingleQuotedString.class);
   }

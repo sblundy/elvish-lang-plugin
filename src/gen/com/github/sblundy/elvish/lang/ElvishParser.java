@@ -93,12 +93,12 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // assignable_string
+  // assignment_right
   public static boolean argument(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "argument")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, ARGUMENT, "<argument>");
-    result_ = assignable_string(builder_, level_ + 1);
+    result_ = assignment_right(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
