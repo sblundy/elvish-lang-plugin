@@ -17,6 +17,7 @@
         <lang.syntaxHighlighterFactory language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishSyntaxHighlighterFactory"/>
         <annotator language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishAnnotator"/>
         <colorSettingsPage implementation="com.github.sblundy.elvish.ElvishColorSettingsPage"/>
+        <lang.braceMatcher language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishPairBraceMatcher"/>
     </extensions>
 
     <actions>
