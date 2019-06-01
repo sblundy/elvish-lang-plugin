@@ -63,14 +63,14 @@ BRACED_BAREWORD_CHAR=[,]
 COMMAND_BAREWORD_CHAR=[<>*\^]
 EOL="\r"|"\n"|"\r\n"
 INLINE_WHITESPACE_CHAR=[ \t]
-INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
+WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
 
 %xstate IN_SINGLE_QUOTE_STRING IN_DOUBLE_QUOTE_STRING
 
 %%
 
 <YYINITIAL> {
-  {INLINE_WHITESPACE}       { return TokenType.WHITE_SPACE; }
+  {WHITESPACE}              { return TokenType.WHITE_SPACE; }
   {COMMENT}                 { return ElvishTypes.COMMENT; }
 
   "{"                       { return ElvishTypes.OPEN_BRACE; }
@@ -111,7 +111,6 @@ INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
   {VARIABLE_CHAR}+          { return ElvishTypes.VARIABLE; }
   "@"{VARIABLE_CHAR}+       { return ElvishTypes.AT_VARIABLE; }
   {BAREWORD_CHAR}+          { return ElvishTypes.BAREWORD; }
-  {EOL}                     { return ElvishTypes.EOL; }
 }
 
 <IN_SINGLE_QUOTE_STRING> {

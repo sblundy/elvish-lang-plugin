@@ -28,12 +28,6 @@ public class ElvishOrdinaryCommandImpl extends ASTWrapperPsiElement implements E
 
   @Override
   @NotNull
-  public List<ElvishArgument> getArgumentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishArgument.class);
-  }
-
-  @Override
-  @NotNull
   public ElvishHead getHead() {
     return findNotNullChildByClass(ElvishHead.class);
   }

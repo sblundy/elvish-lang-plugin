@@ -1,5 +1,9 @@
 {
   parserClass="com.github.sblundy.elvish.lang.ElvishParser"
+  parserUtilClass="com.github.sblundy.elvish.lang.ElvishParserUtils"
+  parserImports = [
+    'static com.intellij.lang.parser.GeneratedParserUtilBase.*'
+  ]
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
   psiClassPrefix="Elvish"
@@ -50,21 +54,18 @@
   mixin("variable_declaration")="com.github.sblundy.elvish.psi.ElvishVariableDeclarationMixin"
 }
 
-script ::= line* <<eof>>
+script ::= command* <<eof>>
 private bareword ::= AT_VARIABLE | VARIABLE | BAREWORD
 
 // commands
 
-private line ::= (command COMMENT line_terminator) | (command line_terminator) | (COMMENT line_terminator) | line_terminator | command | COMMENT
 pipeline ::= pipeline_prv
 private pipeline_head ::= pipeline_prv | ordinary_command
 private pipeline_prv ::= ordinary_command PIPE pipeline_head
 private command ::= special_command | assignment | pipeline | ordinary_command
 
 ordinary_command ::= head argument_list
-private argument_list ::= argument_list_line argument_list_continuation*
-private argument_list_line ::= argument*
-private argument_list_continuation ::= CONTINUATION argument*
+private  argument_list ::= <<parseArgList argument line_terminator>>
 argument ::= assignment_right
 head ::= bareword | BUILTIN_OPERATOR_FN
 
@@ -91,7 +92,7 @@ private TEXT_CHR ::= TEXT | invalid_escape_sequence | escaped_sequence
 private string ::= TEXT_CHR*
 single_quoted_string ::= SINGLE_QUOTE string SINGLE_QUOTE
 double_quoted_string ::= DOUBLE_QUOTE string DOUBLE_QUOTE
-line_terminator ::= EOL+
+private line_terminator ::= EOL+
 
 // captures
 
@@ -116,7 +117,7 @@ finally_statement ::= KEYWORD_FINALLY block
 
 condition ::= variable_ref | output_capture
 collection ::= variable_ref | output_capture
-block ::= OPEN_BRACE line* CLOSE_BRACE
+block ::= OPEN_BRACE command* CLOSE_BRACE
 
 // variables
 
@@ -132,4 +133,4 @@ lambda ::= arg_lambda | no_arg_lambda
 parameter ::= VARIABLE | AT_VARIABLE | option
 private option ::= AMPERSAND(bareword)EQUALS(bareword)
 private arg_lambda ::= OPEN_BRACKET parameter* AT_VARIABLE? CLOSE_BRACKET(no_arg_lambda)
-private no_arg_lambda ::= OPEN_BRACE line* CLOSE_BRACE
+private no_arg_lambda ::= OPEN_BRACE command* CLOSE_BRACE

@@ -5,7 +5,6 @@ Elvish File
     PsiWhiteSpace(' ')
     ElvishArgumentImpl(ARGUMENT)
       PsiElement(ElvishTokenType.VARIABLE)('test')
-  ElvishLineTerminatorImpl(LINE_TERMINATOR)
     PsiElement(ElvishTokenType.EOL)('\n')
   ElvishOrdinaryCommandImpl(ORDINARY_COMMAND)
     ElvishHeadImpl(HEAD)

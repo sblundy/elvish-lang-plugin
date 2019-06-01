@@ -1,7 +1,7 @@
 ElvishTokenType.VARIABLE ('echo')
 WHITE_SPACE (' ')
 ElvishTokenType.VARIABLE ('test')
-ElvishTokenType.EOL ('\n')
+WHITE_SPACE ('\n')
 ElvishTokenType.VARIABLE ('cat')
 WHITE_SPACE (' ')
 ElvishTokenType.BAREWORD ('test.txt')

@@ -23,9 +23,6 @@ public interface ElvishLambda extends PsiElement {
   List<ElvishIfStatement> getIfStatementList();
 
   @NotNull
-  List<ElvishLineTerminator> getLineTerminatorList();
-
-  @NotNull
   List<ElvishOrdinaryCommand> getOrdinaryCommandList();
 
   @NotNull

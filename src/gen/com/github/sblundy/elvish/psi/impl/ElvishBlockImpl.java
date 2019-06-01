@@ -58,12 +58,6 @@ public class ElvishBlockImpl extends ASTWrapperPsiElement implements ElvishBlock
 
   @Override
   @NotNull
-  public List<ElvishLineTerminator> getLineTerminatorList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLineTerminator.class);
-  }
-
-  @Override
-  @NotNull
   public List<ElvishOrdinaryCommand> getOrdinaryCommandList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishOrdinaryCommand.class);
   }
