@@ -65,8 +65,10 @@ private pipeline_prv ::= ordinary_command PIPE pipeline_head
 private command ::= special_command | assignment | pipeline | ordinary_command
 
 ordinary_command ::= head argument_list
-private  argument_list ::= <<parseArgList argument line_terminator>>
+private  argument_list ::= <<parseArgList argument_inner line_terminator>>
+private argument_inner ::= option_value | argument
 argument ::= assignment_right
+option_value ::= AMPERSAND(VARIABLE)EQUALS(assignment_right)
 head ::= bareword | BUILTIN_OPERATOR_FN
 
 assignment ::= assignment_left EQUALS assignment_right

@@ -96,6 +96,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitOptionValue(@NotNull ElvishOptionValue o) {
+    visitPsiElement(o);
+  }
+
   public void visitOrdinaryCommand(@NotNull ElvishOrdinaryCommand o) {
     visitPsiElement(o);
   }

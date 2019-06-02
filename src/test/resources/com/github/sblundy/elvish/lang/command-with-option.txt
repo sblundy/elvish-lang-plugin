@@ -1,0 +1,10 @@
+Elvish File
+  ElvishOrdinaryCommandImpl(ORDINARY_COMMAND)
+    ElvishHeadImpl(HEAD)
+      PsiElement(ElvishTokenType.VARIABLE)('echo')
+    PsiWhiteSpace(' ')
+    ElvishOptionValueImpl(OPTION_VALUE)
+      PsiElement(ElvishTokenType.&)('&')
+      PsiElement(ElvishTokenType.VARIABLE)('a')
+      PsiElement(ElvishTokenType.=)('=')
+      PsiElement(ElvishTokenType.VARIABLE)('test')

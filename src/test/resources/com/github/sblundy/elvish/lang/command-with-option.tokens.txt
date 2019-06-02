@@ -1,0 +1,6 @@
+ElvishTokenType.VARIABLE ('echo')
+WHITE_SPACE (' ')
+ElvishTokenType.& ('&')
+ElvishTokenType.VARIABLE ('a')
+ElvishTokenType.= ('=')
+ElvishTokenType.VARIABLE ('test')

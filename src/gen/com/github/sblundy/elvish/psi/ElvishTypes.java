@@ -30,6 +30,7 @@ public interface ElvishTypes {
   IElementType LAMBDA = new ElvishElementType("LAMBDA");
   IElementType MAP_ENTRY = new ElvishElementType("MAP_ENTRY");
   IElementType MAP_OR_LIST = new ElvishElementType("MAP_OR_LIST");
+  IElementType OPTION_VALUE = new ElvishElementType("OPTION_VALUE");
   IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
   IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
   IElementType PARAMETER = new ElvishElementType("PARAMETER");
@@ -142,6 +143,9 @@ public interface ElvishTypes {
       }
       else if (type == MAP_OR_LIST) {
         return new ElvishMapOrListImpl(node);
+      }
+      else if (type == OPTION_VALUE) {
+        return new ElvishOptionValueImpl(node);
       }
       else if (type == ORDINARY_COMMAND) {
         return new ElvishOrdinaryCommandImpl(node);
