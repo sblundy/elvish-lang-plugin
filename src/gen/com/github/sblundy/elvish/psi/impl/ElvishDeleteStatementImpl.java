@@ -28,6 +28,12 @@ public class ElvishDeleteStatementImpl extends ASTWrapperPsiElement implements E
 
   @Override
   @Nullable
+  public ElvishVariableRef getVariableRef() {
+    return findChildByClass(ElvishVariableRef.class);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getBareword() {
     return findChildByType(BAREWORD);
   }

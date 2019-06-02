@@ -28,7 +28,7 @@ public interface ElvishAssignment extends PsiElement {
   @Nullable
   ElvishSingleQuotedString getSingleQuotedString();
 
-  @Nullable
-  ElvishVariableRef getVariableRef();
+  @NotNull
+  List<ElvishVariableRef> getVariableRefList();
 
 }

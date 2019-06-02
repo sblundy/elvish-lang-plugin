@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishVariableRef extends PsiElement {
 
   @Nullable
+  ElvishVariableRef getVariableRef();
+
+  @Nullable
   PsiElement getBareword();
 
 }

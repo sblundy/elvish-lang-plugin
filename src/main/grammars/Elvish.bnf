@@ -129,7 +129,7 @@ variable_declaration ::= VARIABLE {
     implements="com.intellij.psi.PsiNamedElement"
 }
 variable_ref ::= (REF_MARKER)(AT_VARIABLE|VARIABLE)(variable_index)?
-private variable_index ::= (OPEN_BRACKET)bareword(CLOSE_BRACKET)
+private variable_index ::= (OPEN_BRACKET)(bareword | variable_ref)(CLOSE_BRACKET)
 
 // lambdas
 
