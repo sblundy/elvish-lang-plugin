@@ -77,6 +77,7 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
   "}"                       { return ElvishTypes.CLOSE_BRACE; }
   "["                       { return ElvishTypes.OPEN_BRACKET; }
   "]"                       { return ElvishTypes.CLOSE_BRACKET; }
+  "?"                       { return ElvishTypes.QUESTION; }
   "("                       { return ElvishTypes.OPEN_PARAN; }
   ")"                       { return ElvishTypes.CLOSE_PARAN; }
   "'"                       {

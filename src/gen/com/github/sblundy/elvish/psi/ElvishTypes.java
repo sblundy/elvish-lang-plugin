@@ -69,6 +69,7 @@ public interface ElvishTypes {
   IElementType OPEN_BRACKET = new ElvishTokenType("open_bracket");
   IElementType OPEN_PARAN = new ElvishTokenType("open_paran");
   IElementType PIPE = new ElvishTokenType("pipe");
+  IElementType QUESTION = new ElvishTokenType("?");
   IElementType REF_MARKER = new ElvishTokenType("$");
   IElementType SINGLE_QUOTE = new ElvishTokenType("'");
   IElementType TEXT = new ElvishTokenType(".");

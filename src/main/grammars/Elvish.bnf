@@ -26,6 +26,7 @@
     SINGLE_QUOTE="'"
     DOUBLE_QUOTE="\""
     AMPERSAND="&"
+    QUESTION="?"
     TILDA="~"
     EQUALS="="
     INLINE_WHITESPACE="regexp:[ \t]+"
@@ -100,8 +101,8 @@ private line_terminator ::= EOL+
 // captures
 
 output_capture ::= pipeline_output_body | command_outpub_body
-private command_outpub_body ::= OPEN_PARAN ordinary_command CLOSE_PARAN
-private pipeline_output_body ::= OPEN_PARAN pipeline CLOSE_PARAN
+private command_outpub_body ::= QUESTION?OPEN_PARAN ordinary_command CLOSE_PARAN
+private pipeline_output_body ::= QUESTION?OPEN_PARAN pipeline CLOSE_PARAN
 
 // special commands
 
