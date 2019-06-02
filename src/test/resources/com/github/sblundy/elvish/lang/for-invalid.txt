@@ -13,7 +13,7 @@ Elvish File
     ElvishBlockImpl(BLOCK)
       PsiElement(ElvishTokenType.open_brace)('{')
       PsiWhiteSpace('\n    ')
-      PsiErrorElement:Command Expected
+      PsiErrorElement:"Command Expected"
         PsiElement(ElvishTokenType.$)('$')
         PsiElement(ElvishTokenType.VARIABLE)('x')
       PsiWhiteSpace('\n')
