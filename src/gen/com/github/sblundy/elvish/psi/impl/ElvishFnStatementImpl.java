@@ -28,62 +28,8 @@ public class ElvishFnStatementImpl extends ASTWrapperPsiElement implements Elvis
 
   @Override
   @NotNull
-  public List<ElvishAssignment> getAssignmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishAssignment.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishDeleteStatement> getDeleteStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishDeleteStatement.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishFnStatement> getFnStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishFnStatement.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishForStatement> getForStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishForStatement.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishIfStatement> getIfStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIfStatement.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishOrdinaryCommand> getOrdinaryCommandList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishOrdinaryCommand.class);
-  }
-
-  @Override
-  @NotNull
   public List<ElvishParameter> getParameterList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishParameter.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishPipeline> getPipelineList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishPipeline.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishTryStatement> getTryStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishTryStatement.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishWhileStatement> getWhileStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishWhileStatement.class);
   }
 
   @Override

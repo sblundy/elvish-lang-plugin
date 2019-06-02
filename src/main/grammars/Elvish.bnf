@@ -120,8 +120,8 @@ finally_statement ::= KEYWORD_FINALLY block
 
 condition ::= variable_ref | output_capture
 collection ::= variable_ref | output_capture
-block ::= OPEN_BRACE command* CLOSE_BRACE
-
+block ::= OPEN_BRACE block_body CLOSE_BRACE
+private block_body ::= <<parseBlockBody command>>
 // variables
 
 variable_declaration ::= VARIABLE {
@@ -136,4 +136,4 @@ lambda ::= arg_lambda | no_arg_lambda
 parameter ::= VARIABLE | AT_VARIABLE | option
 private option ::= AMPERSAND(bareword)EQUALS(bareword)
 private arg_lambda ::= OPEN_BRACKET parameter* AT_VARIABLE? CLOSE_BRACKET(no_arg_lambda)
-private no_arg_lambda ::= OPEN_BRACE command* CLOSE_BRACE
+private no_arg_lambda ::= OPEN_BRACE block_body CLOSE_BRACE

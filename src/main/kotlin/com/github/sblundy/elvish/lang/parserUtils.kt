@@ -11,6 +11,7 @@ import com.intellij.lang.parser.GeneratedParserUtilBase
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.TokenType.*
 import com.intellij.psi.tree.IElementType
+import com.intellij.psi.tree.TokenSet
 
 private val newLines = Regex("[\n\r]")
 
@@ -49,6 +50,48 @@ fun parseArgList(
     return true
 }
 
+fun parseBlockBody(
+    builder: PsiBuilder,
+    level: Int,
+    command: GeneratedParserUtilBase.Parser
+): Boolean {
+    if (!GeneratedParserUtilBase.recursion_guard_(builder, level, "parseBlockBody")) return false
+    while (true) {
+        val pos_ = GeneratedParserUtilBase.current_position_(builder)
+        if (!command.parse(builder, level)) {
+            if (builder.tokenType == ElvishTypes.CLOSE_BRACE) {
+                break
+            }
+
+            val marker = builder.mark()
+            skipCountingBraces(builder, TokenSet.create(ElvishTypes.CLOSE_BRACE))
+            marker.error("Command Expected")
+        }
+        if (!GeneratedParserUtilBase.empty_element_parsed_guard_(builder, "parseBlockBody", pos_)) break
+    }
+    return true
+}
+
+fun skipCountingBraces(builder: PsiBuilder, until: TokenSet): Boolean {
+    var braceLevel = 0
+    while (true) {
+        if (builder.eof()) {
+            return false
+        }
+        val type = builder.tokenType
+        if (braceLevel == 0 && until.contains(type)) {
+            return true
+        }
+
+        if (ElvishTypes.OPEN_BRACE === type) {
+            braceLevel++
+        } else if (ElvishTypes.CLOSE_BRACE === type) {
+            braceLevel--
+        }
+        builder.advanceLexer()
+    }
+}
+
 private class TrailingWhiteSpaceAccum(val text: CharSequence) : WhitespaceSkippedCallback {
     var whiteSpaceRange: TextRange = TextRange.EMPTY_RANGE
 
@@ -66,7 +109,7 @@ private class TrailingWhiteSpaceAccum(val text: CharSequence) : WhitespaceSkippe
     }
 }
 
-private class TrailingWhiteSpaceRemapper(val remapEOLs:TextRange) : ITokenTypeRemapper {
+private class TrailingWhiteSpaceRemapper(val remapEOLs: TextRange) : ITokenTypeRemapper {
     override fun filter(source: IElementType, start: Int, end: Int, text: CharSequence): IElementType = if (
         source == WHITE_SPACE &&
         remapEOLs.containsRange(start, end) &&

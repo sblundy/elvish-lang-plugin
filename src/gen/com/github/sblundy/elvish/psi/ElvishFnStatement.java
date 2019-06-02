@@ -8,34 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface ElvishFnStatement extends PsiElement {
 
   @NotNull
-  List<ElvishAssignment> getAssignmentList();
-
-  @NotNull
-  List<ElvishDeleteStatement> getDeleteStatementList();
-
-  @NotNull
-  List<ElvishFnStatement> getFnStatementList();
-
-  @NotNull
-  List<ElvishForStatement> getForStatementList();
-
-  @NotNull
-  List<ElvishIfStatement> getIfStatementList();
-
-  @NotNull
-  List<ElvishOrdinaryCommand> getOrdinaryCommandList();
-
-  @NotNull
   List<ElvishParameter> getParameterList();
-
-  @NotNull
-  List<ElvishPipeline> getPipelineList();
-
-  @NotNull
-  List<ElvishTryStatement> getTryStatementList();
-
-  @NotNull
-  List<ElvishWhileStatement> getWhileStatementList();
 
   @NotNull
   PsiElement getVariable();
