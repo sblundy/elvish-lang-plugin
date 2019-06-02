@@ -2,6 +2,7 @@
 
 package com.github.sblundy.elvish.lang
 
+import com.github.sblundy.elvish.ElvishBundle
 import com.github.sblundy.elvish.psi.ElvishTypes
 import com.github.sblundy.elvish.psi.ElvishTypes.CONTINUATION
 import com.intellij.lang.ITokenTypeRemapper
@@ -65,7 +66,7 @@ fun parseBlockBody(
 
             val marker = builder.mark()
             skipCountingBraces(builder, TokenSet.create(ElvishTypes.CLOSE_BRACE))
-            marker.error("Command Expected")
+            marker.error(ElvishBundle.message("psi.error.command"))
         }
         if (!GeneratedParserUtilBase.empty_element_parsed_guard_(builder, "parseBlockBody", pos_)) break
     }

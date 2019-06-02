@@ -32,19 +32,19 @@ private val additionalHighlightingTag = Collections.unmodifiableMap(
 )
 
 private val elvishAttributesDescriptors = arrayOf(
-    AttributesDescriptor("Command", ElvishSyntaxHighlighter.COMMAND),
-    AttributesDescriptor("Keyword", ElvishSyntaxHighlighter.KEYWORD),
-    AttributesDescriptor("Built In", ElvishSyntaxHighlighter.BUILTIN),
-    AttributesDescriptor("String", ElvishSyntaxHighlighter.STRING),
-    AttributesDescriptor("Bracket", ElvishSyntaxHighlighter.BRACKETS),
-    AttributesDescriptor("Brace", ElvishSyntaxHighlighter.BRACES),
-    AttributesDescriptor("Parenthesis", ElvishSyntaxHighlighter.PARENTHESES),
-    AttributesDescriptor("Parameter", ElvishSyntaxHighlighter.PARAMETER),
-    AttributesDescriptor("Escape Sequence", ElvishSyntaxHighlighter.ESCAPE_SEQUENCE),
-    AttributesDescriptor("Invalid Escape Sequence", ElvishSyntaxHighlighter.INVALID_ESCAPE_SEQUENCE),
-    AttributesDescriptor("Variable Declaration", ElvishSyntaxHighlighter.VARIABLE),
-    AttributesDescriptor("Variable Reference", ElvishSyntaxHighlighter.VARIABLE_REF),
-    AttributesDescriptor("Comment", ElvishSyntaxHighlighter.COMMENT)
+    AttributesDescriptor(ElvishBundle.message("attribute.COMMAND.displayName"), ElvishSyntaxHighlighter.COMMAND),
+    AttributesDescriptor(ElvishBundle.message("attribute.KEYWORD.displayName"), ElvishSyntaxHighlighter.KEYWORD),
+    AttributesDescriptor(ElvishBundle.message("attribute.BUILTIN.displayName"), ElvishSyntaxHighlighter.BUILTIN),
+    AttributesDescriptor(ElvishBundle.message("attribute.STRING.displayName"), ElvishSyntaxHighlighter.STRING),
+    AttributesDescriptor(ElvishBundle.message("attribute.BRACKETS.displayName"), ElvishSyntaxHighlighter.BRACKETS),
+    AttributesDescriptor(ElvishBundle.message("attribute.BRACES.displayName"), ElvishSyntaxHighlighter.BRACES),
+    AttributesDescriptor(ElvishBundle.message("attribute.PARENTHESES.displayName"), ElvishSyntaxHighlighter.PARENTHESES),
+    AttributesDescriptor(ElvishBundle.message("attribute.PARAMETER.displayName"), ElvishSyntaxHighlighter.PARAMETER),
+    AttributesDescriptor(ElvishBundle.message("attribute.ESCAPE_SEQUENCE.displayName"), ElvishSyntaxHighlighter.ESCAPE_SEQUENCE),
+    AttributesDescriptor(ElvishBundle.message("attribute.INVALID_ESCAPE_SEQUENCE.displayName"), ElvishSyntaxHighlighter.INVALID_ESCAPE_SEQUENCE),
+    AttributesDescriptor(ElvishBundle.message("attribute.VARIABLE.displayName"), ElvishSyntaxHighlighter.VARIABLE),
+    AttributesDescriptor(ElvishBundle.message("attribute.VARIABLE_REF.displayName"), ElvishSyntaxHighlighter.VARIABLE_REF),
+    AttributesDescriptor(ElvishBundle.message("attribute.COMMENT.displayName"), ElvishSyntaxHighlighter.COMMENT)
 )
 
 private val sampleElvishScript: String = """
