@@ -1,23 +1,24 @@
 <svg id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16"
-     viewBox="0, 0, 400,400">
+     viewBox="0, 0, 480,480">
     <g>
+        <circle cx="240" cy="240" r="200"/>
         <path id="letter" fill-opacity="0.7" stroke="#54bb54" fill="#54bb54" stroke-width="1"
-              d="M 126,69
+              d="M 166,109
              h 30
              c 30,0 60,10 78,60
              l 77,224
-             H 257
-             L 217,235
-             L 216,234
-             L 215,235
-             L 169,353
-             H 115
-             L 190,156
-             L 181,130
+             H 297
+             L 257,275
+             L 256,274
+             L 255,275
+             L 209,393
+             H 155
+             L 230,196
+             L 221,170
              c -6,-15 -20,-19 -28,-19
-             L 126,110
+             L 166,150
              Z
              "/>
-        <circle id="letter-dot" cx="97" cy="87" r="31" fill="#f8f8f8"/>
+        <circle id="letter-dot" cx="137" cy="127" r="31" fill="#f8f8f8"/>
     </g>
 </svg>
