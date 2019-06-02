@@ -103,7 +103,7 @@ private class TrailingWhiteSpaceAccum(val text: CharSequence) : WhitespaceSkippe
         whiteSpaceRange = if (whiteSpaceRange.isEmpty) {
             TextRange.create(start, end)
         } else if (!whiteSpaceRange.containsOffset(start)) {
-            TextRange.EMPTY_RANGE
+            TextRange.create(start, end)
         } else {
             whiteSpaceRange.union(TextRange.create(start, end))
         }
