@@ -40,6 +40,12 @@ public class ElvishMapOrListImpl extends ASTWrapperPsiElement implements ElvishM
 
   @Override
   @NotNull
+  public List<ElvishEmptyMap> getEmptyMapList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishEmptyMap.class);
+  }
+
+  @Override
+  @NotNull
   public List<ElvishLambda> getLambdaList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLambda.class);
   }

@@ -14,6 +14,9 @@ public interface ElvishAssignment extends PsiElement {
   ElvishDoubleQuotedString getDoubleQuotedString();
 
   @Nullable
+  ElvishEmptyMap getEmptyMap();
+
+  @Nullable
   ElvishLambda getLambda();
 
   @Nullable

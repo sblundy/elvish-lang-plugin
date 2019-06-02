@@ -1,0 +1,7 @@
+ElvishTokenType.VARIABLE ('x')
+WHITE_SPACE (' ')
+ElvishTokenType.= ('=')
+WHITE_SPACE (' ')
+ElvishTokenType.open_bracket ('[')
+ElvishTokenType.& ('&')
+ElvishTokenType.close_bracket (']')

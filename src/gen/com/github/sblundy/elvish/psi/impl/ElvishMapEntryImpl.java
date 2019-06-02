@@ -33,9 +33,15 @@ public class ElvishMapEntryImpl extends ASTWrapperPsiElement implements ElvishMa
   }
 
   @Override
+  @NotNull
+  public List<ElvishDoubleQuotedString> getDoubleQuotedStringList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishDoubleQuotedString.class);
+  }
+
+  @Override
   @Nullable
-  public ElvishDoubleQuotedString getDoubleQuotedString() {
-    return findChildByClass(ElvishDoubleQuotedString.class);
+  public ElvishEmptyMap getEmptyMap() {
+    return findChildByClass(ElvishEmptyMap.class);
   }
 
   @Override
@@ -57,9 +63,9 @@ public class ElvishMapEntryImpl extends ASTWrapperPsiElement implements ElvishMa
   }
 
   @Override
-  @Nullable
-  public ElvishSingleQuotedString getSingleQuotedString() {
-    return findChildByClass(ElvishSingleQuotedString.class);
+  @NotNull
+  public List<ElvishSingleQuotedString> getSingleQuotedStringList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishSingleQuotedString.class);
   }
 
   @Override

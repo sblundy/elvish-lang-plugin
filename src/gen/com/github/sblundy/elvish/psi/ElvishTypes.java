@@ -18,6 +18,7 @@ public interface ElvishTypes {
   IElementType DOUBLE_QUOTED_STRING = new ElvishElementType("DOUBLE_QUOTED_STRING");
   IElementType ELIF_STATEMENT = new ElvishElementType("ELIF_STATEMENT");
   IElementType ELSE_STATEMENT = new ElvishElementType("ELSE_STATEMENT");
+  IElementType EMPTY_MAP = new ElvishElementType("EMPTY_MAP");
   IElementType ESCAPED_SEQUENCE = new ElvishElementType("ESCAPED_SEQUENCE");
   IElementType EXCEPT_STATEMENT = new ElvishElementType("EXCEPT_STATEMENT");
   IElementType FINALLY_STATEMENT = new ElvishElementType("FINALLY_STATEMENT");
@@ -105,6 +106,9 @@ public interface ElvishTypes {
       }
       else if (type == ELSE_STATEMENT) {
         return new ElvishElseStatementImpl(node);
+      }
+      else if (type == EMPTY_MAP) {
+        return new ElvishEmptyMapImpl(node);
       }
       else if (type == ESCAPED_SEQUENCE) {
         return new ElvishEscapedSequenceImpl(node);

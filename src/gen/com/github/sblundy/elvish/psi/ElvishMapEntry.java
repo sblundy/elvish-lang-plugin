@@ -10,8 +10,11 @@ public interface ElvishMapEntry extends PsiElement {
   @Nullable
   ElvishCompoundExpression getCompoundExpression();
 
+  @NotNull
+  List<ElvishDoubleQuotedString> getDoubleQuotedStringList();
+
   @Nullable
-  ElvishDoubleQuotedString getDoubleQuotedString();
+  ElvishEmptyMap getEmptyMap();
 
   @Nullable
   ElvishLambda getLambda();
@@ -22,8 +25,8 @@ public interface ElvishMapEntry extends PsiElement {
   @Nullable
   ElvishOutputCapture getOutputCapture();
 
-  @Nullable
-  ElvishSingleQuotedString getSingleQuotedString();
+  @NotNull
+  List<ElvishSingleQuotedString> getSingleQuotedStringList();
 
   @Nullable
   ElvishVariableRef getVariableRef();

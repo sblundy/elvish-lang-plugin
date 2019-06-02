@@ -48,6 +48,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitEmptyMap(@NotNull ElvishEmptyMap o) {
+    visitPsiElement(o);
+  }
+
   public void visitEscapedSequence(@NotNull ElvishEscapedSequence o) {
     visitPsiElement(o);
   }

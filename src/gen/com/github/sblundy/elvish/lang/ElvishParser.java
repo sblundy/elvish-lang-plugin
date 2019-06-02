@@ -168,13 +168,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // output_capture | lambda | map_or_list | assignable_string
+  // output_capture | lambda | map_or_list | empty_map | assignable_string
   static boolean assignment_right(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "assignment_right")) return false;
     boolean result_;
     result_ = output_capture(builder_, level_ + 1);
     if (!result_) result_ = lambda(builder_, level_ + 1);
     if (!result_) result_ = map_or_list(builder_, level_ + 1);
+    if (!result_) result_ = empty_map(builder_, level_ + 1);
     if (!result_) result_ = assignable_string(builder_, level_ + 1);
     return result_;
   }
@@ -463,6 +464,20 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // OPEN_BRACKET(AMPERSAND)CLOSE_BRACKET
+  public static boolean empty_map(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "empty_map")) return false;
+    if (!nextTokenIs(builder_, OPEN_BRACKET)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, OPEN_BRACKET);
+    result_ = result_ && consumeToken(builder_, AMPERSAND);
+    result_ = result_ && consumeToken(builder_, CLOSE_BRACKET);
+    exit_section_(builder_, marker_, EMPTY_MAP, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // ESCAPED_QUOTED_TEXT
   public static boolean escaped_sequence(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "escaped_sequence")) return false;
@@ -645,7 +660,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // AMPERSAND(bareword)EQUALS(assignment_right)?
+  // AMPERSAND(bareword|single_quoted_string|double_quoted_string)EQUALS(assignment_right)?
   public static boolean map_entry(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "map_entry")) return false;
     if (!nextTokenIs(builder_, AMPERSAND)) return false;
@@ -659,13 +674,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // (bareword)
+  // bareword|single_quoted_string|double_quoted_string
   private static boolean map_entry_1(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "map_entry_1")) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
     result_ = bareword(builder_, level_ + 1);
-    exit_section_(builder_, marker_, null, result_);
+    if (!result_) result_ = single_quoted_string(builder_, level_ + 1);
+    if (!result_) result_ = double_quoted_string(builder_, level_ + 1);
     return result_;
   }
 

@@ -14,6 +14,9 @@ public interface ElvishMapOrList extends PsiElement {
   List<ElvishDoubleQuotedString> getDoubleQuotedStringList();
 
   @NotNull
+  List<ElvishEmptyMap> getEmptyMapList();
+
+  @NotNull
   List<ElvishLambda> getLambdaList();
 
   @NotNull
