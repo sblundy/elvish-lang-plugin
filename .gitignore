@@ -4,3 +4,7 @@ build/
 
 # IDE files and directories
 .idea/
+
+# MacOS
+
+.DS_Store
