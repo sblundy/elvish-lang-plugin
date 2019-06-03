@@ -1,6 +1,6 @@
 <idea-plugin>
-    <id>com.github.sblundy.elivish-lang-plugin</id>
-    <name>Elivish Shell Language</name>
+    <id>com.github.sblundy.elvish-lang-plugin</id>
+    <name>Elvish Shell Language</name>
     <vendor email="el_gonzzo@hotmail.com" url="https://github.com/sblundy/">Steve Blundy</vendor>
 
     <description><![CDATA[
