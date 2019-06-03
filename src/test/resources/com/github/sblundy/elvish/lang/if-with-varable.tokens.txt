@@ -1,7 +1,6 @@
 ElvishTokenType.if ('if')
 WHITE_SPACE (' ')
-ElvishTokenType.$ ('$')
-ElvishTokenType.VARIABLE ('fname')
+ElvishTokenType.VAR_REF ('$fname')
 WHITE_SPACE (' ')
 ElvishTokenType.open_brace ('{')
 WHITE_SPACE ('\n    ')

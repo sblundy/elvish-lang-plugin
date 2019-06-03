@@ -45,7 +45,7 @@
     ESCAPED_QUOTED_TEXT="escaped_sequence"
     INVALID_ESCAPED_QUOTED_TEXT="invalid_escaped_sequence"
     CONTINUATION="continuation"
-    REF_MARKER="$"
+    VAR_REF="VAR_REF"
     PIPE="pipe"
     BUILTIN_OPERATOR_FN
     BAREWORD
@@ -128,7 +128,7 @@ private block_body ::= <<parseBlockBody command>>
 variable_declaration ::= VARIABLE {
     implements="com.intellij.psi.PsiNamedElement"
 }
-variable_ref ::= (REF_MARKER)(AT_VARIABLE|VARIABLE)(variable_index)?
+variable_ref ::= VAR_REF(variable_index)? | (REF_MARKER)(AT_VARIABLE|VARIABLE)(variable_index)?
 private variable_index ::= (OPEN_BRACKET)(bareword | variable_ref)(CLOSE_BRACKET)
 
 // lambdas

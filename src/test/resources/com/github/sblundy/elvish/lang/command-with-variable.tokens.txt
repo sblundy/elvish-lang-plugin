@@ -1,4 +1,3 @@
 ElvishTokenType.VARIABLE ('echo')
 WHITE_SPACE (' ')
-ElvishTokenType.$ ('$')
-ElvishTokenType.VARIABLE ('test')
+ElvishTokenType.VAR_REF ('$test')
