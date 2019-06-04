@@ -38,6 +38,7 @@ public interface ElvishTypes {
   IElementType SINGLE_QUOTED_STRING = new ElvishElementType("SINGLE_QUOTED_STRING");
   IElementType TRY_STATEMENT = new ElvishElementType("TRY_STATEMENT");
   IElementType VARIABLE_DECLARATION = new ElvishElementType("VARIABLE_DECLARATION");
+  IElementType VARIABLE_INDEX = new ElvishElementType("VARIABLE_INDEX");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
   IElementType WHILE_STATEMENT = new ElvishElementType("WHILE_STATEMENT");
 
@@ -70,7 +71,6 @@ public interface ElvishTypes {
   IElementType OPEN_PARAN = new ElvishTokenType("open_paran");
   IElementType PIPE = new ElvishTokenType("pipe");
   IElementType QUESTION = new ElvishTokenType("?");
-  IElementType REF_MARKER = new ElvishTokenType("REF_MARKER");
   IElementType SINGLE_QUOTE = new ElvishTokenType("'");
   IElementType TEXT = new ElvishTokenType(".");
   IElementType TILDA = new ElvishTokenType("~");
@@ -169,6 +169,9 @@ public interface ElvishTypes {
       }
       else if (type == VARIABLE_DECLARATION) {
         return new ElvishVariableDeclarationImpl(node);
+      }
+      else if (type == VARIABLE_INDEX) {
+        return new ElvishVariableIndexImpl(node);
       }
       else if (type == VARIABLE_REF) {
         return new ElvishVariableRefImpl(node);

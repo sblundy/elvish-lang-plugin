@@ -128,6 +128,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiNamedElement(o);
   }
 
+  public void visitVariableIndex(@NotNull ElvishVariableIndex o) {
+    visitPsiElement(o);
+  }
+
   public void visitVariableRef(@NotNull ElvishVariableRef o) {
     visitPsiElement(o);
   }

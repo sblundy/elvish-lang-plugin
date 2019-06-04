@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishDeleteStatement extends PsiElement {
 
   @Nullable
-  ElvishVariableRef getVariableRef();
+  ElvishVariableIndex getVariableIndex();
 
-  @Nullable
-  PsiElement getBareword();
+  @NotNull
+  PsiElement getVariable();
 
 }

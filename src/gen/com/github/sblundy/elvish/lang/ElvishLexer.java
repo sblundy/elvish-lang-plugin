@@ -122,12 +122,12 @@ class ElvishLexer implements FlexLexer {
   private static final String ZZ_ACTION_PACKED_0 =
     "\3\0\1\1\1\2\1\3\1\1\1\4\1\5\1\6"+
     "\6\4\1\7\1\10\3\5\2\7\1\11\1\12\1\13"+
-    "\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23"+
-    "\1\24\1\25\1\26\1\25\1\0\1\27\1\3\2\30"+
-    "\2\4\1\31\1\4\1\32\4\4\1\5\1\33\1\34"+
-    "\1\0\1\35\6\36\4\4\1\37\1\4\1\40\1\41"+
-    "\4\0\1\4\1\42\1\43\2\4\2\0\2\4\1\44"+
-    "\1\0\1\45\1\4\1\0\1\46";
+    "\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\1"+
+    "\1\23\1\24\1\25\1\24\1\0\1\26\1\3\2\27"+
+    "\2\4\1\30\1\4\1\31\4\4\1\5\1\32\1\33"+
+    "\1\0\1\34\6\35\4\4\1\36\1\4\1\37\1\40"+
+    "\4\0\1\4\1\41\1\42\2\4\2\0\2\4\1\43"+
+    "\1\0\1\44\1\4\1\0\1\45";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[90];
@@ -651,196 +651,191 @@ class ElvishLexer implements FlexLexer {
             { return TokenType.BAD_CHARACTER;
             } 
             // fall through
-          case 39: break;
+          case 38: break;
           case 2: 
             { return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 40: break;
+          case 39: break;
           case 3: 
             { return ElvishTypes.COMMENT;
             } 
             // fall through
-          case 41: break;
+          case 40: break;
           case 4: 
             { return ElvishTypes.VARIABLE;
             } 
             // fall through
-          case 42: break;
+          case 41: break;
           case 5: 
             { return ElvishTypes.BUILTIN_OPERATOR_FN;
             } 
             // fall through
-          case 43: break;
+          case 42: break;
           case 6: 
             { return ElvishTypes.CLOSE_BRACKET;
             } 
             // fall through
-          case 44: break;
+          case 43: break;
           case 7: 
             { return ElvishTypes.BAREWORD;
             } 
             // fall through
-          case 45: break;
+          case 44: break;
           case 8: 
             { return ElvishTypes.EQUALS;
             } 
             // fall through
-          case 46: break;
+          case 45: break;
           case 9: 
             { return ElvishTypes.OPEN_BRACE;
             } 
             // fall through
-          case 47: break;
+          case 46: break;
           case 10: 
             { return ElvishTypes.CLOSE_BRACE;
             } 
             // fall through
-          case 48: break;
+          case 47: break;
           case 11: 
             { return ElvishTypes.OPEN_BRACKET;
             } 
             // fall through
-          case 49: break;
+          case 48: break;
           case 12: 
             { return ElvishTypes.QUESTION;
             } 
             // fall through
-          case 50: break;
+          case 49: break;
           case 13: 
             { return ElvishTypes.OPEN_PARAN;
             } 
             // fall through
-          case 51: break;
+          case 50: break;
           case 14: 
             { return ElvishTypes.CLOSE_PARAN;
             } 
             // fall through
-          case 52: break;
+          case 51: break;
           case 15: 
             { yyPushState(IN_SINGLE_QUOTE_STRING);
                                 return ElvishTypes.SINGLE_QUOTE;
             } 
             // fall through
-          case 53: break;
+          case 52: break;
           case 16: 
             { yyPushState(IN_DOUBLE_QUOTE_STRING);
                                 return ElvishTypes.DOUBLE_QUOTE;
             } 
             // fall through
-          case 54: break;
+          case 53: break;
           case 17: 
             { return ElvishTypes.AMPERSAND;
             } 
             // fall through
-          case 55: break;
+          case 54: break;
           case 18: 
             { return ElvishTypes.TILDA;
             } 
             // fall through
-          case 56: break;
+          case 55: break;
           case 19: 
-            { return ElvishTypes.REF_MARKER;
-            } 
-            // fall through
-          case 57: break;
-          case 20: 
             { return ElvishTypes.PIPE;
             } 
             // fall through
-          case 58: break;
-          case 21: 
+          case 56: break;
+          case 20: 
             { return ElvishTypes.TEXT;
             } 
             // fall through
-          case 59: break;
-          case 22: 
+          case 57: break;
+          case 21: 
             { yyPopState();
                                 return ElvishTypes.SINGLE_QUOTE;
             } 
             // fall through
-          case 60: break;
-          case 23: 
+          case 58: break;
+          case 22: 
             { yyPopState();
                                 return ElvishTypes.DOUBLE_QUOTE;
             } 
             // fall through
-          case 61: break;
-          case 24: 
+          case 59: break;
+          case 23: 
             { return ElvishTypes.CONTINUATION;
             } 
             // fall through
-          case 62: break;
-          case 25: 
+          case 60: break;
+          case 24: 
             { return ElvishTypes.KEYWORD_IF;
             } 
             // fall through
-          case 63: break;
-          case 26: 
+          case 61: break;
+          case 25: 
             { return ElvishTypes.KEYWORD_FN;
             } 
             // fall through
-          case 64: break;
-          case 27: 
+          case 62: break;
+          case 26: 
             { return ElvishTypes.AT_VARIABLE;
             } 
             // fall through
-          case 65: break;
-          case 28: 
+          case 63: break;
+          case 27: 
             { return ElvishTypes.VAR_REF;
             } 
             // fall through
-          case 66: break;
-          case 29: 
+          case 64: break;
+          case 28: 
             { return ElvishTypes.ESCAPED_QUOTED_TEXT;
             } 
             // fall through
-          case 67: break;
-          case 30: 
+          case 65: break;
+          case 29: 
             { return ElvishTypes.INVALID_ESCAPED_QUOTED_TEXT;
             } 
             // fall through
-          case 68: break;
-          case 31: 
+          case 66: break;
+          case 30: 
             { return ElvishTypes.KEYWORD_FOR;
             } 
             // fall through
-          case 69: break;
-          case 32: 
+          case 67: break;
+          case 31: 
             { return ElvishTypes.KEYWORD_TRY;
             } 
             // fall through
-          case 70: break;
-          case 33: 
+          case 68: break;
+          case 32: 
             { return ElvishTypes.KEYWORD_DEL;
             } 
             // fall through
-          case 71: break;
-          case 34: 
+          case 69: break;
+          case 33: 
             { return ElvishTypes.KEYWORD_ELSE;
             } 
             // fall through
-          case 72: break;
-          case 35: 
+          case 70: break;
+          case 34: 
             { return ElvishTypes.KEYWORD_ELIF;
             } 
             // fall through
-          case 73: break;
-          case 36: 
+          case 71: break;
+          case 35: 
             { return ElvishTypes.KEYWORD_WHILE;
             } 
             // fall through
-          case 74: break;
-          case 37: 
+          case 72: break;
+          case 36: 
             { return ElvishTypes.KEYWORD_EXCEPT;
             } 
             // fall through
-          case 75: break;
-          case 38: 
+          case 73: break;
+          case 37: 
             { return ElvishTypes.KEYWORD_FINALLY;
             } 
             // fall through
-          case 76: break;
+          case 74: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }
