@@ -70,7 +70,7 @@ private  argument_list ::= <<parseArgList argument_inner line_terminator>>
 private argument_inner ::= option_value | argument
 argument ::= assignment_right
 option_value ::= AMPERSAND(VARIABLE)EQUALS(assignment_right)
-head ::= bareword | COMMAND_BAREWORD
+head ::= bareword | COMMAND_BAREWORD | variable_ref
 
 assignment ::= assignment_left EQUALS assignment_right
 private assignment_right ::= output_capture | lambda | map_or_list | empty_map | assignable_string
