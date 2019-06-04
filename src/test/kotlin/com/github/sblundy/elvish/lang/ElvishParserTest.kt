@@ -60,12 +60,16 @@ class ElvishParserTest {
     }
 
     @Suppress("unused")
+    fun tokensFileLister(): List<String> =
+        FileUtil.findFilesByMask(Pattern.compile(".*\\.tokens.txt"), File(myFullDataPath)).map { it.name.removeSuffix(".tokens.txt") }
+
+    @Suppress("unused")
     fun fileLister(): List<String> =
         FileUtil.findFilesByMask(Pattern.compile(".*\\.elv"), File(myFullDataPath)).map { it.nameWithoutExtension }
 
 
     @ParameterizedTest
-    @MethodSource("fileLister")
+    @MethodSource("tokensFileLister")
     fun lexerTest(baseName: String) {
         val text = loadFile("$baseName.elv")
 
@@ -92,6 +96,7 @@ class ElvishParserTest {
     private fun checkLexer(baseName: String, text: String) {
         val lexer = ElvishLexerAdapter()
         val tokens = loadFile("$baseName.tokens.txt")
+        println("$baseName.tokens.txt")
         val actual = LexerTestCase.printTokens(text, 0, lexer)
         Assert.assertEquals(tokens.trimEnd(), actual.trimEnd())
     }
@@ -115,7 +120,6 @@ class ElvishParserTest {
 
     private fun loadFileDefault(dir: String, name: String): String {
         val file = File(dir, name)
-//        println(file.name)
         return FileUtil.loadFile(file, CharsetToolkit.UTF8, true).trim { it <= ' ' }
     }
 }

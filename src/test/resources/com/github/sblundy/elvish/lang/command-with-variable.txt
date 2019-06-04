@@ -5,5 +5,4 @@ Elvish File
     PsiWhiteSpace(' ')
     ElvishArgumentImpl(ARGUMENT)
       ElvishVariableRefImpl(VARIABLE_REF)
-        PsiElement(ElvishTokenType.$)('$')
-        PsiElement(ElvishTokenType.VARIABLE)('test')
+        PsiElement(ElvishTokenType.VAR_REF)('$test')

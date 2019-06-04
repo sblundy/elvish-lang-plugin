@@ -70,11 +70,12 @@ public interface ElvishTypes {
   IElementType OPEN_PARAN = new ElvishTokenType("open_paran");
   IElementType PIPE = new ElvishTokenType("pipe");
   IElementType QUESTION = new ElvishTokenType("?");
-  IElementType REF_MARKER = new ElvishTokenType("$");
+  IElementType REF_MARKER = new ElvishTokenType("REF_MARKER");
   IElementType SINGLE_QUOTE = new ElvishTokenType("'");
   IElementType TEXT = new ElvishTokenType(".");
   IElementType TILDA = new ElvishTokenType("~");
   IElementType VARIABLE = new ElvishTokenType("VARIABLE");
+  IElementType VAR_REF = new ElvishTokenType("VAR_REF");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
