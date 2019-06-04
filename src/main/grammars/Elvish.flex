@@ -55,12 +55,11 @@ KEYWORD_DEL = del
 KEYWORD_FN = fn
 STRING_CMP_BUILTINS=(([<>=!]=)|[<>])s
 NUMERIC_CMP_BUILTINS=(([<>=!]=)|[<>])
-NUMERIC_BUILTINS=\+|-|\*|\/|%|\^
 VARIABLE_CHAR=[[0-9a-zA-Z\-_:~]||[[\u0080-\uFFFF]&&\p{Print}]] // see parse/parse.go:713 (allowedInVariableName())
 BAREWORD_CHAR=[\.\/@%+!]|{VARIABLE_CHAR}
 LHS_BAREWORD_CHAR=[=]
 BRACED_BAREWORD_CHAR=[,]
-COMMAND_BAREWORD_CHAR=[<>*\^]
+COMMAND_BAREWORD_CHAR=[<>*\^]|{BAREWORD_CHAR}
 EOL="\r"|"\n"|"\r\n"
 INLINE_WHITESPACE_CHAR=[ \t]
 WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
@@ -88,9 +87,6 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
                                 yyPushState(IN_DOUBLE_QUOTE_STRING);
                                 return ElvishTypes.DOUBLE_QUOTE;
                             }
-  {STRING_CMP_BUILTINS}     { return ElvishTypes.BUILTIN_OPERATOR_FN; }
-  {NUMERIC_CMP_BUILTINS}    { return ElvishTypes.BUILTIN_OPERATOR_FN; }
-  {NUMERIC_BUILTINS}        { return ElvishTypes.BUILTIN_OPERATOR_FN; }
   "&"                       { return ElvishTypes.AMPERSAND; }
   "~"                       { return ElvishTypes.TILDA; }
   "="                       { return ElvishTypes.EQUALS; }
@@ -112,6 +108,9 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
   {VARIABLE_CHAR}+          { return ElvishTypes.VARIABLE; }
   "@"{VARIABLE_CHAR}+       { return ElvishTypes.AT_VARIABLE; }
   {BAREWORD_CHAR}+          { return ElvishTypes.BAREWORD; }
+  {COMMAND_BAREWORD_CHAR}+  { return ElvishTypes.COMMAND_BAREWORD; }
+  {STRING_CMP_BUILTINS}     { return ElvishTypes.COMMAND_BAREWORD; }
+  {NUMERIC_CMP_BUILTINS}    { return ElvishTypes.COMMAND_BAREWORD; }
 }
 
 <IN_SINGLE_QUOTE_STRING> {

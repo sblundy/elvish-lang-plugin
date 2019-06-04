@@ -1,0 +1,10 @@
+Elvish File
+  ElvishOrdinaryCommandImpl(ORDINARY_COMMAND)
+    ElvishHeadImpl(HEAD)
+      PsiElement(ElvishTokenType.VARIABLE)('date')
+    PsiWhiteSpace(' ')
+    ElvishArgumentImpl(ARGUMENT)
+      PsiElement(ElvishTokenType.BAREWORD)('+')
+    ElvishArgumentImpl(ARGUMENT)
+      ElvishVariableRefImpl(VARIABLE_REF)
+        PsiElement(ElvishTokenType.VAR_REF)('$fmt')

@@ -11,7 +11,7 @@ public interface ElvishHead extends PsiElement {
   PsiElement getBareword();
 
   @Nullable
-  PsiElement getBuiltinOperatorFn();
+  PsiElement getCommandBareword();
 
   @Nullable
   PsiElement getVariable();

@@ -1,7 +1,7 @@
 ElvishTokenType.if ('if')
 WHITE_SPACE (' ')
 ElvishTokenType.open_paran ('(')
-ElvishTokenType.BUILTIN_OPERATOR_FN ('==')
+ElvishTokenType.COMMAND_BAREWORD ('==')
 WHITE_SPACE (' ')
 ElvishTokenType.VAR_REF ('$x')
 WHITE_SPACE (' ')

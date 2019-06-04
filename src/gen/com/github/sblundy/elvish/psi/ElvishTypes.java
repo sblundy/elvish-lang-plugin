@@ -45,10 +45,10 @@ public interface ElvishTypes {
   IElementType AMPERSAND = new ElvishTokenType("&");
   IElementType AT_VARIABLE = new ElvishTokenType("@VARIABLE");
   IElementType BAREWORD = new ElvishTokenType("BAREWORD");
-  IElementType BUILTIN_OPERATOR_FN = new ElvishTokenType("BUILTIN_OPERATOR_FN");
   IElementType CLOSE_BRACE = new ElvishTokenType("close_brace");
   IElementType CLOSE_BRACKET = new ElvishTokenType("close_bracket");
   IElementType CLOSE_PARAN = new ElvishTokenType("close_paran");
+  IElementType COMMAND_BAREWORD = new ElvishTokenType("COMMAND_BAREWORD");
   IElementType COMMENT = new ElvishTokenType("COMMENT");
   IElementType CONTINUATION = new ElvishTokenType("continuation");
   IElementType DOUBLE_QUOTE = new ElvishTokenType("\"");
