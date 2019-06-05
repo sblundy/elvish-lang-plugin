@@ -222,13 +222,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // variable_ref | output_capture
+  // variable_ref | output_capture | map_or_list
   public static boolean collection(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "collection")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, COLLECTION, "<collection>");
     result_ = variable_ref(builder_, level_ + 1);
     if (!result_) result_ = output_capture(builder_, level_ + 1);
+    if (!result_) result_ = map_or_list(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }

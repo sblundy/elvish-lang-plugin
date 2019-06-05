@@ -120,7 +120,7 @@ except_statement ::= KEYWORD_EXCEPT variable_declaration block
 finally_statement ::= KEYWORD_FINALLY block
 
 condition ::= variable_ref | output_capture
-collection ::= variable_ref | output_capture
+collection ::= variable_ref | output_capture | map_or_list
 block ::= OPEN_BRACE block_body CLOSE_BRACE
 private block_body ::= <<parseBlockBody command>>
 // variables

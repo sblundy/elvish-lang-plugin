@@ -28,6 +28,12 @@ public class ElvishCollectionImpl extends ASTWrapperPsiElement implements Elvish
 
   @Override
   @Nullable
+  public ElvishMapOrList getMapOrList() {
+    return findChildByClass(ElvishMapOrList.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishOutputCapture getOutputCapture() {
     return findChildByClass(ElvishOutputCapture.class);
   }
