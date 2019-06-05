@@ -31,7 +31,7 @@ Elvish File
           ElvishArgumentImpl(ARGUMENT)
             ElvishVariableRefImpl(VARIABLE_REF)
               PsiElement(ElvishTokenType.VAR_REF)('$e')
-          PsiElement(ElvishTokenType.EOL)('\n')
+        PsiWhiteSpace('\n')
         PsiElement(ElvishTokenType.close_brace)('}')
     PsiWhiteSpace(' ')
     ElvishElseStatementImpl(ELSE_STATEMENT)

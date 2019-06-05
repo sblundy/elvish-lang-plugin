@@ -15,5 +15,5 @@ Elvish File
         PsiWhiteSpace(' ')
         ElvishArgumentImpl(ARGUMENT)
           PsiElement(ElvishTokenType.VARIABLE)('ok')
-      PsiWhiteSpace('\n')
+        PsiElement(ElvishTokenType.EOL)('\n')
       PsiElement(ElvishTokenType.close_brace)('}')

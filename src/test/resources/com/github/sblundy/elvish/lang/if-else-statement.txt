@@ -26,7 +26,7 @@ Elvish File
         PsiWhiteSpace(' ')
         ElvishArgumentImpl(ARGUMENT)
           PsiElement(ElvishTokenType.VARIABLE)('go')
-      PsiWhiteSpace('\n')
+        PsiElement(ElvishTokenType.EOL)('\n')
       PsiElement(ElvishTokenType.close_brace)('}')
     PsiWhiteSpace(' ')
     ElvishElseStatementImpl(ELSE_STATEMENT)

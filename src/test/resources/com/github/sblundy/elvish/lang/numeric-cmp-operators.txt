@@ -8,7 +8,7 @@ Elvish File
     PsiWhiteSpace(' ')
     ElvishArgumentImpl(ARGUMENT)
       PsiElement(ElvishTokenType.VARIABLE)('2')
-  PsiWhiteSpace('\n')
+    PsiElement(ElvishTokenType.EOL)('\n')
   ElvishOrdinaryCommandImpl(ORDINARY_COMMAND)
     ElvishHeadImpl(HEAD)
       PsiElement(ElvishTokenType.COMMAND_BAREWORD)('<=')

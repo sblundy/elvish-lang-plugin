@@ -9,6 +9,7 @@ import com.intellij.lang.ITokenTypeRemapper
 import com.intellij.lang.PsiBuilder
 import com.intellij.lang.WhitespaceSkippedCallback
 import com.intellij.lang.parser.GeneratedParserUtilBase
+import com.intellij.openapi.util.Key
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.TokenType.*
 import com.intellij.psi.tree.IElementType
@@ -28,23 +29,21 @@ fun parseArgList(
         GeneratedParserUtilBase.consumeToken(builder, CONTINUATION)
         val result = lineTerminator.parse(builder, level)
         if (result) return true
-        val accum = TrailingWhiteSpaceAccum(builder.originalText)
-        builder.setWhitespaceSkippedCallback(accum)
         val marker = builder.mark()
         try {
             if (!arg.parse(builder, level)) {
                 marker.drop()
                 break
-            } else if (accum.trailingWhitespaceContainsEOL(builder.currentOffset)) {
+            } else if (builder.trailingWhitespaceContainsEOL(builder.currentOffset)) {
                 marker.rollbackTo()
-                builder.setTokenTypeRemapper(TrailingWhiteSpaceRemapper(accum.whiteSpaceRange))
+                builder.remap(builder.whiteSpaceRange())
                 arg.parse(builder, level)
+                lineTerminator.parse(builder, level)
                 break
             }
             marker.drop()
         } finally {
             builder.setTokenTypeRemapper(null)
-            builder.setWhitespaceSkippedCallback(null)
         }
         if (!GeneratedParserUtilBase.empty_element_parsed_guard_(builder, "parseArgList", pos_)) break
     }
@@ -93,6 +92,25 @@ fun skipCountingBraces(builder: PsiBuilder, until: TokenSet): Boolean {
     }
 }
 
+private val TrailingWhiteSpaceAccumKey = Key.create<TrailingWhiteSpaceAccum>("TrailingWhiteSpaceAccum")
+
+private fun PsiBuilder.trailingWhitespaceContainsEOL(end: Int): Boolean {
+    return accum().trailingWhitespaceContainsEOL(end)
+}
+
+private fun PsiBuilder.whiteSpaceRange(): TextRange {
+    return accum().whiteSpaceRange
+}
+
+private fun PsiBuilder.accum(): TrailingWhiteSpaceAccum {
+    return if (!TrailingWhiteSpaceAccumKey.isIn(this)) {
+        val accum = TrailingWhiteSpaceAccum(originalText)
+        putUserData(TrailingWhiteSpaceAccumKey, accum)
+        setWhitespaceSkippedCallback(accum)
+        accum
+    } else this.getUserData(TrailingWhiteSpaceAccumKey)!!
+}
+
 private class TrailingWhiteSpaceAccum(val text: CharSequence) : WhitespaceSkippedCallback {
     var whiteSpaceRange: TextRange = TextRange.EMPTY_RANGE
 
@@ -108,9 +126,27 @@ private class TrailingWhiteSpaceAccum(val text: CharSequence) : WhitespaceSkippe
             whiteSpaceRange.union(TextRange.create(start, end))
         }
     }
+
 }
 
-private class TrailingWhiteSpaceRemapper(val remapEOLs: TextRange) : ITokenTypeRemapper {
+private val RemapperKey = Key.create<TrailingWhiteSpaceRemapper>("TrailingWhiteSpaceRemapper")
+
+private fun PsiBuilder.remap(range: TextRange) {
+    remapper().remapEOLs = range
+}
+
+private fun PsiBuilder.remapper(): TrailingWhiteSpaceRemapper {
+    return if (!RemapperKey.isIn(this)) {
+        val accum = TrailingWhiteSpaceRemapper()
+        putUserData(RemapperKey, accum)
+        this.setTokenTypeRemapper(accum)
+        accum
+    } else this.getUserData(RemapperKey)!!
+}
+
+private class TrailingWhiteSpaceRemapper : ITokenTypeRemapper {
+    var remapEOLs = TextRange.EMPTY_RANGE
+
     override fun filter(source: IElementType, start: Int, end: Int, text: CharSequence): IElementType = if (
         source == WHITE_SPACE &&
         remapEOLs.containsRange(start, end) &&

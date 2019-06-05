@@ -36,7 +36,7 @@ Elvish File
             PsiElement(ElvishTokenType.VAR_REF)('$index')
         PsiWhiteSpace('\n')
         PsiElement(ElvishTokenType.close_bracket)(']')
-  PsiWhiteSpace('\n')
+    PsiElement(ElvishTokenType.EOL)('\n')
   ElvishAssignmentImpl(ASSIGNMENT)
     PsiElement(ElvishTokenType.VARIABLE)('index')
     PsiWhiteSpace(' ')
