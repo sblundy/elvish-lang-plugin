@@ -135,16 +135,31 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // assignment_left EQUALS assignment_right
+  // assignment_left+ EQUALS assignment_right
   public static boolean assignment(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "assignment")) return false;
     if (!nextTokenIs(builder_, VARIABLE)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = assignment_left(builder_, level_ + 1);
+    result_ = assignment_0(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, EQUALS);
     result_ = result_ && assignment_right(builder_, level_ + 1);
     exit_section_(builder_, marker_, ASSIGNMENT, result_);
+    return result_;
+  }
+
+  // assignment_left+
+  private static boolean assignment_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "assignment_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = assignment_left(builder_, level_ + 1);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!assignment_left(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "assignment_0", pos_)) break;
+    }
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 

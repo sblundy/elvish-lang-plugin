@@ -69,9 +69,9 @@ public class ElvishAssignmentImpl extends ASTWrapperPsiElement implements Elvish
   }
 
   @Override
-  @Nullable
-  public ElvishVariableIndex getVariableIndex() {
-    return findChildByClass(ElvishVariableIndex.class);
+  @NotNull
+  public List<ElvishVariableIndex> getVariableIndexList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableIndex.class);
   }
 
   @Override

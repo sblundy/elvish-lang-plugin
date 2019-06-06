@@ -1,0 +1,1 @@
+x y = (splits &max=2 '=' $line)

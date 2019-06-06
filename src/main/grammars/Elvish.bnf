@@ -75,7 +75,7 @@ argument ::= assignment_right
 option_value ::= AMPERSAND(VARIABLE)EQUALS(assignment_right)
 head ::= bareword | COMMAND_BAREWORD | variable_ref
 
-assignment ::= assignment_left EQUALS assignment_right
+assignment ::= assignment_left+ EQUALS assignment_right
 private assignment_right ::= output_capture | lambda | map_or_list | empty_map | assignable_string
 private assignment_left ::= VARIABLE(variable_index)?
 
