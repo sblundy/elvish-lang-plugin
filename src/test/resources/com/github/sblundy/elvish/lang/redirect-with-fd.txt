@@ -1,0 +1,12 @@
+Elvish File
+  ElvishOrdinaryCommandImpl(ORDINARY_COMMAND)
+    ElvishHeadImpl(HEAD)
+      PsiElement(ElvishTokenType.VARIABLE)('echo')
+    PsiWhiteSpace(' ')
+    ElvishArgumentImpl(ARGUMENT)
+      PsiElement(ElvishTokenType.VARIABLE)('a')
+    PsiWhiteSpace(' ')
+    ElvishRedirectionImpl(REDIRECTION)
+      PsiElement(ElvishTokenType.COMMAND_BAREWORD)('2>')
+      PsiWhiteSpace(' ')
+      PsiElement(ElvishTokenType.BAREWORD)('text.txt')

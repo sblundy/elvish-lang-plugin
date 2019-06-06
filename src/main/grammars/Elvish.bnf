@@ -67,7 +67,10 @@ private command ::= special_command | assignment | pipeline | ordinary_command
 
 ordinary_command ::= head argument_list
 private  argument_list ::= <<parseArgList argument_inner line_terminator>>
-private argument_inner ::= option_value | argument
+private argument_inner ::= option_value | redirection | argument
+redirection ::= redirection_operator bareword
+private redirection_operator ::= '0<>' | '1<>' | '2<>' |'0<' | '1<' | '2<' | '0>>' | '1>>' | '2>>' | '0>' | '1>' | '2>' | '<>' | '>>' | '>' | '<'
+
 argument ::= assignment_right
 option_value ::= AMPERSAND(VARIABLE)EQUALS(assignment_right)
 head ::= bareword | COMMAND_BAREWORD | variable_ref

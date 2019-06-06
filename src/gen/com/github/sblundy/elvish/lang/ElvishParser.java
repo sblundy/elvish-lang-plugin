@@ -105,11 +105,12 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // option_value | argument
+  // option_value | redirection | argument
   static boolean argument_inner(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "argument_inner")) return false;
     boolean result_;
     result_ = option_value(builder_, level_ + 1);
+    if (!result_) result_ = redirection(builder_, level_ + 1);
     if (!result_) result_ = argument(builder_, level_ + 1);
     return result_;
   }
@@ -916,6 +917,44 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = ordinary_command(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, PIPE);
     result_ = result_ && pipeline_head(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // redirection_operator bareword
+  public static boolean redirection(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "redirection")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, REDIRECTION, "<redirection>");
+    result_ = redirection_operator(builder_, level_ + 1);
+    result_ = result_ && bareword(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // '0<>' | '1<>' | '2<>' |'0<' | '1<' | '2<' | '0>>' | '1>>' | '2>>' | '0>' | '1>' | '2>' | '<>' | '>>' | '>' | '<'
+  static boolean redirection_operator(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "redirection_operator")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, "0<>");
+    if (!result_) result_ = consumeToken(builder_, "1<>");
+    if (!result_) result_ = consumeToken(builder_, "2<>");
+    if (!result_) result_ = consumeToken(builder_, "0<");
+    if (!result_) result_ = consumeToken(builder_, "1<");
+    if (!result_) result_ = consumeToken(builder_, "2<");
+    if (!result_) result_ = consumeToken(builder_, "0>>");
+    if (!result_) result_ = consumeToken(builder_, "1>>");
+    if (!result_) result_ = consumeToken(builder_, "2>>");
+    if (!result_) result_ = consumeToken(builder_, "0>");
+    if (!result_) result_ = consumeToken(builder_, "1>");
+    if (!result_) result_ = consumeToken(builder_, "2>");
+    if (!result_) result_ = consumeToken(builder_, "<>");
+    if (!result_) result_ = consumeToken(builder_, ">>");
+    if (!result_) result_ = consumeToken(builder_, ">");
+    if (!result_) result_ = consumeToken(builder_, "<");
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }

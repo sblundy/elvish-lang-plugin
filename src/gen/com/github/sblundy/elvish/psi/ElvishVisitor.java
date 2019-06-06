@@ -116,6 +116,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitRedirection(@NotNull ElvishRedirection o) {
+    visitPsiElement(o);
+  }
+
   public void visitSingleQuotedString(@NotNull ElvishSingleQuotedString o) {
     visitPsiElement(o);
   }

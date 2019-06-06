@@ -1,0 +1,1 @@
+echo a 2> text.txt

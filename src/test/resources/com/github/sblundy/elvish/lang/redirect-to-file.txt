@@ -1,0 +1,13 @@
+Elvish File
+  ElvishOrdinaryCommandImpl(ORDINARY_COMMAND)
+    ElvishHeadImpl(HEAD)
+      PsiElement(ElvishTokenType.VARIABLE)('echo')
+    PsiWhiteSpace(' ')
+    ElvishArgumentImpl(ARGUMENT)
+      ElvishVariableRefImpl(VARIABLE_REF)
+        PsiElement(ElvishTokenType.VAR_REF)('$msg')
+    PsiWhiteSpace(' ')
+    ElvishRedirectionImpl(REDIRECTION)
+      PsiElement(ElvishTokenType.COMMAND_BAREWORD)('>')
+      PsiWhiteSpace(' ')
+      PsiElement(ElvishTokenType.BAREWORD)('/dev/tty')

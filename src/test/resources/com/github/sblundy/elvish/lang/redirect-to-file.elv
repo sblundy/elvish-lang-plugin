@@ -1,0 +1,1 @@
+echo $msg > /dev/tty
