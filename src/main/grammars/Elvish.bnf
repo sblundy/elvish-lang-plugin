@@ -135,6 +135,7 @@ variable_index ::= (OPEN_BRACKET)(bareword | variable_ref)(CLOSE_BRACKET)
 
 lambda ::= arg_lambda | no_arg_lambda
 parameter ::= VARIABLE | AT_VARIABLE | option
-private option ::= AMPERSAND(bareword)EQUALS(bareword)
+private option ::= AMPERSAND(bareword)EQUALS(option_default)
+private option_default ::= map_or_list | empty_map | single_quoted_string | double_quoted_string | bareword
 private arg_lambda ::= OPEN_BRACKET parameter* AT_VARIABLE? CLOSE_BRACKET(no_arg_lambda)
 private no_arg_lambda ::= OPEN_BRACE block_body CLOSE_BRACE

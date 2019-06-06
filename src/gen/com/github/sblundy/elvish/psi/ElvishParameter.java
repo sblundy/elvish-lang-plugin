@@ -8,6 +8,18 @@ import com.intellij.psi.PsiElement;
 public interface ElvishParameter extends PsiElement {
 
   @Nullable
+  ElvishDoubleQuotedString getDoubleQuotedString();
+
+  @Nullable
+  ElvishEmptyMap getEmptyMap();
+
+  @Nullable
+  ElvishMapOrList getMapOrList();
+
+  @Nullable
+  ElvishSingleQuotedString getSingleQuotedString();
+
+  @Nullable
   PsiElement getVariable();
 
 }
