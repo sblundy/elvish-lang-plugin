@@ -28,8 +28,38 @@ public class ElvishRedirectionImpl extends ASTWrapperPsiElement implements Elvis
 
   @Override
   @Nullable
+  public ElvishCompoundExpression getCompoundExpression() {
+    return findChildByClass(ElvishCompoundExpression.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishDoubleQuotedString getDoubleQuotedString() {
+    return findChildByClass(ElvishDoubleQuotedString.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishSingleQuotedString getSingleQuotedString() {
+    return findChildByClass(ElvishSingleQuotedString.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishVariableRef getVariableRef() {
+    return findChildByClass(ElvishVariableRef.class);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getBareword() {
     return findChildByType(BAREWORD);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getCommandBareword() {
+    return findChildByType(COMMAND_BAREWORD);
   }
 
   @Override

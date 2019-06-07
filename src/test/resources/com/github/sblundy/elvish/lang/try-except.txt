@@ -31,5 +31,5 @@ Elvish File
           ElvishArgumentImpl(ARGUMENT)
             ElvishVariableRefImpl(VARIABLE_REF)
               PsiElement(ElvishTokenType.VAR_REF)('$e')
-        PsiWhiteSpace('\n')
+          PsiElement(ElvishTokenType.EOL)('\n')
         PsiElement(ElvishTokenType.close_brace)('}')

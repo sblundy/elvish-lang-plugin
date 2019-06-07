@@ -1,0 +1,8 @@
+ElvishTokenType.VARIABLE ('echo')
+WHITE_SPACE (' ')
+ElvishTokenType.VARIABLE ('test')
+WHITE_SPACE (' ')
+ElvishTokenType.COMMAND_BAREWORD ('>')
+WHITE_SPACE (' ')
+ElvishTokenType.VAR_REF ('$x')
+ElvishTokenType.BAREWORD ('.txt')

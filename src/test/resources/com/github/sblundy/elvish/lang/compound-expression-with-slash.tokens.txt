@@ -1,0 +1,4 @@
+ElvishTokenType.VARIABLE ('ls')
+WHITE_SPACE (' ')
+ElvishTokenType.VAR_REF ('$dir')
+ElvishTokenType.COMMAND_BAREWORD ('/*.elv')

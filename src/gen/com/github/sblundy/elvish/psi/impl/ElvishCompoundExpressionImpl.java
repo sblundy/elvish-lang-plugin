@@ -26,28 +26,4 @@ public class ElvishCompoundExpressionImpl extends ASTWrapperPsiElement implement
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public List<ElvishDoubleQuotedString> getDoubleQuotedStringList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishDoubleQuotedString.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishOutputCapture> getOutputCaptureList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishOutputCapture.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishSingleQuotedString> getSingleQuotedStringList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishSingleQuotedString.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishVariableRef> getVariableRefList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableRef.class);
-  }
-
 }

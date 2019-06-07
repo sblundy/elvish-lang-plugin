@@ -7,16 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishCompoundExpression extends PsiElement {
 
-  @NotNull
-  List<ElvishDoubleQuotedString> getDoubleQuotedStringList();
-
-  @NotNull
-  List<ElvishOutputCapture> getOutputCaptureList();
-
-  @NotNull
-  List<ElvishSingleQuotedString> getSingleQuotedStringList();
-
-  @NotNull
-  List<ElvishVariableRef> getVariableRefList();
-
 }

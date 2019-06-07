@@ -1,10 +1,10 @@
 Elvish File
   ElvishOrdinaryCommandImpl(ORDINARY_COMMAND)
     ElvishHeadImpl(HEAD)
-      PsiElement(ElvishTokenType.VARIABLE)('date')
+      PsiElement(ElvishTokenType.VARIABLE)('ls')
     PsiWhiteSpace(' ')
     ElvishArgumentImpl(ARGUMENT)
       ElvishCompoundExpressionImpl(COMPOUND_EXPRESSION)
-        PsiElement(ElvishTokenType.BAREWORD)('+')
         ElvishVariableRefImpl(VARIABLE_REF)
-          PsiElement(ElvishTokenType.VAR_REF)('$fmt')
+          PsiElement(ElvishTokenType.VAR_REF)('$dir')
+        PsiElement(ElvishTokenType.COMMAND_BAREWORD)('/*.elv')

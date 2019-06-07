@@ -68,7 +68,8 @@ private command ::= special_command | assignment | pipeline | ordinary_command
 ordinary_command ::= head argument_list
 private  argument_list ::= <<parseArgList argument_inner line_terminator>>
 private argument_inner ::= option_value | redirection | argument
-redirection ::= redirection_operator bareword
+redirection ::= redirection_operator redirection_target
+private redirection_target ::= compound_expression | variable_ref | double_quoted_string | single_quoted_string | compound_expression_bareword_inner
 private redirection_operator ::= '0<>' | '1<>' | '2<>' |'0<' | '1<' | '2<' | '0>>' | '1>>' | '2>>' | '0>' | '1>' | '2>' | '<>' | '>>' | '>' | '<'
 
 argument ::= assignment_right
@@ -88,11 +89,18 @@ map_entry ::= AMPERSAND(bareword|single_quoted_string|double_quoted_string)EQUAL
 // strings
 
 private assignable_string ::= compound_expression | variable_ref | single_quoted_string | double_quoted_string | bareword
-compound_expression ::= compound_expression_capture | compound_expression_var | compound_expression_single_quoted | compound_expression_double_quoted
-private compound_expression_var ::= variable_ref(compound_expression_capture | compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | output_capture | single_quoted_string | double_quoted_string | variable_ref)
-private compound_expression_single_quoted ::= single_quoted_string(compound_expression_capture | compound_expression_double_quoted | compound_expression_var | output_capture | double_quoted_string | variable_ref)
-private compound_expression_double_quoted ::= double_quoted_string(compound_expression_capture | compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | output_capture | single_quoted_string | double_quoted_string | variable_ref)
-private compound_expression_capture ::= output_capture(compound_expression_capture | compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | output_capture | single_quoted_string | double_quoted_string | variable_ref)
+compound_expression ::= compound_expression_capture | compound_expression_var | compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_bareword
+private compound_expression_var ::= <<parseCompoundExpressionSegment variable_ref compound_expression_var_following>>
+private compound_expression_var_following ::= (compound_expression_capture | compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_bareword | compound_expression_var | output_capture | single_quoted_string | double_quoted_string | variable_ref | compound_expression_bareword_inner)
+private compound_expression_single_quoted ::= <<parseCompoundExpressionSegment single_quoted_string compound_expression_single_quoted_following>>
+private compound_expression_single_quoted_following ::= (compound_expression_capture | compound_expression_double_quoted | compound_expression_var | compound_expression_bareword | output_capture | double_quoted_string | variable_ref | compound_expression_bareword_inner)
+private compound_expression_double_quoted ::= <<parseCompoundExpressionSegment double_quoted_string compound_expression_double_quoted_following>>
+private compound_expression_double_quoted_following ::=  (compound_expression_capture | compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | compound_expression_bareword | output_capture | single_quoted_string | double_quoted_string | variable_ref | compound_expression_bareword_inner)
+private compound_expression_capture ::= <<parseCompoundExpressionSegment output_capture compound_expression_capture_following>>
+private compound_expression_capture_following ::= (compound_expression_capture | compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | compound_expression_bareword | output_capture | single_quoted_string | double_quoted_string | variable_ref | compound_expression_bareword_inner)
+private compound_expression_bareword ::= <<parseCompoundExpressionSegment compound_expression_bareword_inner compound_expression_bareword_following>>
+private compound_expression_bareword_following ::= compound_expression_capture | compound_expression_single_quoted | compound_expression_double_quoted | compound_expression_var | output_capture | single_quoted_string | double_quoted_string | variable_ref
+private compound_expression_bareword_inner ::= COMMAND_BAREWORD | BAREWORD | VARIABLE
 escaped_sequence ::= ESCAPED_QUOTED_TEXT
 invalid_escape_sequence ::= INVALID_ESCAPED_QUOTED_TEXT
 private TEXT_CHR ::= TEXT | invalid_escape_sequence | escaped_sequence

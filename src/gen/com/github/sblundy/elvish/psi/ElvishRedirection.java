@@ -8,7 +8,22 @@ import com.intellij.psi.PsiElement;
 public interface ElvishRedirection extends PsiElement {
 
   @Nullable
+  ElvishCompoundExpression getCompoundExpression();
+
+  @Nullable
+  ElvishDoubleQuotedString getDoubleQuotedString();
+
+  @Nullable
+  ElvishSingleQuotedString getSingleQuotedString();
+
+  @Nullable
+  ElvishVariableRef getVariableRef();
+
+  @Nullable
   PsiElement getBareword();
+
+  @Nullable
+  PsiElement getCommandBareword();
 
   @Nullable
   PsiElement getVariable();
