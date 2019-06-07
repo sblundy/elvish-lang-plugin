@@ -7,8 +7,8 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishMapEntry extends PsiElement {
 
-  @Nullable
-  ElvishCompoundExpression getCompoundExpression();
+  @NotNull
+  List<ElvishCompoundExpression> getCompoundExpressionList();
 
   @NotNull
   List<ElvishDoubleQuotedString> getDoubleQuotedStringList();
@@ -28,7 +28,7 @@ public interface ElvishMapEntry extends PsiElement {
   @NotNull
   List<ElvishSingleQuotedString> getSingleQuotedStringList();
 
-  @Nullable
-  ElvishVariableRef getVariableRef();
+  @NotNull
+  List<ElvishVariableRef> getVariableRefList();
 
 }

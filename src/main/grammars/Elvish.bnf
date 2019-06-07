@@ -86,7 +86,7 @@ private assignment_left ::= VARIABLE(variable_index)?
 map_or_list ::= OPEN_BRACKET item* CLOSE_BRACKET
 empty_map ::= OPEN_BRACKET(AMPERSAND)CLOSE_BRACKET
 private item ::= assignment_right | map_entry
-map_entry ::= AMPERSAND(bareword|single_quoted_string|double_quoted_string)EQUALS(assignment_right)?
+map_entry ::= AMPERSAND(assignable_string)EQUALS(assignment_right)?
 // strings
 
 private assignable_string ::= compound_expression | variable_ref | single_quoted_string | double_quoted_string | bareword

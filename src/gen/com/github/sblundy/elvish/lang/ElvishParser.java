@@ -707,7 +707,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // AMPERSAND(bareword|single_quoted_string|double_quoted_string)EQUALS(assignment_right)?
+  // AMPERSAND(assignable_string)EQUALS(assignment_right)?
   public static boolean map_entry(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "map_entry")) return false;
     if (!nextTokenIs(builder_, AMPERSAND)) return false;
@@ -721,13 +721,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // bareword|single_quoted_string|double_quoted_string
+  // (assignable_string)
   private static boolean map_entry_1(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "map_entry_1")) return false;
     boolean result_;
-    result_ = bareword(builder_, level_ + 1);
-    if (!result_) result_ = single_quoted_string(builder_, level_ + 1);
-    if (!result_) result_ = double_quoted_string(builder_, level_ + 1);
+    Marker marker_ = enter_section_(builder_);
+    result_ = assignable_string(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 

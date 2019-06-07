@@ -27,9 +27,9 @@ public class ElvishMapEntryImpl extends ASTWrapperPsiElement implements ElvishMa
   }
 
   @Override
-  @Nullable
-  public ElvishCompoundExpression getCompoundExpression() {
-    return findChildByClass(ElvishCompoundExpression.class);
+  @NotNull
+  public List<ElvishCompoundExpression> getCompoundExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishCompoundExpression.class);
   }
 
   @Override
@@ -69,9 +69,9 @@ public class ElvishMapEntryImpl extends ASTWrapperPsiElement implements ElvishMa
   }
 
   @Override
-  @Nullable
-  public ElvishVariableRef getVariableRef() {
-    return findChildByClass(ElvishVariableRef.class);
+  @NotNull
+  public List<ElvishVariableRef> getVariableRefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableRef.class);
   }
 
 }
