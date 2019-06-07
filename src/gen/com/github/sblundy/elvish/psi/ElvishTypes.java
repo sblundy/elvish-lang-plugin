@@ -70,8 +70,9 @@ public interface ElvishTypes {
   IElementType OPEN_BRACE = new ElvishTokenType("open_brace");
   IElementType OPEN_BRACKET = new ElvishTokenType("open_bracket");
   IElementType OPEN_PARAN = new ElvishTokenType("open_paran");
-  IElementType PIPE = new ElvishTokenType("pipe");
+  IElementType PIPE = new ElvishTokenType("|");
   IElementType QUESTION = new ElvishTokenType("?");
+  IElementType SEMICOLON = new ElvishTokenType(";");
   IElementType SINGLE_QUOTE = new ElvishTokenType("'");
   IElementType TEXT = new ElvishTokenType(".");
   IElementType TILDA = new ElvishTokenType("~");

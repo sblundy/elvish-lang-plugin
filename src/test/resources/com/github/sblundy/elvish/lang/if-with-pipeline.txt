@@ -14,7 +14,7 @@ Elvish File
               ElvishVariableRefImpl(VARIABLE_REF)
                 PsiElement(ElvishTokenType.VAR_REF)('$fname')
           PsiWhiteSpace(' ')
-          PsiElement(ElvishTokenType.pipe)('|')
+          PsiElement(ElvishTokenType.|)('|')
           PsiWhiteSpace(' ')
           ElvishOrdinaryCommandImpl(ORDINARY_COMMAND)
             ElvishHeadImpl(HEAD)

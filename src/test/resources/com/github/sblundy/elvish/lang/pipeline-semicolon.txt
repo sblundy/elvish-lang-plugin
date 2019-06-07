@@ -7,7 +7,7 @@ Elvish File
       ElvishArgumentImpl(ARGUMENT)
         PsiElement(ElvishTokenType.VARIABLE)('test')
     PsiWhiteSpace(' ')
-    PsiElement(ElvishTokenType.|)('|')
+    PsiElement(ElvishTokenType.;)(';')
     PsiWhiteSpace(' ')
     ElvishOrdinaryCommandImpl(ORDINARY_COMMAND)
       ElvishHeadImpl(HEAD)

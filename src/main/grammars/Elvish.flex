@@ -92,6 +92,7 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
   "="                       { return ElvishTypes.EQUALS; }
   "$""@"?{VARIABLE_CHAR}+   { return ElvishTypes.VAR_REF; }
   "|"                       { return ElvishTypes.PIPE; }
+  ";"                       { return ElvishTypes.SEMICOLON; }
 
   {CONTINUATION}            { return ElvishTypes.CONTINUATION; }
 

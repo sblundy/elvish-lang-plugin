@@ -952,15 +952,26 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // pipeline_element PIPE pipeline_head
+  // pipeline_element pipeline_separator pipeline_head
   static boolean pipeline_prv(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "pipeline_prv")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = pipeline_element(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, PIPE);
+    result_ = result_ && pipeline_separator(builder_, level_ + 1);
     result_ = result_ && pipeline_head(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // PIPE | SEMICOLON
+  static boolean pipeline_separator(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "pipeline_separator")) return false;
+    if (!nextTokenIs(builder_, "", PIPE, SEMICOLON)) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, PIPE);
+    if (!result_) result_ = consumeToken(builder_, SEMICOLON);
     return result_;
   }
 

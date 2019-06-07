@@ -46,7 +46,8 @@
     INVALID_ESCAPED_QUOTED_TEXT="invalid_escaped_sequence"
     CONTINUATION="continuation"
     VAR_REF="VAR_REF"
-    PIPE="pipe"
+    PIPE="|"
+    SEMICOLON=";"
     COMMAND_BAREWORD
     BAREWORD
     VARIABLE
@@ -62,7 +63,8 @@ private bareword ::= AT_VARIABLE | VARIABLE | BAREWORD
 
 pipeline ::= pipeline_prv
 private pipeline_head ::= pipeline_prv | pipeline_element
-private pipeline_prv ::= pipeline_element PIPE pipeline_head
+private pipeline_prv ::= pipeline_element pipeline_separator pipeline_head
+private pipeline_separator ::= PIPE | SEMICOLON
 private pipeline_element ::= special_command | ordinary_command
 private command ::= special_command | assignment | pipeline | ordinary_command
 
