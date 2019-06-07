@@ -8,6 +8,24 @@ import com.intellij.psi.PsiElement;
 public interface ElvishPipeline extends PsiElement {
 
   @NotNull
+  List<ElvishDeleteStatement> getDeleteStatementList();
+
+  @NotNull
+  List<ElvishFnStatement> getFnStatementList();
+
+  @NotNull
+  List<ElvishForStatement> getForStatementList();
+
+  @NotNull
+  List<ElvishIfStatement> getIfStatementList();
+
+  @NotNull
   List<ElvishOrdinaryCommand> getOrdinaryCommandList();
+
+  @NotNull
+  List<ElvishTryStatement> getTryStatementList();
+
+  @NotNull
+  List<ElvishWhileStatement> getWhileStatementList();
 
 }

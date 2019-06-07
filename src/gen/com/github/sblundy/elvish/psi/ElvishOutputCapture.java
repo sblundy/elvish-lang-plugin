@@ -8,9 +8,27 @@ import com.intellij.psi.PsiElement;
 public interface ElvishOutputCapture extends PsiElement {
 
   @Nullable
+  ElvishDeleteStatement getDeleteStatement();
+
+  @Nullable
+  ElvishFnStatement getFnStatement();
+
+  @Nullable
+  ElvishForStatement getForStatement();
+
+  @Nullable
+  ElvishIfStatement getIfStatement();
+
+  @Nullable
   ElvishOrdinaryCommand getOrdinaryCommand();
 
   @Nullable
   ElvishPipeline getPipeline();
+
+  @Nullable
+  ElvishTryStatement getTryStatement();
+
+  @Nullable
+  ElvishWhileStatement getWhileStatement();
 
 }

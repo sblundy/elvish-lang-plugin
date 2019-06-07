@@ -28,6 +28,30 @@ public class ElvishOutputCaptureImpl extends ASTWrapperPsiElement implements Elv
 
   @Override
   @Nullable
+  public ElvishDeleteStatement getDeleteStatement() {
+    return findChildByClass(ElvishDeleteStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishFnStatement getFnStatement() {
+    return findChildByClass(ElvishFnStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishForStatement getForStatement() {
+    return findChildByClass(ElvishForStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishIfStatement getIfStatement() {
+    return findChildByClass(ElvishIfStatement.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishOrdinaryCommand getOrdinaryCommand() {
     return findChildByClass(ElvishOrdinaryCommand.class);
   }
@@ -36,6 +60,18 @@ public class ElvishOutputCaptureImpl extends ASTWrapperPsiElement implements Elv
   @Nullable
   public ElvishPipeline getPipeline() {
     return findChildByClass(ElvishPipeline.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishTryStatement getTryStatement() {
+    return findChildByClass(ElvishTryStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishWhileStatement getWhileStatement() {
+    return findChildByClass(ElvishWhileStatement.class);
   }
 
 }

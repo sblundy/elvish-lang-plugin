@@ -61,8 +61,9 @@ private bareword ::= AT_VARIABLE | VARIABLE | BAREWORD
 // commands
 
 pipeline ::= pipeline_prv
-private pipeline_head ::= pipeline_prv | ordinary_command
-private pipeline_prv ::= ordinary_command PIPE pipeline_head
+private pipeline_head ::= pipeline_prv | pipeline_element
+private pipeline_prv ::= pipeline_element PIPE pipeline_head
+private pipeline_element ::= special_command | ordinary_command
 private command ::= special_command | assignment | pipeline | ordinary_command
 
 ordinary_command ::= head argument_list
@@ -112,7 +113,7 @@ private line_terminator ::= EOL+
 // captures
 
 output_capture ::= pipeline_output_body | command_outpub_body
-private command_outpub_body ::= QUESTION?OPEN_PARAN ordinary_command CLOSE_PARAN
+private command_outpub_body ::= QUESTION?OPEN_PARAN pipeline_element CLOSE_PARAN
 private pipeline_output_body ::= QUESTION?OPEN_PARAN pipeline CLOSE_PARAN
 
 // special commands

@@ -1,0 +1,1 @@
+echo (if $x { put y })
