@@ -1,0 +1,1 @@
+result[$k"~"] = $aliases[$k]

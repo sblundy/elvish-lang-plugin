@@ -28,6 +28,24 @@ public class ElvishVariableIndexImpl extends ASTWrapperPsiElement implements Elv
 
   @Override
   @Nullable
+  public ElvishCompoundExpression getCompoundExpression() {
+    return findChildByClass(ElvishCompoundExpression.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishDoubleQuotedString getDoubleQuotedString() {
+    return findChildByClass(ElvishDoubleQuotedString.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishSingleQuotedString getSingleQuotedString() {
+    return findChildByClass(ElvishSingleQuotedString.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishVariableRef getVariableRef() {
     return findChildByClass(ElvishVariableRef.class);
   }

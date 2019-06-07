@@ -8,6 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface ElvishVariableIndex extends PsiElement {
 
   @Nullable
+  ElvishCompoundExpression getCompoundExpression();
+
+  @Nullable
+  ElvishDoubleQuotedString getDoubleQuotedString();
+
+  @Nullable
+  ElvishSingleQuotedString getSingleQuotedString();
+
+  @Nullable
   ElvishVariableRef getVariableRef();
 
   @Nullable
