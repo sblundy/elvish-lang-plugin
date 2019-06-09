@@ -202,10 +202,9 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (VARIABLE_CHAR|BAREWORD_CHAR)+
+  // (VARIABLE_CHAR|BAREWORD_CHAR|<<parseKeywordAsBareword>>)+
   public static boolean Bareword(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Bareword")) return false;
-    if (!nextTokenIs(builder_, "<bareword>", BAREWORD_CHAR, VARIABLE_CHAR)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, BAREWORD, "<bareword>");
     result_ = Bareword_0(builder_, level_ + 1);
@@ -218,12 +217,15 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // VARIABLE_CHAR|BAREWORD_CHAR
+  // VARIABLE_CHAR|BAREWORD_CHAR|<<parseKeywordAsBareword>>
   private static boolean Bareword_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Bareword_0")) return false;
     boolean result_;
+    Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, VARIABLE_CHAR);
     if (!result_) result_ = consumeToken(builder_, BAREWORD_CHAR);
+    if (!result_) result_ = parseKeywordAsBareword(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 

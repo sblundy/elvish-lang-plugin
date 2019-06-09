@@ -9,6 +9,24 @@ import com.intellij.lang.PsiBuilder
 import com.intellij.lang.parser.GeneratedParserUtilBase
 import com.intellij.psi.tree.TokenSet
 
+private val keywords = setOf(
+    ElvishTypes.KEYWORD_DEL,
+    ElvishTypes.KEYWORD_ELIF,
+    ElvishTypes.KEYWORD_ELSE,
+    ElvishTypes.KEYWORD_EXCEPT,
+    ElvishTypes.KEYWORD_FINALLY,
+    ElvishTypes.KEYWORD_FN,
+    ElvishTypes.KEYWORD_FOR,
+    ElvishTypes.KEYWORD_IF,
+    ElvishTypes.KEYWORD_TRY,
+    ElvishTypes.KEYWORD_WHILE)
+
+fun parseKeywordAsBareword(builder: PsiBuilder, level: Int): Boolean {
+    if (!(builder.tokenType in keywords)) return false
+    builder.remapCurrentToken(ElvishTypes.BAREWORD_CHAR)
+    return true
+}
+
 fun parseArgList(
     builder: PsiBuilder,
     level: Int,

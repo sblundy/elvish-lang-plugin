@@ -72,7 +72,7 @@ DoubleQuoted ::= DOUBLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_T
 private Primary ::= Bareword | SingleQuoted | DoubleQuoted | VariableRef | WILDCARD | TILDE | ExceptionCapture | OutputCapture | Lambda | List | Map | Braced
 Variable ::= VARIABLE_CHAR+
 VariableRef ::= DOLLAR_SIGN AT_SYMBOL? VARIABLE_CHAR+ Index*
-Bareword ::= (VARIABLE_CHAR|BAREWORD_CHAR)+
+Bareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|<<parseKeywordAsBareword>>)+
 CommandBareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|COMMAND_BAREWORD_CHAR|WILDCARD|EQUALS)+
 
 // Maps and lists
