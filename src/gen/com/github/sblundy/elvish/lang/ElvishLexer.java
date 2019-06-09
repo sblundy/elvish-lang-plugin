@@ -730,7 +730,7 @@ class ElvishLexer implements FlexLexer {
             // fall through
           case 61: break;
           case 22: 
-            { return ElvishTypes.TILDA;
+            { return ElvishTypes.TILDE;
             } 
             // fall through
           case 62: break;

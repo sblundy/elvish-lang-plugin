@@ -90,7 +90,7 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
                                 return ElvishTypes.DOUBLE_QUOTE;
                             }
   "&"                       { return ElvishTypes.AMPERSAND; }
-  "~"                       { return ElvishTypes.TILDA; }
+  "~"                       { return ElvishTypes.TILDE; }
   "="                       { return ElvishTypes.EQUALS; }
   "|"                       { return ElvishTypes.PIPE; }
   ";"                       { return ElvishTypes.SEMICOLON; }

@@ -13,7 +13,7 @@ public interface ElvishAssignment extends PsiElement {
   @NotNull
   List<ElvishBraced> getBracedList();
 
-  @NotNull
+  @Nullable
   ElvishCompound getCompound();
 
   @NotNull

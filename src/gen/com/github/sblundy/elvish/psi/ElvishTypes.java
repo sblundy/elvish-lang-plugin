@@ -81,8 +81,7 @@ public interface ElvishTypes {
   IElementType SEMICOLON = new ElvishTokenType(";");
   IElementType SINGLE_QUOTE = new ElvishTokenType("'");
   IElementType TEXT = new ElvishTokenType("TEXT");
-  IElementType TILDA = new ElvishTokenType("~");
-  IElementType TILDE = new ElvishTokenType("TILDE");
+  IElementType TILDE = new ElvishTokenType("~");
   IElementType VARIABLE_CHAR = new ElvishTokenType("VARIABLE_CHAR");
   IElementType WILDCARD = new ElvishTokenType("*");
 

@@ -110,14 +110,15 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   public static boolean Assignment(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Assignment")) return false;
     if (!nextTokenIs(builder_, VARIABLE_CHAR)) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
+    boolean result_, pinned_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ASSIGNMENT, null);
     result_ = Assignment_0(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, EQUALS);
-    result_ = result_ && Assignment_2(builder_, level_ + 1);
-    result_ = result_ && Compound(builder_, level_ + 1);
-    exit_section_(builder_, marker_, ASSIGNMENT, result_);
-    return result_;
+    pinned_ = result_; // pin = 2
+    result_ = result_ && report_error_(builder_, Assignment_2(builder_, level_ + 1));
+    result_ = pinned_ && Compound(builder_, level_ + 1) && result_;
+    exit_section_(builder_, level_, marker_, result_, pinned_, null);
+    return result_ || pinned_;
   }
 
   // (Variable Index* Space?)+

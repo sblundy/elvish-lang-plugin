@@ -39,9 +39,9 @@ public class ElvishAssignmentImpl extends ASTWrapperPsiElement implements Elvish
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ElvishCompound getCompound() {
-    return findNotNullChildByClass(ElvishCompound.class);
+    return findChildByClass(ElvishCompound.class);
   }
 
   @Override
