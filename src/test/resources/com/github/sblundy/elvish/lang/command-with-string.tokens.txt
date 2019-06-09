@@ -1,5 +1,5 @@
-ElvishTokenType.VARIABLE ('echo')
-WHITE_SPACE (' ')
+ElvishTokenType.VARIABLE_CHAR ('echo')
+ElvishTokenType.INLINE_WHITESPACE (' ')
 ElvishTokenType.' (''')
-ElvishTokenType.. ('test string')
+ElvishTokenType.TEXT ('test string')
 ElvishTokenType.' (''')

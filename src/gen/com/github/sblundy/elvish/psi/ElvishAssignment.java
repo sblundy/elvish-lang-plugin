@@ -7,34 +7,40 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishAssignment extends PsiElement {
 
-  @Nullable
-  ElvishCompoundExpression getCompoundExpression();
-
-  @Nullable
-  ElvishDoubleQuotedString getDoubleQuotedString();
-
-  @Nullable
-  ElvishEmptyMap getEmptyMap();
-
-  @Nullable
-  ElvishLambda getLambda();
-
-  @Nullable
-  ElvishMapOrList getMapOrList();
-
-  @Nullable
-  ElvishOutputCapture getOutputCapture();
-
-  @Nullable
-  ElvishSingleQuotedString getSingleQuotedString();
+  @NotNull
+  List<ElvishBareword> getBarewordList();
 
   @NotNull
-  List<ElvishVariableIndex> getVariableIndexList();
+  List<ElvishBraced> getBracedList();
 
-  @Nullable
-  ElvishVariableRef getVariableRef();
+  @NotNull
+  ElvishCompound getCompound();
 
-  @Nullable
-  PsiElement getBareword();
+  @NotNull
+  List<ElvishDoubleQuoted> getDoubleQuotedList();
+
+  @NotNull
+  List<ElvishExceptionCapture> getExceptionCaptureList();
+
+  @NotNull
+  List<ElvishLambda> getLambdaList();
+
+  @NotNull
+  List<ElvishList> getListList();
+
+  @NotNull
+  List<ElvishMap> getMapList();
+
+  @NotNull
+  List<ElvishOutputCapture> getOutputCaptureList();
+
+  @NotNull
+  List<ElvishSingleQuoted> getSingleQuotedList();
+
+  @NotNull
+  List<ElvishVariable> getVariableList();
+
+  @NotNull
+  List<ElvishVariableRef> getVariableRefList();
 
 }

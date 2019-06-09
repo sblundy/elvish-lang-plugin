@@ -27,63 +27,75 @@ public class ElvishAssignmentImpl extends ASTWrapperPsiElement implements Elvish
   }
 
   @Override
-  @Nullable
-  public ElvishCompoundExpression getCompoundExpression() {
-    return findChildByClass(ElvishCompoundExpression.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishDoubleQuotedString getDoubleQuotedString() {
-    return findChildByClass(ElvishDoubleQuotedString.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishEmptyMap getEmptyMap() {
-    return findChildByClass(ElvishEmptyMap.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishLambda getLambda() {
-    return findChildByClass(ElvishLambda.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishMapOrList getMapOrList() {
-    return findChildByClass(ElvishMapOrList.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishOutputCapture getOutputCapture() {
-    return findChildByClass(ElvishOutputCapture.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishSingleQuotedString getSingleQuotedString() {
-    return findChildByClass(ElvishSingleQuotedString.class);
+  @NotNull
+  public List<ElvishBareword> getBarewordList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishBareword.class);
   }
 
   @Override
   @NotNull
-  public List<ElvishVariableIndex> getVariableIndexList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableIndex.class);
+  public List<ElvishBraced> getBracedList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishBraced.class);
   }
 
   @Override
-  @Nullable
-  public ElvishVariableRef getVariableRef() {
-    return findChildByClass(ElvishVariableRef.class);
+  @NotNull
+  public ElvishCompound getCompound() {
+    return findNotNullChildByClass(ElvishCompound.class);
   }
 
   @Override
-  @Nullable
-  public PsiElement getBareword() {
-    return findChildByType(BAREWORD);
+  @NotNull
+  public List<ElvishDoubleQuoted> getDoubleQuotedList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishDoubleQuoted.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishExceptionCapture> getExceptionCaptureList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishExceptionCapture.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishLambda> getLambdaList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLambda.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishList> getListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishList.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishMap> getMapList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishMap.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishOutputCapture> getOutputCaptureList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishOutputCapture.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishSingleQuoted> getSingleQuotedList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishSingleQuoted.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishVariable> getVariableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariable.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishVariableRef> getVariableRefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableRef.class);
   }
 
 }

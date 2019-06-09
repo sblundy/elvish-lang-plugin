@@ -28,6 +28,12 @@ public class ElvishConditionImpl extends ASTWrapperPsiElement implements ElvishC
 
   @Override
   @Nullable
+  public ElvishExceptionCapture getExceptionCapture() {
+    return findChildByClass(ElvishExceptionCapture.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishOutputCapture getOutputCapture() {
     return findChildByClass(ElvishOutputCapture.class);
   }

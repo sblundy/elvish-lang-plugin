@@ -27,33 +27,9 @@ public class ElvishParameterImpl extends ASTWrapperPsiElement implements ElvishP
   }
 
   @Override
-  @Nullable
-  public ElvishDoubleQuotedString getDoubleQuotedString() {
-    return findChildByClass(ElvishDoubleQuotedString.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishEmptyMap getEmptyMap() {
-    return findChildByClass(ElvishEmptyMap.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishMapOrList getMapOrList() {
-    return findChildByClass(ElvishMapOrList.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishSingleQuotedString getSingleQuotedString() {
-    return findChildByClass(ElvishSingleQuotedString.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getVariable() {
-    return findChildByType(VARIABLE);
+  @NotNull
+  public ElvishCompound getCompound() {
+    return findNotNullChildByClass(ElvishCompound.class);
   }
 
 }

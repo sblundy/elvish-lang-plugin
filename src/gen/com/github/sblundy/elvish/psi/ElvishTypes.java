@@ -9,54 +9,60 @@ import com.github.sblundy.elvish.psi.impl.*;
 public interface ElvishTypes {
 
   IElementType ARGUMENT = new ElvishElementType("ARGUMENT");
+  IElementType ARRAY = new ElvishElementType("ARRAY");
   IElementType ASSIGNMENT = new ElvishElementType("ASSIGNMENT");
-  IElementType BLOCK = new ElvishElementType("BLOCK");
+  IElementType BAREWORD = new ElvishElementType("BAREWORD");
+  IElementType BRACED = new ElvishElementType("BRACED");
+  IElementType BRACED_SEP = new ElvishElementType("BRACED_SEP");
+  IElementType CHUNK = new ElvishElementType("CHUNK");
   IElementType COLLECTION = new ElvishElementType("COLLECTION");
-  IElementType COMPOUND_EXPRESSION = new ElvishElementType("COMPOUND_EXPRESSION");
+  IElementType COMMAND_BAREWORD = new ElvishElementType("COMMAND_BAREWORD");
+  IElementType COMPOUND = new ElvishElementType("COMPOUND");
   IElementType CONDITION = new ElvishElementType("CONDITION");
-  IElementType DELETE_STATEMENT = new ElvishElementType("DELETE_STATEMENT");
-  IElementType DOUBLE_QUOTED_STRING = new ElvishElementType("DOUBLE_QUOTED_STRING");
-  IElementType ELIF_STATEMENT = new ElvishElementType("ELIF_STATEMENT");
-  IElementType ELSE_STATEMENT = new ElvishElementType("ELSE_STATEMENT");
-  IElementType EMPTY_MAP = new ElvishElementType("EMPTY_MAP");
-  IElementType ESCAPED_SEQUENCE = new ElvishElementType("ESCAPED_SEQUENCE");
-  IElementType EXCEPT_STATEMENT = new ElvishElementType("EXCEPT_STATEMENT");
-  IElementType FINALLY_STATEMENT = new ElvishElementType("FINALLY_STATEMENT");
-  IElementType FN_STATEMENT = new ElvishElementType("FN_STATEMENT");
-  IElementType FOR_STATEMENT = new ElvishElementType("FOR_STATEMENT");
+  IElementType DELETE_COMMAND = new ElvishElementType("DELETE_COMMAND");
+  IElementType DOUBLE_QUOTED = new ElvishElementType("DOUBLE_QUOTED");
+  IElementType ELSE_BLOCK = new ElvishElementType("ELSE_BLOCK");
+  IElementType EL_IF_BLOCK = new ElvishElementType("EL_IF_BLOCK");
+  IElementType EXCEPTION_CAPTURE = new ElvishElementType("EXCEPTION_CAPTURE");
+  IElementType EXCEPT_BLOCK = new ElvishElementType("EXCEPT_BLOCK");
+  IElementType EXITUS_REDIR = new ElvishElementType("EXITUS_REDIR");
+  IElementType FINALLY_BLOCK = new ElvishElementType("FINALLY_BLOCK");
+  IElementType FN_COMMAND = new ElvishElementType("FN_COMMAND");
+  IElementType FOR_COMMAND = new ElvishElementType("FOR_COMMAND");
   IElementType HEAD = new ElvishElementType("HEAD");
-  IElementType IF_STATEMENT = new ElvishElementType("IF_STATEMENT");
-  IElementType INVALID_ESCAPE_SEQUENCE = new ElvishElementType("INVALID_ESCAPE_SEQUENCE");
+  IElementType IF_COMMAND = new ElvishElementType("IF_COMMAND");
   IElementType LAMBDA = new ElvishElementType("LAMBDA");
-  IElementType MAP_ENTRY = new ElvishElementType("MAP_ENTRY");
-  IElementType MAP_OR_LIST = new ElvishElementType("MAP_OR_LIST");
-  IElementType OPTION_VALUE = new ElvishElementType("OPTION_VALUE");
-  IElementType ORDINARY_COMMAND = new ElvishElementType("ORDINARY_COMMAND");
+  IElementType LAMBDA_ARGUMENTS = new ElvishElementType("LAMBDA_ARGUMENTS");
+  IElementType LIST = new ElvishElementType("LIST");
+  IElementType LOGIC_COMMAND = new ElvishElementType("LOGIC_COMMAND");
+  IElementType MAP = new ElvishElementType("MAP");
+  IElementType MAP_PAIR = new ElvishElementType("MAP_PAIR");
   IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
   IElementType PARAMETER = new ElvishElementType("PARAMETER");
-  IElementType PIPELINE = new ElvishElementType("PIPELINE");
-  IElementType REDIRECTION = new ElvishElementType("REDIRECTION");
-  IElementType SINGLE_QUOTED_STRING = new ElvishElementType("SINGLE_QUOTED_STRING");
-  IElementType TRY_STATEMENT = new ElvishElementType("TRY_STATEMENT");
-  IElementType VARIABLE_DECLARATION = new ElvishElementType("VARIABLE_DECLARATION");
-  IElementType VARIABLE_INDEX = new ElvishElementType("VARIABLE_INDEX");
+  IElementType PIPELINE_SEP = new ElvishElementType("PIPELINE_SEP");
+  IElementType REDIR = new ElvishElementType("REDIR");
+  IElementType SINGLE_QUOTED = new ElvishElementType("SINGLE_QUOTED");
+  IElementType TRY_COMMAND = new ElvishElementType("TRY_COMMAND");
+  IElementType VARIABLE = new ElvishElementType("VARIABLE");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
-  IElementType WHILE_STATEMENT = new ElvishElementType("WHILE_STATEMENT");
+  IElementType WHILE_COMMAND = new ElvishElementType("WHILE_COMMAND");
 
   IElementType AMPERSAND = new ElvishTokenType("&");
-  IElementType AT_VARIABLE = new ElvishTokenType("@VARIABLE");
-  IElementType BAREWORD = new ElvishTokenType("BAREWORD");
-  IElementType CLOSE_BRACE = new ElvishTokenType("close_brace");
-  IElementType CLOSE_BRACKET = new ElvishTokenType("close_bracket");
-  IElementType CLOSE_PARAN = new ElvishTokenType("close_paran");
-  IElementType COMMAND_BAREWORD = new ElvishTokenType("COMMAND_BAREWORD");
+  IElementType AT_SYMBOL = new ElvishTokenType("@");
+  IElementType BAREWORD_CHAR = new ElvishTokenType("BAREWORD_CHAR");
+  IElementType CLOSE_BRACE = new ElvishTokenType("}");
+  IElementType CLOSE_BRACKET = new ElvishTokenType("]");
+  IElementType CLOSE_PARAN = new ElvishTokenType(")");
+  IElementType COMMAND_BAREWORD_CHAR = new ElvishTokenType("COMMAND_BAREWORD_CHAR");
   IElementType COMMENT = new ElvishTokenType("COMMENT");
-  IElementType CONTINUATION = new ElvishTokenType("continuation");
+  IElementType CONTINUATION = new ElvishTokenType("CONTINUATION");
+  IElementType DOLLAR_SIGN = new ElvishTokenType("$");
   IElementType DOUBLE_QUOTE = new ElvishTokenType("\"");
   IElementType EOL = new ElvishTokenType("EOL");
   IElementType EQUALS = new ElvishTokenType("=");
-  IElementType ESCAPED_QUOTED_TEXT = new ElvishTokenType("escaped_sequence");
-  IElementType INVALID_ESCAPED_QUOTED_TEXT = new ElvishTokenType("invalid_escaped_sequence");
+  IElementType ESCAPED_QUOTED_TEXT = new ElvishTokenType("ESCAPED_QUOTED_TEXT");
+  IElementType INLINE_WHITESPACE = new ElvishTokenType("INLINE_WHITESPACE");
+  IElementType INVALID_ESCAPED_QUOTED_TEXT = new ElvishTokenType("INVALID_ESCAPED_QUOTED_TEXT");
   IElementType KEYWORD_DEL = new ElvishTokenType("del");
   IElementType KEYWORD_ELIF = new ElvishTokenType("elif");
   IElementType KEYWORD_ELSE = new ElvishTokenType("else");
@@ -67,17 +73,18 @@ public interface ElvishTypes {
   IElementType KEYWORD_IF = new ElvishTokenType("if");
   IElementType KEYWORD_TRY = new ElvishTokenType("try");
   IElementType KEYWORD_WHILE = new ElvishTokenType("while");
-  IElementType OPEN_BRACE = new ElvishTokenType("open_brace");
-  IElementType OPEN_BRACKET = new ElvishTokenType("open_bracket");
-  IElementType OPEN_PARAN = new ElvishTokenType("open_paran");
+  IElementType OPEN_BRACE = new ElvishTokenType("{");
+  IElementType OPEN_BRACKET = new ElvishTokenType("[");
+  IElementType OPEN_PARAN = new ElvishTokenType("(");
   IElementType PIPE = new ElvishTokenType("|");
   IElementType QUESTION = new ElvishTokenType("?");
   IElementType SEMICOLON = new ElvishTokenType(";");
   IElementType SINGLE_QUOTE = new ElvishTokenType("'");
-  IElementType TEXT = new ElvishTokenType(".");
+  IElementType TEXT = new ElvishTokenType("TEXT");
   IElementType TILDA = new ElvishTokenType("~");
-  IElementType VARIABLE = new ElvishTokenType("VARIABLE");
-  IElementType VAR_REF = new ElvishTokenType("VAR_REF");
+  IElementType TILDE = new ElvishTokenType("TILDE");
+  IElementType VARIABLE_CHAR = new ElvishTokenType("VARIABLE_CHAR");
+  IElementType WILDCARD = new ElvishTokenType("*");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
@@ -85,74 +92,89 @@ public interface ElvishTypes {
       if (type == ARGUMENT) {
         return new ElvishArgumentImpl(node);
       }
+      else if (type == ARRAY) {
+        return new ElvishArrayImpl(node);
+      }
       else if (type == ASSIGNMENT) {
         return new ElvishAssignmentImpl(node);
       }
-      else if (type == BLOCK) {
-        return new ElvishBlockImpl(node);
+      else if (type == BAREWORD) {
+        return new ElvishBarewordImpl(node);
+      }
+      else if (type == BRACED) {
+        return new ElvishBracedImpl(node);
+      }
+      else if (type == BRACED_SEP) {
+        return new ElvishBracedSepImpl(node);
+      }
+      else if (type == CHUNK) {
+        return new ElvishChunkImpl(node);
       }
       else if (type == COLLECTION) {
         return new ElvishCollectionImpl(node);
       }
-      else if (type == COMPOUND_EXPRESSION) {
-        return new ElvishCompoundExpressionImpl(node);
+      else if (type == COMMAND_BAREWORD) {
+        return new ElvishCommandBarewordImpl(node);
+      }
+      else if (type == COMPOUND) {
+        return new ElvishCompoundImpl(node);
       }
       else if (type == CONDITION) {
         return new ElvishConditionImpl(node);
       }
-      else if (type == DELETE_STATEMENT) {
-        return new ElvishDeleteStatementImpl(node);
+      else if (type == DELETE_COMMAND) {
+        return new ElvishDeleteCommandImpl(node);
       }
-      else if (type == DOUBLE_QUOTED_STRING) {
-        return new ElvishDoubleQuotedStringImpl(node);
+      else if (type == DOUBLE_QUOTED) {
+        return new ElvishDoubleQuotedImpl(node);
       }
-      else if (type == ELIF_STATEMENT) {
-        return new ElvishElifStatementImpl(node);
+      else if (type == ELSE_BLOCK) {
+        return new ElvishElseBlockImpl(node);
       }
-      else if (type == ELSE_STATEMENT) {
-        return new ElvishElseStatementImpl(node);
+      else if (type == EL_IF_BLOCK) {
+        return new ElvishElIfBlockImpl(node);
       }
-      else if (type == EMPTY_MAP) {
-        return new ElvishEmptyMapImpl(node);
+      else if (type == EXCEPTION_CAPTURE) {
+        return new ElvishExceptionCaptureImpl(node);
       }
-      else if (type == ESCAPED_SEQUENCE) {
-        return new ElvishEscapedSequenceImpl(node);
+      else if (type == EXCEPT_BLOCK) {
+        return new ElvishExceptBlockImpl(node);
       }
-      else if (type == EXCEPT_STATEMENT) {
-        return new ElvishExceptStatementImpl(node);
+      else if (type == EXITUS_REDIR) {
+        return new ElvishExitusRedirImpl(node);
       }
-      else if (type == FINALLY_STATEMENT) {
-        return new ElvishFinallyStatementImpl(node);
+      else if (type == FINALLY_BLOCK) {
+        return new ElvishFinallyBlockImpl(node);
       }
-      else if (type == FN_STATEMENT) {
-        return new ElvishFnStatementImpl(node);
+      else if (type == FN_COMMAND) {
+        return new ElvishFnCommandImpl(node);
       }
-      else if (type == FOR_STATEMENT) {
-        return new ElvishForStatementImpl(node);
+      else if (type == FOR_COMMAND) {
+        return new ElvishForCommandImpl(node);
       }
       else if (type == HEAD) {
         return new ElvishHeadImpl(node);
       }
-      else if (type == IF_STATEMENT) {
-        return new ElvishIfStatementImpl(node);
-      }
-      else if (type == INVALID_ESCAPE_SEQUENCE) {
-        return new ElvishInvalidEscapeSequenceImpl(node);
+      else if (type == IF_COMMAND) {
+        return new ElvishIfCommandImpl(node);
       }
       else if (type == LAMBDA) {
         return new ElvishLambdaImpl(node);
       }
-      else if (type == MAP_ENTRY) {
-        return new ElvishMapEntryImpl(node);
+      else if (type == LAMBDA_ARGUMENTS) {
+        return new ElvishLambdaArgumentsImpl(node);
       }
-      else if (type == MAP_OR_LIST) {
-        return new ElvishMapOrListImpl(node);
+      else if (type == LIST) {
+        return new ElvishListImpl(node);
       }
-      else if (type == OPTION_VALUE) {
-        return new ElvishOptionValueImpl(node);
+      else if (type == LOGIC_COMMAND) {
+        return new ElvishLogicCommandImpl(node);
       }
-      else if (type == ORDINARY_COMMAND) {
-        return new ElvishOrdinaryCommandImpl(node);
+      else if (type == MAP) {
+        return new ElvishMapImpl(node);
+      }
+      else if (type == MAP_PAIR) {
+        return new ElvishMapPairImpl(node);
       }
       else if (type == OUTPUT_CAPTURE) {
         return new ElvishOutputCaptureImpl(node);
@@ -160,29 +182,26 @@ public interface ElvishTypes {
       else if (type == PARAMETER) {
         return new ElvishParameterImpl(node);
       }
-      else if (type == PIPELINE) {
-        return new ElvishPipelineImpl(node);
+      else if (type == PIPELINE_SEP) {
+        return new ElvishPipelineSepImpl(node);
       }
-      else if (type == REDIRECTION) {
-        return new ElvishRedirectionImpl(node);
+      else if (type == REDIR) {
+        return new ElvishRedirImpl(node);
       }
-      else if (type == SINGLE_QUOTED_STRING) {
-        return new ElvishSingleQuotedStringImpl(node);
+      else if (type == SINGLE_QUOTED) {
+        return new ElvishSingleQuotedImpl(node);
       }
-      else if (type == TRY_STATEMENT) {
-        return new ElvishTryStatementImpl(node);
+      else if (type == TRY_COMMAND) {
+        return new ElvishTryCommandImpl(node);
       }
-      else if (type == VARIABLE_DECLARATION) {
-        return new ElvishVariableDeclarationImpl(node);
-      }
-      else if (type == VARIABLE_INDEX) {
-        return new ElvishVariableIndexImpl(node);
+      else if (type == VARIABLE) {
+        return new ElvishVariableImpl(node);
       }
       else if (type == VARIABLE_REF) {
         return new ElvishVariableRefImpl(node);
       }
-      else if (type == WHILE_STATEMENT) {
-        return new ElvishWhileStatementImpl(node);
+      else if (type == WHILE_COMMAND) {
+        return new ElvishWhileCommandImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

@@ -1,5 +1,7 @@
 Elvish File
-  ElvishDeleteStatementImpl(DELETE_STATEMENT)
-    PsiElement(ElvishTokenType.del)('del')
-    PsiWhiteSpace(' ')
-    PsiElement(ElvishTokenType.VARIABLE)('x')
+  ElvishChunkImpl(CHUNK)
+    ElvishDeleteCommandImpl(DELETE_COMMAND)
+      PsiElement(ElvishTokenType.del)('del')
+      PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
+      ElvishVariableImpl(VARIABLE)
+        PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')

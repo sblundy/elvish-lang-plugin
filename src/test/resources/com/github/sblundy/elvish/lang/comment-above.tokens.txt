@@ -1,4 +1,4 @@
 ElvishTokenType.COMMENT ('# Test comment\n')
-ElvishTokenType.VARIABLE ('echo')
-WHITE_SPACE (' ')
-ElvishTokenType.VARIABLE ('test')
+ElvishTokenType.VARIABLE_CHAR ('echo')
+ElvishTokenType.INLINE_WHITESPACE (' ')
+ElvishTokenType.VARIABLE_CHAR ('test')

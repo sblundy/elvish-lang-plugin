@@ -4,11 +4,10 @@ package com.github.sblundy.elvish.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
 
 public class ElvishVisitor extends PsiElementVisitor {
 
-  public void visitArgument(@NotNull ElvishArgument o) {
+  public void visitArray(@NotNull ElvishArray o) {
     visitPsiElement(o);
   }
 
@@ -16,7 +15,19 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBlock(@NotNull ElvishBlock o) {
+  public void visitBareword(@NotNull ElvishBareword o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBraced(@NotNull ElvishBraced o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBracedSep(@NotNull ElvishBracedSep o) {
+    visitPsiElement(o);
+  }
+
+  public void visitChunk(@NotNull ElvishChunk o) {
     visitPsiElement(o);
   }
 
@@ -24,7 +35,11 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitCompoundExpression(@NotNull ElvishCompoundExpression o) {
+  public void visitCommandBareword(@NotNull ElvishCommandBareword o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCompound(@NotNull ElvishCompound o) {
     visitPsiElement(o);
   }
 
@@ -32,55 +47,47 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitDeleteStatement(@NotNull ElvishDeleteStatement o) {
+  public void visitDeleteCommand(@NotNull ElvishDeleteCommand o) {
     visitPsiElement(o);
   }
 
-  public void visitDoubleQuotedString(@NotNull ElvishDoubleQuotedString o) {
+  public void visitDoubleQuoted(@NotNull ElvishDoubleQuoted o) {
     visitPsiElement(o);
   }
 
-  public void visitElifStatement(@NotNull ElvishElifStatement o) {
+  public void visitElIfBlock(@NotNull ElvishElIfBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitElseStatement(@NotNull ElvishElseStatement o) {
+  public void visitElseBlock(@NotNull ElvishElseBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitEmptyMap(@NotNull ElvishEmptyMap o) {
+  public void visitExceptBlock(@NotNull ElvishExceptBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitEscapedSequence(@NotNull ElvishEscapedSequence o) {
+  public void visitExceptionCapture(@NotNull ElvishExceptionCapture o) {
     visitPsiElement(o);
   }
 
-  public void visitExceptStatement(@NotNull ElvishExceptStatement o) {
+  public void visitExitusRedir(@NotNull ElvishExitusRedir o) {
     visitPsiElement(o);
   }
 
-  public void visitFinallyStatement(@NotNull ElvishFinallyStatement o) {
+  public void visitFinallyBlock(@NotNull ElvishFinallyBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitFnStatement(@NotNull ElvishFnStatement o) {
+  public void visitFnCommand(@NotNull ElvishFnCommand o) {
     visitPsiElement(o);
   }
 
-  public void visitForStatement(@NotNull ElvishForStatement o) {
+  public void visitForCommand(@NotNull ElvishForCommand o) {
     visitPsiElement(o);
   }
 
-  public void visitHead(@NotNull ElvishHead o) {
-    visitPsiElement(o);
-  }
-
-  public void visitIfStatement(@NotNull ElvishIfStatement o) {
-    visitPsiElement(o);
-  }
-
-  public void visitInvalidEscapeSequence(@NotNull ElvishInvalidEscapeSequence o) {
+  public void visitIfCommand(@NotNull ElvishIfCommand o) {
     visitPsiElement(o);
   }
 
@@ -88,19 +95,23 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitMapEntry(@NotNull ElvishMapEntry o) {
+  public void visitLambdaArguments(@NotNull ElvishLambdaArguments o) {
     visitPsiElement(o);
   }
 
-  public void visitMapOrList(@NotNull ElvishMapOrList o) {
+  public void visitList(@NotNull ElvishList o) {
     visitPsiElement(o);
   }
 
-  public void visitOptionValue(@NotNull ElvishOptionValue o) {
+  public void visitLogicCommand(@NotNull ElvishLogicCommand o) {
     visitPsiElement(o);
   }
 
-  public void visitOrdinaryCommand(@NotNull ElvishOrdinaryCommand o) {
+  public void visitMap(@NotNull ElvishMap o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMapPair(@NotNull ElvishMapPair o) {
     visitPsiElement(o);
   }
 
@@ -108,31 +119,23 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitParameter(@NotNull ElvishParameter o) {
+  public void visitPipelineSep(@NotNull ElvishPipelineSep o) {
     visitPsiElement(o);
   }
 
-  public void visitPipeline(@NotNull ElvishPipeline o) {
+  public void visitRedir(@NotNull ElvishRedir o) {
     visitPsiElement(o);
   }
 
-  public void visitRedirection(@NotNull ElvishRedirection o) {
+  public void visitSingleQuoted(@NotNull ElvishSingleQuoted o) {
     visitPsiElement(o);
   }
 
-  public void visitSingleQuotedString(@NotNull ElvishSingleQuotedString o) {
+  public void visitTryCommand(@NotNull ElvishTryCommand o) {
     visitPsiElement(o);
   }
 
-  public void visitTryStatement(@NotNull ElvishTryStatement o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVariableDeclaration(@NotNull ElvishVariableDeclaration o) {
-    visitPsiNamedElement(o);
-  }
-
-  public void visitVariableIndex(@NotNull ElvishVariableIndex o) {
+  public void visitVariable(@NotNull ElvishVariable o) {
     visitPsiElement(o);
   }
 
@@ -140,12 +143,20 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitWhileStatement(@NotNull ElvishWhileStatement o) {
+  public void visitWhileCommand(@NotNull ElvishWhileCommand o) {
     visitPsiElement(o);
   }
 
-  public void visitPsiNamedElement(@NotNull PsiNamedElement o) {
-    visitElement(o);
+  public void visitArgument(@NotNull ElvishArgument o) {
+    visitPsiElement(o);
+  }
+
+  public void visitHead(@NotNull ElvishHead o) {
+    visitPsiElement(o);
+  }
+
+  public void visitParameter(@NotNull ElvishParameter o) {
+    visitPsiElement(o);
   }
 
   public void visitPsiElement(@NotNull PsiElement o) {

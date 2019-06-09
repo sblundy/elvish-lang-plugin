@@ -28,62 +28,26 @@ public class ElvishArgumentImpl extends ASTWrapperPsiElement implements ElvishAr
 
   @Override
   @Nullable
-  public ElvishCompoundExpression getCompoundExpression() {
-    return findChildByClass(ElvishCompoundExpression.class);
+  public ElvishCompound getCompound() {
+    return findChildByClass(ElvishCompound.class);
   }
 
   @Override
   @Nullable
-  public ElvishDoubleQuotedString getDoubleQuotedString() {
-    return findChildByClass(ElvishDoubleQuotedString.class);
+  public ElvishExitusRedir getExitusRedir() {
+    return findChildByClass(ElvishExitusRedir.class);
   }
 
   @Override
   @Nullable
-  public ElvishEmptyMap getEmptyMap() {
-    return findChildByClass(ElvishEmptyMap.class);
+  public ElvishMapPair getMapPair() {
+    return findChildByClass(ElvishMapPair.class);
   }
 
   @Override
   @Nullable
-  public ElvishLambda getLambda() {
-    return findChildByClass(ElvishLambda.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishMapOrList getMapOrList() {
-    return findChildByClass(ElvishMapOrList.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishOutputCapture getOutputCapture() {
-    return findChildByClass(ElvishOutputCapture.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishSingleQuotedString getSingleQuotedString() {
-    return findChildByClass(ElvishSingleQuotedString.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishVariableRef getVariableRef() {
-    return findChildByClass(ElvishVariableRef.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getBareword() {
-    return findChildByType(BAREWORD);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getVariable() {
-    return findChildByType(VARIABLE);
+  public ElvishRedir getRedir() {
+    return findChildByClass(ElvishRedir.class);
   }
 
 }

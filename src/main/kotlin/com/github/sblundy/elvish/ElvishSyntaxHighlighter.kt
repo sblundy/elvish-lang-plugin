@@ -18,8 +18,6 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
     override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
         return when (tokenType) {
             ElvishTypes.COMMENT -> COMMENT_KEYS
-            ElvishTypes.SINGLE_QUOTED_STRING,
-                ElvishTypes.DOUBLE_QUOTED_STRING,
                 ElvishTypes.SINGLE_QUOTE,
                 ElvishTypes.DOUBLE_QUOTE,
                 ElvishTypes.TEXT -> STRING_KEYS

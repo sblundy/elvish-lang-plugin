@@ -1,2 +1,4 @@
 Elvish File
   PsiComment(ElvishTokenType.COMMENT)('# Test comment')
+  ElvishChunkImpl(CHUNK)
+    <empty list>

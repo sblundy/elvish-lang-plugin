@@ -8,7 +8,13 @@ import com.intellij.psi.PsiElement;
 public interface ElvishCollection extends PsiElement {
 
   @Nullable
-  ElvishMapOrList getMapOrList();
+  ElvishExceptionCapture getExceptionCapture();
+
+  @Nullable
+  ElvishList getList();
+
+  @Nullable
+  ElvishMap getMap();
 
   @Nullable
   ElvishOutputCapture getOutputCapture();

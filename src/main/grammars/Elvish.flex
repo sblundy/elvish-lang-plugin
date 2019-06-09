@@ -56,12 +56,13 @@ KEYWORD_FN = fn
 STRING_CMP_BUILTINS=(([<>=!]=)|[<>])s
 NUMERIC_CMP_BUILTINS=(([<>=!]=)|[<>])
 VARIABLE_CHAR=[[0-9a-zA-Z\-_:~]||[[\u0080-\uFFFF]&&\p{Print}]] // see parse/parse.go:713 (allowedInVariableName())
-BAREWORD_CHAR=[\.\/@%+!]|{VARIABLE_CHAR}
+BAREWORD_CHAR=[\.\/@%+!]
 LHS_BAREWORD_CHAR=[=]
 BRACED_BAREWORD_CHAR=[,]
-COMMAND_BAREWORD_CHAR=[<>*\^]|{BAREWORD_CHAR}
+COMMAND_BAREWORD_CHAR=[<>*\^]
 EOL="\r"|"\n"|"\r\n"
 INLINE_WHITESPACE_CHAR=[ \t]
+INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
 WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
 
 %xstate IN_SINGLE_QUOTE_STRING IN_DOUBLE_QUOTE_STRING
@@ -69,9 +70,10 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
 %%
 
 <YYINITIAL> {
-  {WHITESPACE}              { return TokenType.WHITE_SPACE; }
+  {INLINE_WHITESPACE}       { return ElvishTypes.INLINE_WHITESPACE; }
   {COMMENT}                 { return ElvishTypes.COMMENT; }
 
+  "$"                       { return ElvishTypes.DOLLAR_SIGN; }
   "{"                       { return ElvishTypes.OPEN_BRACE; }
   "}"                       { return ElvishTypes.CLOSE_BRACE; }
   "["                       { return ElvishTypes.OPEN_BRACKET; }
@@ -90,12 +92,13 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
   "&"                       { return ElvishTypes.AMPERSAND; }
   "~"                       { return ElvishTypes.TILDA; }
   "="                       { return ElvishTypes.EQUALS; }
-  "$""@"?{VARIABLE_CHAR}+   { return ElvishTypes.VAR_REF; }
   "|"                       { return ElvishTypes.PIPE; }
   ";"                       { return ElvishTypes.SEMICOLON; }
+  "@"                       { return ElvishTypes.AT_SYMBOL; }
+  "*"                       { return ElvishTypes.WILDCARD; }
 
   {CONTINUATION}            { return ElvishTypes.CONTINUATION; }
-
+  {EOL}                     { return ElvishTypes.EOL; }
   {KEYWORD_ELIF}            { return ElvishTypes.KEYWORD_ELIF; }
   {KEYWORD_ELSE}            { return ElvishTypes.KEYWORD_ELSE; }
   {KEYWORD_WHILE}           { return ElvishTypes.KEYWORD_WHILE; }
@@ -106,12 +109,9 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
   {KEYWORD_FN}              { return ElvishTypes.KEYWORD_FN; }
   {KEYWORD_TRY}             { return ElvishTypes.KEYWORD_TRY; }
   {KEYWORD_DEL}             { return ElvishTypes.KEYWORD_DEL; }
-  {VARIABLE_CHAR}+          { return ElvishTypes.VARIABLE; }
-  "@"{VARIABLE_CHAR}+       { return ElvishTypes.AT_VARIABLE; }
-  {BAREWORD_CHAR}+          { return ElvishTypes.BAREWORD; }
-  {COMMAND_BAREWORD_CHAR}+  { return ElvishTypes.COMMAND_BAREWORD; }
-  {STRING_CMP_BUILTINS}     { return ElvishTypes.COMMAND_BAREWORD; }
-  {NUMERIC_CMP_BUILTINS}    { return ElvishTypes.COMMAND_BAREWORD; }
+  {VARIABLE_CHAR}+          { return ElvishTypes.VARIABLE_CHAR; }
+  {BAREWORD_CHAR}+          { return ElvishTypes.BAREWORD_CHAR; }
+  {COMMAND_BAREWORD_CHAR}+  { return ElvishTypes.COMMAND_BAREWORD_CHAR; }
 }
 
 <IN_SINGLE_QUOTE_STRING> {

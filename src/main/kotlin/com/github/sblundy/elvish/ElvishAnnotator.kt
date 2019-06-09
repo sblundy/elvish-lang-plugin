@@ -14,7 +14,7 @@ class ElvishAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         val attributes = when (element) {
             is ElvishHead -> if (isBuiltin(element)) { BUILTIN } else { COMMAND }
-            is ElvishVariableDeclaration -> VARIABLE
+            is ElvishVariable -> VARIABLE
             is ElvishVariableRef -> VARIABLE_REF
             is ElvishParameter -> PARAMETER
             else -> null

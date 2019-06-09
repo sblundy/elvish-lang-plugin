@@ -1,6 +1,6 @@
 package com.github.sblundy.elvish
 
-import com.github.sblundy.elvish.psi.ElvishBlock
+import com.github.sblundy.elvish.psi.ElvishBraced
 import com.github.sblundy.elvish.psi.ElvishLambda
 import com.github.sblundy.elvish.psi.ElvishOutputCapture
 import com.github.sblundy.elvish.psi.ElvishTypes
@@ -24,7 +24,7 @@ class ElvishPairBraceMatcher: PairedBraceMatcher {
         val p = when (element) {
             is ElvishLambda -> element
             is ElvishOutputCapture -> element
-            is ElvishBlock -> element.parent
+            is ElvishBraced -> element.parent
             else -> null
         }
 

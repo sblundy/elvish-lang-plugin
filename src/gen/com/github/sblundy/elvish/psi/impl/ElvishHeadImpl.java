@@ -28,26 +28,38 @@ public class ElvishHeadImpl extends ASTWrapperPsiElement implements ElvishHead {
 
   @Override
   @Nullable
+  public ElvishCommandBareword getCommandBareword() {
+    return findChildByClass(ElvishCommandBareword.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishDoubleQuoted getDoubleQuoted() {
+    return findChildByClass(ElvishDoubleQuoted.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishExceptionCapture getExceptionCapture() {
+    return findChildByClass(ElvishExceptionCapture.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishOutputCapture getOutputCapture() {
+    return findChildByClass(ElvishOutputCapture.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishSingleQuoted getSingleQuoted() {
+    return findChildByClass(ElvishSingleQuoted.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishVariableRef getVariableRef() {
     return findChildByClass(ElvishVariableRef.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getBareword() {
-    return findChildByType(BAREWORD);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getCommandBareword() {
-    return findChildByType(COMMAND_BAREWORD);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getVariable() {
-    return findChildByType(VARIABLE);
   }
 
 }

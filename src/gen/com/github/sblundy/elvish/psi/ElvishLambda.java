@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishLambda extends PsiElement {
 
   @NotNull
-  List<ElvishParameter> getParameterList();
+  ElvishChunk getChunk();
+
+  @Nullable
+  ElvishLambdaArguments getLambdaArguments();
 
 }

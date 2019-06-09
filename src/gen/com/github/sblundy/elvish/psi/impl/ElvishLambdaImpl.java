@@ -28,8 +28,14 @@ public class ElvishLambdaImpl extends ASTWrapperPsiElement implements ElvishLamb
 
   @Override
   @NotNull
-  public List<ElvishParameter> getParameterList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishParameter.class);
+  public ElvishChunk getChunk() {
+    return findNotNullChildByClass(ElvishChunk.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishLambdaArguments getLambdaArguments() {
+    return findChildByClass(ElvishLambdaArguments.class);
   }
 
 }

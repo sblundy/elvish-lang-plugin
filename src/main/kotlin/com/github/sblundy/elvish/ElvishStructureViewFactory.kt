@@ -1,7 +1,7 @@
 package com.github.sblundy.elvish
 
 import com.github.sblundy.elvish.psi.ElvishFile
-import com.github.sblundy.elvish.psi.ElvishFnStatement
+import com.github.sblundy.elvish.psi.ElvishFnCommand
 import com.intellij.icons.AllIcons
 import com.intellij.ide.structureView.*
 import com.intellij.ide.structureView.impl.common.PsiTreeElementBase
@@ -31,7 +31,7 @@ class ElvishStructureViewFactory : PsiStructureViewFactory {
 
     private class ElvishStructureViewFile(psiFile: ElvishFile): PsiTreeElementBase<ElvishFile>(psiFile) {
         override fun getChildrenBase(): MutableCollection<StructureViewTreeElement> {
-            val functions = element?.findChildrenByClass(ElvishFnStatement::class.java)
+            val functions = element?.findChildrenByClass(ElvishFnCommand::class.java)
             return functions?.let {
                 it.map { ElvishStructureViewFunction(it) }.toMutableList<StructureViewTreeElement>()
             } ?: mutableListOf()
@@ -42,7 +42,7 @@ class ElvishStructureViewFactory : PsiStructureViewFactory {
         }
     }
 
-    private class ElvishStructureViewFunction(fn: ElvishFnStatement): PsiTreeElementBase<ElvishFnStatement>(fn) {
+    private class ElvishStructureViewFunction(fn: ElvishFnCommand): PsiTreeElementBase<ElvishFnCommand>(fn) {
         override fun getChildrenBase(): MutableCollection<StructureViewTreeElement> = mutableListOf()
         override fun getPresentableText(): String? = element?.variable?.text
         override fun getIcon(open: Boolean): Icon = AllIcons.Nodes.Method

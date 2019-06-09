@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishCondition extends PsiElement {
 
   @Nullable
+  ElvishExceptionCapture getExceptionCapture();
+
+  @Nullable
   ElvishOutputCapture getOutputCapture();
 
   @Nullable

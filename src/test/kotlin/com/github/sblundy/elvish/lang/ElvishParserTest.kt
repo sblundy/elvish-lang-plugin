@@ -65,6 +65,7 @@ class ElvishParserTest {
     @Suppress("unused")
     fun fileLister(): List<String> =
         FileUtil.findFilesByMask(Pattern.compile(".*\\.elv"), File(myFullDataPath)).map { it.nameWithoutExtension }
+            .filterNot { it == "for-invalid" }
 
 
     @ParameterizedTest

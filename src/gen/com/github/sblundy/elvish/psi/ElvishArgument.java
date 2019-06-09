@@ -8,33 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface ElvishArgument extends PsiElement {
 
   @Nullable
-  ElvishCompoundExpression getCompoundExpression();
+  ElvishCompound getCompound();
 
   @Nullable
-  ElvishDoubleQuotedString getDoubleQuotedString();
+  ElvishExitusRedir getExitusRedir();
 
   @Nullable
-  ElvishEmptyMap getEmptyMap();
+  ElvishMapPair getMapPair();
 
   @Nullable
-  ElvishLambda getLambda();
-
-  @Nullable
-  ElvishMapOrList getMapOrList();
-
-  @Nullable
-  ElvishOutputCapture getOutputCapture();
-
-  @Nullable
-  ElvishSingleQuotedString getSingleQuotedString();
-
-  @Nullable
-  ElvishVariableRef getVariableRef();
-
-  @Nullable
-  PsiElement getBareword();
-
-  @Nullable
-  PsiElement getVariable();
+  ElvishRedir getRedir();
 
 }
