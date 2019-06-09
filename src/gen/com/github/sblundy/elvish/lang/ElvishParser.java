@@ -1321,7 +1321,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // PIPE Space? Form Space?
+  // PIPE Space? (EOL Space?)? Form Space?
   static boolean PipelineExtension(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "PipelineExtension")) return false;
     if (!nextTokenIs(builder_, PIPE)) return false;
@@ -1329,8 +1329,9 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, PIPE);
     result_ = result_ && PipelineExtension_1(builder_, level_ + 1);
+    result_ = result_ && PipelineExtension_2(builder_, level_ + 1);
     result_ = result_ && Form(builder_, level_ + 1);
-    result_ = result_ && PipelineExtension_3(builder_, level_ + 1);
+    result_ = result_ && PipelineExtension_4(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
@@ -1342,9 +1343,34 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return true;
   }
 
+  // (EOL Space?)?
+  private static boolean PipelineExtension_2(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "PipelineExtension_2")) return false;
+    PipelineExtension_2_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // EOL Space?
+  private static boolean PipelineExtension_2_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "PipelineExtension_2_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, EOL);
+    result_ = result_ && PipelineExtension_2_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
   // Space?
-  private static boolean PipelineExtension_3(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "PipelineExtension_3")) return false;
+  private static boolean PipelineExtension_2_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "PipelineExtension_2_0_1")) return false;
+    Space(builder_, level_ + 1);
+    return true;
+  }
+
+  // Space?
+  private static boolean PipelineExtension_4(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "PipelineExtension_4")) return false;
     Space(builder_, level_ + 1);
     return true;
   }

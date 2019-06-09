@@ -62,7 +62,7 @@ private ChuckSep ::= PipelineSep | Space
 PipelineSep ::= EOL | SEMICOLON
 private Space ::= INLINE_WHITESPACE
 private Pipeline ::= Form Space? PipelineExtension*
-private PipelineExtension ::= PIPE Space? Form Space?
+private PipelineExtension ::= PIPE Space? (EOL Space?)? Form Space?
 private Form ::= AssignmentOnlyForm | SpecialCommand | CommandForm
 private AssignmentOnlyForm ::= Space? Assignment Space?
 
