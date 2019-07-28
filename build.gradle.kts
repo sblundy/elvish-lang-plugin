@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.intellij") version "0.4.8"
+    id("org.jetbrains.intellij") version "0.4.9"
     java
     kotlin("jvm") version "1.3.21"
-    id("org.jetbrains.grammarkit") version "2019.1"
+    id("org.jetbrains.grammarkit") version "2019.2"
 }
 
 group = "com.github.sblundy"
@@ -23,7 +23,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = "2019.1.2"
+    version = "2019.2"
 }
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -63,6 +63,10 @@ tasks.withType<KotlinCompile> {
     dependsOn(
         generateLexer, generateParser
     )
+}
+
+tasks.getByName("buildSearchableOptions") {
+    enabled = false
 }
 
 tasks.withType<Test> {

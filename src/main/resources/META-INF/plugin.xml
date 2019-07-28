@@ -12,7 +12,7 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="com.github.sblundy.elvish.ElvishFileTypeFactory"/>
+        <fileType name="Elvish" language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishFileType" fieldName="INSTANCE" extensions="elv"/>
         <lang.parserDefinition language="Elvish" implementationClass="com.github.sblundy.elvish.lang.ElvishParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishSyntaxHighlighterFactory"/>
         <annotator language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishAnnotator"/>

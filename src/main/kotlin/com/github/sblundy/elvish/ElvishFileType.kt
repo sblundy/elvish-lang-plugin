@@ -5,7 +5,7 @@ import javax.swing.Icon
 
 class ElvishFileType private constructor(): LanguageFileType(ElvishLanguage.INSTANCE) {
     companion object {
-        val INSTANCE = ElvishFileType()
+        @JvmField val INSTANCE = ElvishFileType()
     }
     override fun getIcon(): Icon? = icons.ElvishIcons.FILE_ICON
 

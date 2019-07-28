@@ -4,6 +4,6 @@ import com.intellij.lang.Language
 
 class ElvishLanguage private constructor(): Language("Elvish") {
     companion object {
-        val INSTANCE = ElvishLanguage()
+        @JvmField val INSTANCE = ElvishLanguage()
     }
 }

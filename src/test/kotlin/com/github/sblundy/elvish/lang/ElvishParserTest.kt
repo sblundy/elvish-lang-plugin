@@ -12,7 +12,6 @@ import com.intellij.psi.impl.PsiFileFactoryImpl
 import com.intellij.testFramework.*
 import com.intellij.testFramework.fixtures.IdeaProjectTestFixture
 import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory
-import com.intellij.testFramework.fixtures.JavaTestFixtureFactory
 import com.intellij.testFramework.fixtures.impl.LightTempDirTestFixtureImpl
 import org.jetbrains.annotations.NonNls
 import org.junit.Assert
@@ -42,7 +41,7 @@ class ElvishParserTest {
         val factory = IdeaTestFixtureFactory.getFixtureFactory()
         val fixtureBuilder = factory.createLightFixtureBuilder()
         val fixture = fixtureBuilder.fixture
-        myFixture = JavaTestFixtureFactory.getFixtureFactory()
+        myFixture = IdeaTestFixtureFactory.getFixtureFactory()
             .createCodeInsightFixture(fixture, LightTempDirTestFixtureImpl(true))
 
         myFixture.setUp()
