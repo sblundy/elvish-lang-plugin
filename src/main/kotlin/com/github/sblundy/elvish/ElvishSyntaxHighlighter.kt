@@ -32,6 +32,7 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
                 ElvishTypes.KEYWORD_FOR,
                 ElvishTypes.KEYWORD_IF,
                 ElvishTypes.KEYWORD_TRY,
+                ElvishTypes.KEYWORD_USE,
                 ElvishTypes.KEYWORD_WHILE -> KEYWORD_KEYS
             ElvishTypes.OPEN_BRACKET, ElvishTypes.CLOSE_BRACKET -> BRACKETS_KEYS
             ElvishTypes.OPEN_BRACE, ElvishTypes.CLOSE_BRACE -> BRACES_KEYS

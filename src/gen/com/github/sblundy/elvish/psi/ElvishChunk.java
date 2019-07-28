@@ -32,6 +32,9 @@ public interface ElvishChunk extends PsiElement {
   List<ElvishTryCommand> getTryCommandList();
 
   @NotNull
+  List<ElvishUseCommand> getUseCommandList();
+
+  @NotNull
   List<ElvishWhileCommand> getWhileCommandList();
 
   @NotNull

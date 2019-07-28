@@ -53,6 +53,7 @@
     KEYWORD_TRY="try"
     KEYWORD_DEL="del"
     KEYWORD_FN="fn"
+    KEYWORD_USE="use"
     CONTINUATION="regexp:[\\][\r|\n]"
   ]
 }
@@ -114,7 +115,7 @@ BracedSep ::= (Space | EOL)* [ ',' ] (Space | EOL)*
 
 // Special Commands
 
-private SpecialCommand ::= DeleteCommand | LogicCommand | IfCommand | WhileCommand | ForCommand | TryCommand | FnCommand
+private SpecialCommand ::= DeleteCommand | UseCommand | LogicCommand | IfCommand | WhileCommand | ForCommand | TryCommand | FnCommand
 
 DeleteCommand ::= KEYWORD_DEL CommandSep* Variable Index*
 LogicCommand ::= LogicCMD (CommandSep* argument)* CommandSep*
@@ -130,3 +131,4 @@ TryCommand ::= KEYWORD_TRY Space OPEN_BRACE Chunk CLOSE_BRACE (Space ExceptBlock
 ExceptBlock ::= KEYWORD_EXCEPT Space Variable Space OPEN_BRACE Chunk CLOSE_BRACE
 FinallyBlock ::= KEYWORD_FINALLY Space OPEN_BRACE Chunk CLOSE_BRACE
 FnCommand ::= KEYWORD_FN Space Variable Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE
+UseCommand ::= KEYWORD_USE Space Bareword

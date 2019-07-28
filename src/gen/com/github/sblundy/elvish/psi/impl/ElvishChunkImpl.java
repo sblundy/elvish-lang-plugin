@@ -76,6 +76,12 @@ public class ElvishChunkImpl extends ASTWrapperPsiElement implements ElvishChunk
 
   @Override
   @NotNull
+  public List<ElvishUseCommand> getUseCommandList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishUseCommand.class);
+  }
+
+  @Override
+  @NotNull
   public List<ElvishWhileCommand> getWhileCommandList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishWhileCommand.class);
   }

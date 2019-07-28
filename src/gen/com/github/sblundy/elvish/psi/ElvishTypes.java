@@ -43,6 +43,7 @@ public interface ElvishTypes {
   IElementType REDIR = new ElvishElementType("REDIR");
   IElementType SINGLE_QUOTED = new ElvishElementType("SINGLE_QUOTED");
   IElementType TRY_COMMAND = new ElvishElementType("TRY_COMMAND");
+  IElementType USE_COMMAND = new ElvishElementType("USE_COMMAND");
   IElementType VARIABLE = new ElvishElementType("VARIABLE");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
   IElementType WHILE_COMMAND = new ElvishElementType("WHILE_COMMAND");
@@ -72,6 +73,7 @@ public interface ElvishTypes {
   IElementType KEYWORD_FOR = new ElvishTokenType("for");
   IElementType KEYWORD_IF = new ElvishTokenType("if");
   IElementType KEYWORD_TRY = new ElvishTokenType("try");
+  IElementType KEYWORD_USE = new ElvishTokenType("use");
   IElementType KEYWORD_WHILE = new ElvishTokenType("while");
   IElementType OPEN_BRACE = new ElvishTokenType("{");
   IElementType OPEN_BRACKET = new ElvishTokenType("[");
@@ -192,6 +194,9 @@ public interface ElvishTypes {
       }
       else if (type == TRY_COMMAND) {
         return new ElvishTryCommandImpl(node);
+      }
+      else if (type == USE_COMMAND) {
+        return new ElvishUseCommandImpl(node);
       }
       else if (type == VARIABLE) {
         return new ElvishVariableImpl(node);

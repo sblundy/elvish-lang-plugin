@@ -1530,11 +1530,12 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DeleteCommand | LogicCommand | IfCommand | WhileCommand | ForCommand | TryCommand | FnCommand
+  // DeleteCommand | UseCommand | LogicCommand | IfCommand | WhileCommand | ForCommand | TryCommand | FnCommand
   static boolean SpecialCommand(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "SpecialCommand")) return false;
     boolean result_;
     result_ = DeleteCommand(builder_, level_ + 1);
+    if (!result_) result_ = UseCommand(builder_, level_ + 1);
     if (!result_) result_ = LogicCommand(builder_, level_ + 1);
     if (!result_) result_ = IfCommand(builder_, level_ + 1);
     if (!result_) result_ = WhileCommand(builder_, level_ + 1);
@@ -1614,6 +1615,20 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = Space(builder_, level_ + 1);
     result_ = result_ && FinallyBlock(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // KEYWORD_USE Space Bareword
+  public static boolean UseCommand(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "UseCommand")) return false;
+    if (!nextTokenIs(builder_, KEYWORD_USE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, KEYWORD_USE);
+    result_ = result_ && Space(builder_, level_ + 1);
+    result_ = result_ && Bareword(builder_, level_ + 1);
+    exit_section_(builder_, marker_, USE_COMMAND, result_);
     return result_;
   }
 

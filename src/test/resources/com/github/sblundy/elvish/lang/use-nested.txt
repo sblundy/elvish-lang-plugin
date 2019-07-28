@@ -1,0 +1,7 @@
+Elvish File
+  ElvishChunkImpl(CHUNK)
+    ElvishUseCommandImpl(USE_COMMAND)
+      PsiElement(ElvishTokenType.use)('use')
+      PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
+      ElvishBarewordImpl(BAREWORD)
+        PsiElement(ElvishTokenType.VARIABLE_CHAR)('x:y:z')
