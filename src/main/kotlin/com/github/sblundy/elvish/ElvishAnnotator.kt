@@ -2,6 +2,7 @@ package com.github.sblundy.elvish
 
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.BUILTIN
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.COMMAND
+import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.COMMAND_CAPTURE
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.PARAMETER
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.VARIABLE
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.VARIABLE_REF
@@ -12,17 +13,39 @@ import com.intellij.psi.PsiElement
 
 class ElvishAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        val attributes = when (element) {
-            is ElvishHead -> if (isBuiltin(element)) { BUILTIN } else { COMMAND }
-            is ElvishVariable -> VARIABLE
-            is ElvishVariableRef -> VARIABLE_REF
-            is ElvishParameter -> PARAMETER
-            else -> null
-        }
+        when (element) {
+            is ElvishOutputCapture -> {
+                val openParan = holder.createInfoAnnotation(element.openParan.textRange, null)
+                val closeParan = holder.createInfoAnnotation(element.closeParan.textRange, null)
+                openParan.textAttributes = COMMAND_CAPTURE
+                closeParan.textAttributes = COMMAND_CAPTURE
+                return
+            }
+            is ElvishExceptionCapture -> {
+                val openParan = holder.createInfoAnnotation(element.question.textRange.union(element.openParan.textRange), null)
+                val closeParan = holder.createInfoAnnotation(element.closeParan.textRange, null)
+                openParan.textAttributes = COMMAND_CAPTURE
+                closeParan.textAttributes = COMMAND_CAPTURE
+                return
+            }
+            else -> {
+                val attributes = when (element) {
+                    is ElvishHead -> if (isBuiltin(element)) {
+                        BUILTIN
+                    } else {
+                        COMMAND
+                    }
+                    is ElvishVariable -> VARIABLE
+                    is ElvishVariableRef -> VARIABLE_REF
+                    is ElvishParameter -> PARAMETER
+                    else -> null
+                }
 
-        attributes?.let {
-            val annotation = holder.createInfoAnnotation(element.textRange, null)
-            annotation.textAttributes = attributes
+                attributes?.let {
+                    val annotation = holder.createInfoAnnotation(element.textRange, null)
+                    annotation.textAttributes = attributes
+                }
+            }
         }
     }
 

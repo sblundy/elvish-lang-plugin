@@ -1,9 +1,7 @@
 package com.github.sblundy.elvish
 
-import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory
-import com.intellij.openapi.project.Project
-import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.fileTypes.SingleLazyInstanceSyntaxHighlighterFactory
 
-class ElvishSyntaxHighlighterFactory: SyntaxHighlighterFactory() {
-    override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?) = ElvishSyntaxHighlighter()
+class ElvishSyntaxHighlighterFactory: SingleLazyInstanceSyntaxHighlighterFactory() {
+    override fun createHighlighter() = ElvishSyntaxHighlighter()
 }

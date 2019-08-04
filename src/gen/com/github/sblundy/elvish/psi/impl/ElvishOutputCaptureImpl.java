@@ -32,4 +32,16 @@ public class ElvishOutputCaptureImpl extends ASTWrapperPsiElement implements Elv
     return findNotNullChildByClass(ElvishChunk.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getCloseParan() {
+    return findNotNullChildByType(CLOSE_PARAN);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getOpenParan() {
+    return findNotNullChildByType(OPEN_PARAN);
+  }
+
 }

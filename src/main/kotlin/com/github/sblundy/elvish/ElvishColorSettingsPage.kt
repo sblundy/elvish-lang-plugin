@@ -25,6 +25,7 @@ private val additionalHighlightingTag = Collections.unmodifiableMap(
     mutableMapOf(
         "builtIn" to ElvishSyntaxHighlighter.BUILTIN,
         "command" to ElvishSyntaxHighlighter.COMMAND,
+        "commandCapture" to ElvishSyntaxHighlighter.COMMAND_CAPTURE,
         "parameter" to ElvishSyntaxHighlighter.PARAMETER,
         "variable" to ElvishSyntaxHighlighter.VARIABLE,
         "variableRef" to ElvishSyntaxHighlighter.VARIABLE_REF
@@ -33,12 +34,15 @@ private val additionalHighlightingTag = Collections.unmodifiableMap(
 
 private val elvishAttributesDescriptors = arrayOf(
     AttributesDescriptor(ElvishBundle.message("attribute.COMMAND.displayName"), ElvishSyntaxHighlighter.COMMAND),
+    AttributesDescriptor(ElvishBundle.message("attribute.COMMAND_CAPTURE.displayName"), ElvishSyntaxHighlighter.COMMAND_CAPTURE),
     AttributesDescriptor(ElvishBundle.message("attribute.KEYWORD.displayName"), ElvishSyntaxHighlighter.KEYWORD),
+    AttributesDescriptor(ElvishBundle.message("attribute.SEP_KEYWORD.displayName"), ElvishSyntaxHighlighter.SEP_KEYWORD),
     AttributesDescriptor(ElvishBundle.message("attribute.BUILTIN.displayName"), ElvishSyntaxHighlighter.BUILTIN),
     AttributesDescriptor(ElvishBundle.message("attribute.STRING.displayName"), ElvishSyntaxHighlighter.STRING),
     AttributesDescriptor(ElvishBundle.message("attribute.BRACKETS.displayName"), ElvishSyntaxHighlighter.BRACKETS),
     AttributesDescriptor(ElvishBundle.message("attribute.BRACES.displayName"), ElvishSyntaxHighlighter.BRACES),
     AttributesDescriptor(ElvishBundle.message("attribute.PARENTHESES.displayName"), ElvishSyntaxHighlighter.PARENTHESES),
+    AttributesDescriptor(ElvishBundle.message("attribute.OPERATOR.displayName"), ElvishSyntaxHighlighter.OPERATOR),
     AttributesDescriptor(ElvishBundle.message("attribute.PARAMETER.displayName"), ElvishSyntaxHighlighter.PARAMETER),
     AttributesDescriptor(ElvishBundle.message("attribute.ESCAPE_SEQUENCE.displayName"), ElvishSyntaxHighlighter.ESCAPE_SEQUENCE),
     AttributesDescriptor(ElvishBundle.message("attribute.INVALID_ESCAPE_SEQUENCE.displayName"), ElvishSyntaxHighlighter.INVALID_ESCAPE_SEQUENCE),
@@ -52,8 +56,10 @@ private val sampleElvishScript: String = """
     <command>command</command> -f argument 'single quoted string'
     <variable>x</variable> = '''s'
     <builtIn>put</builtIn> <variableRef>${'$'}x</variableRef>
-    if (<builtIn>has-suffix</builtIn> <variableRef>${'$'}fname</variableRef> .go) {
-        <builtIn>echo</builtIn> <variableRef>${'$'}fname</variableRef> "is go f\ile"
+    if <commandCapture>(</commandCapture><builtIn>has-suffix</builtIn> <variableRef>${'$'}fname</variableRef> .go<commandCapture>)</commandCapture> {
+        <builtIn>echo</builtIn> "Package name is "<commandCapture>(</commandCapture><command>head</command> -n 1 <variableRef>${'$'}fname</variableRef> | <command>cut</command> -c 9-<commandCapture>)</commandCapture>
+    } else {
+        <builtIn>echo</builtIn> <variableRef>${'$'}fname</variableRef> "is not go f\ile"
     }
-    y = [<parameter>x</parameter> <parameter>@y</parameter>]{ echo ${'$'}x }
+    <variable>y</variable> = [<parameter>x</parameter> <parameter>@y</parameter>]{ <builtIn>echo</builtIn> <variableRef>${'$'}x</variableRef> }
 """.trimIndent()
