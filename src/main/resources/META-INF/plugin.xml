@@ -7,6 +7,15 @@
     Support editing files for the <a href="https://elv.sh/">Elvish Shell</a> language.
     ]]></description>
 
+    <change-notes><![CDATA[
+    <div>
+        <h4>1.0.0</h4>
+        <ul>
+            <li>Basic parsing and syntax highlighting</li>
+        </ul>
+    </div>
+    ]]></change-notes>
+
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.lang</depends>
