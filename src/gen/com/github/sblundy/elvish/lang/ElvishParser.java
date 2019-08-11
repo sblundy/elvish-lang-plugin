@@ -320,13 +320,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (Space | EOL)* [ ',' ] (Space | EOL)*
+  // (Space | EOL)* ',' (Space | EOL)*
   public static boolean BracedSep(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "BracedSep")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, BRACED_SEP, "<braced sep>");
     result_ = BracedSep_0(builder_, level_ + 1);
-    result_ = result_ && BracedSep_1(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, ",");
     result_ = result_ && BracedSep_2(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
@@ -350,13 +350,6 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = Space(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, EOL);
     return result_;
-  }
-
-  // [ ',' ]
-  private static boolean BracedSep_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "BracedSep_1")) return false;
-    consumeToken(builder_, ",");
-    return true;
   }
 
   // (Space | EOL)*

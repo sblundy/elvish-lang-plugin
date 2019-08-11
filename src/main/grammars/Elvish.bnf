@@ -111,7 +111,7 @@ Lambda ::= LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE
 LambdaArguments ::=OPEN_BRACKET Space? ((parameter | MapPair) Space?)* CLOSE_BRACKET
 parameter ::= AT_SYMBOL? Compound
 Braced ::= OPEN_BRACE (Space | EOL)* Compound (BracedSep* Compound)* (Space | EOL)* CLOSE_BRACE
-BracedSep ::= (Space | EOL)* [ ',' ] (Space | EOL)*
+BracedSep ::= (Space | EOL)* ',' (Space | EOL)*
 
 // Special Commands
 
