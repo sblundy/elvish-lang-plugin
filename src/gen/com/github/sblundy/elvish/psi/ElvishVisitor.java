@@ -23,6 +23,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBracedBareword(@NotNull ElvishBracedBareword o) {
+    visitPsiElement(o);
+  }
+
   public void visitBracedSep(@NotNull ElvishBracedSep o) {
     visitPsiElement(o);
   }

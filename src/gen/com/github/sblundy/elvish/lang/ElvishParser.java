@@ -202,7 +202,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (VARIABLE_CHAR|BAREWORD_CHAR|<<parseKeywordAsBareword>>)+
+  // (VARIABLE_CHAR|BAREWORD_CHAR|COMMA|<<parseKeywordAsBareword>>)+
   public static boolean Bareword(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Bareword")) return false;
     boolean result_;
@@ -217,20 +217,21 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // VARIABLE_CHAR|BAREWORD_CHAR|<<parseKeywordAsBareword>>
+  // VARIABLE_CHAR|BAREWORD_CHAR|COMMA|<<parseKeywordAsBareword>>
   private static boolean Bareword_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Bareword_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, VARIABLE_CHAR);
     if (!result_) result_ = consumeToken(builder_, BAREWORD_CHAR);
+    if (!result_) result_ = consumeToken(builder_, COMMA);
     if (!result_) result_ = parseKeywordAsBareword(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
   /* ********************************************************** */
-  // OPEN_BRACE (Space | EOL)* Bareword (BracedSep* Bareword)* (Space | EOL)* CLOSE_BRACE
+  // OPEN_BRACE (Space | EOL)* BracedBareword (BracedSep* BracedBareword)* (Space | EOL)* CLOSE_BRACE
   public static boolean Braced(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Braced")) return false;
     if (!nextTokenIs(builder_, OPEN_BRACE)) return false;
@@ -238,7 +239,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, OPEN_BRACE);
     result_ = result_ && Braced_1(builder_, level_ + 1);
-    result_ = result_ && Bareword(builder_, level_ + 1);
+    result_ = result_ && BracedBareword(builder_, level_ + 1);
     result_ = result_ && Braced_3(builder_, level_ + 1);
     result_ = result_ && Braced_4(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, CLOSE_BRACE);
@@ -266,7 +267,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // (BracedSep* Bareword)*
+  // (BracedSep* BracedBareword)*
   private static boolean Braced_3(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Braced_3")) return false;
     while (true) {
@@ -277,13 +278,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // BracedSep* Bareword
+  // BracedSep* BracedBareword
   private static boolean Braced_3_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Braced_3_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = Braced_3_0_0(builder_, level_ + 1);
-    result_ = result_ && Bareword(builder_, level_ + 1);
+    result_ = result_ && BracedBareword(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
@@ -320,13 +321,41 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (Space | EOL)* <<parseCommaAsSeparator>> (Space | EOL)*
+  // (VARIABLE_CHAR|BAREWORD_CHAR|<<parseKeywordAsBareword>>)+
+  public static boolean BracedBareword(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "BracedBareword")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, BRACED_BAREWORD, "<braced bareword>");
+    result_ = BracedBareword_0(builder_, level_ + 1);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!BracedBareword_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "BracedBareword", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // VARIABLE_CHAR|BAREWORD_CHAR|<<parseKeywordAsBareword>>
+  private static boolean BracedBareword_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "BracedBareword_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, VARIABLE_CHAR);
+    if (!result_) result_ = consumeToken(builder_, BAREWORD_CHAR);
+    if (!result_) result_ = parseKeywordAsBareword(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // (Space | EOL)* COMMA (Space | EOL)*
   public static boolean BracedSep(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "BracedSep")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, BRACED_SEP, "<braced sep>");
     result_ = BracedSep_0(builder_, level_ + 1);
-    result_ = result_ && parseCommaAsSeparator(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, COMMA);
     result_ = result_ && BracedSep_2(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;

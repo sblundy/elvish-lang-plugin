@@ -28,8 +28,8 @@ public class ElvishBracedImpl extends ASTWrapperPsiElement implements ElvishBrac
 
   @Override
   @NotNull
-  public List<ElvishBareword> getBarewordList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishBareword.class);
+  public List<ElvishBracedBareword> getBracedBarewordList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishBracedBareword.class);
   }
 
   @Override

@@ -113,6 +113,7 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
   {KEYWORD_USE}             { return ElvishTypes.KEYWORD_USE; }
   {VARIABLE_CHAR}+          { return ElvishTypes.VARIABLE_CHAR; }
   {BAREWORD_CHAR}+          { return ElvishTypes.BAREWORD_CHAR; }
+  {BRACED_BAREWORD_CHAR}    { return ElvishTypes.COMMA; }
   {COMMAND_BAREWORD_CHAR}+  { return ElvishTypes.COMMAND_BAREWORD_CHAR; }
 }
 

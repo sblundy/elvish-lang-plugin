@@ -17,13 +17,6 @@ private val keywords = setOf(
     ElvishTypes.KEYWORD_TRY,
     ElvishTypes.KEYWORD_WHILE)
 
-fun parseCommaAsSeparator(builder: PsiBuilder, level: Int): Boolean {
-    if (builder.tokenText != ",") return false
-    builder.remapCurrentToken(ElvishTypes.BRACED_SEPARATOR)
-    builder.advanceLexer()
-    return true
-}
-
 fun parseKeywordAsBareword(builder: PsiBuilder, level: Int): Boolean {
     if (!(builder.tokenType in keywords)) return false
     builder.remapCurrentToken(ElvishTypes.BAREWORD_CHAR)

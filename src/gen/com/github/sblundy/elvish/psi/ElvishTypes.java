@@ -13,6 +13,7 @@ public interface ElvishTypes {
   IElementType ASSIGNMENT = new ElvishElementType("ASSIGNMENT");
   IElementType BAREWORD = new ElvishElementType("BAREWORD");
   IElementType BRACED = new ElvishElementType("BRACED");
+  IElementType BRACED_BAREWORD = new ElvishElementType("BRACED_BAREWORD");
   IElementType BRACED_SEP = new ElvishElementType("BRACED_SEP");
   IElementType CHUNK = new ElvishElementType("CHUNK");
   IElementType COLLECTION = new ElvishElementType("COLLECTION");
@@ -51,10 +52,10 @@ public interface ElvishTypes {
   IElementType AMPERSAND = new ElvishTokenType("&");
   IElementType AT_SYMBOL = new ElvishTokenType("@");
   IElementType BAREWORD_CHAR = new ElvishTokenType("BAREWORD_CHAR");
-  IElementType BRACED_SEPARATOR = new ElvishTokenType("[, ]+");
   IElementType CLOSE_BRACE = new ElvishTokenType("}");
   IElementType CLOSE_BRACKET = new ElvishTokenType("]");
   IElementType CLOSE_PARAN = new ElvishTokenType(")");
+  IElementType COMMA = new ElvishTokenType(",");
   IElementType COMMAND_BAREWORD_CHAR = new ElvishTokenType("COMMAND_BAREWORD_CHAR");
   IElementType COMMENT = new ElvishTokenType("COMMENT");
   IElementType CONTINUATION = new ElvishTokenType("CONTINUATION");
@@ -105,6 +106,9 @@ public interface ElvishTypes {
       }
       else if (type == BRACED) {
         return new ElvishBracedImpl(node);
+      }
+      else if (type == BRACED_BAREWORD) {
+        return new ElvishBracedBarewordImpl(node);
       }
       else if (type == BRACED_SEP) {
         return new ElvishBracedSepImpl(node);
