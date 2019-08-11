@@ -10,4 +10,10 @@ public interface ElvishOutputCapture extends PsiElement {
   @NotNull
   ElvishChunk getChunk();
 
+  @NotNull
+  PsiElement getCloseParan();
+
+  @NotNull
+  PsiElement getOpenParan();
+
 }

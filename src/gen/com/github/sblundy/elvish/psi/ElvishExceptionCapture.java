@@ -10,4 +10,13 @@ public interface ElvishExceptionCapture extends PsiElement {
   @NotNull
   ElvishChunk getChunk();
 
+  @NotNull
+  PsiElement getCloseParan();
+
+  @NotNull
+  PsiElement getOpenParan();
+
+  @NotNull
+  PsiElement getQuestion();
+
 }

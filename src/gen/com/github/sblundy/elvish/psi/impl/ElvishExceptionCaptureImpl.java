@@ -32,4 +32,22 @@ public class ElvishExceptionCaptureImpl extends ASTWrapperPsiElement implements 
     return findNotNullChildByClass(ElvishChunk.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getCloseParan() {
+    return findNotNullChildByType(CLOSE_PARAN);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getOpenParan() {
+    return findNotNullChildByType(OPEN_PARAN);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getQuestion() {
+    return findNotNullChildByType(QUESTION);
+  }
+
 }
