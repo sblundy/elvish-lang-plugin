@@ -51,6 +51,7 @@ public interface ElvishTypes {
   IElementType AMPERSAND = new ElvishTokenType("&");
   IElementType AT_SYMBOL = new ElvishTokenType("@");
   IElementType BAREWORD_CHAR = new ElvishTokenType("BAREWORD_CHAR");
+  IElementType BRACED_SEPARATOR = new ElvishTokenType("[, ]+");
   IElementType CLOSE_BRACE = new ElvishTokenType("}");
   IElementType CLOSE_BRACKET = new ElvishTokenType("]");
   IElementType CLOSE_PARAN = new ElvishTokenType(")");

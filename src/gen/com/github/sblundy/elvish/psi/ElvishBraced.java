@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishBraced extends PsiElement {
 
   @NotNull
-  List<ElvishBracedSep> getBracedSepList();
+  List<ElvishBareword> getBarewordList();
 
   @NotNull
-  List<ElvishCompound> getCompoundList();
+  List<ElvishBracedSep> getBracedSepList();
 
 }

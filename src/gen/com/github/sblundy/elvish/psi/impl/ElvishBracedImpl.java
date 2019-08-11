@@ -28,14 +28,14 @@ public class ElvishBracedImpl extends ASTWrapperPsiElement implements ElvishBrac
 
   @Override
   @NotNull
-  public List<ElvishBracedSep> getBracedSepList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishBracedSep.class);
+  public List<ElvishBareword> getBarewordList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishBareword.class);
   }
 
   @Override
   @NotNull
-  public List<ElvishCompound> getCompoundList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishCompound.class);
+  public List<ElvishBracedSep> getBracedSepList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishBracedSep.class);
   }
 
 }

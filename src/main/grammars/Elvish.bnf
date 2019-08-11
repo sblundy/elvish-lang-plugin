@@ -43,6 +43,7 @@
     BAREWORD_CHAR="regexp:[./@%+!]"
     VARIABLE_CHAR="regexp:[0-9a-zA-Z\-_:~]"
     COMMAND_BAREWORD_CHAR="regexp:[<>*^]"
+    BRACED_SEPARATOR="[, ]+"
     WILDCARD="*"
     KEYWORD_ELSE="else"
     KEYWORD_ELIF="elif"
@@ -113,8 +114,8 @@ OutputCapture ::= OPEN_PARAN Chunk CLOSE_PARAN
 Lambda ::= LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE
 LambdaArguments ::=OPEN_BRACKET Space? ((parameter | MapPair) Space?)* CLOSE_BRACKET
 parameter ::= AT_SYMBOL? Compound
-Braced ::= OPEN_BRACE (Space | EOL)* Compound (BracedSep* Compound)* (Space | EOL)* CLOSE_BRACE
-BracedSep ::= (Space | EOL)* ',' (Space | EOL)*
+Braced ::= OPEN_BRACE (Space | EOL)* Bareword (BracedSep* Bareword)* (Space | EOL)* CLOSE_BRACE
+BracedSep ::= (Space | EOL)* <<parseCommaAsSeparator>> (Space | EOL)*
 
 // Special Commands
 

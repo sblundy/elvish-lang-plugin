@@ -230,7 +230,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // OPEN_BRACE (Space | EOL)* Compound (BracedSep* Compound)* (Space | EOL)* CLOSE_BRACE
+  // OPEN_BRACE (Space | EOL)* Bareword (BracedSep* Bareword)* (Space | EOL)* CLOSE_BRACE
   public static boolean Braced(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Braced")) return false;
     if (!nextTokenIs(builder_, OPEN_BRACE)) return false;
@@ -238,7 +238,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, OPEN_BRACE);
     result_ = result_ && Braced_1(builder_, level_ + 1);
-    result_ = result_ && Compound(builder_, level_ + 1);
+    result_ = result_ && Bareword(builder_, level_ + 1);
     result_ = result_ && Braced_3(builder_, level_ + 1);
     result_ = result_ && Braced_4(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, CLOSE_BRACE);
@@ -266,7 +266,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // (BracedSep* Compound)*
+  // (BracedSep* Bareword)*
   private static boolean Braced_3(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Braced_3")) return false;
     while (true) {
@@ -277,13 +277,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // BracedSep* Compound
+  // BracedSep* Bareword
   private static boolean Braced_3_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Braced_3_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = Braced_3_0_0(builder_, level_ + 1);
-    result_ = result_ && Compound(builder_, level_ + 1);
+    result_ = result_ && Bareword(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
@@ -320,13 +320,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (Space | EOL)* ',' (Space | EOL)*
+  // (Space | EOL)* <<parseCommaAsSeparator>> (Space | EOL)*
   public static boolean BracedSep(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "BracedSep")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, BRACED_SEP, "<braced sep>");
     result_ = BracedSep_0(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, ",");
+    result_ = result_ && parseCommaAsSeparator(builder_, level_ + 1);
     result_ = result_ && BracedSep_2(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
