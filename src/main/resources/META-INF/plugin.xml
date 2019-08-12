@@ -30,6 +30,8 @@
         <lang.psiStructureViewFactory language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishStructureViewFactory"/>
         <additionalTextAttributes scheme="Default" file="colors/ElvishDefault.xml"/>
         <additionalTextAttributes scheme="Darcula" file="colors/ElvishDarcula.xml"/>
+
+        <langCodeStyleSettingsProvider implementation="com.github.sblundy.elvish.style.ElvishLanguageCodeStyleSettingsProvider"/>
     </extensions>
 
     <actions>
