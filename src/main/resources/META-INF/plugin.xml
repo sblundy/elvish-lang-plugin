@@ -12,6 +12,7 @@
         <h4>1.0.0</h4>
         <ul>
             <li>Basic parsing and syntax highlighting</li>
+            <li>Rudimentary code style configuration</li>
         </ul>
     </div>
     ]]></change-notes>
