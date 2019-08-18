@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.sblundy"
-version = "1.0-beta-4"
+version = "1.0-beta-5"
 
 repositories {
     mavenCentral()
@@ -42,6 +42,17 @@ tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
+    changeNotes("")
+}
+
+tasks.getByName<org.jetbrains.intellij.tasks.PublishTask>("publishPlugin") {
+    channels("beta")
+    if (project.hasProperty("publishToken")) {
+        token(project.ext["publishToken"])
+    }
 }
 
 val generateLexer = task<org.jetbrains.grammarkit.tasks.GenerateLexer>("generateLexer") {
