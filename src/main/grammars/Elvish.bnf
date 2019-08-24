@@ -17,95 +17,102 @@
   tokenTypeClass="com.github.sblundy.elvish.psi.ElvishTokenType"
 
   tokens=[
+    WHITE_SPACE="regexp:[ \t]"
     COMMENT='regexp://.*'
+    DOLLAR_SIGN="$"
     OPEN_BRACE="{"
     CLOSE_BRACE="}"
     OPEN_BRACKET="["
     CLOSE_BRACKET="]"
+    QUESTION="?"
     OPEN_PARAN="("
     CLOSE_PARAN=")"
     SINGLE_QUOTE="'"
     DOUBLE_QUOTE="\""
     AMPERSAND="&"
-    QUESTION="?"
-    DOLLAR_SIGN="$"
     TILDE="~"
     EQUALS="="
-    AT_SYMBOL="@"
-    WILDCARD="*"
-    INLINE_WHITESPACE="regexp:[ \t]+"
-    EOL="regexp:\r|\n|\r\n"
-    TEXT
-    ESCAPED_QUOTED_TEXT
-    INVALID_ESCAPED_QUOTED_TEXT
     PIPE="|"
     SEMICOLON=";"
-    BAREWORD_CHAR="regexp:[./@%+!]"
-    VARIABLE_CHAR="regexp:[0-9a-zA-Z\-_:~]"
-    COMMAND_BAREWORD_CHAR="regexp:[<>*^]"
-    COMMA=","
+    AT_SYMBOL="@"
     WILDCARD="*"
-    KEYWORD_ELSE="else"
+    CONTINUATION="regexp:[\\][\r|\n]"
+    EOL="regexp:\r|\n|\r\n"
     KEYWORD_ELIF="elif"
+    KEYWORD_ELSE="else"
     KEYWORD_WHILE="while"
     KEYWORD_EXCEPT="except"
     KEYWORD_FINALLY="finally"
     KEYWORD_FOR="for"
     KEYWORD_IF="if"
+    KEYWORD_FN="fn"
     KEYWORD_TRY="try"
     KEYWORD_DEL="del"
-    KEYWORD_FN="fn"
     KEYWORD_USE="use"
-    CONTINUATION="regexp:[\\][\r|\n]"
+    VARIABLE_CHAR="regexp:[0-9a-zA-Z\-_:~]"
+    BAREWORD_CHAR="regexp:[./@%+!]"
+    COMMA=","
+    COMMAND_BAREWORD_CHAR="regexp:[<>*^]"
+    
+    
+    ESCAPED_QUOTED_TEXT
+    TEXT
+    INVALID_ESCAPED_QUOTED_TEXT
   ]
 
   generateTokenAccessors(".*Capture")=true
 }
 script ::= Chunk
 Chunk ::= ChuckSep* ( Pipeline ChuckSep* )*
-private ChuckSep ::= PipelineSep | Space
+private ChuckSep ::= PipelineSep
 PipelineSep ::= EOL | SEMICOLON
-private Space ::= INLINE_WHITESPACE
-private Pipeline ::= Form Space? PipelineExtension*
-private PipelineExtension ::= PIPE Space? (EOL Space?)? Form Space?
-private Form ::= AssignmentOnlyForm | SpecialCommand | CommandForm
-private AssignmentOnlyForm ::= Space? Assignment Space?
+private Pipeline ::= AssignmentOnlyForm | PipelineHead PipelineExtension*
+private PipelineHead ::= SpecialCommand | CommandForm
+private PipelineExtension ::= PIPE EOL? PipelineHead
+private AssignmentOnlyForm ::= Assignment
 
 // Barewords and strings
 SingleQuoted ::= SINGLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* SINGLE_QUOTE
 DoubleQuoted ::= DOUBLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* DOUBLE_QUOTE
 private Primary ::= Bareword | SingleQuoted | DoubleQuoted | VariableRef | WILDCARD | TILDE | ExceptionCapture | OutputCapture | Lambda | List | Map | Braced
-Variable ::= VARIABLE_CHAR+
-VariableRef ::= DOLLAR_SIGN AT_SYMBOL? VARIABLE_CHAR+ Index*
-Bareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|COMMA|<<parseKeywordAsBareword>>)+
-BracedBareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|<<parseKeywordAsBareword>>)+
-CommandBareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|COMMAND_BAREWORD_CHAR|WILDCARD|EQUALS)+
+private CompoundPrimary ::= Bareword | SingleQuoted | DoubleQuoted | VariableRef | WILDCARD | TILDE | ExceptionCapture | OutputCapture | List | Map | Braced
+Variable ::= VariableName
+VariableRef ::= <<parseVariableRef DOLLAR_SIGN AT_SYMBOL VariableName Index>>
+private VariableName ::= <<parseBareword VARIABLE_CHAR>>
+Bareword ::= <<parseBareword BarewordInner>>
+private BarewordInner ::= (VARIABLE_CHAR|BAREWORD_CHAR|COMMA|<<parseKeywordAsBareword>>)
+BracedBareword ::= <<parseBareword BracedBarewordInner>>
+private BracedBarewordInner ::= (VARIABLE_CHAR|BAREWORD_CHAR|<<parseKeywordAsBareword>>)
+CommandBareword ::= <<parseBareword CommandBarewordInner>>
+private CommandBarewordInner ::= (VARIABLE_CHAR|BAREWORD_CHAR|COMMAND_BAREWORD_CHAR|WILDCARD|EQUALS)
 
 // Maps and lists
-Compound ::= TILDE? Indexing+
-private Indexing ::= Primary Index*
+Compound ::= Lambda | <<parseCompound TILDE Indexing>>
+private Indexing ::= <<parseVariableName CompoundPrimary Index>>
 private Index ::= OPEN_BRACKET Primary+ CLOSE_BRACKET
 Array ::= ArraySpace* (Compound ArraySpace*)*
-private ArraySpace ::= Space | EOL
+private ArraySpace ::= EOL
 List ::= OPEN_BRACKET Array CLOSE_BRACKET
 Map ::= EmptyMap | MapWithValues
 private MapWithValues ::= OPEN_BRACKET ArraySpace* (MapPair ArraySpace*)+ CLOSE_BRACKET
-private EmptyMap ::= OPEN_BRACKET Space? AMPERSAND Space? CLOSE_BRACKET
-MapPair ::= AMPERSAND Space? Compound EQUALS Space? Compound
+private EmptyMap ::= OPEN_BRACKET AMPERSAND CLOSE_BRACKET
+MapPair ::= AMPERSAND Compound EQUALS Compound
 
 // Commands
-Assignment ::= (Variable Index* Space?)+ EQUALS Space? Compound {
+Assignment ::= AssignmentTarget+ EQUALS Compound {
   pin=2
 }
 
-private CommandForm ::= head (CommandSep+ argument)* AMPERSAND?
-private CommandSep ::= Space | CONTINUATION
+private AssignmentTarget ::= <<parseVariableName Variable Index>>
+
+private CommandForm ::= head (CommandSep* argument)* AMPERSAND?
+private CommandSep ::= CONTINUATION
 head ::= CmdExpr | SingleQuoted | DoubleQuoted | VariableRef | ExceptionCapture | OutputCapture
-argument ::=  Redir | MapPair | Compound | ExitusRedir
+argument ::= Redir | MapPair | Compound | ExitusRedir
 private CmdExpr ::= CommandBareword
 
-ExitusRedir ::= QUESTION '>' Space? Compound
-Redir ::= RedirFD? RedirMode Space? ( AMPERSAND? Compound? )
+ExitusRedir ::= QUESTION '>' Compound
+Redir ::= RedirFD? RedirMode ( AMPERSAND? Compound? )
 private RedirMode ::= '<' | '>' | '<>' | '>>'
 private RedirFD ::= '0' | '1' | '2'
 
@@ -113,10 +120,10 @@ ExceptionCapture ::= QUESTION OPEN_PARAN Chunk CLOSE_PARAN
 OutputCapture ::= OPEN_PARAN Chunk CLOSE_PARAN
 
 Lambda ::= LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE
-LambdaArguments ::=OPEN_BRACKET Space? ((parameter | MapPair) Space?)* CLOSE_BRACKET
+LambdaArguments ::=OPEN_BRACKET ((parameter | MapPair) )* CLOSE_BRACKET
 parameter ::= AT_SYMBOL? Compound
-Braced ::= OPEN_BRACE (Space | EOL)* BracedBareword (BracedSep* BracedBareword)* (Space | EOL)* CLOSE_BRACE
-BracedSep ::= (Space | EOL)* COMMA (Space | EOL)*
+Braced ::= OPEN_BRACE EOL* BracedBareword (BracedSep* BracedBareword)* EOL* CLOSE_BRACE
+BracedSep ::= EOL* COMMA EOL*
 
 // Special Commands
 
@@ -125,15 +132,15 @@ private SpecialCommand ::= DeleteCommand | UseCommand | LogicCommand | IfCommand
 DeleteCommand ::= KEYWORD_DEL CommandSep* Variable Index*
 LogicCommand ::= LogicCMD (CommandSep* argument)* CommandSep*
 private LogicCMD ::= 'or' | 'and'
-IfCommand ::= KEYWORD_IF Space Condition Space OPEN_BRACE Chunk CLOSE_BRACE (Space ElIfBlock)* (Space ElseBlock)?
+IfCommand ::= KEYWORD_IF Condition OPEN_BRACE Chunk CLOSE_BRACE ElIfBlock* ElseBlock?
 Condition ::= VariableRef | ExceptionCapture | OutputCapture
-ElIfBlock ::= KEYWORD_ELIF Space Condition Space OPEN_BRACE Chunk CLOSE_BRACE
-ElseBlock ::= KEYWORD_ELSE Space OPEN_BRACE Chunk CLOSE_BRACE
-WhileCommand ::= KEYWORD_WHILE Space Condition Space OPEN_BRACE Chunk CLOSE_BRACE (Space ElseBlock)?
-ForCommand ::= KEYWORD_FOR Space Variable Space Collection Space OPEN_BRACE Chunk CLOSE_BRACE (Space ElseBlock)?
+ElIfBlock ::= KEYWORD_ELIF Condition OPEN_BRACE Chunk CLOSE_BRACE
+ElseBlock ::= KEYWORD_ELSE OPEN_BRACE Chunk CLOSE_BRACE
+WhileCommand ::= KEYWORD_WHILE Condition OPEN_BRACE Chunk CLOSE_BRACE ElseBlock?
+ForCommand ::= KEYWORD_FOR Variable Collection OPEN_BRACE Chunk CLOSE_BRACE ElseBlock?
 Collection ::= List | Map | VariableRef | ExceptionCapture | OutputCapture
-TryCommand ::= KEYWORD_TRY Space OPEN_BRACE Chunk CLOSE_BRACE (Space ExceptBlock)? (Space ElseBlock)? (Space FinallyBlock)?
-ExceptBlock ::= KEYWORD_EXCEPT Space Variable Space OPEN_BRACE Chunk CLOSE_BRACE
-FinallyBlock ::= KEYWORD_FINALLY Space OPEN_BRACE Chunk CLOSE_BRACE
-FnCommand ::= KEYWORD_FN Space Variable Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE
-UseCommand ::= KEYWORD_USE Space Bareword
+TryCommand ::= KEYWORD_TRY OPEN_BRACE Chunk CLOSE_BRACE ExceptBlock? ElseBlock? FinallyBlock?
+ExceptBlock ::= KEYWORD_EXCEPT Variable OPEN_BRACE Chunk CLOSE_BRACE
+FinallyBlock ::= KEYWORD_FINALLY OPEN_BRACE Chunk CLOSE_BRACE
+FnCommand ::= KEYWORD_FN Variable LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE
+UseCommand ::= KEYWORD_USE Bareword

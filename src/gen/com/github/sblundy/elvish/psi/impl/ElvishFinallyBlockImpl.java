@@ -32,10 +32,4 @@ public class ElvishFinallyBlockImpl extends ASTWrapperPsiElement implements Elvi
     return findNotNullChildByClass(ElvishChunk.class);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getInlineWhitespace() {
-    return findNotNullChildByType(INLINE_WHITESPACE);
-  }
-
 }

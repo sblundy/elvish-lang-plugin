@@ -32,10 +32,4 @@ public class ElvishRedirImpl extends ASTWrapperPsiElement implements ElvishRedir
     return findChildByClass(ElvishCompound.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getInlineWhitespace() {
-    return findChildByType(INLINE_WHITESPACE);
-  }
-
 }

@@ -64,14 +64,13 @@ COMMAND_BAREWORD_CHAR=[<>*\^]
 EOL="\r"|"\n"|"\r\n"
 INLINE_WHITESPACE_CHAR=[ \t]
 INLINE_WHITESPACE={INLINE_WHITESPACE_CHAR}+
-WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
 
 %xstate IN_SINGLE_QUOTE_STRING IN_DOUBLE_QUOTE_STRING
 
 %%
 
 <YYINITIAL> {
-  {INLINE_WHITESPACE}       { return ElvishTypes.INLINE_WHITESPACE; }
+  {INLINE_WHITESPACE}       { return TokenType.WHITE_SPACE; }
   {COMMENT}                 { return ElvishTypes.COMMENT; }
 
   "$"                       { return ElvishTypes.DOLLAR_SIGN; }

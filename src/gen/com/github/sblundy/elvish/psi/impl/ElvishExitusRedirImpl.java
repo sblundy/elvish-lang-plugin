@@ -32,10 +32,4 @@ public class ElvishExitusRedirImpl extends ASTWrapperPsiElement implements Elvis
     return findNotNullChildByClass(ElvishCompound.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getInlineWhitespace() {
-    return findChildByType(INLINE_WHITESPACE);
-  }
-
 }

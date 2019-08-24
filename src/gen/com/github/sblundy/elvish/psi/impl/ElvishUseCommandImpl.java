@@ -32,10 +32,4 @@ public class ElvishUseCommandImpl extends ASTWrapperPsiElement implements Elvish
     return findNotNullChildByClass(ElvishBareword.class);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getInlineWhitespace() {
-    return findNotNullChildByType(INLINE_WHITESPACE);
-  }
-
 }

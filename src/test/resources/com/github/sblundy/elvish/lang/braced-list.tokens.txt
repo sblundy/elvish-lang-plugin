@@ -1,5 +1,5 @@
 ElvishTokenType.VARIABLE_CHAR ('ls')
-ElvishTokenType.INLINE_WHITESPACE (' ')
+WHITE_SPACE (' ')
 ElvishTokenType.VARIABLE_CHAR ('01')
 ElvishTokenType.BAREWORD_CHAR ('/')
 ElvishTokenType.{ ('{')

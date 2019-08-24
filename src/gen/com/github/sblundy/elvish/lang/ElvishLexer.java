@@ -682,7 +682,7 @@ class ElvishLexer implements FlexLexer {
             // fall through
           case 53: break;
           case 12: 
-            { return ElvishTypes.INLINE_WHITESPACE;
+            { return TokenType.WHITE_SPACE;
             } 
             // fall through
           case 54: break;

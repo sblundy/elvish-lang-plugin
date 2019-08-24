@@ -1,5 +1,5 @@
 ElvishTokenType.VARIABLE_CHAR ('x')
-ElvishTokenType.INLINE_WHITESPACE (' ')
+WHITE_SPACE (' ')
 ElvishTokenType.= ('=')
-ElvishTokenType.INLINE_WHITESPACE (' ')
+WHITE_SPACE (' ')
 ElvishTokenType.VARIABLE_CHAR ('word')

@@ -62,9 +62,9 @@ class ElvishParserTest {
         FileUtil.findFilesByMask(Pattern.compile(".*\\.tokens.txt"), File(myFullDataPath)).map { it.name.removeSuffix(".tokens.txt") }
 
     @Suppress("unused")
-    fun fileLister(): List<String> =
+    fun fileLister(): List<String> = //listOf("assignment-list-command")
         FileUtil.findFilesByMask(Pattern.compile(".*\\.elv"), File(myFullDataPath)).map { it.nameWithoutExtension }
-            .filterNot { it == "for-invalid" }
+            .filterNot { it == "for-invalid" }.sorted()
 
 
     @ParameterizedTest

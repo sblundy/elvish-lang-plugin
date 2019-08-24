@@ -10,7 +10,4 @@ public interface ElvishElseBlock extends PsiElement {
   @NotNull
   ElvishChunk getChunk();
 
-  @NotNull
-  PsiElement getInlineWhitespace();
-
 }

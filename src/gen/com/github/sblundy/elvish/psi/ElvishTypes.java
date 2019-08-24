@@ -64,7 +64,6 @@ public interface ElvishTypes {
   IElementType EOL = new ElvishTokenType("EOL");
   IElementType EQUALS = new ElvishTokenType("=");
   IElementType ESCAPED_QUOTED_TEXT = new ElvishTokenType("ESCAPED_QUOTED_TEXT");
-  IElementType INLINE_WHITESPACE = new ElvishTokenType("INLINE_WHITESPACE");
   IElementType INVALID_ESCAPED_QUOTED_TEXT = new ElvishTokenType("INVALID_ESCAPED_QUOTED_TEXT");
   IElementType KEYWORD_DEL = new ElvishTokenType("del");
   IElementType KEYWORD_ELIF = new ElvishTokenType("elif");

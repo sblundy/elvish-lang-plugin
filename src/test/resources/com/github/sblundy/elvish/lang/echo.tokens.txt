@@ -1,3 +1,3 @@
 ElvishTokenType.VARIABLE_CHAR ('echo')
-ElvishTokenType.INLINE_WHITESPACE (' ')
+WHITE_SPACE (' ')
 ElvishTokenType.VARIABLE_CHAR ('test')

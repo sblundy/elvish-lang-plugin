@@ -10,7 +10,4 @@ public interface ElvishUseCommand extends PsiElement {
   @NotNull
   ElvishBareword getBareword();
 
-  @NotNull
-  PsiElement getInlineWhitespace();
-
 }

@@ -3,7 +3,7 @@ Elvish File
     ElvishHeadImpl(HEAD)
       ElvishCommandBarewordImpl(COMMAND_BAREWORD)
         PsiElement(ElvishTokenType.VARIABLE_CHAR)('echo')
-    PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
+    PsiWhiteSpace(' ')
     ElvishArgumentImpl(ARGUMENT)
       ElvishCompoundImpl(COMPOUND)
         ElvishSingleQuotedImpl(SINGLE_QUOTED)

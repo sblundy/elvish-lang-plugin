@@ -10,7 +10,4 @@ public interface ElvishRedir extends PsiElement {
   @Nullable
   ElvishCompound getCompound();
 
-  @Nullable
-  PsiElement getInlineWhitespace();
-
 }
