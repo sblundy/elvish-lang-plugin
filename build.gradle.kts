@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.github.sblundy"
-version = "1.0-beta-5"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -48,7 +48,6 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.getByName<PublishTask>("publishPlugin") {
-    channels("beta")
     if (project.hasProperty("publishToken")) {
         token(project.ext["publishToken"])
     }
