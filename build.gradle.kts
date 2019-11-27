@@ -1,14 +1,18 @@
+import org.jetbrains.grammarkit.tasks.GenerateLexer
+import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.intellij.tasks.PatchPluginXmlTask
+import org.jetbrains.intellij.tasks.PublishTask
 
 plugins {
     id("org.jetbrains.intellij") version "0.4.9"
     java
-    kotlin("jvm") version "1.3.41"
+    kotlin("jvm") version "1.3.50"
     id("org.jetbrains.grammarkit") version "2019.2"
 }
 
 group = "com.github.sblundy"
-version = "1.0-beta-5"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -35,34 +39,28 @@ sourceSets {
     }
 }
 
-tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes("""
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>""")
+tasks.getByName<PatchPluginXmlTask>("patchPluginXml") {
+    changeNotes("")
 }
+
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-tasks.withType<org.jetbrains.intellij.tasks.PatchPluginXmlTask> {
-    changeNotes("")
-}
-
-tasks.getByName<org.jetbrains.intellij.tasks.PublishTask>("publishPlugin") {
-    channels("beta")
+tasks.getByName<PublishTask>("publishPlugin") {
     if (project.hasProperty("publishToken")) {
         token(project.ext["publishToken"])
     }
 }
 
-val generateLexer = task<org.jetbrains.grammarkit.tasks.GenerateLexer>("generateLexer") {
+val generateLexer = task<GenerateLexer>("generateLexer") {
     source = "src/main/grammars/Elvish.flex"
     targetDir = "src/gen/com/github/sblundy/elvish/lang"
     targetClass = "_ElvishLexer"
     purgeOldFiles = true
 }
 
-val generateParser = task<org.jetbrains.grammarkit.tasks.GenerateParser>("generateParser") {
+val generateParser = task<GenerateParser>("generateParser") {
     source = "src/main/grammars/Elvish.bnf"
     targetRoot = "src/gen"
     pathToParser = "/com/github/sblundy/elvish/lang/ElvishParser.java"

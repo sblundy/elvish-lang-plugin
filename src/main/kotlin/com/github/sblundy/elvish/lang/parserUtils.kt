@@ -6,21 +6,8 @@ import com.github.sblundy.elvish.psi.ElvishTypes
 import com.intellij.lang.PsiBuilder
 import com.intellij.lang.parser.GeneratedParserUtilBase
 
-private val keywords = setOf(
-    ElvishTypes.KEYWORD_DEL,
-    ElvishTypes.KEYWORD_ELIF,
-    ElvishTypes.KEYWORD_ELSE,
-    ElvishTypes.KEYWORD_EXCEPT,
-    ElvishTypes.KEYWORD_FINALLY,
-    ElvishTypes.KEYWORD_FN,
-    ElvishTypes.KEYWORD_FOR,
-    ElvishTypes.KEYWORD_IF,
-    ElvishTypes.KEYWORD_TRY,
-    ElvishTypes.KEYWORD_WHILE
-)
-
 fun parseKeywordAsBareword(builder: PsiBuilder, @Suppress("UNUSED_PARAMETER") level: Int): Boolean {
-    if (builder.tokenType !in keywords) return false
+    if (builder.tokenType !in ElvishParserDefinition.KEYWORDS) return false
     builder.remapCurrentToken(ElvishTypes.BAREWORD_CHAR)
     return GeneratedParserUtilBase.consumeTokenFast(builder, ElvishTypes.BAREWORD_CHAR)
 }
@@ -102,7 +89,7 @@ private fun GeneratedParserUtilBase.Parser.parseOptionalNoTrailingWhitespace(bui
         }
     }
 
-    return true
+    return GeneratedParserUtilBase.consumeToken(builder, ElvishTypes.BAREWORD_CHAR)
 }
 
 private fun whileNoWhitespace(builder: PsiBuilder, level: Int, parser: GeneratedParserUtilBase.Parser) {

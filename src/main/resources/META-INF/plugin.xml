@@ -12,12 +12,14 @@
         <h4>1.0.0</h4>
         <ul>
             <li>Basic parsing and syntax highlighting</li>
+            <li>Rudimentary code style configuration</li>
         </ul>
     </div>
     ]]></change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
