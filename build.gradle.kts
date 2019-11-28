@@ -41,6 +41,8 @@ sourceSets {
 
 tasks.getByName<PatchPluginXmlTask>("patchPluginXml") {
     changeNotes("")
+    sinceBuild("192")
+    untilBuild("193.*")
 }
 
 tasks.withType<KotlinCompile> {
