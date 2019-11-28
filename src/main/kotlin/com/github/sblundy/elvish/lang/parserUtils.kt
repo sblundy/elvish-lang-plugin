@@ -69,9 +69,7 @@ fun parseVariableRef(
         return result
     }
 
-    if (!atSymbol.parseOptionalNoTrailingWhitespace(builder, level + 1)) {
-        return result
-    }
+    atSymbol.parseOptionalNoTrailingWhitespace(builder, level + 1)
 
     if (variable.parse(builder, level + 1)) {
         result = true
