@@ -465,15 +465,22 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // Lambda | <<parseCompound TILDE Indexing>>
+  // Lambda | <<parseCompound TILDE? Indexing>>
   public static boolean Compound(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Compound")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, COMPOUND, "<compound>");
     result_ = Lambda(builder_, level_ + 1);
-    if (!result_) result_ = parseCompound(builder_, level_ + 1, TILDE_parser_, ElvishParser::Indexing);
+    if (!result_) result_ = parseCompound(builder_, level_ + 1, ElvishParser::Compound_1_0, ElvishParser::Indexing);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
+  }
+
+  // TILDE?
+  private static boolean Compound_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "Compound_1_0")) return false;
+    consumeToken(builder_, TILDE);
+    return true;
   }
 
   /* ********************************************************** */
@@ -1425,6 +1432,5 @@ public class ElvishParser implements PsiParser, LightPsiParser {
 
   static final Parser AT_SYMBOL_parser_ = (builder_, level_) -> consumeToken(builder_, AT_SYMBOL);
   static final Parser DOLLAR_SIGN_parser_ = (builder_, level_) -> consumeToken(builder_, DOLLAR_SIGN);
-  static final Parser TILDE_parser_ = (builder_, level_) -> consumeToken(builder_, TILDE);
   static final Parser VARIABLE_CHAR_parser_ = (builder_, level_) -> consumeToken(builder_, VARIABLE_CHAR);
 }

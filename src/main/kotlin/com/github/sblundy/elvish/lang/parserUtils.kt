@@ -28,9 +28,7 @@ fun parseCompound(
     indexing: GeneratedParserUtilBase.Parser
 ): Boolean {
     var result = false
-    if (!tilda.parseOptionalNoTrailingWhitespace(builder, level + 1)) {
-        return result
-    }
+    tilda.parseOptionalNoTrailingWhitespace(builder, level + 1)
 
     if (indexing.parse(builder, level + 1)) {
         result = true

@@ -87,7 +87,7 @@ CommandBareword ::= <<parseBareword CommandBarewordInner>>
 private CommandBarewordInner ::= (VARIABLE_CHAR|BAREWORD_CHAR|COMMAND_BAREWORD_CHAR|WILDCARD|EQUALS)
 
 // Maps and lists
-Compound ::= Lambda | <<parseCompound TILDE Indexing>>
+Compound ::= Lambda | <<parseCompound TILDE? Indexing>>
 private Indexing ::= <<parseVariableName CompoundPrimary Index>>
 private Index ::= OPEN_BRACKET Primary+ CLOSE_BRACKET
 Array ::= ArraySpace* (Compound ArraySpace*)*
