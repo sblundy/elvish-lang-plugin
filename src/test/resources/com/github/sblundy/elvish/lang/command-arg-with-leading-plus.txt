@@ -10,4 +10,5 @@ Elvish File
           PsiElement(ElvishTokenType.BAREWORD_CHAR)('+')
         ElvishVariableRefImpl(VARIABLE_REF)
           PsiElement(ElvishTokenType.$)('$')
-          PsiElement(ElvishTokenType.VARIABLE_CHAR)('fmt')
+          ElvishVariableNameImpl(VARIABLE_NAME)
+            PsiElement(ElvishTokenType.VARIABLE_CHAR)('fmt')

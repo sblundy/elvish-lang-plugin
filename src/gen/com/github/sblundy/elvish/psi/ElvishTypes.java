@@ -46,6 +46,7 @@ public interface ElvishTypes {
   IElementType TRY_COMMAND = new ElvishElementType("TRY_COMMAND");
   IElementType USE_COMMAND = new ElvishElementType("USE_COMMAND");
   IElementType VARIABLE = new ElvishElementType("VARIABLE");
+  IElementType VARIABLE_NAME = new ElvishElementType("VARIABLE_NAME");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
   IElementType WHILE_COMMAND = new ElvishElementType("WHILE_COMMAND");
 
@@ -205,6 +206,9 @@ public interface ElvishTypes {
       }
       else if (type == VARIABLE) {
         return new ElvishVariableImpl(node);
+      }
+      else if (type == VARIABLE_NAME) {
+        return new ElvishVariableNameImpl(node);
       }
       else if (type == VARIABLE_REF) {
         return new ElvishVariableRefImpl(node);

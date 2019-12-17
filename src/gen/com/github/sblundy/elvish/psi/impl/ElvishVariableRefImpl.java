@@ -82,6 +82,12 @@ public class ElvishVariableRefImpl extends ASTWrapperPsiElement implements Elvis
 
   @Override
   @NotNull
+  public ElvishVariableName getVariableName() {
+    return findNotNullChildByClass(ElvishVariableName.class);
+  }
+
+  @Override
+  @NotNull
   public List<ElvishVariableRef> getVariableRefList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableRef.class);
   }

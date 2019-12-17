@@ -4,4 +4,5 @@ Elvish File
       PsiElement(ElvishTokenType.del)('del')
       PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
       ElvishVariableImpl(VARIABLE)
-        PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')
+        ElvishVariableNameImpl(VARIABLE_NAME)
+          PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')

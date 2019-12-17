@@ -35,6 +35,9 @@ public interface ElvishVariableRef extends PsiElement {
   List<ElvishSingleQuoted> getSingleQuotedList();
 
   @NotNull
+  ElvishVariableName getVariableName();
+
+  @NotNull
   List<ElvishVariableRef> getVariableRefList();
 
 }

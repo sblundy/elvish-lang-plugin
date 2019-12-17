@@ -1653,9 +1653,21 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VARIABLE_CHAR+
+  // VariableName
   public static boolean Variable(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Variable")) return false;
+    if (!nextTokenIs(builder_, VARIABLE_CHAR)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = VariableName(builder_, level_ + 1);
+    exit_section_(builder_, marker_, VARIABLE, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // VARIABLE_CHAR+
+  public static boolean VariableName(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "VariableName")) return false;
     if (!nextTokenIs(builder_, VARIABLE_CHAR)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
@@ -1663,14 +1675,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     while (result_) {
       int pos_ = current_position_(builder_);
       if (!consumeToken(builder_, VARIABLE_CHAR)) break;
-      if (!empty_element_parsed_guard_(builder_, "Variable", pos_)) break;
+      if (!empty_element_parsed_guard_(builder_, "VariableName", pos_)) break;
     }
-    exit_section_(builder_, marker_, VARIABLE, result_);
+    exit_section_(builder_, marker_, VARIABLE_NAME, result_);
     return result_;
   }
 
   /* ********************************************************** */
-  // DOLLAR_SIGN AT_SYMBOL? VARIABLE_CHAR+ Index*
+  // DOLLAR_SIGN AT_SYMBOL? VariableName Index*
   public static boolean VariableRef(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "VariableRef")) return false;
     if (!nextTokenIs(builder_, DOLLAR_SIGN)) return false;
@@ -1678,7 +1690,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, DOLLAR_SIGN);
     result_ = result_ && VariableRef_1(builder_, level_ + 1);
-    result_ = result_ && VariableRef_2(builder_, level_ + 1);
+    result_ = result_ && VariableName(builder_, level_ + 1);
     result_ = result_ && VariableRef_3(builder_, level_ + 1);
     exit_section_(builder_, marker_, VARIABLE_REF, result_);
     return result_;
@@ -1689,21 +1701,6 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(builder_, level_, "VariableRef_1")) return false;
     consumeToken(builder_, AT_SYMBOL);
     return true;
-  }
-
-  // VARIABLE_CHAR+
-  private static boolean VariableRef_2(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "VariableRef_2")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, VARIABLE_CHAR);
-    while (result_) {
-      int pos_ = current_position_(builder_);
-      if (!consumeToken(builder_, VARIABLE_CHAR)) break;
-      if (!empty_element_parsed_guard_(builder_, "VariableRef_2", pos_)) break;
-    }
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
   }
 
   // Index*

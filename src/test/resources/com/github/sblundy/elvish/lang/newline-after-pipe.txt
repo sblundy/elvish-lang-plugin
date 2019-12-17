@@ -36,6 +36,7 @@ Elvish File
               ElvishCompoundImpl(COMPOUND)
                 ElvishVariableRefImpl(VARIABLE_REF)
                   PsiElement(ElvishTokenType.$)('$')
-                  PsiElement(ElvishTokenType.VARIABLE_CHAR)('i')
+                  ElvishVariableNameImpl(VARIABLE_NAME)
+                    PsiElement(ElvishTokenType.VARIABLE_CHAR)('i')
             PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
           PsiElement(ElvishTokenType.})('}')
