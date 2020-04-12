@@ -29,6 +29,9 @@ public interface ElvishVariableRef extends PsiElement {
   List<ElvishMap> getMapList();
 
   @NotNull
+  List<ElvishNamespaceName> getNamespaceNameList();
+
+  @NotNull
   List<ElvishOutputCapture> getOutputCaptureList();
 
   @NotNull

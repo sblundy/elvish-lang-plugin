@@ -11,7 +11,7 @@ Elvish File
           ElvishVariableNameImpl(VARIABLE_NAME)
             PsiElement(ElvishTokenType.VARIABLE_CHAR)('dir')
         ElvishBarewordImpl(BAREWORD)
-          PsiElement(ElvishTokenType.BAREWORD_CHAR)('/')
+          PsiElement(ElvishTokenType./)('/')
         PsiElement(ElvishTokenType.*)('*')
         ElvishBarewordImpl(BAREWORD)
           PsiElement(ElvishTokenType.BAREWORD_CHAR)('.')

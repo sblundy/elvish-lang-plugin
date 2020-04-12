@@ -16,6 +16,9 @@ public interface ElvishHead extends PsiElement {
   @Nullable
   ElvishExceptionCapture getExceptionCapture();
 
+  @NotNull
+  List<ElvishNamespaceName> getNamespaceNameList();
+
   @Nullable
   ElvishOutputCapture getOutputCapture();
 

@@ -47,7 +47,7 @@ Elvish File
       PsiElement(ElvishTokenType.EOL)('\n')
     ElvishHeadImpl(HEAD)
       ElvishCommandBarewordImpl(COMMAND_BAREWORD)
-        PsiElement(ElvishTokenType.BAREWORD_CHAR)('/')
+        PsiElement(ElvishTokenType./)('/')
     PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
     ElvishArgumentImpl(ARGUMENT)
       ElvishCompoundImpl(COMPOUND)

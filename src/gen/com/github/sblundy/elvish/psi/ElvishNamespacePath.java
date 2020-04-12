@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishVariable extends PsiElement {
-
-  @NotNull
-  List<ElvishNamespaceName> getNamespaceNameList();
-
-  @NotNull
-  ElvishVariableName getVariableName();
+public interface ElvishNamespacePath extends PsiElement {
 
 }

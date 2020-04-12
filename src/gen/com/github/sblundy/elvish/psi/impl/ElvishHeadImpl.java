@@ -45,6 +45,12 @@ public class ElvishHeadImpl extends ASTWrapperPsiElement implements ElvishHead {
   }
 
   @Override
+  @NotNull
+  public List<ElvishNamespaceName> getNamespaceNameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishNamespaceName.class);
+  }
+
+  @Override
   @Nullable
   public ElvishOutputCapture getOutputCapture() {
     return findChildByClass(ElvishOutputCapture.class);

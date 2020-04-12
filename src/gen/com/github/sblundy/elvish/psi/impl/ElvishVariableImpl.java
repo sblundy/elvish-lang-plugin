@@ -28,6 +28,12 @@ public class ElvishVariableImpl extends ASTWrapperPsiElement implements ElvishVa
 
   @Override
   @NotNull
+  public List<ElvishNamespaceName> getNamespaceNameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishNamespaceName.class);
+  }
+
+  @Override
+  @NotNull
   public ElvishVariableName getVariableName() {
     return findNotNullChildByClass(ElvishVariableName.class);
   }

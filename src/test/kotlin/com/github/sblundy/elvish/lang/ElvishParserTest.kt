@@ -62,7 +62,7 @@ class ElvishParserTest {
         FileUtil.findFilesByMask(Pattern.compile(".*\\.tokens.txt"), File(myFullDataPath)).map { it.name.removeSuffix(".tokens.txt") }
 
     @Suppress("unused")
-    fun fileLister(): List<String> =
+    fun fileLister(): List<String> = //listOf("compound-expression-with-slash", "assignment-chained-range")
         FileUtil.findFilesByMask(Pattern.compile(".*\\.elv"), File(myFullDataPath)).map { it.nameWithoutExtension }
             .filterNot { it == "for-invalid" }
 

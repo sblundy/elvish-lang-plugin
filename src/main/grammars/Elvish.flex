@@ -56,8 +56,10 @@ KEYWORD_FN = fn
 KEYWORD_USE = use
 STRING_CMP_BUILTINS=(([<>=!]=)|[<>])s
 NUMERIC_CMP_BUILTINS=(([<>=!]=)|[<>])
-VARIABLE_CHAR=[[0-9a-zA-Z\-_:~]||[[\u0080-\uFFFF]&&\p{Print}]] // see parse/parse.go:713 (allowedInVariableName())
-BAREWORD_CHAR=[\.\/@%+!]
+VARIABLE_CHAR=[[0-9a-zA-Z\-_~]||[[\u0080-\uFFFF]&&\p{Print}]] // see parse/parse.go:713 (allowedInVariableName())
+BAREWORD_CHAR=[\.@%+!]
+COLON=:
+BACKSLASH=\/
 LHS_BAREWORD_CHAR=[=]
 BRACED_BAREWORD_CHAR=[,]
 COMMAND_BAREWORD_CHAR=[<>*\^]
@@ -80,6 +82,8 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
   "["                       { return ElvishTypes.OPEN_BRACKET; }
   "]"                       { return ElvishTypes.CLOSE_BRACKET; }
   "?"                       { return ElvishTypes.QUESTION; }
+  ":"                       { return ElvishTypes.COLON; }
+  "/"                       { return ElvishTypes.BACKSLASH; }
   "("                       { return ElvishTypes.OPEN_PARAN; }
   ")"                       { return ElvishTypes.CLOSE_PARAN; }
   "'"                       {
