@@ -64,7 +64,9 @@
   generateTokenAccessors(".*Capture")=true
 }
 script ::= Chunk
-Chunk ::= ChuckSep* ( Pipeline ChuckSep* )*
+Chunk ::= ChuckSep* ( Pipeline ChuckSep* )* {
+  extends="com.github.sblundy.elvish.psi.ElvishChunkBase"
+}
 private ChuckSep ::= PipelineSep | Space
 PipelineSep ::= EOL | SEMICOLON
 private Space ::= INLINE_WHITESPACE
@@ -77,12 +79,17 @@ private AssignmentOnlyForm ::= Space? Assignment Space?
 SingleQuoted ::= SINGLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* SINGLE_QUOTE
 DoubleQuoted ::= DOUBLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* DOUBLE_QUOTE
 private Primary ::= Bareword | SingleQuoted | DoubleQuoted | VariableRef | WILDCARD | TILDE | ExceptionCapture | OutputCapture | Lambda | List | Map | Braced
-Variable ::= NamespaceName* VariableName
+Variable ::= NamespaceName* VariableName {
+  extends="com.github.sblundy.elvish.psi.ElvishVariableBase"
+  implements="com.github.sblundy.elvish.psi.ElvishVariableDeclaration"
+}
 NamespacePath ::= VARIABLE_CHAR+ NSSeparator
 NamespaceName ::= VARIABLE_CHAR+ COLON
 private NSSeparator ::= COLON | BACKSLASH
 VariableName ::= VARIABLE_CHAR+
-VariableRef ::= DOLLAR_SIGN AT_SYMBOL? VariableRefName Index*
+VariableRef ::= DOLLAR_SIGN AT_SYMBOL? VariableRefName Index* {
+  extends="com.github.sblundy.elvish.psi.ElvishVariableRefBase"
+}
 private VariableRefName ::= NamespaceName* VariableName
 Bareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|BACKSLASH|COMMA|<<parseKeywordAsBareword>>)+
 BracedBareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|BACKSLASH|<<parseKeywordAsBareword>>)+
@@ -106,6 +113,7 @@ MapPair ::= AMPERSAND Space? Compound EQUALS Space? Compound
 // Commands
 Assignment ::= (Variable Index* Space?)+ EQUALS Space? Compound {
   pin=2
+  extends="com.github.sblundy.elvish.psi.ElvishAssignmentBase"
 }
 
 private CommandForm ::= head (CommandSep+ argument)* AMPERSAND?
@@ -122,9 +130,14 @@ private RedirFD ::= '0' | '1' | '2'
 ExceptionCapture ::= QUESTION OPEN_PARAN Chunk CLOSE_PARAN
 OutputCapture ::= OPEN_PARAN Chunk CLOSE_PARAN
 
-Lambda ::= LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE
+Lambda ::= LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
+  extends="com.github.sblundy.elvish.psi.ElvishLambdaBase"
+}
 LambdaArguments ::=OPEN_BRACKET Space? ((parameter | MapPair) Space?)* CLOSE_BRACKET
-parameter ::= AT_SYMBOL? Compound
+parameter ::= AT_SYMBOL? Compound {
+  extends="com.github.sblundy.elvish.psi.ElvishParameterBase"
+  implements="com.github.sblundy.elvish.psi.ElvishVariableDeclaration"
+}
 Braced ::= OPEN_BRACE (Space | EOL)* BracedBareword (BracedSep* BracedBareword)* (Space | EOL)* CLOSE_BRACE
 BracedSep ::= (Space | EOL)* COMMA (Space | EOL)*
 
@@ -140,10 +153,16 @@ Condition ::= VariableRef | ExceptionCapture | OutputCapture
 ElIfBlock ::= KEYWORD_ELIF Space Condition Space OPEN_BRACE Chunk CLOSE_BRACE
 ElseBlock ::= KEYWORD_ELSE Space OPEN_BRACE Chunk CLOSE_BRACE
 WhileCommand ::= KEYWORD_WHILE Space Condition Space OPEN_BRACE Chunk CLOSE_BRACE (Space ElseBlock)?
-ForCommand ::= KEYWORD_FOR Space Variable Space Collection Space OPEN_BRACE Chunk CLOSE_BRACE (Space ElseBlock)?
+ForCommand ::= KEYWORD_FOR Space Variable Space Collection Space OPEN_BRACE Chunk CLOSE_BRACE (Space ElseBlock)? {
+  implements="com.github.sblundy.elvish.psi.ElvishVariableDeclaringBlock"
+}
 Collection ::= List | Map | VariableRef | ExceptionCapture | OutputCapture
 TryCommand ::= KEYWORD_TRY Space OPEN_BRACE Chunk CLOSE_BRACE (Space ExceptBlock)? (Space ElseBlock)? (Space FinallyBlock)?
-ExceptBlock ::= KEYWORD_EXCEPT Space Variable Space OPEN_BRACE Chunk CLOSE_BRACE
+ExceptBlock ::= KEYWORD_EXCEPT Space Variable Space OPEN_BRACE Chunk CLOSE_BRACE {
+  implements="com.github.sblundy.elvish.psi.ElvishVariableDeclaringBlock"
+}
 FinallyBlock ::= KEYWORD_FINALLY Space OPEN_BRACE Chunk CLOSE_BRACE
-FnCommand ::= KEYWORD_FN Space Variable Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE
+FnCommand ::= KEYWORD_FN Space Variable Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
+  extends="com.github.sblundy.elvish.psi.ElvishLambdaBase"
+}
 UseCommand ::= KEYWORD_USE Space NamespacePath* VariableName

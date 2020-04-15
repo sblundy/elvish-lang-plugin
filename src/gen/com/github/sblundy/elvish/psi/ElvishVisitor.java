@@ -68,7 +68,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitExceptBlock(@NotNull ElvishExceptBlock o) {
-    visitPsiElement(o);
+    visitVariableDeclaringBlock(o);
   }
 
   public void visitExceptionCapture(@NotNull ElvishExceptionCapture o) {
@@ -88,7 +88,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitForCommand(@NotNull ElvishForCommand o) {
-    visitPsiElement(o);
+    visitVariableDeclaringBlock(o);
   }
 
   public void visitIfCommand(@NotNull ElvishIfCommand o) {
@@ -152,7 +152,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitVariable(@NotNull ElvishVariable o) {
-    visitPsiElement(o);
+    visitVariableDeclaration(o);
   }
 
   public void visitVariableName(@NotNull ElvishVariableName o) {
@@ -176,6 +176,14 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitParameter(@NotNull ElvishParameter o) {
+    visitVariableDeclaration(o);
+  }
+
+  public void visitVariableDeclaration(@NotNull ElvishVariableDeclaration o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariableDeclaringBlock(@NotNull ElvishVariableDeclaringBlock o) {
     visitPsiElement(o);
   }
 

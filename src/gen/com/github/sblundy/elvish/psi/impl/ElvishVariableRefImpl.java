@@ -8,12 +8,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.github.sblundy.elvish.psi.ElvishVariableRefBase;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishVariableRefImpl extends ASTWrapperPsiElement implements ElvishVariableRef {
+public class ElvishVariableRefImpl extends ElvishVariableRefBase implements ElvishVariableRef {
 
-  public ElvishVariableRefImpl(@NotNull ASTNode node) {
+  public ElvishVariableRefImpl(ASTNode node) {
     super(node);
   }
 
