@@ -20,6 +20,11 @@ public abstract class ElvishParameterBase extends ASTWrapperPsiElement implement
     }
 
     @Override
+    public String getName() {
+        return getCompound().getText();
+    }
+
+    @Override
     public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
         //TODO is actually a variable name?
         ElvishVariableName ne = ElvishPsiUtils.INSTANCE.newNameElement(name, getProject());

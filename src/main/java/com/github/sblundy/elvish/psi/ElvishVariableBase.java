@@ -20,6 +20,11 @@ public abstract class ElvishVariableBase extends ASTWrapperPsiElement implements
     }
 
     @Override
+    public String getName() {
+        return getVariableName().getText();
+    }
+
+    @Override
     public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
         ElvishVariableName ne = ElvishPsiUtils.INSTANCE.newNameElement(name, getProject());
         getVariableName().replace(ne);

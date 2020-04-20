@@ -13,6 +13,6 @@ public abstract class ElvishVariableRefBase extends ASTWrapperPsiElement impleme
 
     @Override
     public PsiReference getReference() {
-        return new ElvishVariableReference(this, TextRange.create(1, getTextLength() - 1));
+        return new ElvishVariableReference(this, TextRange.create(1, getStartOffsetInParent() + getTextLength()));
     }
 }
