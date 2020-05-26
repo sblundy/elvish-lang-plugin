@@ -49,6 +49,7 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.getByName<PublishTask>("publishPlugin") {
+    channels("beta")
     if (project.hasProperty("publishToken")) {
         token(project.ext["publishToken"])
     }
