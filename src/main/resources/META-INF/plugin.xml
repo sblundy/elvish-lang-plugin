@@ -9,6 +9,11 @@
 
     <change-notes><![CDATA[
     <div>
+        <h4>1.0.3</h4>
+        <ul>
+            <li>Fix depreciation warning</li>
+            <li>Support next IntelliJ version</li>
+        </ul>
         <h4>1.0.0</h4>
         <ul>
             <li>Basic parsing and syntax highlighting</li>
