@@ -9,23 +9,22 @@ import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.VARIABLE_REF
 import com.github.sblundy.elvish.psi.*
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
+import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 
 class ElvishAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         when (element) {
             is ElvishOutputCapture -> {
-                val openParan = holder.createInfoAnnotation(element.openParan.textRange, null)
-                val closeParan = holder.createInfoAnnotation(element.closeParan.textRange, null)
-                openParan.textAttributes = COMMAND_CAPTURE
-                closeParan.textAttributes = COMMAND_CAPTURE
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION).textAttributes(COMMAND_CAPTURE).create()
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION).textAttributes(COMMAND_CAPTURE).create()
                 return
             }
             is ElvishExceptionCapture -> {
-                val openParan = holder.createInfoAnnotation(element.question.textRange.union(element.openParan.textRange), null)
-                val closeParan = holder.createInfoAnnotation(element.closeParan.textRange, null)
-                openParan.textAttributes = COMMAND_CAPTURE
-                closeParan.textAttributes = COMMAND_CAPTURE
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .range(element.question.textRange.union(element.openParan.textRange))
+                    .textAttributes(COMMAND_CAPTURE).create()
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION).textAttributes(COMMAND_CAPTURE).create()
                 return
             }
             else -> {
@@ -42,8 +41,7 @@ class ElvishAnnotator : Annotator {
                 }
 
                 attributes?.let {
-                    val annotation = holder.createInfoAnnotation(element.textRange, null)
-                    annotation.textAttributes = attributes
+                    holder.newSilentAnnotation(HighlightSeverity.INFORMATION).textAttributes(attributes).create()
                 }
             }
         }
