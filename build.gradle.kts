@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.github.sblundy"
-version = "1.0.2"
+version = "1.0.3-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -27,7 +27,6 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = "2020.1"
 }
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
