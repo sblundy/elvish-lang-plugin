@@ -8,7 +8,7 @@ plugins {
     id("org.jetbrains.intellij") version "0.4.21"
     java
     kotlin("jvm") version "1.3.72"
-    id("org.jetbrains.grammarkit") version "2020.1"
+    id("org.jetbrains.grammarkit") version "2020.2.1"
 }
 
 group = "com.github.sblundy"
