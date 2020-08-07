@@ -5,14 +5,14 @@ import org.jetbrains.intellij.tasks.PatchPluginXmlTask
 import org.jetbrains.intellij.tasks.PublishTask
 
 plugins {
-    id("org.jetbrains.intellij") version "0.4.18"
+    id("org.jetbrains.intellij") version "0.4.21"
     java
-    kotlin("jvm") version "1.3.61"
-    id("org.jetbrains.grammarkit") version "2020.1"
+    kotlin("jvm") version "1.3.72"
+    id("org.jetbrains.grammarkit") version "2020.2.1"
 }
 
 group = "com.github.sblundy"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories {
     mavenCentral()
@@ -27,7 +27,6 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = "2020.1"
 }
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -41,8 +40,8 @@ sourceSets {
 
 tasks.getByName<PatchPluginXmlTask>("patchPluginXml") {
     changeNotes("")
-    sinceBuild("192")
-    untilBuild("201.*")
+    sinceBuild("201")
+    untilBuild("202.*")
 }
 
 tasks.withType<KotlinCompile> {

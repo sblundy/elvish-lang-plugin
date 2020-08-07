@@ -1168,10 +1168,8 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   static boolean LogicCMD(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "LogicCMD")) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, "or");
     if (!result_) result_ = consumeToken(builder_, "and");
-    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
@@ -1597,11 +1595,9 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   static boolean RedirFD(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "RedirFD")) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, "0");
     if (!result_) result_ = consumeToken(builder_, "1");
     if (!result_) result_ = consumeToken(builder_, "2");
-    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
@@ -1610,12 +1606,10 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   static boolean RedirMode(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "RedirMode")) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, "<");
     if (!result_) result_ = consumeToken(builder_, ">");
     if (!result_) result_ = consumeToken(builder_, "<>");
     if (!result_) result_ = consumeToken(builder_, ">>");
-    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
