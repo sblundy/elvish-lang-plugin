@@ -1,5 +1,6 @@
 package com.github.sblundy.elvish.psi
 
+import com.github.sblundy.elvish.psi.ElvishPsiUtils.newNameElement
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 
@@ -18,5 +19,11 @@ internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInEl
         return scope.findVariables(element.variableName.text, element.namespaceNameList.map { ns -> ns.text }).mapNotNull { declaration ->
             PsiElementResolveResult(declaration)
         }.toTypedArray()
+    }
+
+    override fun handleElementRename(name: String): PsiElement {
+        val ne = newNameElement(name, element.project)
+        element.variableName.replace(ne)
+        return element
     }
 }
