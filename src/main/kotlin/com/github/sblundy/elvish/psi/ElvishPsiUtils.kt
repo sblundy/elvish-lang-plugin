@@ -5,10 +5,11 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileFactory
+import org.jetbrains.annotations.NotNull
 
 object ElvishPsiUtils {
-    fun findVariableInParentScope(name: String, e: PsiElement): Collection<ElvishVariableDeclaration> {
-        return (findParentScope(e) ?: return emptyList()).findVariables(name)
+    fun findVariableInParentScope(name: @NotNull String, ns: @NotNull List<String>, e: @NotNull PsiElement): @NotNull Collection<ElvishVariableDeclaration> {
+        return (findParentScope(e) ?: return emptyList()).findVariables(name, ns)
     }
 
     fun findParentScope(e: PsiElement): ElvishVariableScope? {

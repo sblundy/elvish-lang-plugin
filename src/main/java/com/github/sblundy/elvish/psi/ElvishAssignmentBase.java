@@ -14,10 +14,10 @@ public abstract class ElvishAssignmentBase extends ASTWrapperPsiElement implemen
     }
 
     @Override
-    public Collection<ElvishVariableDeclaration> findVariables(String name) {
+    public @NotNull Collection<ElvishVariableDeclaration> findVariables(@NotNull String name, @NotNull List<String> ns) {
         List<ElvishVariableDeclaration> found = new ArrayList<>();
         for (ElvishVariableDeclaration declaration : getVariableList()) {
-            if (declaration.textMatches(name)) {
+            if (declaration.nameMatches(name, ns)) {
                 found.add(declaration);
             }
         }

@@ -15,9 +15,9 @@ public abstract class ElvishLambdaBase extends ASTWrapperPsiElement implements E
     }
 
     @Override
-    public Collection<ElvishVariableDeclaration> findVariables(String name) {
+    public @NotNull Collection<ElvishVariableDeclaration> findVariables(@NotNull String name, @NotNull List<String> ns) {
         List<ElvishVariableDeclaration> found = new ArrayList<>();
-        if (getLambdaArguments() != null) {
+        if (getLambdaArguments() != null && ns.isEmpty()) {
             for (ElvishVariableDeclaration declaration : getLambdaArguments().getParameterList()) {
                 if (declaration.textMatches(name)) {
                     found.add(declaration);
@@ -29,7 +29,7 @@ public abstract class ElvishLambdaBase extends ASTWrapperPsiElement implements E
             return found;
         }
 
-        return ElvishPsiUtils.INSTANCE.findVariableInParentScope(name, this);
+        return ElvishPsiUtils.INSTANCE.findVariableInParentScope(name, ns, this);
     }
 
     @Nullable

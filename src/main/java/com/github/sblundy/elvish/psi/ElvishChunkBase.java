@@ -15,17 +15,17 @@ public abstract class ElvishChunkBase extends ASTWrapperPsiElement implements El
 
     @NotNull
     @Override
-    public Collection<ElvishVariableDeclaration> findVariables(String name) {
+    public Collection<ElvishVariableDeclaration> findVariables(@NotNull String name, @NotNull List<String> ns) {
         List<ElvishVariableDeclaration> found = new ArrayList<>();
         for (ElvishAssignment assignment : getAssignmentList()) {
             for (ElvishVariableDeclaration declaration : assignment.getVariableList()) {
-                if (declaration.textMatches(name)) {
+                if (declaration.nameMatches(name, ns)) {
                     found.add(declaration);
                 }
             }
         }
 
-        found.addAll(ElvishPsiUtils.INSTANCE.findVariableInParentScope(name, this));
+        found.addAll(ElvishPsiUtils.INSTANCE.findVariableInParentScope(name, ns, this));
         return found;
     }
 }

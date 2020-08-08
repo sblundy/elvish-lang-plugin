@@ -2,7 +2,6 @@ package com.github.sblundy.elvish.psi;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,6 +12,6 @@ public abstract class ElvishVariableRefBase extends ASTWrapperPsiElement impleme
 
     @Override
     public PsiReference getReference() {
-        return new ElvishVariableReference(this, TextRange.create(1, getStartOffsetInParent() + getTextLength()));
+        return new ElvishVariableReference(this, getVariableName().getTextRangeInParent());
     }
 }

@@ -8,6 +8,8 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public abstract class ElvishParameterBase extends ASTWrapperPsiElement implements PsiNameIdentifierOwner {
     public ElvishParameterBase(@NotNull ASTNode node) {
         super(node);
@@ -30,6 +32,14 @@ public abstract class ElvishParameterBase extends ASTWrapperPsiElement implement
         ElvishVariableName ne = ElvishPsiUtils.INSTANCE.newNameElement(name, getProject());
         getCompound().replace(ne);
         return this;
+    }
+
+    public boolean nameMatches(@NotNull String name, @NotNull List<String> ns) {
+        if (!ns.isEmpty()) {
+            return false;
+        }
+
+        return name.equals(getName());
     }
 
     @NotNull
