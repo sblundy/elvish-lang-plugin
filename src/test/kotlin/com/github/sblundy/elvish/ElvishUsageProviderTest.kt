@@ -89,6 +89,16 @@ class ElvishUsageProviderTest {
             Assert.assertEquals(1, usages.size)
         }
     }
+
+    @Test
+    fun testFindUsagesNamespacedVar() {
+        runTest {
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-ns-var.elv")
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(1, usages.size)
+        }
+    }
 }
 
 fun runTest(t : () -> Unit) {
