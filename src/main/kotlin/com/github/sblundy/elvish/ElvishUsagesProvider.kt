@@ -11,8 +11,8 @@ class ElvishUsagesProvider : FindUsagesProvider {
 
     override fun getDescriptiveName(element: PsiElement): String {
         return when (element) {
-            is ElvishVariable -> element.variableName.text
-            is ElvishParameter -> element.compound.text
+            is ElvishVariable -> element.text
+            is ElvishParameter -> element.text
             else -> ""
         }
     }
