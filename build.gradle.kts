@@ -49,6 +49,11 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.getByName<PublishTask>("publishPlugin") {
+    if (version.toString().endsWith("SNAPSHOT")) {
+        enabled = false
+    } else if (version.toString().contains("BETA", true)) {
+        channels("beta")
+    }
     if (project.hasProperty("publishToken")) {
         token(project.ext["publishToken"])
     }
