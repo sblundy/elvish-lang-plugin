@@ -2,20 +2,15 @@ package com.github.sblundy.elvish
 
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
-import com.intellij.testFramework.EdtTestUtil
 import com.intellij.testFramework.LightProjectDescriptor
 import com.intellij.testFramework.TestDataPath
-import com.intellij.testFramework.TestLoggerFactory
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory
 import com.intellij.testFramework.fixtures.impl.LightTempDirTestFixtureImpl
-import com.intellij.util.ThrowableRunnable
-import org.junit.Assert
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import java.lang.reflect.InvocationTargetException
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestDataPath("\$CONTENT_ROOT/src/test/resources/")

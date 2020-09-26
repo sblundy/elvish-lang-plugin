@@ -33,7 +33,7 @@ class ElvishStructureViewFactory : PsiStructureViewFactory {
         override fun getChildrenBase(): MutableCollection<StructureViewTreeElement> {
             val functions = element?.findChildrenByClass(ElvishFnCommand::class.java)
             return functions?.let {
-                it.map { ElvishStructureViewFunction(it) }.toMutableList<StructureViewTreeElement>()
+                it.map { ElvishStructureViewFunction(it) }.toMutableList()
             } ?: mutableListOf()
         }
 
