@@ -7,7 +7,7 @@ import org.jetbrains.intellij.tasks.PublishTask
 plugins {
     id("org.jetbrains.intellij") version "0.4.21"
     java
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "1.4.10"
     id("org.jetbrains.grammarkit") version "2020.2.1"
 }
 
@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     testCompile("org.junit.jupiter:junit-jupiter-api:5.3.2")
     testCompile("org.junit.jupiter:junit-jupiter-params:5.3.2")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.2")
@@ -29,7 +29,7 @@ dependencies {
 intellij {
 }
 configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 sourceSets {
@@ -45,7 +45,7 @@ tasks.getByName<PatchPluginXmlTask>("patchPluginXml") {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }
 
 tasks.getByName<PublishTask>("publishPlugin") {
