@@ -5,14 +5,14 @@ import org.jetbrains.intellij.tasks.PatchPluginXmlTask
 import org.jetbrains.intellij.tasks.PublishTask
 
 plugins {
-    id("org.jetbrains.intellij") version "0.4.21"
+    id("org.jetbrains.intellij") version "0.4.22"
     java
     kotlin("jvm") version "1.4.10"
     id("org.jetbrains.grammarkit") version "2020.2.1"
 }
 
 group = "com.github.sblundy"
-version = "1.1.0-SNAPSHOT"
+version = "1.1.0-BETA1"
 
 repositories {
     mavenCentral()
@@ -20,9 +20,9 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    testCompile("org.junit.jupiter:junit-jupiter-api:5.3.2")
-    testCompile("org.junit.jupiter:junit-jupiter-params:5.3.2")
-    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.3.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.3.2")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
