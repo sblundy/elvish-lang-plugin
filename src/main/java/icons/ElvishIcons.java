@@ -8,5 +8,5 @@ import javax.swing.*;
  *
  */
 public interface ElvishIcons {
-    Icon FILE_ICON = IconLoader.getIcon("/icons/fileIcon.svg");
+    Icon FILE_ICON = IconLoader.getIcon("/icons/fileIcon.svg", ElvishIcons.class);
 }
