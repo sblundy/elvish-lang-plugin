@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.github.sblundy"
-version = "1.1.0-BETA1"
+version = "1.2.0-SHAPSHOT"
 
 repositories {
     mavenCentral()
