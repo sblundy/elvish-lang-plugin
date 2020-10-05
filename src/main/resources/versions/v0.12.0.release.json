@@ -1,0 +1,14 @@
+{
+  "name": "v0.12.0",
+  "previous": "v0.11.0",
+  "builtins": {
+    "added": [
+      "get-env",
+      "has-env",
+      "set-env",
+      "unset-env",
+      "styled",
+      "styled-segment"
+    ]
+  }
+}

@@ -44,6 +44,13 @@
         <additionalTextAttributes scheme="Darcula" file="colors/ElvishDarcula.xml"/>
 
         <langCodeStyleSettingsProvider implementation="com.github.sblundy.elvish.style.ElvishLanguageCodeStyleSettingsProvider"/>
+
+        <projectConfigurable instance="com.github.sblundy.elvish.settings.ElvishSettingsConfigurable"
+                             groupId="language"/>
+        <projectService serviceImplementation="com.github.sblundy.elvish.settings.ElvishSettings"/>
+
+        <applicationService serviceImplementation="com.github.sblundy.elvish.lang.version.ElvishBundledService"/>
+        <applicationService serviceImplementation="com.github.sblundy.elvish.lang.version.VersionsService" />
     </extensions>
 
     <actions>

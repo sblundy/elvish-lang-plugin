@@ -8,6 +8,7 @@ plugins {
     id("org.jetbrains.intellij") version "0.4.22"
     java
     kotlin("jvm") version "1.4.10"
+    kotlin("plugin.serialization") version "1.4.10"
     id("org.jetbrains.grammarkit") version "2020.2.1"
 }
 
@@ -20,6 +21,9 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation(kotlin("reflect"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.0-RC2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.2")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.3.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.3.2")
@@ -82,6 +86,17 @@ tasks.withType<KotlinCompile> {
 
 tasks.getByName("buildSearchableOptions") {
     enabled = false
+}
+
+val prepareVersionsDir = task<Copy>("prepareVersionsDir") {
+    destinationDir = (tasks.getByName("prepareSandbox") as org.jetbrains.intellij.tasks.PrepareSandboxTask).let { File(it.destinationDir, it.pluginName) }
+    from("src/main/resources/versions") {
+        into("versions")
+    }
+}
+
+tasks.getByName("prepareSandbox") {
+    dependsOn(prepareVersionsDir)
 }
 
 tasks.withType<Test> {
