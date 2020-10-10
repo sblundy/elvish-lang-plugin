@@ -2,6 +2,7 @@ import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.intellij.tasks.PatchPluginXmlTask
+import org.jetbrains.intellij.tasks.PrepareSandboxTask
 import org.jetbrains.intellij.tasks.PublishTask
 
 plugins {
@@ -88,15 +89,10 @@ tasks.getByName("buildSearchableOptions") {
     enabled = false
 }
 
-val prepareVersionsDir = task<Copy>("prepareVersionsDir") {
-    destinationDir = (tasks.getByName("prepareSandbox") as org.jetbrains.intellij.tasks.PrepareSandboxTask).let { File(it.destinationDir, it.pluginName) }
+tasks.getByName<PrepareSandboxTask>("prepareSandbox") {
     from("src/main/resources/versions") {
-        into("versions")
+        into("$pluginName/versions")
     }
-}
-
-tasks.getByName("prepareSandbox") {
-    dependsOn(prepareVersionsDir)
 }
 
 tasks.withType<Test> {
