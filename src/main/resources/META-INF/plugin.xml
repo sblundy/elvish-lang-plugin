@@ -38,6 +38,7 @@
         <annotator language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishAnnotator"/>
         <colorSettingsPage implementation="com.github.sblundy.elvish.ElvishColorSettingsPage"/>
         <lang.braceMatcher language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishPairBraceMatcher"/>
+        <lang.commenter language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishCommenter"/>
         <lang.psiStructureViewFactory language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishStructureViewFactory"/>
         <lang.findUsagesProvider language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishUsagesProvider"/>
         <additionalTextAttributes scheme="Default" file="colors/ElvishDefault.xml"/>
