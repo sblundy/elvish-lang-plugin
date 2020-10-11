@@ -8,16 +8,13 @@ import com.intellij.psi.PsiElement;
 public interface ElvishHead extends PsiElement {
 
   @Nullable
-  ElvishCommandBareword getCommandBareword();
+  ElvishCommandExpression getCommandExpression();
 
   @Nullable
   ElvishDoubleQuoted getDoubleQuoted();
 
   @Nullable
   ElvishExceptionCapture getExceptionCapture();
-
-  @NotNull
-  List<ElvishNamespaceName> getNamespaceNameList();
 
   @Nullable
   ElvishOutputCapture getOutputCapture();

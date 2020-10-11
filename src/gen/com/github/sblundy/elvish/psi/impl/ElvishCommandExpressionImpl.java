@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.FnCommandBase;
+import com.github.sblundy.elvish.psi.ElvishCommandExpressionBase;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishFnCommandImpl extends FnCommandBase implements ElvishFnCommand {
+public class ElvishCommandExpressionImpl extends ElvishCommandExpressionBase implements ElvishCommandExpression {
 
-  public ElvishFnCommandImpl(ASTNode node) {
+  public ElvishCommandExpressionImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitFnCommand(this);
+    visitor.visitCommandExpression(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,20 +28,14 @@ public class ElvishFnCommandImpl extends FnCommandBase implements ElvishFnComman
 
   @Override
   @NotNull
-  public ElvishChunk getChunk() {
-    return findNotNullChildByClass(ElvishChunk.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishLambdaArguments getLambdaArguments() {
-    return findChildByClass(ElvishLambdaArguments.class);
+  public ElvishCommandBareword getCommandBareword() {
+    return findNotNullChildByClass(ElvishCommandBareword.class);
   }
 
   @Override
   @NotNull
-  public ElvishVariableName getVariableName() {
-    return findNotNullChildByClass(ElvishVariableName.class);
+  public List<ElvishNamespaceName> getNamespaceNameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishNamespaceName.class);
   }
 
 }

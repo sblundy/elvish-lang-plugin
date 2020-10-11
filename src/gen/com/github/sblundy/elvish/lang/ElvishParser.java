@@ -468,29 +468,6 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NamespaceName* CommandBareword
-  static boolean CmdExpr(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "CmdExpr")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = CmdExpr_0(builder_, level_ + 1);
-    result_ = result_ && CommandBareword(builder_, level_ + 1);
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
-  }
-
-  // NamespaceName*
-  private static boolean CmdExpr_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "CmdExpr_0")) return false;
-    while (true) {
-      int pos_ = current_position_(builder_);
-      if (!NamespaceName(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "CmdExpr_0", pos_)) break;
-    }
-    return true;
-  }
-
-  /* ********************************************************** */
   // List | Map | VariableRef | ExceptionCapture | OutputCapture
   public static boolean Collection(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Collection")) return false;
@@ -532,6 +509,29 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     if (!result_) result_ = consumeToken(builder_, BACKSLASH);
     if (!result_) result_ = consumeToken(builder_, EQUALS);
     return result_;
+  }
+
+  /* ********************************************************** */
+  // NamespaceName* CommandBareword
+  public static boolean CommandExpression(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "CommandExpression")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, COMMAND_EXPRESSION, "<command expression>");
+    result_ = CommandExpression_0(builder_, level_ + 1);
+    result_ = result_ && CommandBareword(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // NamespaceName*
+  private static boolean CommandExpression_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "CommandExpression_0")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!NamespaceName(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "CommandExpression_0", pos_)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -856,7 +856,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_FN Space Variable Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE
+  // KEYWORD_FN Space VariableName Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE
   public static boolean FnCommand(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "FnCommand")) return false;
     if (!nextTokenIs(builder_, KEYWORD_FN)) return false;
@@ -864,7 +864,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, KEYWORD_FN);
     result_ = result_ && Space(builder_, level_ + 1);
-    result_ = result_ && Variable(builder_, level_ + 1);
+    result_ = result_ && VariableName(builder_, level_ + 1);
     result_ = result_ && Space(builder_, level_ + 1);
     result_ = result_ && FnCommand_4(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, OPEN_BRACE);
@@ -1919,12 +1919,12 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CmdExpr | SingleQuoted | DoubleQuoted | VariableRef | ExceptionCapture | OutputCapture
+  // CommandExpression | SingleQuoted | DoubleQuoted | VariableRef | ExceptionCapture | OutputCapture
   public static boolean head(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "head")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, HEAD, "<head>");
-    result_ = CmdExpr(builder_, level_ + 1);
+    result_ = CommandExpression(builder_, level_ + 1);
     if (!result_) result_ = SingleQuoted(builder_, level_ + 1);
     if (!result_) result_ = DoubleQuoted(builder_, level_ + 1);
     if (!result_) result_ = VariableRef(builder_, level_ + 1);

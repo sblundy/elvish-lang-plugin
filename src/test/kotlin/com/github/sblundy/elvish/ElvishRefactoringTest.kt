@@ -62,4 +62,13 @@ class ElvishRefactoringTest {
             myFixture.checkResultByFile(myFullDataPath + "ElvishRefactoringTest-rename-ns-var.elv", myFullDataPath + "ElvishRefactoringTest-rename-ns-var-after.elv", false)
         }
     }
+
+    @Test
+    fun testRenameFnCommand() {
+        runTest {
+            myFixture.configureByFiles(myFullDataPath + "ElvishRefactoringTest-rename-fn.elv")
+            myFixture.renameElementAtCaret("zz")
+            myFixture.checkResultByFile(myFullDataPath + "ElvishRefactoringTest-rename-fn.elv", myFullDataPath + "ElvishRefactoringTest-rename-fn-after.elv", false)
+        }
+    }
 }

@@ -28,8 +28,8 @@ public class ElvishHeadImpl extends ASTWrapperPsiElement implements ElvishHead {
 
   @Override
   @Nullable
-  public ElvishCommandBareword getCommandBareword() {
-    return findChildByClass(ElvishCommandBareword.class);
+  public ElvishCommandExpression getCommandExpression() {
+    return findChildByClass(ElvishCommandExpression.class);
   }
 
   @Override
@@ -42,12 +42,6 @@ public class ElvishHeadImpl extends ASTWrapperPsiElement implements ElvishHead {
   @Nullable
   public ElvishExceptionCapture getExceptionCapture() {
     return findChildByClass(ElvishExceptionCapture.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishNamespaceName> getNamespaceNameList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishNamespaceName.class);
   }
 
   @Override
