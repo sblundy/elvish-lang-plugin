@@ -52,6 +52,11 @@
 
         <applicationService serviceImplementation="com.github.sblundy.elvish.lang.version.ElvishBundledService"/>
         <applicationService serviceImplementation="com.github.sblundy.elvish.lang.version.VersionsService" />
+
+        <localInspection language="Elvish" level="WARNING" enabledByDefault="true"
+                         groupBundle="com.github.sblundy.elvish.ElvishBundle" groupKey="inspection.group.label"
+                         bundle="com.github.sblundy.elvish.ElvishBundle" key="inspection.deprecated.label"
+                         implementationClass="com.github.sblundy.elvish.codeInspections.DeprecatedInspection"/>
     </extensions>
 
     <actions>

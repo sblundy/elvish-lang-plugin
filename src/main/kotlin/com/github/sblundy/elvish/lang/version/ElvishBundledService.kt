@@ -13,10 +13,13 @@ class ElvishBundledService {
     }
 
     fun builtin(project: Project): Set<String> {
+        return currentVersion(project)?.builtinFunctions ?: emptySet()
+    }
+
+    fun currentVersion(project: Project): ElvishLanguageVersion? {
         val settings = ElvishSettings.getInstance(project)
         val vs = VersionsService.getInstance()
         //TODO warning on unknown version?
-        val v = settings.state.languageVersion?.let { vs.getVersion(it) ?: vs.latestRelease } ?: vs.latestRelease
-        return v?.let { v.builtinFunctions } ?: emptySet()
+        return settings.state.languageVersion?.let { vs.getVersion(it) ?: vs.latestRelease } ?: vs.latestRelease
     }
 }
