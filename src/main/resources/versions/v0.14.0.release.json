@@ -11,6 +11,14 @@
         "read-upto",
         "show",
         "time"
+      ],
+      "deprecated": [
+        "^",
+        "explode",
+        "joins",
+        "replaces",
+        "splits",
+        "-time"
       ]
     }
   }

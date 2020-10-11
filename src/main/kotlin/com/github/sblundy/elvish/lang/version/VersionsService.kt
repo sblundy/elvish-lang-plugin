@@ -16,13 +16,22 @@ private val log = logger<VersionsService>()
 
 data class ElvishLanguageVersion(val name: String, val builtin: ElvishModule, val release: Boolean = true) {
     val builtinFunctions: Set<String>
-        get() = builtin.functions
+        get() = builtin.functions.keys
     val builtinVariables: Set<String>
-        get() = builtin.variables
+        get() = builtin.variables.keys
+
+    fun isFunctionDeprecated(name: String): Boolean {
+        return builtin.functions[name]?.deprecated ?: false
+    }
+
+    fun isVariableDeprecated(name: String): Boolean {
+        return builtin.variables[name]?.deprecated ?: false
+    }
 }
 
-data class ElvishModule(val variables: Set<String>, val functions: Set<String>)
-
+data class ElvishModule(val variables: Map<String, ElvishVariable>, val functions: Map<String, ElvishFunction>)
+data class ElvishVariable(val deprecated: Boolean = false)
+data class ElvishFunction(val deprecated: Boolean = false)
 class VersionsService {
     companion object {
         @JvmStatic
@@ -52,16 +61,34 @@ private fun convertDefsToVersions(defs: Sequence<VersionDef>): List<ElvishLangua
     val vd = orderVersionDefs(defs)
     //TODO make this more resistant to non-linear version trees
     var versions = listOf<ElvishLanguageVersion>()
-    var previous = ElvishLanguageVersion("", ElvishModule(emptySet(), emptySet()), false)
+    var previous = ElvishLanguageVersion("", ElvishModule(emptyMap(), emptyMap()), false)
     for (def in vd.reversed()) {
-        val builtinVariables = (previous.builtinVariables + def.builtin.variables.added) - def.builtin.variables.removed
-        val builtinFunctions = (previous.builtinFunctions + def.builtin.functions.added) - def.builtin.functions.removed
-        val version = ElvishLanguageVersion(def.name, ElvishModule(builtinVariables, builtinFunctions), def.release)
+        val version = ElvishLanguageVersion(def.name, previous.builtin.applyDiff(def.builtin), def.release)
         versions = listOf(version) + versions
         previous = version
     }
 
     return versions
+}
+
+private fun ElvishModule.applyDiff(diff: ModuleDef): ElvishModule {
+    var builtinVariables = diff.variables.added.fold(variables.toMutableMap()) { m, name ->
+        m[name] = ElvishVariable()
+        m
+    }
+    builtinVariables = diff.variables.deprecated.fold(builtinVariables) {m, name ->
+        m[name] = ElvishVariable(deprecated = true)
+        m
+    }
+    var builtinFunctions = diff.functions.added.fold(functions.toMutableMap()) {m, name ->
+        m[name] = ElvishFunction()
+        m
+    }
+    builtinFunctions = diff.functions.deprecated.fold(builtinFunctions) {m, name ->
+        m[name] = ElvishFunction(deprecated = true)
+        m
+    }
+    return ElvishModule(builtinVariables - diff.variables.removed, builtinFunctions - diff.functions.removed)
 }
 
 private fun orderVersionDefs(it: Sequence<VersionDef>): List<VersionDef> {
@@ -139,8 +166,16 @@ private data class VersionDef(
     val release: Boolean = true,
     val builtin: ModuleDef = ModuleDef()
 )
-@Serializable
-private data class ModuleDef(val variables: VersionChanges = VersionChanges(), val functions: VersionChanges = VersionChanges())
 
 @Serializable
-private data class VersionChanges(val added: List<String> = emptyList(), val removed: List<String> = emptyList())
+private data class ModuleDef(
+    val variables: VersionChanges = VersionChanges(),
+    val functions: VersionChanges = VersionChanges()
+)
+
+@Serializable
+private data class VersionChanges(
+    val added: List<String> = emptyList(),
+    val deprecated: List<String> = emptyList(),
+    val removed: List<String> = emptyList()
+)
