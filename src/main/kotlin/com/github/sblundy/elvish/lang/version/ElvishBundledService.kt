@@ -12,7 +12,7 @@ class ElvishBundledService {
         }
     }
 
-    fun builtins(project: Project): Set<String> {
+    fun builtin(project: Project): Set<String> {
         val settings = ElvishSettings.getInstance(project)
         val vs = VersionsService.getInstance()
         //TODO warning on unknown version?

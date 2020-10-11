@@ -1,6 +1,6 @@
 {
   "name": "v0.11.0",
-  "builtins": {
+  "builtin": {
     "variables": {
       "added": [
         "_",

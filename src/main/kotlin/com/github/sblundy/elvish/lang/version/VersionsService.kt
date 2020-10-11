@@ -14,11 +14,11 @@ import java.nio.file.*
 
 private val log = logger<VersionsService>()
 
-data class ElvishLanguageVersion(val name: String, val builtins: ElvishModule, val release: Boolean = true) {
+data class ElvishLanguageVersion(val name: String, val builtin: ElvishModule, val release: Boolean = true) {
     val builtinFunctions: Set<String>
-        get() = builtins.functions
+        get() = builtin.functions
     val builtinVariables: Set<String>
-        get() = builtins.variables
+        get() = builtin.variables
 }
 
 data class ElvishModule(val variables: Set<String>, val functions: Set<String>)
@@ -54,8 +54,8 @@ private fun convertDefsToVersions(defs: Sequence<VersionDef>): List<ElvishLangua
     var versions = listOf<ElvishLanguageVersion>()
     var previous = ElvishLanguageVersion("", ElvishModule(emptySet(), emptySet()), false)
     for (def in vd.reversed()) {
-        val builtinVariables = (previous.builtinVariables + def.builtins.variables.added) - def.builtins.variables.removed
-        val builtinFunctions = (previous.builtinFunctions + def.builtins.functions.added) - def.builtins.functions.removed
+        val builtinVariables = (previous.builtinVariables + def.builtin.variables.added) - def.builtin.variables.removed
+        val builtinFunctions = (previous.builtinFunctions + def.builtin.functions.added) - def.builtin.functions.removed
         val version = ElvishLanguageVersion(def.name, ElvishModule(builtinVariables, builtinFunctions), def.release)
         versions = listOf(version) + versions
         previous = version
@@ -137,7 +137,7 @@ private data class VersionDef(
     val name: String,
     val previous: String? = null,
     val release: Boolean = true,
-    val builtins: ModuleDef = ModuleDef()
+    val builtin: ModuleDef = ModuleDef()
 )
 @Serializable
 private data class ModuleDef(val variables: VersionChanges = VersionChanges(), val functions: VersionChanges = VersionChanges())

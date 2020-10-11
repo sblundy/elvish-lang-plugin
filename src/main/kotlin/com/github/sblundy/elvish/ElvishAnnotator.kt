@@ -15,7 +15,7 @@ import com.intellij.psi.PsiElement
 
 class ElvishAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        val builtins = ElvishBundledService.getInstance().builtins(element.project)
+        val builtin = ElvishBundledService.getInstance().builtin(element.project)
         when (element) {
             is ElvishOutputCapture -> {
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION).textAttributes(COMMAND_CAPTURE).create()
@@ -31,7 +31,7 @@ class ElvishAnnotator : Annotator {
             }
             else -> {
                 val attributes = when (element) {
-                    is ElvishHead -> if (builtins.contains(element.text)) {
+                    is ElvishHead -> if (builtin.contains(element.text)) {
                         BUILTIN
                     } else {
                         COMMAND
