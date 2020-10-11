@@ -14,7 +14,14 @@ import java.nio.file.*
 
 private val log = logger<VersionsService>()
 
-data class ElvishLanguageVersion(val name: String, val builtinFunctions: Set<String>, val release: Boolean = true)
+data class ElvishLanguageVersion(val name: String, val builtins: ElvishModule, val release: Boolean = true) {
+    val builtinFunctions: Set<String>
+        get() = builtins.functions
+    val builtinVariables: Set<String>
+        get() = builtins.variables
+}
+
+data class ElvishModule(val variables: Set<String>, val functions: Set<String>)
 
 class VersionsService {
     companion object {
@@ -45,16 +52,11 @@ private fun convertDefsToVersions(defs: Sequence<VersionDef>): List<ElvishLangua
     val vd = orderVersionDefs(defs)
     //TODO make this more resistant to non-linear version trees
     var versions = listOf<ElvishLanguageVersion>()
-    var previous: ElvishLanguageVersion? = null
+    var previous = ElvishLanguageVersion("", ElvishModule(emptySet(), emptySet()), false)
     for (def in vd.reversed()) {
-        var builtins = previous?.builtinFunctions ?: setOf()
-        if (def.builtins?.added != null) {
-            builtins += def.builtins.added
-        }
-        if (def.builtins?.removed != null) {
-            builtins -= def.builtins.removed
-        }
-        val version = ElvishLanguageVersion(def.name, builtins, def.release)
+        val builtinVariables = (previous.builtinVariables + def.builtins.variables.added) - def.builtins.variables.removed
+        val builtinFunctions = (previous.builtinFunctions + def.builtins.functions.added) - def.builtins.functions.removed
+        val version = ElvishLanguageVersion(def.name, ElvishModule(builtinVariables, builtinFunctions), def.release)
         versions = listOf(version) + versions
         previous = version
     }
@@ -124,18 +126,21 @@ private fun versionsDefsFromPluginJar(): Sequence<String>? {
     return resources?.asSequence()?.flatMap { extractChildren(it.toURI()) }
 }
 
-private fun extractChildren(it: URI): List<String> = FileSystems.newFileSystem(it, emptyMap<String, Any>(), null).use { fs ->
-    val p = fs.getPath("versions")
-    Files.newDirectoryStream(p).map { it.readText() }
-}
+private fun extractChildren(it: URI): List<String> =
+    FileSystems.newFileSystem(it, emptyMap<String, Any>(), null).use { fs ->
+        val p = fs.getPath("versions")
+        Files.newDirectoryStream(p).map { it.readText() }
+    }
 
 @Serializable
 private data class VersionDef(
     val name: String,
     val previous: String? = null,
     val release: Boolean = true,
-    val builtins: VersionChanges? = null
+    val builtins: ModuleDef = ModuleDef()
 )
+@Serializable
+private data class ModuleDef(val variables: VersionChanges = VersionChanges(), val functions: VersionChanges = VersionChanges())
 
 @Serializable
-private data class VersionChanges(val added: List<String>? = null, val removed: List<String>? = null)
+private data class VersionChanges(val added: List<String> = emptyList(), val removed: List<String> = emptyList())
