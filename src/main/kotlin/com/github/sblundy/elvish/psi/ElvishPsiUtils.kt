@@ -33,13 +33,13 @@ object ElvishPsiUtils {
     }
 
     private class ElvishFunctionScopeWrapper(private val inner: ElvishFunctionScope) : ElvishDeclarationScope {
-        override fun findVariables(name: String, ns: MutableList<String>): Collection<ElvishVariableDeclaration> = mutableListOf()
-        override fun findFnCommands(name: String, ns: MutableList<String>) = inner.findFnCommands(name, ns)
+        override fun findVariables(name: String, ns: List<String>): Collection<ElvishVariableDeclaration> = mutableListOf()
+        override fun findFnCommands(name: String, ns: List<String>) = inner.findFnCommands(name, ns)
     }
 
     private class ElvishVariableScopeWrapper(private val inner: ElvishVariableScope) : ElvishDeclarationScope {
-        override fun findVariables(name: String, ns: MutableList<String>) = inner.findVariables(name, ns)
-        override fun findFnCommands(name: String, ns: MutableList<String>): Collection<ElvishFunctionDeclaration> = mutableListOf()
+        override fun findVariables(name: String, ns: List<String>) = inner.findVariables(name, ns)
+        override fun findFnCommands(name: String, ns: List<String>): Collection<ElvishFunctionDeclaration> = mutableListOf()
     }
 
     fun newNameElement(name: String, myProject: Project): ElvishVariableName {

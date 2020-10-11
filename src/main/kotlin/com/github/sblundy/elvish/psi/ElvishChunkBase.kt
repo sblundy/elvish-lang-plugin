@@ -12,7 +12,7 @@ abstract class ElvishChunkBase(node: ASTNode) : ASTWrapperPsiElement(node), Elvi
                 findVariableInParentScope(name, ns, this)
     }
 
-    override fun findFnCommands(name: String, ns: MutableList<String>): Collection<ElvishFunctionDeclaration> {
+    override fun findFnCommands(name: String, ns: List<String>): Collection<ElvishFunctionDeclaration> {
         return fnCommandList.filter { it.nameMatches(name, ns) } + findFnCommandInParentScope(name, ns, this)
     }
 }
