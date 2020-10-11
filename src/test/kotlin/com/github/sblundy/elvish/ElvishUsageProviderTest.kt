@@ -95,6 +95,17 @@ class ElvishUsageProviderTest {
             Assert.assertEquals(1, usages.size)
         }
     }
+
+    @Test
+    fun testFindUsagesFnCommand() {
+        runTest {
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-fn.elv")
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(1, usages.size)
+            Assert.assertEquals(26, usages.firstOrNull()?.navigationOffset)
+        }
+    }
 }
 
 fun runTest(t : () -> Unit) {

@@ -12,17 +12,34 @@ object ElvishPsiUtils {
         return (findParentScope(e) ?: return emptyList()).findVariables(name, ns)
     }
 
-    fun findParentScope(e: PsiElement): ElvishVariableScope? {
+    fun findFnCommandInParentScope(name: @NotNull String, ns: @NotNull List<String>, e: @NotNull PsiElement): @NotNull Collection<ElvishFunctionDeclaration> {
+        return (findParentScope(e) ?: return emptyList()).findFnCommands(name, ns)
+    }
+
+    fun findParentScope(e: PsiElement): ElvishDeclarationScope? {
         var parent: PsiElement? = e.parent
         while (parent != null) {
-            if (parent is ElvishFile) {
-                break
-            } else if (parent is ElvishVariableScope) {
-                return parent
+            when (parent) {
+                is ElvishFile -> {
+                    break
+                }
+                is ElvishDeclarationScope -> return parent
+                is ElvishVariableScope -> return ElvishVariableScopeWrapper(parent)
+                is ElvishFunctionScope -> return ElvishFunctionScopeWrapper(parent)
             }
             parent = parent.parent
         }
         return null
+    }
+
+    private class ElvishFunctionScopeWrapper(private val inner: ElvishFunctionScope) : ElvishDeclarationScope {
+        override fun findVariables(name: String, ns: List<String>): Collection<ElvishVariableDeclaration> = mutableListOf()
+        override fun findFnCommands(name: String, ns: List<String>) = inner.findFnCommands(name, ns)
+    }
+
+    private class ElvishVariableScopeWrapper(private val inner: ElvishVariableScope) : ElvishDeclarationScope {
+        override fun findVariables(name: String, ns: List<String>) = inner.findVariables(name, ns)
+        override fun findFnCommands(name: String, ns: List<String>): Collection<ElvishFunctionDeclaration> = mutableListOf()
     }
 
     fun newNameElement(name: String, myProject: Project): ElvishVariableName {

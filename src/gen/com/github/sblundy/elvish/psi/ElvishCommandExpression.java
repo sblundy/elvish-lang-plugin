@@ -5,15 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishFnCommand extends ElvishFunctionDeclaration {
+public interface ElvishCommandExpression extends PsiElement {
 
   @NotNull
-  ElvishChunk getChunk();
-
-  @Nullable
-  ElvishLambdaArguments getLambdaArguments();
+  ElvishCommandBareword getCommandBareword();
 
   @NotNull
-  ElvishVariableName getVariableName();
+  List<ElvishNamespaceName> getNamespaceNameList();
 
 }

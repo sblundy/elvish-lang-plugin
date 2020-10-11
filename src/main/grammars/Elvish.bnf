@@ -118,9 +118,11 @@ Assignment ::= (Variable Index* Space?)+ EQUALS Space? Compound {
 
 private CommandForm ::= head (CommandSep+ argument)* AMPERSAND?
 private CommandSep ::= Space | CONTINUATION
-head ::= CmdExpr | SingleQuoted | DoubleQuoted | VariableRef | ExceptionCapture | OutputCapture
+head ::= CommandExpression | SingleQuoted | DoubleQuoted | VariableRef | ExceptionCapture | OutputCapture
 argument ::=  Redir | MapPair | Compound | ExitusRedir
-private CmdExpr ::= NamespaceName* CommandBareword
+CommandExpression ::= NamespaceName* CommandBareword{
+  extends="com.github.sblundy.elvish.psi.ElvishCommandExpressionBase"
+}
 
 ExitusRedir ::= QUESTION '>' Space? Compound
 Redir ::= RedirFD? RedirMode Space? ( AMPERSAND? Compound? )
@@ -162,7 +164,8 @@ ExceptBlock ::= KEYWORD_EXCEPT Space Variable Space OPEN_BRACE Chunk CLOSE_BRACE
   implements="com.github.sblundy.elvish.psi.ElvishVariableDeclaringBlock"
 }
 FinallyBlock ::= KEYWORD_FINALLY Space OPEN_BRACE Chunk CLOSE_BRACE
-FnCommand ::= KEYWORD_FN Space Variable Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
-  extends="com.github.sblundy.elvish.psi.ElvishLambdaBase"
+FnCommand ::= KEYWORD_FN Space VariableName Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
+  extends="com.github.sblundy.elvish.psi.FnCommandBase"
+  implements="com.github.sblundy.elvish.psi.ElvishFunctionDeclaration"
 }
 UseCommand ::= KEYWORD_USE Space NamespacePath* VariableName

@@ -43,6 +43,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCommandExpression(@NotNull ElvishCommandExpression o) {
+    visitPsiElement(o);
+  }
+
   public void visitCompound(@NotNull ElvishCompound o) {
     visitPsiElement(o);
   }
@@ -84,7 +88,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitFnCommand(@NotNull ElvishFnCommand o) {
-    visitPsiElement(o);
+    visitFunctionDeclaration(o);
   }
 
   public void visitForCommand(@NotNull ElvishForCommand o) {
@@ -177,6 +181,10 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitParameter(@NotNull ElvishParameter o) {
     visitVariableDeclaration(o);
+  }
+
+  public void visitFunctionDeclaration(@NotNull ElvishFunctionDeclaration o) {
+    visitPsiElement(o);
   }
 
   public void visitVariableDeclaration(@NotNull ElvishVariableDeclaration o) {

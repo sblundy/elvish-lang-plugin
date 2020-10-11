@@ -44,7 +44,7 @@ class ElvishStructureViewFactory : PsiStructureViewFactory {
 
     private class ElvishStructureViewFunction(fn: ElvishFnCommand): PsiTreeElementBase<ElvishFnCommand>(fn) {
         override fun getChildrenBase(): MutableCollection<StructureViewTreeElement> = mutableListOf()
-        override fun getPresentableText(): String? = element?.variable?.text
+        override fun getPresentableText(): String? = element?.variableName?.text
         override fun getIcon(open: Boolean): Icon = AllIcons.Nodes.Method
     }
 }

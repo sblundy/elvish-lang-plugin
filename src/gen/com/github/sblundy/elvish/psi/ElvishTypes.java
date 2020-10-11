@@ -18,6 +18,7 @@ public interface ElvishTypes {
   IElementType CHUNK = new ElvishElementType("CHUNK");
   IElementType COLLECTION = new ElvishElementType("COLLECTION");
   IElementType COMMAND_BAREWORD = new ElvishElementType("COMMAND_BAREWORD");
+  IElementType COMMAND_EXPRESSION = new ElvishElementType("COMMAND_EXPRESSION");
   IElementType COMPOUND = new ElvishElementType("COMPOUND");
   IElementType CONDITION = new ElvishElementType("CONDITION");
   IElementType DELETE_COMMAND = new ElvishElementType("DELETE_COMMAND");
@@ -126,6 +127,9 @@ public interface ElvishTypes {
       }
       else if (type == COMMAND_BAREWORD) {
         return new ElvishCommandBarewordImpl(node);
+      }
+      else if (type == COMMAND_EXPRESSION) {
+        return new ElvishCommandExpressionImpl(node);
       }
       else if (type == COMPOUND) {
         return new ElvishCompoundImpl(node);
