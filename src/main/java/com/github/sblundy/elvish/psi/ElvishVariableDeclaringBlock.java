@@ -19,4 +19,15 @@ public interface ElvishVariableDeclaringBlock extends ElvishVariableScope, PsiEl
 
         return ElvishPsiUtils.INSTANCE.findVariableInParentScope(name, ns, this);
     }
+
+    default void processVariables(@NotNull ElvishVariableScope.VariableProcessor processor) {
+        ElvishVariable v = getVariable();
+        if (v != null) {
+            if (!processor.process(v)) {
+                return;
+            }
+        }
+
+        ElvishPsiUtils.INSTANCE.processVariablesInParentScope(processor, this);
+    }
 }

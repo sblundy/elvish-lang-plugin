@@ -9,6 +9,10 @@
 
     <change-notes><![CDATA[
     <div>
+        <h4>1.1.0</h4>
+        <ul>
+            <li>Variable declaration highlighting</li>
+        </ul>
         <h4>1.0.3</h4>
         <ul>
             <li>Fix depreciation warning</li>
@@ -18,10 +22,6 @@
         <ul>
             <li>Basic parsing and syntax highlighting</li>
             <li>Rudimentary code style configuration</li>
-        </ul>
-        <h4>1.1.0</h4>
-        <ul>
-            <li>Variable declaration highlighting</li>
         </ul>
     </div>
     ]]></change-notes>

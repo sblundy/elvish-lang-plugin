@@ -1,7 +1,10 @@
 package com.github.sblundy.elvish.psi
 
+import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
+import com.intellij.util.ArrayUtilRt
 
 internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rangeInElement: TextRange?) :
     PsiReferenceBase<ElvishCommandExpressionBase?>(element, rangeInElement, true) {
@@ -25,7 +28,10 @@ internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rang
         return element
     }
 
-    override fun isReferenceTo(element: PsiElement): Boolean {
-        return super.isReferenceTo(element)
+    override fun getVariants(): Array<Any> {
+        val scope = ElvishPsiUtils.findParentScope(element) ?: return ArrayUtilRt.EMPTY_OBJECT_ARRAY
+        val variants = mutableListOf<Any>()
+        scope.processFnCommands { variants.add(LookupElementBuilder.create(it, it.text).withIcon(AllIcons.Nodes.Function)) }
+        return variants.toTypedArray()
     }
 }
