@@ -153,11 +153,14 @@ private fun versionsDefsFromPluginJar(): Sequence<String>? {
     return resources?.asSequence()?.flatMap { extractChildren(it.toURI()) }
 }
 
-private fun extractChildren(it: URI): List<String> =
+private fun extractChildren(it: URI): List<String> = if (it.scheme == "file") {
+    Paths.get(it).toFile().listFiles()?.map { it.readText() }?.toList() ?: emptyList()
+} else {
     FileSystems.newFileSystem(it, emptyMap<String, Any>(), null).use { fs ->
         val p = fs.getPath("versions")
         Files.newDirectoryStream(p).map { it.readText() }
     }
+}
 
 @Serializable
 private data class VersionDef(
