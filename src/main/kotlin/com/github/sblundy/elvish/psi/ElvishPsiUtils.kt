@@ -1,6 +1,7 @@
 package com.github.sblundy.elvish.psi
 
 import com.github.sblundy.elvish.ElvishFileType
+import com.github.sblundy.elvish.lang.version.ElvishBundledService
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
@@ -27,9 +28,7 @@ object ElvishPsiUtils {
         var parent: PsiElement? = e.parent
         while (parent != null) {
             when (parent) {
-                is ElvishFile -> {
-                    break
-                }
+                is ElvishFile -> return projectBuiltinScope(e)
                 is ElvishDeclarationScope -> return parent
                 is ElvishVariableScope -> return ElvishVariableScopeWrapper(parent)
                 is ElvishFunctionScope -> return ElvishFunctionScopeWrapper(parent)
@@ -39,12 +38,23 @@ object ElvishPsiUtils {
         return null
     }
 
+    private fun projectBuiltinScope(e: PsiElement): BuiltinScope? {
+        e.project.getBuiltinScope()?.let { return it }
+
+        return ElvishBundledService.getInstance().currentVersion(e.project)?.let {
+            val scope = BuiltinScope(it, e.manager)
+            e.project.putBuiltinScope(scope)
+            scope
+        }
+    }
+
     private class ElvishFunctionScopeWrapper(private val inner: ElvishFunctionScope) : ElvishDeclarationScope {
         override fun findVariables(name: String, ns: List<String>): Collection<ElvishVariableDeclaration> {
             return (inner as? PsiElement)?.let {
                 findParentScope(inner)?.findVariables(name, ns)
             } ?: mutableListOf()
         }
+
         override fun processVariables(processor: ElvishVariableScope.VariableProcessor) {
             (inner as? PsiElement)?.let {
                 findParentScope(inner)?.processVariables(processor)
@@ -62,6 +72,7 @@ object ElvishPsiUtils {
         override fun processVariables(processor: ElvishVariableScope.VariableProcessor) {
             inner.processVariables(processor)
         }
+
         override fun findFnCommands(name: String, ns: List<String>): Collection<ElvishFunctionDeclaration> {
             return (inner as? PsiElement)?.let {
                 findParentScope(inner)?.findFnCommands(name, ns)
