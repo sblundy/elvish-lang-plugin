@@ -6,16 +6,16 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
 
 abstract class ElvishLambdaBase(node: ASTNode) : ASTWrapperPsiElement(node), ElvishVariableScope {
-    override fun findVariables(name: String, ns: List<String>): Collection<ElvishVariableDeclaration> {
+    override fun findVariables(ref: ReferenceWithNamespacePsiElement): Collection<ElvishVariableDeclaration> {
         val found = lambdaArguments?.let { lambdaArguments ->
-            if (ns.isEmpty()) {
-                lambdaArguments.parameterList.filter { it.nameMatches(name, ns) }
+            if (!ref.hasNamespace) {
+                lambdaArguments.parameterList.filter { it.nameMatches(ref) }
             } else {
                 listOf()
             }
         } ?: listOf()
 
-        return if (found.isNotEmpty()) { found } else findVariableInParentScope(name, ns, this)
+        return if (found.isNotEmpty()) { found } else findVariableInParentScope(ref, this)
     }
 
     override fun processVariables(processor: ElvishVariableScope.VariableProcessor) {

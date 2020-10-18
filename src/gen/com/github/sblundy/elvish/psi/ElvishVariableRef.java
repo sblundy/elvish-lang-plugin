@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishVariableRef extends PsiElement {
+public interface ElvishVariableRef extends ReferenceWithNamespacePsiElement {
 
   @NotNull
   List<ElvishBareword> getBarewordList();

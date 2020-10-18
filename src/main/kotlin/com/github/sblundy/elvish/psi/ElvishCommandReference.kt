@@ -16,8 +16,7 @@ internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rang
     private fun multiResolve(): Array<ResolveResult> {
         val scope = ElvishPsiUtils.findParentScope(element) ?: return ResolveResult.EMPTY_ARRAY
 
-        val ns = element.namespaceNameList.map { ns -> ns.text }
-        return scope.findFnCommands(element.commandBareword.text, ns).mapNotNull { declaration ->
+        return scope.findFnCommands(element).mapNotNull { declaration ->
             PsiElementResolveResult(declaration)
         }.toTypedArray()
     }

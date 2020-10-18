@@ -8,10 +8,10 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
 
 abstract class ElvishChunkBase(node: ASTNode) : ASTWrapperPsiElement(node), ElvishChunk, ElvishDeclarationScope {
-    override fun findVariables(name: String, ns: List<String>): Collection<ElvishVariableDeclaration> {
+    override fun findVariables(ref: ReferenceWithNamespacePsiElement): Collection<ElvishVariableDeclaration> {
         return assignmentList.flatMap { it.variableList }
-            .filter { it.nameMatches(name, ns) } +
-                findVariableInParentScope(name, ns, this)
+            .filter { it.nameMatches(ref) } +
+                findVariableInParentScope(ref, this)
     }
 
     override fun processVariables(processor: ElvishVariableScope.VariableProcessor) {
@@ -24,8 +24,8 @@ abstract class ElvishChunkBase(node: ASTNode) : ASTWrapperPsiElement(node), Elvi
         processVariablesInParentScope(processor, this)
     }
 
-    override fun findFnCommands(name: String, ns: List<String>): Collection<ElvishFunctionDeclaration> {
-        return fnCommandList.filter { it.nameMatches(name, ns) } + findFnCommandInParentScope(name, ns, this)
+    override fun findFnCommands(ref: ReferenceWithNamespacePsiElement): Collection<ElvishFunctionDeclaration> {
+        return fnCommandList.filter { it.nameMatches(ref) } + findFnCommandInParentScope(ref, this)
     }
 
     override fun processFnCommands(processor: ElvishFunctionScope.FnCommandProcessor) {

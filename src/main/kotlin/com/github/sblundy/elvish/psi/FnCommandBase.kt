@@ -6,8 +6,8 @@ import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.util.IncorrectOperationException
 
 abstract class FnCommandBase(node: ASTNode) : ElvishLambdaBase(node), ElvishFunctionDeclaration, PsiNameIdentifierOwner {
-    override fun nameMatches(name: String, ns: List<String>): Boolean =
-        ns.isEmpty() && variableName.textMatches(name)
+    override fun nameMatches(ref: ReferenceWithNamespacePsiElement): Boolean =
+        !ref.hasNamespace && variableName.textMatches(ref.targetElement)
 
     abstract val variableName: ElvishVariableName
 

@@ -8,12 +8,12 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileFactory
 
 object ElvishPsiUtils {
-    fun findVariableInParentScope(name: String, ns: List<String>, e: PsiElement): Collection<ElvishVariableDeclaration> {
-        return (findParentScope(e) ?: return emptyList()).findVariables(name, ns)
+    fun findVariableInParentScope(ref: ReferenceWithNamespacePsiElement, e: PsiElement): Collection<ElvishVariableDeclaration> {
+        return (findParentScope(e) ?: return emptyList()).findVariables(ref)
     }
 
-    fun findFnCommandInParentScope(name: String, ns: List<String>, e: PsiElement): Collection<ElvishFunctionDeclaration> {
-        return (findParentScope(e) ?: return emptyList()).findFnCommands(name, ns)
+    fun findFnCommandInParentScope(ref: ReferenceWithNamespacePsiElement, e: PsiElement): Collection<ElvishFunctionDeclaration> {
+        return (findParentScope(e) ?: return emptyList()).findFnCommands(ref)
     }
 
     fun processVariablesInParentScope(processor: ElvishVariableScope.VariableProcessor, e: PsiElement) {
@@ -49,9 +49,9 @@ object ElvishPsiUtils {
     }
 
     private class ElvishFunctionScopeWrapper(private val inner: ElvishFunctionScope) : ElvishDeclarationScope {
-        override fun findVariables(name: String, ns: List<String>): Collection<ElvishVariableDeclaration> {
+        override fun findVariables(ref: ReferenceWithNamespacePsiElement): Collection<ElvishVariableDeclaration> {
             return (inner as? PsiElement)?.let {
-                findParentScope(inner)?.findVariables(name, ns)
+                findParentScope(inner)?.findVariables(ref)
             } ?: mutableListOf()
         }
 
@@ -61,21 +61,21 @@ object ElvishPsiUtils {
             }
         }
 
-        override fun findFnCommands(name: String, ns: List<String>) = inner.findFnCommands(name, ns)
+        override fun findFnCommands(ref: ReferenceWithNamespacePsiElement) = inner.findFnCommands(ref)
         override fun processFnCommands(processor: ElvishFunctionScope.FnCommandProcessor) {
             inner.processFnCommands(processor)
         }
     }
 
     private class ElvishVariableScopeWrapper(private val inner: ElvishVariableScope) : ElvishDeclarationScope {
-        override fun findVariables(name: String, ns: List<String>) = inner.findVariables(name, ns)
+        override fun findVariables(ref: ReferenceWithNamespacePsiElement) = inner.findVariables(ref)
         override fun processVariables(processor: ElvishVariableScope.VariableProcessor) {
             inner.processVariables(processor)
         }
 
-        override fun findFnCommands(name: String, ns: List<String>): Collection<ElvishFunctionDeclaration> {
+        override fun findFnCommands(ref: ReferenceWithNamespacePsiElement): Collection<ElvishFunctionDeclaration> {
             return (inner as? PsiElement)?.let {
-                findParentScope(inner)?.findFnCommands(name, ns)
+                findParentScope(inner)?.findFnCommands(ref)
             } ?: mutableListOf()
         }
 

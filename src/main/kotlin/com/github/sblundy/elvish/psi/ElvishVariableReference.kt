@@ -22,7 +22,7 @@ internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInEl
     override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
         val scope = ElvishPsiUtils.findParentScope(element) ?: return ResolveResult.EMPTY_ARRAY
 
-        return scope.findVariables(element.variableName.text, element.namespaceNameList.map { ns -> ns.text }).mapNotNull { declaration ->
+        return scope.findVariables(element).mapNotNull { declaration ->
             PsiElementResolveResult(declaration)
         }.toTypedArray()
     }

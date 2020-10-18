@@ -20,7 +20,7 @@ abstract class ElvishParameterBase(node: ASTNode) : ASTWrapperPsiElement(node), 
         return this
     }
 
-    fun nameMatches(name: String, ns: List<String?>): Boolean = ns.isEmpty() && compound.textMatches(name)
+    fun nameMatches(ref: ReferenceWithNamespacePsiElement): Boolean = !ref.hasNamespace && compound.textMatches(ref.targetElement)
 
     abstract val compound: ElvishCompound
 }

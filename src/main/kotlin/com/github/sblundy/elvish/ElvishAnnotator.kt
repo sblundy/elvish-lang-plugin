@@ -6,7 +6,6 @@ import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.COMMAND_CAPTU
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.PARAMETER
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.VARIABLE
 import com.github.sblundy.elvish.ElvishSyntaxHighlighter.Companion.VARIABLE_REF
-import com.github.sblundy.elvish.lang.version.ElvishBundledService
 import com.github.sblundy.elvish.psi.*
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
@@ -15,7 +14,6 @@ import com.intellij.psi.PsiElement
 
 class ElvishAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        val builtin = ElvishBundledService.getInstance().builtin(element.project)
         when (element) {
             is ElvishOutputCapture -> {
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION).textAttributes(COMMAND_CAPTURE).create()
@@ -31,7 +29,7 @@ class ElvishAnnotator : Annotator {
             }
             else -> {
                 val attributes = when (element) {
-                    is ElvishHead -> if (builtin.contains(element.text)) {
+                    is ElvishCommandExpression -> if (element.isBuiltin()) {
                         BUILTIN
                     } else {
                         COMMAND
@@ -48,4 +46,8 @@ class ElvishAnnotator : Annotator {
             }
         }
     }
+}
+
+fun ElvishCommandExpression.isBuiltin(): Boolean {
+    return !hasNamespace && project.getBuiltinScope()?.findFnCommands(this)?.isNotEmpty() == true
 }

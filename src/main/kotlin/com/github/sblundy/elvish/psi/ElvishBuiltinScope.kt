@@ -12,14 +12,14 @@ internal class BuiltinScope(val version: ElvishLanguageVersion, manager: PsiMana
     private val variables = version.builtinVariables.map { ElvishPsiBuiltinVariable(it, manager) }
     private val functions = version.builtinFunctions.map { ElvishPsiBuiltinCommand(it, manager) }
 
-    override fun findVariables(name: String, ns: List<String>): Collection<ElvishVariableDeclaration> =
-        variables.filter { it.nameMatches(name, ns) }
+    override fun findVariables(ref: ReferenceWithNamespacePsiElement): Collection<ElvishVariableDeclaration> =
+        variables.filter { it.nameMatches(ref) }
 
     override fun processVariables(processor: ElvishVariableScope.VariableProcessor) =
         variables.forEach { processor.process(it) }
 
-    override fun findFnCommands(name: String, ns: List<String>): Collection<ElvishFunctionDeclaration> =
-        functions.filter { it.nameMatches(name, ns) }
+    override fun findFnCommands(ref: ReferenceWithNamespacePsiElement): Collection<ElvishFunctionDeclaration> =
+        functions.filter { it.nameMatches(ref) }
 
     override fun processFnCommands(processor: ElvishFunctionScope.FnCommandProcessor) =
         functions.forEach { processor.process(it) }

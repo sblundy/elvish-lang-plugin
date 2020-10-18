@@ -24,9 +24,9 @@ abstract class ElvishVariableBase(node: ASTNode) : ASTWrapperPsiElement(node), P
     abstract val variableName: ElvishVariableName
     abstract val namespaceNameList: List<ElvishNamespaceName>
 
-    fun nameMatches(name: String, ns: List<String>): Boolean {
-        return variableName.textMatches(name) &&
-                ns.size == namespaceNameList.size &&
-                ns.zip(namespaceNameList).all { (a, b) -> a == b.text }
+    fun nameMatches(ref: ReferenceWithNamespacePsiElement): Boolean {
+        return variableName.textMatches(ref.targetElement) &&
+                ref.namespaceLength == namespaceNameList.size &&
+                ref.namespacePathElements.zip(namespaceNameList).all { (a, b) -> b.textMatches(a) }
     }
 }

@@ -89,6 +89,7 @@ private NSSeparator ::= COLON | BACKSLASH
 VariableName ::= VARIABLE_CHAR+
 VariableRef ::= DOLLAR_SIGN AT_SYMBOL? VariableRefName Index* {
   extends="com.github.sblundy.elvish.psi.ElvishVariableRefBase"
+  implements="com.github.sblundy.elvish.psi.ReferenceWithNamespacePsiElement"
 }
 private VariableRefName ::= NamespaceName* VariableName
 Bareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|BACKSLASH|COMMA|<<parseKeywordAsBareword>>)+
@@ -122,6 +123,7 @@ head ::= CommandExpression | SingleQuoted | DoubleQuoted | VariableRef | Excepti
 argument ::=  Redir | MapPair | Compound | ExitusRedir
 CommandExpression ::= NamespaceName* CommandBareword{
   extends="com.github.sblundy.elvish.psi.ElvishCommandExpressionBase"
+  implements="com.github.sblundy.elvish.psi.ReferenceWithNamespacePsiElement"
 }
 
 ExitusRedir ::= QUESTION '>' Space? Compound

@@ -25,10 +25,10 @@ sealed class ElvishPsiBuiltin(private val manager: PsiManager) : FakePsiElement(
 
 class ElvishPsiBuiltinCommand(override val builtin: String, manager: PsiManager) : ElvishPsiBuiltin(manager),
     ElvishFunctionDeclaration {
-    override fun nameMatches(name: String, ns: List<String>) = ns.isEmpty() && name == builtin
+    override fun nameMatches(ref: ReferenceWithNamespacePsiElement) = !ref.hasNamespace && ref.targetElement.textMatches(builtin)
 }
 
 class ElvishPsiBuiltinVariable(override val builtin: String, manager: PsiManager) : ElvishPsiBuiltin(manager),
     ElvishVariableDeclaration {
-    override fun nameMatches(name: String, ns: List<String>) = ns.isEmpty() && name == builtin
+    override fun nameMatches(ref: ReferenceWithNamespacePsiElement) = !ref.hasNamespace && ref.targetElement.textMatches(builtin)
 }

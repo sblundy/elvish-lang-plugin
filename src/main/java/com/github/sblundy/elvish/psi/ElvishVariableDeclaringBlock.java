@@ -5,19 +5,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public interface ElvishVariableDeclaringBlock extends ElvishVariableScope, PsiElement {
     ElvishVariable getVariable();
 
     @Override
-    default @NotNull Collection<ElvishVariableDeclaration> findVariables(@NotNull String name, @NotNull List<String> ns) {
+    default @NotNull Collection<ElvishVariableDeclaration> findVariables(@NotNull ReferenceWithNamespacePsiElement ref) {
         ElvishVariable v = getVariable();
-        if (v != null && v.nameMatches(name, ns)) {
+        if (v != null && v.nameMatches(ref)) {
             return Collections.singletonList(v);
         }
 
-        return ElvishPsiUtils.INSTANCE.findVariableInParentScope(name, ns, this);
+        return ElvishPsiUtils.INSTANCE.findVariableInParentScope(ref, this);
     }
 
     default void processVariables(@NotNull ElvishVariableScope.VariableProcessor processor) {
