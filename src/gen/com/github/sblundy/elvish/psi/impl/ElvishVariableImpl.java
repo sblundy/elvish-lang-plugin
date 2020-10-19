@@ -27,9 +27,9 @@ public class ElvishVariableImpl extends ElvishVariableBase implements ElvishVari
   }
 
   @Override
-  @NotNull
-  public List<ElvishNamespaceName> getNamespaceNameList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishNamespaceName.class);
+  @Nullable
+  public ElvishNamespaceName getNamespaceName() {
+    return findChildByClass(ElvishNamespaceName.class);
   }
 
   @Override

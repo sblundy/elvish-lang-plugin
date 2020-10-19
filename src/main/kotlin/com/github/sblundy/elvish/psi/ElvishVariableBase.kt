@@ -22,7 +22,9 @@ abstract class ElvishVariableBase(node: ASTNode) : ASTWrapperPsiElement(node), P
     override fun getTextOffset(): Int = variableName.textOffset
 
     abstract val variableName: ElvishVariableName
-    abstract val namespaceNameList: List<ElvishNamespaceName>
+    abstract val namespaceName: ElvishNamespaceName?
+    private val namespaceNameList: List<ElvishVariableName>
+        get() = namespaceName?.variableNameList ?: emptyList()
 
     fun nameMatches(ref: ReferenceWithNamespacePsiElement): Boolean {
         return variableName.textMatches(ref.targetElement) &&

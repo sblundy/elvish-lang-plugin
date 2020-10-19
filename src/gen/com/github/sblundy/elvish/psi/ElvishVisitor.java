@@ -127,10 +127,6 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitNamespacePath(@NotNull ElvishNamespacePath o) {
-    visitPsiElement(o);
-  }
-
   public void visitOutputCapture(@NotNull ElvishOutputCapture o) {
     visitPsiElement(o);
   }

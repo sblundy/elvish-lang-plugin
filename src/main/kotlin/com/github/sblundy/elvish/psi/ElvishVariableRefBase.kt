@@ -9,7 +9,7 @@ abstract class ElvishVariableRefBase(node: ASTNode) : ASTWrapperPsiElement(node)
     override val targetElement: PsiElement
         get() = variableName
     override val namespacePathElements: List<PsiElement>
-        get() = namespaceNameList.map { it }
+        get() = namespaceName?.variableNameList?.map { it } ?: emptyList()
     override val namespaceLength: Int
         get() = namespacePathElements.size
     override val hasNamespace: Boolean

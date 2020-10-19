@@ -26,4 +26,10 @@ public class ElvishNamespaceNameImpl extends ASTWrapperPsiElement implements Elv
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<ElvishVariableName> getVariableNameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableName.class);
+  }
+
 }

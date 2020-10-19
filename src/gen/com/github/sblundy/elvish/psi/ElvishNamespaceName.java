@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishNamespaceName extends PsiElement {
 
+  @NotNull
+  List<ElvishVariableName> getVariableNameList();
+
 }

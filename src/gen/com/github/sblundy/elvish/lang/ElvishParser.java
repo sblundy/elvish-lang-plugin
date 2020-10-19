@@ -1338,68 +1338,29 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // COLON | BACKSLASH
-  static boolean NSSeparator(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "NSSeparator")) return false;
-    if (!nextTokenIs(builder_, "", BACKSLASH, COLON)) return false;
-    boolean result_;
-    result_ = consumeToken(builder_, COLON);
-    if (!result_) result_ = consumeToken(builder_, BACKSLASH);
-    return result_;
-  }
-
-  /* ********************************************************** */
-  // VARIABLE_CHAR+ COLON
+  // (VariableName COLON)+
   public static boolean NamespaceName(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "NamespaceName")) return false;
     if (!nextTokenIs(builder_, VARIABLE_CHAR)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = NamespaceName_0(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, COLON);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!NamespaceName_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "NamespaceName", pos_)) break;
+    }
     exit_section_(builder_, marker_, NAMESPACE_NAME, result_);
     return result_;
   }
 
-  // VARIABLE_CHAR+
+  // VariableName COLON
   private static boolean NamespaceName_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "NamespaceName_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, VARIABLE_CHAR);
-    while (result_) {
-      int pos_ = current_position_(builder_);
-      if (!consumeToken(builder_, VARIABLE_CHAR)) break;
-      if (!empty_element_parsed_guard_(builder_, "NamespaceName_0", pos_)) break;
-    }
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
-  }
-
-  /* ********************************************************** */
-  // VARIABLE_CHAR+ NSSeparator
-  public static boolean NamespacePath(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "NamespacePath")) return false;
-    if (!nextTokenIs(builder_, VARIABLE_CHAR)) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = NamespacePath_0(builder_, level_ + 1);
-    result_ = result_ && NSSeparator(builder_, level_ + 1);
-    exit_section_(builder_, marker_, NAMESPACE_PATH, result_);
-    return result_;
-  }
-
-  // VARIABLE_CHAR+
-  private static boolean NamespacePath_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "NamespacePath_0")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, VARIABLE_CHAR);
-    while (result_) {
-      int pos_ = current_position_(builder_);
-      if (!consumeToken(builder_, VARIABLE_CHAR)) break;
-      if (!empty_element_parsed_guard_(builder_, "NamespacePath_0", pos_)) break;
-    }
+    result_ = VariableName(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, COLON);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
@@ -1744,7 +1705,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_USE Space NamespacePath* VariableName
+  // KEYWORD_USE Space ((VARIABLE_CHAR+'.')* VARIABLE_CHAR+ BACKSLASH)* (VariableName COLON)* VariableName
   public static boolean UseCommand(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "UseCommand")) return false;
     if (!nextTokenIs(builder_, KEYWORD_USE)) return false;
@@ -1753,24 +1714,111 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = consumeToken(builder_, KEYWORD_USE);
     result_ = result_ && Space(builder_, level_ + 1);
     result_ = result_ && UseCommand_2(builder_, level_ + 1);
+    result_ = result_ && UseCommand_3(builder_, level_ + 1);
     result_ = result_ && VariableName(builder_, level_ + 1);
     exit_section_(builder_, marker_, USE_COMMAND, result_);
     return result_;
   }
 
-  // NamespacePath*
+  // ((VARIABLE_CHAR+'.')* VARIABLE_CHAR+ BACKSLASH)*
   private static boolean UseCommand_2(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "UseCommand_2")) return false;
     while (true) {
       int pos_ = current_position_(builder_);
-      if (!NamespacePath(builder_, level_ + 1)) break;
+      if (!UseCommand_2_0(builder_, level_ + 1)) break;
       if (!empty_element_parsed_guard_(builder_, "UseCommand_2", pos_)) break;
     }
     return true;
   }
 
+  // (VARIABLE_CHAR+'.')* VARIABLE_CHAR+ BACKSLASH
+  private static boolean UseCommand_2_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "UseCommand_2_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = UseCommand_2_0_0(builder_, level_ + 1);
+    result_ = result_ && UseCommand_2_0_1(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, BACKSLASH);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (VARIABLE_CHAR+'.')*
+  private static boolean UseCommand_2_0_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "UseCommand_2_0_0")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!UseCommand_2_0_0_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "UseCommand_2_0_0", pos_)) break;
+    }
+    return true;
+  }
+
+  // VARIABLE_CHAR+'.'
+  private static boolean UseCommand_2_0_0_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "UseCommand_2_0_0_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = UseCommand_2_0_0_0_0(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, ".");
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // VARIABLE_CHAR+
+  private static boolean UseCommand_2_0_0_0_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "UseCommand_2_0_0_0_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, VARIABLE_CHAR);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!consumeToken(builder_, VARIABLE_CHAR)) break;
+      if (!empty_element_parsed_guard_(builder_, "UseCommand_2_0_0_0_0", pos_)) break;
+    }
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // VARIABLE_CHAR+
+  private static boolean UseCommand_2_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "UseCommand_2_0_1")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, VARIABLE_CHAR);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!consumeToken(builder_, VARIABLE_CHAR)) break;
+      if (!empty_element_parsed_guard_(builder_, "UseCommand_2_0_1", pos_)) break;
+    }
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (VariableName COLON)*
+  private static boolean UseCommand_3(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "UseCommand_3")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!UseCommand_3_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "UseCommand_3", pos_)) break;
+    }
+    return true;
+  }
+
+  // VariableName COLON
+  private static boolean UseCommand_3_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "UseCommand_3_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = VariableName(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, COLON);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
   /* ********************************************************** */
-  // NamespaceName* VariableName
+  // NamespaceName? VariableName
   public static boolean Variable(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Variable")) return false;
     if (!nextTokenIs(builder_, VARIABLE_CHAR)) return false;
@@ -1782,14 +1830,10 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // NamespaceName*
+  // NamespaceName?
   private static boolean Variable_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Variable_0")) return false;
-    while (true) {
-      int pos_ = current_position_(builder_);
-      if (!NamespaceName(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "Variable_0", pos_)) break;
-    }
+    NamespaceName(builder_, level_ + 1);
     return true;
   }
 
@@ -1844,7 +1888,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NamespaceName* VariableName
+  // NamespaceName? VariableName
   static boolean VariableRefName(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "VariableRefName")) return false;
     if (!nextTokenIs(builder_, VARIABLE_CHAR)) return false;
@@ -1856,14 +1900,10 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // NamespaceName*
+  // NamespaceName?
   private static boolean VariableRefName_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "VariableRefName_0")) return false;
-    while (true) {
-      int pos_ = current_position_(builder_);
-      if (!NamespaceName(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "VariableRefName_0", pos_)) break;
-    }
+    NamespaceName(builder_, level_ + 1);
     return true;
   }
 

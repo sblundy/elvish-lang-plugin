@@ -28,14 +28,8 @@ public class ElvishUseCommandImpl extends ASTWrapperPsiElement implements Elvish
 
   @Override
   @NotNull
-  public List<ElvishNamespacePath> getNamespacePathList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishNamespacePath.class);
-  }
-
-  @Override
-  @NotNull
-  public ElvishVariableName getVariableName() {
-    return findNotNullChildByClass(ElvishVariableName.class);
+  public List<ElvishVariableName> getVariableNameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableName.class);
   }
 
   @Override

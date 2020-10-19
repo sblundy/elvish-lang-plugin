@@ -8,10 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface ElvishUseCommand extends PsiElement {
 
   @NotNull
-  List<ElvishNamespacePath> getNamespacePathList();
-
-  @NotNull
-  ElvishVariableName getVariableName();
+  List<ElvishVariableName> getVariableNameList();
 
   @NotNull
   PsiElement getInlineWhitespace();

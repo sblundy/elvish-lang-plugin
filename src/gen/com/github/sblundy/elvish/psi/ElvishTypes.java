@@ -40,7 +40,6 @@ public interface ElvishTypes {
   IElementType MAP = new ElvishElementType("MAP");
   IElementType MAP_PAIR = new ElvishElementType("MAP_PAIR");
   IElementType NAMESPACE_NAME = new ElvishElementType("NAMESPACE_NAME");
-  IElementType NAMESPACE_PATH = new ElvishElementType("NAMESPACE_PATH");
   IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
   IElementType PARAMETER = new ElvishElementType("PARAMETER");
   IElementType PIPELINE_SEP = new ElvishElementType("PIPELINE_SEP");
@@ -193,9 +192,6 @@ public interface ElvishTypes {
       }
       else if (type == NAMESPACE_NAME) {
         return new ElvishNamespaceNameImpl(node);
-      }
-      else if (type == NAMESPACE_PATH) {
-        return new ElvishNamespacePathImpl(node);
       }
       else if (type == OUTPUT_CAPTURE) {
         return new ElvishOutputCaptureImpl(node);

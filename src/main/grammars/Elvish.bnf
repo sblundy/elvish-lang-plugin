@@ -79,19 +79,17 @@ private AssignmentOnlyForm ::= Space? Assignment Space?
 SingleQuoted ::= SINGLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* SINGLE_QUOTE
 DoubleQuoted ::= DOUBLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* DOUBLE_QUOTE
 private Primary ::= Bareword | SingleQuoted | DoubleQuoted | VariableRef | WILDCARD | TILDE | ExceptionCapture | OutputCapture | Lambda | List | Map | Braced
-Variable ::= NamespaceName* VariableName {
+Variable ::= NamespaceName? VariableName {
   extends="com.github.sblundy.elvish.psi.ElvishVariableBase"
   implements="com.github.sblundy.elvish.psi.ElvishVariableDeclaration"
 }
-NamespacePath ::= VARIABLE_CHAR+ NSSeparator
-NamespaceName ::= VARIABLE_CHAR+ COLON
-private NSSeparator ::= COLON | BACKSLASH
+NamespaceName ::= (VariableName COLON)+
 VariableName ::= VARIABLE_CHAR+
 VariableRef ::= DOLLAR_SIGN AT_SYMBOL? VariableRefName Index* {
   extends="com.github.sblundy.elvish.psi.ElvishVariableRefBase"
   implements="com.github.sblundy.elvish.psi.ReferenceWithNamespacePsiElement"
 }
-private VariableRefName ::= NamespaceName* VariableName
+private VariableRefName ::= NamespaceName? VariableName
 Bareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|BACKSLASH|COMMA|<<parseKeywordAsBareword>>)+
 BracedBareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|BACKSLASH|<<parseKeywordAsBareword>>)+
 CommandBareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|COMMAND_BAREWORD_CHAR|WILDCARD|BACKSLASH|EQUALS)+
@@ -170,4 +168,4 @@ FnCommand ::= KEYWORD_FN Space VariableName Space LambdaArguments? OPEN_BRACE Ch
   extends="com.github.sblundy.elvish.psi.FnCommandBase"
   implements="com.github.sblundy.elvish.psi.ElvishFunctionDeclaration"
 }
-UseCommand ::= KEYWORD_USE Space NamespacePath* VariableName
+UseCommand ::= KEYWORD_USE Space ((VARIABLE_CHAR+'.')* VARIABLE_CHAR+ BACKSLASH)* (VariableName COLON)* VariableName

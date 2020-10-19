@@ -64,7 +64,8 @@ private fun ElvishParameter.toLookupElement(): LookupElement {
 }
 
 private fun ElvishVariable.toLookupElement(): LookupElement {
-    val fullname = (namespaceNameList.map { it.text } + variableName.text).joinToString("")
+    val namespacePrefix = namespaceName?.let { namespaceName -> namespaceName.variableNameList.map { it.text }}?: emptyList()
+    val fullname = (namespacePrefix+variableName.text).joinToString(":")
     return LookupElementBuilder.create(this, fullname)
         .withPresentableText(fullname).withIcon(AllIcons.Nodes.Variable)
 }

@@ -28,8 +28,8 @@ public interface ElvishVariableRef extends ReferenceWithNamespacePsiElement {
   @NotNull
   List<ElvishMap> getMapList();
 
-  @NotNull
-  List<ElvishNamespaceName> getNamespaceNameList();
+  @Nullable
+  ElvishNamespaceName getNamespaceName();
 
   @NotNull
   List<ElvishOutputCapture> getOutputCaptureList();
