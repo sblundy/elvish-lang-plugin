@@ -11,6 +11,9 @@
     <div>
         <h4>1.1.0</h4>
         <ul>
+            <li>Configurable Elvish version support</li>
+            <li>Variable and command completion, including builtin functions</li>
+            <li>Builtin command depreciation warnings</li>
             <li>Variable declaration highlighting</li>
         </ul>
         <h4>1.0.3</h4>
