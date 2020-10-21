@@ -11,10 +11,15 @@ import kotlinx.serialization.json.Json
 import java.io.File
 import java.net.URI
 import java.nio.file.*
+import java.util.*
 
 private val log = logger<VersionsService>()
+private val emptyLanguageParseFlagSet = EnumSet.noneOf(LanguageParseFlag::class.java)
 
-data class ElvishLanguageVersion(val name: String, val builtin: ElvishModule, val release: Boolean = true) {
+data class ElvishLanguageVersion(val name: String,
+                                 val builtin: ElvishModule,
+                                 val parseFlags: EnumSet<LanguageParseFlag> = emptyLanguageParseFlagSet,
+                                 val release: Boolean = true) {
     val builtinFunctions: Set<String>
         get() = builtin.functions.keys
     val builtinVariables: Set<String>
@@ -32,6 +37,12 @@ data class ElvishLanguageVersion(val name: String, val builtin: ElvishModule, va
 data class ElvishModule(val variables: Map<String, ElvishVariable>, val functions: Map<String, ElvishFunction>)
 data class ElvishVariable(val deprecated: Boolean = false)
 data class ElvishFunction(val deprecated: Boolean = false)
+
+enum class LanguageParseFlag {
+    UseWithOptionalRename,
+    CarrotContinuation
+}
+
 class VersionsService {
     companion object {
         @JvmStatic
@@ -45,7 +56,8 @@ class VersionsService {
     internal val latestRelease: ElvishLanguageVersion?
         get() = versions.find { it.release }
 
-    val versionNames = versions.map { it.name }
+    val versionNames: List<String>
+        get() = versions.map { it.name }
 
     fun getVersion(name: String): ElvishLanguageVersion? = versions.find { it.name == name }
 }
@@ -61,9 +73,10 @@ private fun convertDefsToVersions(defs: Sequence<VersionDef>): List<ElvishLangua
     val vd = orderVersionDefs(defs)
     //TODO make this more resistant to non-linear version trees
     var versions = listOf<ElvishLanguageVersion>()
-    var previous = ElvishLanguageVersion("", ElvishModule(emptyMap(), emptyMap()), false)
+    var previous = ElvishLanguageVersion("", ElvishModule(emptyMap(), emptyMap()), release = false)
     for (def in vd.reversed()) {
-        val version = ElvishLanguageVersion(def.name, previous.builtin.applyDiff(def.builtin), def.release)
+        val flags = (previous.parseFlags + def.parseFlags.added.map { LanguageParseFlag.valueOf(it) }) - def.parseFlags.removed.map { LanguageParseFlag.valueOf(it) }
+        val version = ElvishLanguageVersion(def.name, previous.builtin.applyDiff(def.builtin), if (flags.isEmpty()) {emptyLanguageParseFlagSet} else {EnumSet.copyOf(flags)}, def.release)
         versions = listOf(version) + versions
         previous = version
     }
@@ -167,7 +180,8 @@ private data class VersionDef(
     val name: String,
     val previous: String? = null,
     val release: Boolean = true,
-    val builtin: ModuleDef = ModuleDef()
+    val builtin: ModuleDef = ModuleDef(),
+    val parseFlags: VersionChanges = VersionChanges()
 )
 
 @Serializable

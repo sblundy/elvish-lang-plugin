@@ -16,5 +16,6 @@
         "only-values"
       ]
     }
-  }
+  },
+  "parseFlags": {"added": ["UseWithOptionalRename"]}
 }

@@ -58,7 +58,7 @@
     KEYWORD_DEL="del"
     KEYWORD_FN="fn"
     KEYWORD_USE="use"
-    CONTINUATION="regexp:[\\][\r|\n]"
+    CONTINUATION="regexp:[\\^][\r|\n]"
   ]
 
   generateTokenAccessors(".*Capture")=true
@@ -168,4 +168,5 @@ FnCommand ::= KEYWORD_FN Space VariableName Space LambdaArguments? OPEN_BRACE Ch
   extends="com.github.sblundy.elvish.psi.FnCommandBase"
   implements="com.github.sblundy.elvish.psi.ElvishFunctionDeclaration"
 }
-UseCommand ::= KEYWORD_USE Space ((VARIABLE_CHAR+'.')* VARIABLE_CHAR+ BACKSLASH)* (VariableName COLON)* VariableName
+UseCommand ::= KEYWORD_USE Space ((VARIABLE_CHAR+'.')* VARIABLE_CHAR+ BACKSLASH)* (VariableName COLON)* VariableName (Space ModuleRename)?
+ModuleRename ::= <<parseIfFlag "UseWithOptionalRename" VariableName>>

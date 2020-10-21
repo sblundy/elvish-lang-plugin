@@ -123,6 +123,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitModuleRename(@NotNull ElvishModuleRename o) {
+    visitPsiElement(o);
+  }
+
   public void visitNamespaceName(@NotNull ElvishNamespaceName o) {
     visitPsiElement(o);
   }

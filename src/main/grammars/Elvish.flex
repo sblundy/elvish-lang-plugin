@@ -5,8 +5,10 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
 import com.intellij.util.containers.IntArrayList;
 
+import com.github.sblundy.elvish.lang.version.LanguageParseFlag;
 import com.github.sblundy.elvish.psi.ElvishTypes;
 
+import java.util.EnumSet;
 %%
 
 %class ElvishLexer
@@ -17,24 +19,35 @@ import com.github.sblundy.elvish.psi.ElvishTypes;
 %unicode
 
 %{
-  final IntArrayList states = new IntArrayList();
+    final IntArrayList states = new IntArrayList();
 
-  private void yyPushState(int newState) {
-      states.add(yystate());
-      yybegin(newState);
-  }
+    private void yyPushState(int newState) {
+        states.add(yystate());
+        yybegin(newState);
+    }
 
-  private void yyPopState() {
-      int prevState = states.remove(states.size() - 1);
-      yybegin(prevState);
-  }
+    private void yyPopState() {
+        int prevState = states.remove(states.size() - 1);
+        yybegin(prevState);
+    }
+
+    public EnumSet<LanguageParseFlag> parseFlags = EnumSet.noneOf(LanguageParseFlag.class);
+
+    private IElementType yyCheckContinuation() {
+        if (parseFlags.contains(LanguageParseFlag.CarrotContinuation)) {
+            return ElvishTypes.CONTINUATION;
+        }
+        yypushback(1);
+        return ElvishTypes.COMMAND_BAREWORD_CHAR;
+    }
 %}
 
 LINE =                          [^\n]*
 LINE_COMMENT =                  "#"{LINE}
 COMMENT =                       {LINE_COMMENT}{EOL}*
 
-CONTINUATION =                  [\\]{EOL}
+SLASH_CONTINUATION =            [\\]{EOL}
+CARROT_CONTINUATION =           [\^]{EOL}
 
 ARBITRARY_8CHAR_STRING_ESCAPES = [\\]U[0-9a-fA-F]{8}
 ARBITRARY_4CHAR_STRING_ESCAPES = [\\]u[0-9a-fA-F]{4}
@@ -102,7 +115,8 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
   "@"                       { return ElvishTypes.AT_SYMBOL; }
   "*"                       { return ElvishTypes.WILDCARD; }
 
-  {CONTINUATION}            { return ElvishTypes.CONTINUATION; }
+  {SLASH_CONTINUATION}      { return ElvishTypes.CONTINUATION; }
+  {CARROT_CONTINUATION}     { return yyCheckContinuation(); }
   {EOL}                     { return ElvishTypes.EOL; }
   {KEYWORD_ELIF}            { return ElvishTypes.KEYWORD_ELIF; }
   {KEYWORD_ELSE}            { return ElvishTypes.KEYWORD_ELSE; }

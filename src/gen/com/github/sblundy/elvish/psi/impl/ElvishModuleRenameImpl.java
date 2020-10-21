@@ -11,31 +11,19 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishUseCommandImpl extends ASTWrapperPsiElement implements ElvishUseCommand {
+public class ElvishModuleRenameImpl extends ASTWrapperPsiElement implements ElvishModuleRename {
 
-  public ElvishUseCommandImpl(@NotNull ASTNode node) {
+  public ElvishModuleRenameImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitUseCommand(this);
+    visitor.visitModuleRename(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public ElvishModuleRename getModuleRename() {
-    return findChildByClass(ElvishModuleRename.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishVariableName> getVariableNameList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableName.class);
   }
 
 }

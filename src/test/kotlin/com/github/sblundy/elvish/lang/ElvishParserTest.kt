@@ -91,7 +91,7 @@ class ElvishParserTest {
     }
 
     private fun checkLexer(baseName: String, text: String) {
-        val lexer = ElvishLexerAdapter()
+        val lexer = ElvishLexerAdapter(myProject.currentVersionParseFlags())
         val actual = LexerTestCase.printTokens(text, 0, lexer)
         UsefulTestCase.assertSameLinesWithFile("$myFullDataPath/$baseName.tokens.txt", actual)
     }

@@ -1,5 +1,6 @@
 package com.github.sblundy.elvish
 
+import com.github.sblundy.elvish.lang.allLanguageParseFlags
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighter
 import com.intellij.openapi.options.colors.AttributesDescriptor
@@ -10,7 +11,7 @@ import java.util.*
 import javax.swing.Icon
 
 class ElvishColorSettingsPage : ColorSettingsPage {
-    override fun getHighlighter(): SyntaxHighlighter = ElvishSyntaxHighlighter()
+    override fun getHighlighter(): SyntaxHighlighter = ElvishSyntaxHighlighter(allLanguageParseFlags)
     override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey>? =
         additionalHighlightingTag
 

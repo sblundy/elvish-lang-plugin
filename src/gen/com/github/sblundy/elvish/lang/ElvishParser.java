@@ -1338,6 +1338,17 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // <<parseIfFlag "UseWithOptionalRename" VariableName>>
+  public static boolean ModuleRename(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "ModuleRename")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, MODULE_RENAME, "<module rename>");
+    result_ = parseIfFlag(builder_, level_ + 1, "UseWithOptionalRename", ElvishParser::VariableName);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // (VariableName COLON)+
   public static boolean NamespaceName(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "NamespaceName")) return false;
@@ -1705,7 +1716,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_USE Space ((VARIABLE_CHAR+'.')* VARIABLE_CHAR+ BACKSLASH)* (VariableName COLON)* VariableName
+  // KEYWORD_USE Space ((VARIABLE_CHAR+'.')* VARIABLE_CHAR+ BACKSLASH)* (VariableName COLON)* VariableName (Space ModuleRename)?
   public static boolean UseCommand(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "UseCommand")) return false;
     if (!nextTokenIs(builder_, KEYWORD_USE)) return false;
@@ -1716,6 +1727,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = result_ && UseCommand_2(builder_, level_ + 1);
     result_ = result_ && UseCommand_3(builder_, level_ + 1);
     result_ = result_ && VariableName(builder_, level_ + 1);
+    result_ = result_ && UseCommand_5(builder_, level_ + 1);
     exit_section_(builder_, marker_, USE_COMMAND, result_);
     return result_;
   }
@@ -1813,6 +1825,24 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = VariableName(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, COLON);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (Space ModuleRename)?
+  private static boolean UseCommand_5(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "UseCommand_5")) return false;
+    UseCommand_5_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // Space ModuleRename
+  private static boolean UseCommand_5_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "UseCommand_5_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = Space(builder_, level_ + 1);
+    result_ = result_ && ModuleRename(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }

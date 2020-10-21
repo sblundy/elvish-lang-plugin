@@ -1,6 +1,7 @@
 package com.github.sblundy.elvish
 
 import com.github.sblundy.elvish.lang.ElvishLexerAdapter
+import com.github.sblundy.elvish.lang.version.LanguageParseFlag
 import com.github.sblundy.elvish.psi.ElvishTypes
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.diagnostic.logger
@@ -11,8 +12,9 @@ import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey
 import com.intellij.psi.TokenType
+import java.util.*
 
-class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
+class ElvishSyntaxHighlighter(private val parseFlags: EnumSet<LanguageParseFlag>) : SyntaxHighlighterBase() {
     private val log = logger<ElvishSyntaxHighlighter>()
 
     override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
@@ -47,7 +49,7 @@ class ElvishSyntaxHighlighter : SyntaxHighlighterBase() {
         }
     }
 
-    override fun getHighlightingLexer(): Lexer = ElvishLexerAdapter()
+    override fun getHighlightingLexer(): Lexer = ElvishLexerAdapter(parseFlags)
 
     companion object {
         val COMMAND = createTextAttributesKey("ELVISH_COMMAND", DefaultLanguageHighlighterColors.IDENTIFIER)

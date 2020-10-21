@@ -39,6 +39,7 @@ public interface ElvishTypes {
   IElementType LOGIC_COMMAND = new ElvishElementType("LOGIC_COMMAND");
   IElementType MAP = new ElvishElementType("MAP");
   IElementType MAP_PAIR = new ElvishElementType("MAP_PAIR");
+  IElementType MODULE_RENAME = new ElvishElementType("MODULE_RENAME");
   IElementType NAMESPACE_NAME = new ElvishElementType("NAMESPACE_NAME");
   IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
   IElementType PARAMETER = new ElvishElementType("PARAMETER");
@@ -189,6 +190,9 @@ public interface ElvishTypes {
       }
       else if (type == MAP_PAIR) {
         return new ElvishMapPairImpl(node);
+      }
+      else if (type == MODULE_RENAME) {
+        return new ElvishModuleRenameImpl(node);
       }
       else if (type == NAMESPACE_NAME) {
         return new ElvishNamespaceNameImpl(node);
