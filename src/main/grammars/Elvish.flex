@@ -3,7 +3,7 @@ package com.github.sblundy.elvish.lang;
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
-import com.intellij.util.containers.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 
 import com.github.sblundy.elvish.lang.version.LanguageParseFlag;
 import com.github.sblundy.elvish.psi.ElvishTypes;
