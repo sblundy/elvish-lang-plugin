@@ -1,0 +1,3 @@
+x = 'yy'
+
+echo $<caret>

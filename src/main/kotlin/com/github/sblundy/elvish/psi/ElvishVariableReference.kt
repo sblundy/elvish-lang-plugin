@@ -8,6 +8,7 @@ import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 import com.intellij.util.ArrayUtilRt
+import icons.ElvishIcons
 
 internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInElement: TextRange?) :
     PsiReferenceBase<ElvishVariableRefBase?>(element, rangeInElement, true),
@@ -40,6 +41,7 @@ internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInEl
             when (dec) {
                 is ElvishParameter -> variants.add(dec.toLookupElement())
                 is ElvishVariable -> variants.add(dec.toLookupElement())
+                is ElvishPsiBuiltinVariable -> variants.add(dec.toLookupElement())
                 else -> log.debug("unknown type:" + dec.javaClass.name)
             }
             true
@@ -47,6 +49,7 @@ internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInEl
         scope.processFnCommands { dec ->
             when (dec) {
                 is ElvishFnCommand -> variants.add(dec.toLookupElement())
+                is ElvishPsiBuiltinCommand -> variants.add(dec.toLookupElement())
                 else -> log.debug("unknown type:" + dec.javaClass.name)
             }
             true
@@ -59,6 +62,10 @@ private fun ElvishFnCommand.toLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, variableName.text + "~").withIcon(AllIcons.Nodes.Function)
 }
 
+private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
+    return LookupElementBuilder.create(this, "$name~").withIcon(ElvishIcons.FILE_ICON)
+}
+
 private fun ElvishParameter.toLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, compound.text).withIcon(AllIcons.Nodes.Parameter)
 }
@@ -68,4 +75,8 @@ private fun ElvishVariable.toLookupElement(): LookupElement {
     val fullname = (namespacePrefix+variableName.text).joinToString(":")
     return LookupElementBuilder.create(this, fullname)
         .withPresentableText(fullname).withIcon(AllIcons.Nodes.Variable)
+}
+
+private fun ElvishPsiBuiltinVariable.toLookupElement(): LookupElement {
+    return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.FILE_ICON)
 }
