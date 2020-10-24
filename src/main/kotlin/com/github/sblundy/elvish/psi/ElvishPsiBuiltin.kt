@@ -32,3 +32,8 @@ class ElvishPsiBuiltinVariable(override val builtin: String, manager: PsiManager
     ElvishVariableDeclaration {
     override fun nameMatches(ref: ReferenceWithNamespacePsiElement) = !ref.hasNamespace && ref.targetElement.textMatches(builtin)
 }
+
+class ElvishPsiBuiltinValue(override val builtin: String, manager: PsiManager) : ElvishPsiBuiltin(manager),
+    ElvishVariableDeclaration {
+    override fun nameMatches(ref: ReferenceWithNamespacePsiElement) = !ref.hasNamespace && ref.targetElement.textMatches(builtin)
+}

@@ -42,6 +42,7 @@ internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInEl
                 is ElvishParameter -> variants.add(dec.toLookupElement())
                 is ElvishVariable -> variants.add(dec.toLookupElement())
                 is ElvishPsiBuiltinVariable -> variants.add(dec.toLookupElement())
+                is ElvishPsiBuiltinValue -> variants.add(dec.toLookupElement())
                 else -> log.debug("unknown type:" + dec.javaClass.name)
             }
             true
@@ -79,4 +80,8 @@ private fun ElvishVariable.toLookupElement(): LookupElement {
 
 private fun ElvishPsiBuiltinVariable.toLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.BUILTIN_VARIABLE)
+}
+
+private fun ElvishPsiBuiltinValue.toLookupElement(): LookupElement {
+    return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.BUILTIN_VALUE)
 }

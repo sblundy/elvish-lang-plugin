@@ -52,9 +52,9 @@ class ElvishCodeInsightTest {
             myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-variable.elv")
             myFixture.complete(CompletionType.BASIC, 1)
 
-            val lookupStrings = myFixture.lookupElementStrings
+            val lookupStrings = myFixture.lookupElementStrings?: listOf()
 
-            Assert.assertEquals(listOf("x"), lookupStrings)
+            Assert.assertTrue(lookupStrings.contains("x"))
         }
     }
 

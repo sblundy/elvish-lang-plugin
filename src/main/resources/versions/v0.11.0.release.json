@@ -1,17 +1,21 @@
 {
   "name": "v0.11.0",
   "builtin": {
+    "values": {
+      "added": [
+        "false",
+        "ok",
+        "true"
+      ]
+    },
     "variables": {
       "added": [
         "_",
         "after-chdir",
         "before-chdir",
-        "false",
-        "ok",
         "paths",
         "pid",
         "pwd",
-        "true",
         "value-out-indicator"
       ]
     },

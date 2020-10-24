@@ -9,14 +9,15 @@ import com.intellij.psi.PsiManager
 private val scopeKey = Key.create<BuiltinScope>("ElvishPsiUtils.BuiltinScope")
 
 internal class BuiltinScope(val version: ElvishLanguageVersion, manager: PsiManager) : ElvishDeclarationScope {
+    private val values = version.builtinValues.map { ElvishPsiBuiltinValue(it, manager) }
     private val variables = version.builtinVariables.map { ElvishPsiBuiltinVariable(it, manager) }
     private val functions = version.builtinFunctions.map { ElvishPsiBuiltinCommand(it, manager) }
 
     override fun findVariables(ref: ReferenceWithNamespacePsiElement): Collection<ElvishVariableDeclaration> =
-        variables.filter { it.nameMatches(ref) }
+        (values + variables).filter { it.nameMatches(ref) }
 
     override fun processVariables(processor: ElvishVariableScope.VariableProcessor) =
-        variables.forEach { processor.process(it) }
+        (values + variables).forEach { processor.process(it) }
 
     override fun findFnCommands(ref: ReferenceWithNamespacePsiElement): Collection<ElvishFunctionDeclaration> =
         functions.filter { it.nameMatches(ref) }
