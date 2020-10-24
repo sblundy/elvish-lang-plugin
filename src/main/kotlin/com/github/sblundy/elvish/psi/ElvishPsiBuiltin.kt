@@ -10,6 +10,7 @@ import javax.swing.Icon
 
 sealed class ElvishPsiBuiltin(private val manager: PsiManager) : FakePsiElement() {
     abstract val builtin: String
+    abstract val isDoNotUse: Boolean
     override fun getLanguage() = ElvishLanguage.INSTANCE
     override fun getParent(): PsiElement? = null
     override fun getProject() = manager.project
@@ -26,14 +27,17 @@ sealed class ElvishPsiBuiltin(private val manager: PsiManager) : FakePsiElement(
 class ElvishPsiBuiltinCommand(override val builtin: String, manager: PsiManager) : ElvishPsiBuiltin(manager),
     ElvishFunctionDeclaration {
     override fun nameMatches(ref: ReferenceWithNamespacePsiElement) = !ref.hasNamespace && ref.targetElement.textMatches(builtin)
+    override val isDoNotUse: Boolean = builtin.startsWith('-') && builtin != "-"
 }
 
 class ElvishPsiBuiltinVariable(override val builtin: String, manager: PsiManager) : ElvishPsiBuiltin(manager),
     ElvishVariableDeclaration {
     override fun nameMatches(ref: ReferenceWithNamespacePsiElement) = !ref.hasNamespace && ref.targetElement.textMatches(builtin)
+    override val isDoNotUse: Boolean = builtin.startsWith('-')
 }
 
 class ElvishPsiBuiltinValue(override val builtin: String, manager: PsiManager) : ElvishPsiBuiltin(manager),
     ElvishVariableDeclaration {
     override fun nameMatches(ref: ReferenceWithNamespacePsiElement) = !ref.hasNamespace && ref.targetElement.textMatches(builtin)
+    override val isDoNotUse: Boolean = builtin.startsWith('-')
 }
