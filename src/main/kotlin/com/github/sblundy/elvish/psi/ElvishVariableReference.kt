@@ -63,7 +63,7 @@ private fun ElvishFnCommand.toLookupElement(): LookupElement {
 }
 
 private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, "$name~").withIcon(ElvishIcons.FILE_ICON)
+    return LookupElementBuilder.create(this, "$name~").withIcon(ElvishIcons.BUILTIN_FUNCTION)
 }
 
 private fun ElvishParameter.toLookupElement(): LookupElement {
@@ -78,5 +78,5 @@ private fun ElvishVariable.toLookupElement(): LookupElement {
 }
 
 private fun ElvishPsiBuiltinVariable.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.FILE_ICON)
+    return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.BUILTIN_VARIABLE)
 }

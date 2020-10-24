@@ -37,7 +37,7 @@ internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rang
         scope.processFnCommands {
             when (it) {
                 is ElvishFnCommand -> variants.add(LookupElementBuilder.create(it, it.variableName.text).withIcon(AllIcons.Nodes.Function))
-                is ElvishPsiBuiltinCommand -> variants.add(LookupElementBuilder.create(it, it.name).withIcon(ElvishIcons.FILE_ICON))
+                is ElvishPsiBuiltinCommand -> variants.add(LookupElementBuilder.create(it, it.name).withIcon(ElvishIcons.BUILTIN_FUNCTION))
                 else -> log.error("function type not supported: ${it.javaClass.canonicalName}")
             }
             true
