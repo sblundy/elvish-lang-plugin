@@ -1,24 +1,13 @@
-<svg id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16"
-     viewBox="0, 0, 480,480">
-    <g>
-        <circle cx="240" cy="240" r="200"/>
-        <path id="letter" fill-opacity="0.7" stroke="#54bb54" fill="#54bb54" stroke-width="1"
-              d="M 166,109
-             h 30
-             c 30,0 60,10 78,60
-             l 77,224
-             h -54
-             l -40,-118
-             l -1,-1
-             l -1,1
-             l -46,118
-             h -54
-             l  75,-197
-             l  -9,-26
-             c  -6,-15 -20,-19 -28,-19
-             l -27,-1
-             Z
-             "/>
-        <circle id="letter-dot" cx="137" cy="127" r="31" fill="#f8f8f8"/>
+<svg id="svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+    <mask id="cutout" fill="#fff">
+        <path d="M0,0 h16 v13.9 l-2.7,-5.9 h-2.7 a1.5,1.5 90 0 0 -1.5,1.5 a1.5,1.5 90 0 0 1.5,1.5 h0.8 L8.8,16 h-9.3 z"/>
+    </mask>
+    <g fill="none" fill-rule="evenodd" fill-opacity="0.8" mask="url(#cutout)">
+        <polygon fill="#9AA7B0" points="7 1 3 5 7 5"/>
+        <polygon fill="#9AA7B0" points="8 1 8 6 3 6 3 15 13 15 13 1"/>
+    </g>
+    <g transform="translate(10,9)">
+        <polygon id="letter" fill="#499C54" points="2.724 0 1 0 1 1 2 1 2.4 2 0 7 1.2 7 3 3.2 4.8 7 6 7"/>
+        <circle cx="0.5" cy="0.5" r="0.6" fill="#9AA7B0" fill-opacity="0.8"/>
     </g>
 </svg>
