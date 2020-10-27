@@ -1,8 +1,6 @@
 package com.github.sblundy.elvish
 
-import com.github.sblundy.elvish.psi.ElvishFnCommand
-import com.github.sblundy.elvish.psi.ElvishParameter
-import com.github.sblundy.elvish.psi.ElvishVariable
+import com.github.sblundy.elvish.psi.*
 import com.intellij.lang.HelpID
 import com.intellij.lang.findUsages.FindUsagesProvider
 import com.intellij.psi.PsiElement
@@ -21,9 +19,13 @@ class ElvishUsagesProvider : FindUsagesProvider {
 
     override fun getType(element: PsiElement): String {
         return when (element) {
-            is ElvishVariable -> ElvishBundle.message("attribute.VARIABLE.displayName")
-            is ElvishParameter -> ElvishBundle.message("attribute.PARAMETER.displayName")
-            is ElvishFnCommand -> ElvishBundle.message("attribute.FN_COMMAND.displayName")
+            is ElvishVariable -> "variable"
+            is ElvishVariableRef -> "variable"
+            is ElvishParameter -> "parameter"
+            is ElvishFnCommand -> "function"
+            is ElvishCommandExpression -> "function"
+            is ElvishPsiBuiltinCommand -> "builtin command"
+            is ElvishPsiBuiltinVariable -> "builtin variable"
             else -> ""
         }
     }
@@ -31,5 +33,5 @@ class ElvishUsagesProvider : FindUsagesProvider {
     override fun getHelpId(psiElement: PsiElement): String? = HelpID.FIND_OTHER_USAGES
 
     override fun canFindUsagesFor(psiElement: PsiElement): Boolean =
-        psiElement is ElvishVariable || psiElement is ElvishParameter || psiElement is ElvishFnCommand
+        psiElement is ElvishVariable || psiElement is ElvishParameter || psiElement is ElvishFnCommand || psiElement is ElvishPsiBuiltinCommand || psiElement is ElvishPsiBuiltinVariable
 }
