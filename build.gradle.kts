@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.intellij.tasks.PatchPluginXmlTask
 import org.jetbrains.intellij.tasks.PrepareSandboxTask
 import org.jetbrains.intellij.tasks.PublishTask
+import org.jetbrains.intellij.tasks.RunIdeTask
 
 plugins {
     id("org.jetbrains.intellij") version "0.4.22"
@@ -100,4 +101,9 @@ tasks.withType<Test> {
     testLogging {
         events("passed", "skipped", "failed")
     }
+}
+
+tasks.withType<RunIdeTask> {
+    autoReloadPlugins = true
+    systemProperty("ide.plugins.snapshot.on.unload.fail", "true")
 }
