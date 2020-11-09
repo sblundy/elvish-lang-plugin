@@ -54,6 +54,7 @@ data class ElvishFunction(val deprecated: Boolean = false)
 
 enum class LanguageParseFlag {
     UseWithOptionalRename,
+    UseRelativeModules,
     CarrotContinuation
 }
 

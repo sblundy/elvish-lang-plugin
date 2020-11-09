@@ -22,5 +22,5 @@
       ]
     }
   },
-  "parseFlags": {"added": ["CarrotContinuation"]}
+  "parseFlags": {"added": ["CarrotContinuation", "UseRelativeModules"]}
 }

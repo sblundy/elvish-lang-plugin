@@ -35,16 +35,18 @@ public interface ElvishTypes {
   IElementType IF_COMMAND = new ElvishElementType("IF_COMMAND");
   IElementType LAMBDA = new ElvishElementType("LAMBDA");
   IElementType LAMBDA_ARGUMENTS = new ElvishElementType("LAMBDA_ARGUMENTS");
+  IElementType LIB_MODULE_SPEC = new ElvishElementType("LIB_MODULE_SPEC");
   IElementType LIST = new ElvishElementType("LIST");
   IElementType LOGIC_COMMAND = new ElvishElementType("LOGIC_COMMAND");
   IElementType MAP = new ElvishElementType("MAP");
   IElementType MAP_PAIR = new ElvishElementType("MAP_PAIR");
-  IElementType MODULE_RENAME = new ElvishElementType("MODULE_RENAME");
+  IElementType MODULE_ALIAS = new ElvishElementType("MODULE_ALIAS");
   IElementType NAMESPACE_NAME = new ElvishElementType("NAMESPACE_NAME");
   IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
   IElementType PARAMETER = new ElvishElementType("PARAMETER");
   IElementType PIPELINE_SEP = new ElvishElementType("PIPELINE_SEP");
   IElementType REDIR = new ElvishElementType("REDIR");
+  IElementType RELATIVE_MODULE_SPEC = new ElvishElementType("RELATIVE_MODULE_SPEC");
   IElementType SINGLE_QUOTED = new ElvishElementType("SINGLE_QUOTED");
   IElementType TRY_COMMAND = new ElvishElementType("TRY_COMMAND");
   IElementType USE_COMMAND = new ElvishElementType("USE_COMMAND");
@@ -179,6 +181,9 @@ public interface ElvishTypes {
       else if (type == LAMBDA_ARGUMENTS) {
         return new ElvishLambdaArgumentsImpl(node);
       }
+      else if (type == LIB_MODULE_SPEC) {
+        return new ElvishLibModuleSpecImpl(node);
+      }
       else if (type == LIST) {
         return new ElvishListImpl(node);
       }
@@ -191,8 +196,8 @@ public interface ElvishTypes {
       else if (type == MAP_PAIR) {
         return new ElvishMapPairImpl(node);
       }
-      else if (type == MODULE_RENAME) {
-        return new ElvishModuleRenameImpl(node);
+      else if (type == MODULE_ALIAS) {
+        return new ElvishModuleAliasImpl(node);
       }
       else if (type == NAMESPACE_NAME) {
         return new ElvishNamespaceNameImpl(node);
@@ -208,6 +213,9 @@ public interface ElvishTypes {
       }
       else if (type == REDIR) {
         return new ElvishRedirImpl(node);
+      }
+      else if (type == RELATIVE_MODULE_SPEC) {
+        return new ElvishRelativeModuleSpecImpl(node);
       }
       else if (type == SINGLE_QUOTED) {
         return new ElvishSingleQuotedImpl(node);

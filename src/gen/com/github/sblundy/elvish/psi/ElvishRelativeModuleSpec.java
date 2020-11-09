@@ -5,6 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishModuleRename extends PsiElement {
+public interface ElvishRelativeModuleSpec extends PsiElement {
+
+  @NotNull
+  List<ElvishVariableName> getVariableNameList();
 
 }

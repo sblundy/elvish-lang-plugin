@@ -107,6 +107,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitLibModuleSpec(@NotNull ElvishLibModuleSpec o) {
+    visitPsiElement(o);
+  }
+
   public void visitList(@NotNull ElvishList o) {
     visitPsiElement(o);
   }
@@ -123,7 +127,7 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitModuleRename(@NotNull ElvishModuleRename o) {
+  public void visitModuleAlias(@NotNull ElvishModuleAlias o) {
     visitPsiElement(o);
   }
 
@@ -140,6 +144,10 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitRedir(@NotNull ElvishRedir o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRelativeModuleSpec(@NotNull ElvishRelativeModuleSpec o) {
     visitPsiElement(o);
   }
 
