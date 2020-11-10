@@ -168,8 +168,9 @@ FnCommand ::= KEYWORD_FN Space VariableName Space LambdaArguments? OPEN_BRACE Ch
   extends="com.github.sblundy.elvish.psi.FnCommandBase"
   implements="com.github.sblundy.elvish.psi.ElvishFunctionDeclaration"
 }
-UseCommand ::= KEYWORD_USE Space (<<parseIfFlag "UseRelativeModules" RelativeModuleSpec>> | LibModuleSpec) (Space ModuleAlias)?
+UseCommand ::= KEYWORD_USE Space (RelativeModuleSpec | LibModuleSpec) (Space ModuleAlias)?
 LibModuleSpec ::= (VARIABLE_CHAR+'.')* ModulePathSegment* (VariableName COLON)* VariableName
-RelativeModuleSpec ::= ('./' | '../') (ModulePathSegment | './' | '../')* (VariableName COLON)* VariableName
+RelativeModuleSpec ::= <<parseIfFlag "UseRelativeModules" RelativeModuleSpecInner>>
+private RelativeModuleSpecInner ::= ('./' | '../') (ModulePathSegment | './' | '../')* (VariableName COLON)* VariableName
 private ModulePathSegment ::= VARIABLE_CHAR+ BACKSLASH
 ModuleAlias ::= <<parseIfFlag "UseWithOptionalRename" VariableName>>

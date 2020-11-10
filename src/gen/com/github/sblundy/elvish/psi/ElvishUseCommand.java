@@ -13,4 +13,7 @@ public interface ElvishUseCommand extends PsiElement {
   @Nullable
   ElvishModuleAlias getModuleAlias();
 
+  @Nullable
+  ElvishRelativeModuleSpec getRelativeModuleSpec();
+
 }

@@ -38,4 +38,10 @@ public class ElvishUseCommandImpl extends ASTWrapperPsiElement implements Elvish
     return findChildByClass(ElvishModuleAlias.class);
   }
 
+  @Override
+  @Nullable
+  public ElvishRelativeModuleSpec getRelativeModuleSpec() {
+    return findChildByClass(ElvishRelativeModuleSpec.class);
+  }
+
 }

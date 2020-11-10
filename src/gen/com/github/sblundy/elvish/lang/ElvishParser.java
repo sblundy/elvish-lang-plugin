@@ -1699,22 +1699,33 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ('./' | '../') (ModulePathSegment | './' | '../')* (VariableName COLON)* VariableName
+  // <<parseIfFlag "UseRelativeModules" RelativeModuleSpecInner>>
   public static boolean RelativeModuleSpec(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "RelativeModuleSpec")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, RELATIVE_MODULE_SPEC, "<relative module spec>");
-    result_ = RelativeModuleSpec_0(builder_, level_ + 1);
-    result_ = result_ && RelativeModuleSpec_1(builder_, level_ + 1);
-    result_ = result_ && RelativeModuleSpec_2(builder_, level_ + 1);
-    result_ = result_ && VariableName(builder_, level_ + 1);
+    result_ = parseIfFlag(builder_, level_ + 1, "UseRelativeModules", ElvishParser::RelativeModuleSpecInner);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
+  /* ********************************************************** */
+  // ('./' | '../') (ModulePathSegment | './' | '../')* (VariableName COLON)* VariableName
+  static boolean RelativeModuleSpecInner(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "RelativeModuleSpecInner")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = RelativeModuleSpecInner_0(builder_, level_ + 1);
+    result_ = result_ && RelativeModuleSpecInner_1(builder_, level_ + 1);
+    result_ = result_ && RelativeModuleSpecInner_2(builder_, level_ + 1);
+    result_ = result_ && VariableName(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
   // './' | '../'
-  private static boolean RelativeModuleSpec_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "RelativeModuleSpec_0")) return false;
+  private static boolean RelativeModuleSpecInner_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "RelativeModuleSpecInner_0")) return false;
     boolean result_;
     result_ = consumeToken(builder_, "./");
     if (!result_) result_ = consumeToken(builder_, "../");
@@ -1722,19 +1733,19 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   // (ModulePathSegment | './' | '../')*
-  private static boolean RelativeModuleSpec_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "RelativeModuleSpec_1")) return false;
+  private static boolean RelativeModuleSpecInner_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "RelativeModuleSpecInner_1")) return false;
     while (true) {
       int pos_ = current_position_(builder_);
-      if (!RelativeModuleSpec_1_0(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "RelativeModuleSpec_1", pos_)) break;
+      if (!RelativeModuleSpecInner_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "RelativeModuleSpecInner_1", pos_)) break;
     }
     return true;
   }
 
   // ModulePathSegment | './' | '../'
-  private static boolean RelativeModuleSpec_1_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "RelativeModuleSpec_1_0")) return false;
+  private static boolean RelativeModuleSpecInner_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "RelativeModuleSpecInner_1_0")) return false;
     boolean result_;
     result_ = ModulePathSegment(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, "./");
@@ -1743,19 +1754,19 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   // (VariableName COLON)*
-  private static boolean RelativeModuleSpec_2(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "RelativeModuleSpec_2")) return false;
+  private static boolean RelativeModuleSpecInner_2(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "RelativeModuleSpecInner_2")) return false;
     while (true) {
       int pos_ = current_position_(builder_);
-      if (!RelativeModuleSpec_2_0(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "RelativeModuleSpec_2", pos_)) break;
+      if (!RelativeModuleSpecInner_2_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "RelativeModuleSpecInner_2", pos_)) break;
     }
     return true;
   }
 
   // VariableName COLON
-  private static boolean RelativeModuleSpec_2_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "RelativeModuleSpec_2_0")) return false;
+  private static boolean RelativeModuleSpecInner_2_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "RelativeModuleSpecInner_2_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = VariableName(builder_, level_ + 1);
@@ -1895,7 +1906,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_USE Space (<<parseIfFlag "UseRelativeModules" RelativeModuleSpec>> | LibModuleSpec) (Space ModuleAlias)?
+  // KEYWORD_USE Space (RelativeModuleSpec | LibModuleSpec) (Space ModuleAlias)?
   public static boolean UseCommand(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "UseCommand")) return false;
     if (!nextTokenIs(builder_, KEYWORD_USE)) return false;
@@ -1909,14 +1920,12 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // <<parseIfFlag "UseRelativeModules" RelativeModuleSpec>> | LibModuleSpec
+  // RelativeModuleSpec | LibModuleSpec
   private static boolean UseCommand_2(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "UseCommand_2")) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = parseIfFlag(builder_, level_ + 1, "UseRelativeModules", ElvishParser::RelativeModuleSpec);
+    result_ = RelativeModuleSpec(builder_, level_ + 1);
     if (!result_) result_ = LibModuleSpec(builder_, level_ + 1);
-    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 

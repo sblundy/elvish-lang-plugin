@@ -26,10 +26,4 @@ public class ElvishRelativeModuleSpecImpl extends ASTWrapperPsiElement implement
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public List<ElvishVariableName> getVariableNameList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableName.class);
-  }
-
 }
