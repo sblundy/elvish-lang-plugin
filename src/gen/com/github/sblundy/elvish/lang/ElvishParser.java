@@ -992,55 +992,111 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // OPEN_BRACKET IndexValue CLOSE_BRACKET
+  // OPEN_BRACKET (IndexRange | IndexSingle) CLOSE_BRACKET
   static boolean Index(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Index")) return false;
     if (!nextTokenIs(builder_, OPEN_BRACKET)) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
+    boolean result_, pinned_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_);
     result_ = consumeToken(builder_, OPEN_BRACKET);
-    result_ = result_ && IndexValue(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, CLOSE_BRACKET);
-    exit_section_(builder_, marker_, null, result_);
+    pinned_ = result_; // pin = 1
+    result_ = result_ && report_error_(builder_, Index_1(builder_, level_ + 1));
+    result_ = pinned_ && consumeToken(builder_, CLOSE_BRACKET) && result_;
+    exit_section_(builder_, level_, marker_, result_, pinned_, null);
+    return result_ || pinned_;
+  }
+
+  // IndexRange | IndexSingle
+  private static boolean Index_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "Index_1")) return false;
+    boolean result_;
+    result_ = IndexRange(builder_, level_ + 1);
+    if (!result_) result_ = IndexSingle(builder_, level_ + 1);
     return result_;
   }
 
   /* ********************************************************** */
-  // Primary COLON Primary
-  static boolean IndexRange(PsiBuilder builder_, int level_) {
+  // IndexValue+ IndexRangeSeparator IndexValue+
+  public static boolean IndexRange(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "IndexRange")) return false;
     boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, INDEX_RANGE, "<index range>");
+    result_ = IndexRange_0(builder_, level_ + 1);
+    result_ = result_ && IndexRangeSeparator(builder_, level_ + 1);
+    result_ = result_ && IndexRange_2(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // IndexValue+
+  private static boolean IndexRange_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "IndexRange_0")) return false;
+    boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = Primary(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, COLON);
-    result_ = result_ && Primary(builder_, level_ + 1);
+    result_ = IndexValue(builder_, level_ + 1);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!IndexValue(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "IndexRange_0", pos_)) break;
+    }
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
-  /* ********************************************************** */
-  // Primary+
-  static boolean IndexSingle(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "IndexSingle")) return false;
+  // IndexValue+
+  private static boolean IndexRange_2(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "IndexRange_2")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = Primary(builder_, level_ + 1);
+    result_ = IndexValue(builder_, level_ + 1);
     while (result_) {
       int pos_ = current_position_(builder_);
-      if (!Primary(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "IndexSingle", pos_)) break;
+      if (!IndexValue(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "IndexRange_2", pos_)) break;
     }
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
   /* ********************************************************** */
-  // IndexRange | IndexSingle
+  // COLON | <<parseIfFlag "NewSliceIndex" NewSliceIndexString>>
+  static boolean IndexRangeSeparator(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "IndexRangeSeparator")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, COLON);
+    if (!result_) result_ = parseIfFlag(builder_, level_ + 1, "NewSliceIndex", ElvishParser::NewSliceIndexString);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // IndexValue+
+  public static boolean IndexSingle(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "IndexSingle")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, INDEX_SINGLE, "<index single>");
+    result_ = IndexValue(builder_, level_ + 1);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!IndexValue(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "IndexSingle", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // VariableName | SingleQuoted | DoubleQuoted | VariableRef | ExceptionCapture | OutputCapture
   static boolean IndexValue(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "IndexValue")) return false;
     boolean result_;
-    result_ = IndexRange(builder_, level_ + 1);
-    if (!result_) result_ = IndexSingle(builder_, level_ + 1);
+    result_ = VariableName(builder_, level_ + 1);
+    if (!result_) result_ = SingleQuoted(builder_, level_ + 1);
+    if (!result_) result_ = DoubleQuoted(builder_, level_ + 1);
+    if (!result_) result_ = VariableRef(builder_, level_ + 1);
+    if (!result_) result_ = ExceptionCapture(builder_, level_ + 1);
+    if (!result_) result_ = OutputCapture(builder_, level_ + 1);
     return result_;
   }
 
@@ -1486,6 +1542,16 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = VariableName(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, COLON);
     exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // '..=' | '..'
+  static boolean NewSliceIndexString(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "NewSliceIndexString")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, "..=");
+    if (!result_) result_ = consumeToken(builder_, "..");
     return result_;
   }
 

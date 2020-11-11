@@ -8,36 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface ElvishDeleteCommand extends PsiElement {
 
   @NotNull
-  List<ElvishBareword> getBarewordList();
+  List<ElvishIndexRange> getIndexRangeList();
 
   @NotNull
-  List<ElvishBraced> getBracedList();
-
-  @NotNull
-  List<ElvishDoubleQuoted> getDoubleQuotedList();
-
-  @NotNull
-  List<ElvishExceptionCapture> getExceptionCaptureList();
-
-  @NotNull
-  List<ElvishLambda> getLambdaList();
-
-  @NotNull
-  List<ElvishList> getListList();
-
-  @NotNull
-  List<ElvishMap> getMapList();
-
-  @NotNull
-  List<ElvishOutputCapture> getOutputCaptureList();
-
-  @NotNull
-  List<ElvishSingleQuoted> getSingleQuotedList();
+  List<ElvishIndexSingle> getIndexSingleList();
 
   @NotNull
   ElvishVariable getVariable();
-
-  @NotNull
-  List<ElvishVariableRef> getVariableRefList();
 
 }

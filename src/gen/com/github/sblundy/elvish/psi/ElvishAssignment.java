@@ -7,40 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishAssignment extends PsiElement {
 
-  @NotNull
-  List<ElvishBareword> getBarewordList();
-
-  @NotNull
-  List<ElvishBraced> getBracedList();
-
   @Nullable
   ElvishCompound getCompound();
 
   @NotNull
-  List<ElvishDoubleQuoted> getDoubleQuotedList();
+  List<ElvishIndexRange> getIndexRangeList();
 
   @NotNull
-  List<ElvishExceptionCapture> getExceptionCaptureList();
-
-  @NotNull
-  List<ElvishLambda> getLambdaList();
-
-  @NotNull
-  List<ElvishList> getListList();
-
-  @NotNull
-  List<ElvishMap> getMapList();
-
-  @NotNull
-  List<ElvishOutputCapture> getOutputCaptureList();
-
-  @NotNull
-  List<ElvishSingleQuoted> getSingleQuotedList();
+  List<ElvishIndexSingle> getIndexSingleList();
 
   @NotNull
   List<ElvishVariable> getVariableList();
-
-  @NotNull
-  List<ElvishVariableRef> getVariableRefList();
 
 }

@@ -1,0 +1,21 @@
+{
+  "name": "v0.15.0",
+  "previous": "v0.14.0",
+  "builtin": {
+    "functions": {
+      "added": [
+        "eval",
+        "sleep"
+      ],
+      "deprecated": [
+        "chr",
+        "ord",
+        "has-prefix",
+        "has-suffix",
+        "-source",
+        "esleep"
+      ]
+    }
+  },
+  "parseFlags": {"added": ["NewSliceIndex"]}
+}

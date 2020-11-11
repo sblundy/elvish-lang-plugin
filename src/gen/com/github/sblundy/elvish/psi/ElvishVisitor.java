@@ -99,6 +99,14 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitIndexRange(@NotNull ElvishIndexRange o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIndexSingle(@NotNull ElvishIndexSingle o) {
+    visitPsiElement(o);
+  }
+
   public void visitLambda(@NotNull ElvishLambda o) {
     visitPsiElement(o);
   }

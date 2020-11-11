@@ -97,10 +97,13 @@ CommandBareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|COMMAND_BAREWORD_CHAR|WILDCARD|
 // Maps and lists
 Compound ::= TILDE? Indexing+
 private Indexing ::= Primary Index*
-private Index ::= OPEN_BRACKET IndexValue CLOSE_BRACKET
-private IndexValue ::= IndexRange | IndexSingle
-private IndexSingle ::= Primary+
-private IndexRange ::= Primary COLON Primary
+private Index ::= OPEN_BRACKET (IndexRange | IndexSingle) CLOSE_BRACKET
+{ pin=1 }
+private IndexValue ::= VariableName | SingleQuoted | DoubleQuoted | VariableRef | ExceptionCapture | OutputCapture
+IndexSingle ::= IndexValue+
+IndexRange ::= IndexValue+ IndexRangeSeparator IndexValue+
+private IndexRangeSeparator ::= COLON | <<parseIfFlag "NewSliceIndex" NewSliceIndexString>>
+private NewSliceIndexString ::= '..=' | '..'
 Array ::= ArraySpace* (Compound ArraySpace*)*
 private ArraySpace ::= Space | EOL
 List ::= OPEN_BRACKET Array CLOSE_BRACKET

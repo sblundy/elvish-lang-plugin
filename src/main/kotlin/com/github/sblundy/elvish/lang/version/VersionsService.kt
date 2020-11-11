@@ -55,6 +55,7 @@ data class ElvishFunction(val deprecated: Boolean = false)
 enum class LanguageParseFlag {
     UseWithOptionalRename,
     UseRelativeModules,
+    NewSliceIndex,
     CarrotContinuation
 }
 
@@ -146,7 +147,7 @@ private fun orderVersionDefs(it: Sequence<VersionDef>): List<VersionDef> {
     var p: String? = null
 
     for (index in v.size - 1 downTo 1) {
-        for (i in 0 until index) {
+        for (i in 0..index) {
             if (v[i].previous == p) {
                 val tmp = v[i]
                 v[i] = v[index]

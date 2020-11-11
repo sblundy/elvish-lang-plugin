@@ -33,6 +33,8 @@ public interface ElvishTypes {
   IElementType FOR_COMMAND = new ElvishElementType("FOR_COMMAND");
   IElementType HEAD = new ElvishElementType("HEAD");
   IElementType IF_COMMAND = new ElvishElementType("IF_COMMAND");
+  IElementType INDEX_RANGE = new ElvishElementType("INDEX_RANGE");
+  IElementType INDEX_SINGLE = new ElvishElementType("INDEX_SINGLE");
   IElementType LAMBDA = new ElvishElementType("LAMBDA");
   IElementType LAMBDA_ARGUMENTS = new ElvishElementType("LAMBDA_ARGUMENTS");
   IElementType LIB_MODULE_SPEC = new ElvishElementType("LIB_MODULE_SPEC");
@@ -174,6 +176,12 @@ public interface ElvishTypes {
       }
       else if (type == IF_COMMAND) {
         return new ElvishIfCommandImpl(node);
+      }
+      else if (type == INDEX_RANGE) {
+        return new ElvishIndexRangeImpl(node);
+      }
+      else if (type == INDEX_SINGLE) {
+        return new ElvishIndexSingleImpl(node);
       }
       else if (type == LAMBDA) {
         return new ElvishLambdaImpl(node);

@@ -11,31 +11,19 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishCompoundImpl extends ASTWrapperPsiElement implements ElvishCompound {
+public class ElvishIndexSingleImpl extends ASTWrapperPsiElement implements ElvishIndexSingle {
 
-  public ElvishCompoundImpl(@NotNull ASTNode node) {
+  public ElvishIndexSingleImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitCompound(this);
+    visitor.visitIndexSingle(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishBareword> getBarewordList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishBareword.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishBraced> getBracedList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishBraced.class);
   }
 
   @Override
@@ -52,36 +40,6 @@ public class ElvishCompoundImpl extends ASTWrapperPsiElement implements ElvishCo
 
   @Override
   @NotNull
-  public List<ElvishIndexRange> getIndexRangeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexRange.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishIndexSingle> getIndexSingleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexSingle.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishLambda> getLambdaList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLambda.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishList> getListList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishList.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishMap> getMapList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishMap.class);
-  }
-
-  @Override
-  @NotNull
   public List<ElvishOutputCapture> getOutputCaptureList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishOutputCapture.class);
   }
@@ -90,6 +48,12 @@ public class ElvishCompoundImpl extends ASTWrapperPsiElement implements ElvishCo
   @NotNull
   public List<ElvishSingleQuoted> getSingleQuotedList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishSingleQuoted.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishVariableName> getVariableNameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableName.class);
   }
 
   @Override
