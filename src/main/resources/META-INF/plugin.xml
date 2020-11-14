@@ -9,6 +9,12 @@
 
     <change-notes><![CDATA[
     <div>
+        <h4>1.1.1</h4>
+        <ul>
+            <li>Fix plugin reload to not require a restart</li>
+            <li>Support for relative paths in <span style="font-family: monospace">use</span> commands</li>
+            <li>Add v0.15.0 pre-release support</li>
+        </ul>
         <h4>1.1.0</h4>
         <ul>
             <li>Configurable Elvish version support</li>
