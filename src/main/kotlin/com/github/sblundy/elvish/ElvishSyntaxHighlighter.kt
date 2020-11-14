@@ -4,7 +4,6 @@ import com.github.sblundy.elvish.lang.ElvishLexerAdapter
 import com.github.sblundy.elvish.lang.version.LanguageParseFlag
 import com.github.sblundy.elvish.psi.ElvishTypes
 import com.intellij.lexer.Lexer
-import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.tree.IElementType
@@ -15,8 +14,6 @@ import com.intellij.psi.TokenType
 import java.util.*
 
 class ElvishSyntaxHighlighter(private val parseFlags: EnumSet<LanguageParseFlag>) : SyntaxHighlighterBase() {
-    private val log = logger<ElvishSyntaxHighlighter>()
-
     override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
         return when (tokenType) {
             ElvishTypes.COMMENT -> COMMENT_KEYS
@@ -42,10 +39,7 @@ class ElvishSyntaxHighlighter(private val parseFlags: EnumSet<LanguageParseFlag>
             ElvishTypes.PIPE, ElvishTypes.REDIR -> OPERATOR_KEYS
             ElvishTypes.HEAD -> COMMAND_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
-            else -> {
-                tokenType?.let { log.info("token type not found:$tokenType") }
-                EMPTY_KEYS
-            }
+            else -> EMPTY_KEYS
         }
     }
 

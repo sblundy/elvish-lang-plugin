@@ -42,17 +42,17 @@ class ElvishSettingsConfigurableUi : ConfigurableUi<ElvishSettings.ElvishLanguag
         }
 
     override fun reset(settings: ElvishSettings.ElvishLanguageOptions) {
-        log.info("in reset($settings)")
+        log.debug("in reset($settings)")
         selectedVersion = settings.languageVersion?.let { VersionsService.getInstance().getVersion(it) }
     }
 
     override fun isModified(settings: ElvishSettings.ElvishLanguageOptions): Boolean {
-        log.info("in isModified($settings)/${model.selectedItem}")
+        log.debug("in isModified($settings)/${model.selectedItem}")
         return selectedVersion != settings.languageVersion?.let { VersionsService.getInstance().getVersion(it) }
     }
 
     override fun apply(settings: ElvishSettings.ElvishLanguageOptions) {
-        log.info("in apply($settings)")
+        log.debug("in apply($settings)")
         settings.languageVersion = selectedVersion?.name
     }
 

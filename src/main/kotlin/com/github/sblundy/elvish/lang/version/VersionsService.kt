@@ -3,6 +3,7 @@ package com.github.sblundy.elvish.lang.version
 import com.intellij.openapi.application.PluginPathManager
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.diagnostic.logger
+import com.intellij.openapi.diagnostic.debug
 import com.intellij.util.PathUtil
 import com.intellij.util.io.readText
 import kotlinx.serialization.Serializable
@@ -79,9 +80,9 @@ class VersionsService {
 }
 
 private fun loadVersions(): List<ElvishLanguageVersion> {
-    log.info("in loadVersions")
+    log.debug("in loadVersions")
     val versions = versionDefs()?.let { convertDefsToVersions(it) } ?: emptyList()
-    log.info("end loadVersions: $versions")
+    log.debug { "end loadVersions: $versions" }
     return versions
 }
 
@@ -143,7 +144,7 @@ private fun ElvishModule.applyDiff(diff: ModuleDef): ElvishModule {
 
 private fun orderVersionDefs(it: Sequence<VersionDef>): List<VersionDef> {
     val v = it.toMutableList()
-    log.info("in orderedVersionDefs: ${v.size}")
+    log.debug("in orderedVersionDefs: ${v.size}")
     var p: String? = null
 
     for (index in v.size - 1 downTo 1) {
@@ -164,7 +165,7 @@ private fun orderVersionDefs(it: Sequence<VersionDef>): List<VersionDef> {
 private fun versionDefs(): Sequence<VersionDef>? {
     val defs = versionsDefsFromPluginDevDir() ?: versionsDefsFromPluginDir() ?: versionsDefsFromPluginJar()
     return defs?.map {
-        log.debug("decoding $it")
+        log.debug { "decoding $it" }
         Json.decodeFromString(it)
     }
 }

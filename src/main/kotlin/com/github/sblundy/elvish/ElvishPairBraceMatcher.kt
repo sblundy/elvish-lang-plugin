@@ -7,6 +7,7 @@ import com.github.sblundy.elvish.psi.ElvishTypes
 import com.intellij.lang.BracePair
 import com.intellij.lang.PairedBraceMatcher
 import com.intellij.openapi.diagnostic.logger
+import com.intellij.openapi.diagnostic.debug
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
 
@@ -28,7 +29,7 @@ class ElvishPairBraceMatcher: PairedBraceMatcher {
             else -> null
         }
 
-        log.info("found construct:$p")
+        log.debug { "found construct:$p" }
         return p?.let { p.textRange.startOffset }?: openingBraceOffset
     }
 
