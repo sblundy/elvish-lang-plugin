@@ -1,6 +1,7 @@
 {
   "name": "v0.15.0",
   "previous": "v0.14.0",
+  "release": false,
   "builtin": {
     "functions": {
       "added": [

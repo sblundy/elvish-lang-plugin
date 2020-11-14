@@ -67,7 +67,7 @@ class VersionsService {
         }
     }
 
-    private val versions: List<ElvishLanguageVersion> by lazy { loadVersions() }
+    val versions: List<ElvishLanguageVersion> by lazy { loadVersions() }
 
     internal val latestRelease: ElvishLanguageVersion?
         get() = versions.find { it.release }
