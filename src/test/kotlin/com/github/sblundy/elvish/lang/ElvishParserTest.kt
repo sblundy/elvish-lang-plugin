@@ -1,6 +1,7 @@
 package com.github.sblundy.elvish.lang
 
 import com.github.sblundy.elvish.ElvishLanguage
+import com.github.sblundy.elvish.settings.ElvishSettings
 import com.intellij.mock.MockPsiManager
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
@@ -50,6 +51,7 @@ class ElvishParserTest {
         myModule = myFixture.module
         myPsiManager = MockPsiManager(myProject)
         myFileFactory = PsiFileFactoryImpl(myPsiManager)
+        ElvishSettings.getInstance(myProject).let { it.state.languageVersion = "v0.15.0"  } //TODO remove once v0.15.0 is released
     }
 
     @AfterAll
