@@ -7,4 +7,5 @@ import com.intellij.psi.PsiElement
  */
 interface ElvishFunctionDeclaration : PsiElement {
     fun nameMatches(ref: ReferenceWithNamespacePsiElement): Boolean
+    fun getCommandName(): ElvishVariableName
 }

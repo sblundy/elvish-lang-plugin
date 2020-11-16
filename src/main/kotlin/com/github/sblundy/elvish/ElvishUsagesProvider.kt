@@ -12,7 +12,7 @@ class ElvishUsagesProvider : FindUsagesProvider {
         return when (element) {
             is ElvishVariable -> element.text
             is ElvishParameter -> element.text
-            is ElvishFnCommand -> element.variableName.text
+            is ElvishFnCommand -> element.getCommandName().text
             else -> ""
         }
     }

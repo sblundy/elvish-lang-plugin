@@ -2171,13 +2171,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // AT_SYMBOL? Compound
+  // AT_SYMBOL? VariableName
   public static boolean parameter(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "parameter")) return false;
+    if (!nextTokenIs(builder_, "<parameter>", AT_SYMBOL, VARIABLE_CHAR)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, PARAMETER, "<parameter>");
     result_ = parameter_0(builder_, level_ + 1);
-    result_ = result_ && Compound(builder_, level_ + 1);
+    result_ = result_ && VariableName(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }

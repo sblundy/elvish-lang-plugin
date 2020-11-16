@@ -26,7 +26,10 @@ sealed class ElvishPsiBuiltin(private val manager: PsiManager) : FakePsiElement(
 
 class ElvishPsiBuiltinCommand(override val builtin: String, manager: PsiManager) : ElvishPsiBuiltin(manager),
     ElvishFunctionDeclaration {
+    private val commandName = FakeVariableName(builtin, manager)
     override fun nameMatches(ref: ReferenceWithNamespacePsiElement) = !ref.hasNamespace && ref.targetElement.textMatches(builtin)
+    override fun getCommandName(): ElvishVariableName = commandName
+
     override val isDoNotUse: Boolean = builtin.startsWith('-') && builtin != "-"
     override fun getIcon(open: Boolean): Icon? = ElvishIcons.BUILTIN_FUNCTION
     override fun getPresentation(): ItemPresentation? = ElvishBasicItemPresentation(builtin, ElvishIcons.BUILTIN_FUNCTION)
@@ -34,7 +37,9 @@ class ElvishPsiBuiltinCommand(override val builtin: String, manager: PsiManager)
 
 class ElvishPsiBuiltinVariable(override val builtin: String, manager: PsiManager) : ElvishPsiBuiltin(manager),
     ElvishVariableDeclaration {
+    private val variableName = FakeVariableName(builtin, manager)
     override fun nameMatches(ref: ReferenceWithNamespacePsiElement) = !ref.hasNamespace && ref.targetElement.textMatches(builtin)
+    override fun getVariableName(): ElvishVariableName = variableName
     override val isDoNotUse: Boolean = builtin.startsWith('-')
     override fun getIcon(open: Boolean): Icon? = ElvishIcons.BUILTIN_VARIABLE
     override fun getPresentation(): ItemPresentation? = ElvishBasicItemPresentation(builtin, ElvishIcons.BUILTIN_VARIABLE)
@@ -42,8 +47,14 @@ class ElvishPsiBuiltinVariable(override val builtin: String, manager: PsiManager
 
 class ElvishPsiBuiltinValue(override val builtin: String, manager: PsiManager) : ElvishPsiBuiltin(manager),
     ElvishVariableDeclaration {
+    private val variableName = FakeVariableName(builtin, manager)
     override fun nameMatches(ref: ReferenceWithNamespacePsiElement) = !ref.hasNamespace && ref.targetElement.textMatches(builtin)
+    override fun getVariableName(): ElvishVariableName = variableName
     override val isDoNotUse: Boolean = builtin.startsWith('-')
     override fun getIcon(open: Boolean): Icon? = ElvishIcons.BUILTIN_VALUE
     override fun getPresentation(): ItemPresentation? = ElvishBasicItemPresentation(builtin, ElvishIcons.BUILTIN_VALUE)
+}
+
+private class FakeVariableName(override val builtin: String, manager: PsiManager): ElvishPsiBuiltin(manager), ElvishVariableName {
+    override val isDoNotUse: Boolean = false
 }

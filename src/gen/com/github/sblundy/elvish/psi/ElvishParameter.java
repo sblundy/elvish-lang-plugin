@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ElvishParameter extends ElvishVariableDeclaration {
 
   @NotNull
-  ElvishCompound getCompound();
+  ElvishVariableName getVariableName();
 
 }

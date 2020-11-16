@@ -60,7 +60,7 @@ internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInEl
 }
 
 private fun ElvishFnCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, variableName.text + "~").withIcon(AllIcons.Nodes.Function)
+    return LookupElementBuilder.create(this, getCommandName().text + "~").withIcon(AllIcons.Nodes.Function)
 }
 
 private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
@@ -68,12 +68,12 @@ private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
 }
 
 private fun ElvishParameter.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, compound.text).withIcon(AllIcons.Nodes.Parameter)
+    return LookupElementBuilder.create(this, getVariableName().text).withIcon(AllIcons.Nodes.Parameter)
 }
 
 private fun ElvishVariable.toLookupElement(): LookupElement {
     val namespacePrefix = namespaceName?.let { namespaceName -> namespaceName.variableNameList.map { it.text }}?: emptyList()
-    val fullname = (namespacePrefix+variableName.text).joinToString(":")
+    val fullname = (namespacePrefix+getVariableName().text).joinToString(":")
     return LookupElementBuilder.create(this, fullname)
         .withPresentableText(fullname).withIcon(AllIcons.Nodes.Variable)
 }

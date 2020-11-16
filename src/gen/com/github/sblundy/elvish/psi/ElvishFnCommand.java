@@ -14,6 +14,6 @@ public interface ElvishFnCommand extends ElvishFunctionDeclaration {
   ElvishLambdaArguments getLambdaArguments();
 
   @NotNull
-  ElvishVariableName getVariableName();
+  ElvishVariableName getCommandName();
 
 }

@@ -139,7 +139,7 @@ Lambda ::= LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
   extends="com.github.sblundy.elvish.psi.ElvishLambdaBase"
 }
 LambdaArguments ::=OPEN_BRACKET Space? ((parameter | MapPair) Space?)* CLOSE_BRACKET
-parameter ::= AT_SYMBOL? Compound {
+parameter ::= AT_SYMBOL? VariableName {
   extends="com.github.sblundy.elvish.psi.ElvishParameterBase"
   implements="com.github.sblundy.elvish.psi.ElvishVariableDeclaration"
 }
@@ -170,6 +170,7 @@ FinallyBlock ::= KEYWORD_FINALLY Space OPEN_BRACE Chunk CLOSE_BRACE
 FnCommand ::= KEYWORD_FN Space VariableName Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
   extends="com.github.sblundy.elvish.psi.FnCommandBase"
   implements="com.github.sblundy.elvish.psi.ElvishFunctionDeclaration"
+  methods=[commandName="VariableName"]
 }
 UseCommand ::= KEYWORD_USE Space (RelativeModuleSpec | LibModuleSpec) (Space ModuleAlias)?
 LibModuleSpec ::= (VARIABLE_CHAR+'.')* ModulePathSegment* (VariableName COLON)* VariableName

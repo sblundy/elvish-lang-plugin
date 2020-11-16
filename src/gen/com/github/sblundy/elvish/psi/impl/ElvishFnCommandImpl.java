@@ -40,7 +40,7 @@ public class ElvishFnCommandImpl extends FnCommandBase implements ElvishFnComman
 
   @Override
   @NotNull
-  public ElvishVariableName getVariableName() {
+  public ElvishVariableName getCommandName() {
     return findNotNullChildByClass(ElvishVariableName.class);
   }
 

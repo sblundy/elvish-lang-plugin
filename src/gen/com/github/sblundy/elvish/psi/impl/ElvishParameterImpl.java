@@ -28,8 +28,8 @@ public class ElvishParameterImpl extends ElvishParameterBase implements ElvishPa
 
   @Override
   @NotNull
-  public ElvishCompound getCompound() {
-    return findNotNullChildByClass(ElvishCompound.class);
+  public ElvishVariableName getVariableName() {
+    return findNotNullChildByClass(ElvishVariableName.class);
   }
 
 }

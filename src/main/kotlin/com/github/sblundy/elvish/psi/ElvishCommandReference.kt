@@ -36,7 +36,7 @@ internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rang
         val variants = mutableListOf<Any>()
         scope.processFnCommands {
             when (it) {
-                is ElvishFnCommand -> variants.add(LookupElementBuilder.create(it, it.variableName.text).withIcon(AllIcons.Nodes.Function))
+                is ElvishFnCommand -> variants.add(LookupElementBuilder.create(it, it.getCommandName().text).withIcon(AllIcons.Nodes.Function))
                 is ElvishPsiBuiltinCommand -> variants.add(LookupElementBuilder.create(it, it.name).withIcon(ElvishIcons.BUILTIN_FUNCTION))
                 else -> log.error("function type not supported: ${it.javaClass.canonicalName}")
             }

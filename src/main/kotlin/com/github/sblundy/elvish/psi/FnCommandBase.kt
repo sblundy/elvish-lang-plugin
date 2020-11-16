@@ -10,28 +10,26 @@ import javax.swing.Icon
 
 abstract class FnCommandBase(node: ASTNode) : ElvishLambdaBase(node), ElvishFunctionDeclaration, PsiNameIdentifierOwner {
     override fun nameMatches(ref: ReferenceWithNamespacePsiElement): Boolean =
-        !ref.hasNamespace && variableName.textMatches(ref.targetElement)
+        !ref.hasNamespace && getCommandName().textMatches(ref.targetElement)
 
-    abstract val variableName: ElvishVariableName
-
-    override fun getNameIdentifier(): PsiElement? = variableName
+    override fun getNameIdentifier(): PsiElement? = getCommandName()
 
     override fun getName(): String? {
-        return variableName.text
+        return getCommandName().text
     }
 
     @Throws(IncorrectOperationException::class)
     override fun setName(name: String): PsiElement {
         val ne = ElvishPsiUtils.newNameElement(name, project)
-        variableName.replace(ne)
+        getCommandName().replace(ne)
         return this
     }
 
     override fun getTextOffset(): Int {
-        return variableName.textOffset
+        return getCommandName().textOffset
     }
 
     override fun getIcon(flags: Int): Icon? = AllIcons.Nodes.Function
 
-    override fun getPresentation(): ItemPresentation? = ElvishBasicItemPresentation(variableName.text, AllIcons.Nodes.Function)
+    override fun getPresentation(): ItemPresentation? = ElvishBasicItemPresentation(getCommandName().text, AllIcons.Nodes.Function)
 }
