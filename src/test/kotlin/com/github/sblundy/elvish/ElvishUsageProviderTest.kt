@@ -106,6 +106,17 @@ class ElvishUsageProviderTest {
             Assert.assertEquals(26, usages.firstOrNull()?.navigationOffset)
         }
     }
+
+    @Test
+    fun testFindUsagesMuseliGit() {
+        runTest {
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-museli-git.elv")
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(1, usages.size)
+            Assert.assertEquals(127, usages.firstOrNull()?.navigationOffset)
+        }
+    }
 }
 
 fun runTest(t : () -> Unit) {

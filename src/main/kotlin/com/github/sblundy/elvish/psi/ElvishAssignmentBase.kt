@@ -5,7 +5,8 @@ import com.intellij.lang.ASTNode
 
 abstract class ElvishAssignmentBase(node: ASTNode) : ASTWrapperPsiElement(node), ElvishAssignment, ElvishVariableScope {
     override fun findVariables(ref: ReferenceWithNamespacePsiElement): Collection<ElvishVariableDeclaration> {
-        return variableList.filter { declaration -> declaration.nameMatches(ref) }
+        return variableList.filter { declaration -> declaration.nameMatches(ref) } +
+                ElvishPsiUtils.findVariableInParentScope(ref, this)
     }
 
     override fun processVariables(processor: ElvishVariableScope.VariableProcessor) {
