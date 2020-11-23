@@ -26,14 +26,6 @@ abstract class ElvishVariableBase(node: ASTNode) : ASTWrapperPsiElement(node), P
 
     abstract val variableName: ElvishVariableName
     abstract val namespaceName: ElvishNamespaceName?
-    private val namespaceNameList: List<ElvishVariableName>
-        get() = namespaceName?.variableNameList ?: emptyList()
-
-    fun nameMatches(ref: ReferenceWithNamespacePsiElement): Boolean {
-        return variableName.textMatches(ref.targetElement) &&
-                ref.namespaceLength == namespaceNameList.size &&
-                ref.namespacePathElements.zip(namespaceNameList).all { (a, b) -> b.textMatches(a) }
-    }
 
     override fun getIcon(flags: Int): Icon? = AllIcons.Nodes.Variable
 

@@ -27,12 +27,6 @@ public class ElvishTryCommandImpl extends ASTWrapperPsiElement implements Elvish
   }
 
   @Override
-  @NotNull
-  public ElvishChunk getChunk() {
-    return findNotNullChildByClass(ElvishChunk.class);
-  }
-
-  @Override
   @Nullable
   public ElvishElseBlock getElseBlock() {
     return findChildByClass(ElvishElseBlock.class);
@@ -40,14 +34,14 @@ public class ElvishTryCommandImpl extends ASTWrapperPsiElement implements Elvish
 
   @Override
   @Nullable
-  public ElvishExceptBlock getExceptBlock() {
-    return findChildByClass(ElvishExceptBlock.class);
+  public ElvishFinallyBlock getFinallyBlock() {
+    return findChildByClass(ElvishFinallyBlock.class);
   }
 
   @Override
-  @Nullable
-  public ElvishFinallyBlock getFinallyBlock() {
-    return findChildByClass(ElvishFinallyBlock.class);
+  @NotNull
+  public List<ElvishLexicalScope> getLexicalScopeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLexicalScope.class);
   }
 
 }

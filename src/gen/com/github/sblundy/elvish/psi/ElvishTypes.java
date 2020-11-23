@@ -37,6 +37,7 @@ public interface ElvishTypes {
   IElementType INDEX_SINGLE = new ElvishElementType("INDEX_SINGLE");
   IElementType LAMBDA = new ElvishElementType("LAMBDA");
   IElementType LAMBDA_ARGUMENTS = new ElvishElementType("LAMBDA_ARGUMENTS");
+  IElementType LAMBDA_BLOCK = new ElvishElementType("LAMBDA_BLOCK");
   IElementType LIB_MODULE_SPEC = new ElvishElementType("LIB_MODULE_SPEC");
   IElementType LIST = new ElvishElementType("LIST");
   IElementType LOGIC_COMMAND = new ElvishElementType("LOGIC_COMMAND");
@@ -188,6 +189,9 @@ public interface ElvishTypes {
       }
       else if (type == LAMBDA_ARGUMENTS) {
         return new ElvishLambdaArgumentsImpl(node);
+      }
+      else if (type == LAMBDA_BLOCK) {
+        return new ElvishLambdaBlockImpl(node);
       }
       else if (type == LIB_MODULE_SPEC) {
         return new ElvishLibModuleSpecImpl(node);

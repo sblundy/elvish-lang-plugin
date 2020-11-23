@@ -22,7 +22,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
 
   public void parseLight(IElementType root_, PsiBuilder builder_) {
     boolean result_;
-    builder_ = adapt_builder_(root_, builder_, this, null);
+    builder_ = adapt_builder_(root_, builder_, this, EXTENDS_SETS_);
     Marker marker_ = enter_section_(builder_, 0, _COLLAPSE_, null);
     result_ = parse_root_(root_, builder_);
     exit_section_(builder_, 0, marker_, root_, result_, true, TRUE_CONDITION);
@@ -35,6 +35,10 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   static boolean parse_root_(IElementType root_, PsiBuilder builder_, int level_) {
     return script(builder_, level_ + 1);
   }
+
+  public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[] {
+    create_token_set_(EXCEPT_BLOCK, LAMBDA, LAMBDA_BLOCK),
+  };
 
   /* ********************************************************** */
   // ArraySpace* (Compound ArraySpace*)*
@@ -512,7 +516,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NamespaceName* CommandBareword
+  // NamespaceName? CommandBareword
   public static boolean CommandExpression(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "CommandExpression")) return false;
     boolean result_;
@@ -523,14 +527,10 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // NamespaceName*
+  // NamespaceName?
   private static boolean CommandExpression_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "CommandExpression_0")) return false;
-    while (true) {
-      int pos_ = current_position_(builder_);
-      if (!NamespaceName(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "CommandExpression_0", pos_)) break;
-    }
+    NamespaceName(builder_, level_ + 1);
     return true;
   }
 
@@ -722,7 +722,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_ELIF Space Condition Space OPEN_BRACE Chunk CLOSE_BRACE
+  // KEYWORD_ELIF Space Condition Space LambdaBlock
   public static boolean ElIfBlock(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "ElIfBlock")) return false;
     if (!nextTokenIs(builder_, KEYWORD_ELIF)) return false;
@@ -732,15 +732,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = result_ && Space(builder_, level_ + 1);
     result_ = result_ && Condition(builder_, level_ + 1);
     result_ = result_ && Space(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, OPEN_BRACE);
-    result_ = result_ && Chunk(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, CLOSE_BRACE);
+    result_ = result_ && LambdaBlock(builder_, level_ + 1);
     exit_section_(builder_, marker_, EL_IF_BLOCK, result_);
     return result_;
   }
 
   /* ********************************************************** */
-  // KEYWORD_ELSE Space OPEN_BRACE Chunk CLOSE_BRACE
+  // KEYWORD_ELSE Space LambdaBlock
   public static boolean ElseBlock(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "ElseBlock")) return false;
     if (!nextTokenIs(builder_, KEYWORD_ELSE)) return false;
@@ -748,9 +746,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, KEYWORD_ELSE);
     result_ = result_ && Space(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, OPEN_BRACE);
-    result_ = result_ && Chunk(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, CLOSE_BRACE);
+    result_ = result_ && LambdaBlock(builder_, level_ + 1);
     exit_section_(builder_, marker_, ELSE_BLOCK, result_);
     return result_;
   }
@@ -840,7 +836,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_FINALLY Space OPEN_BRACE Chunk CLOSE_BRACE
+  // KEYWORD_FINALLY Space LambdaBlock
   public static boolean FinallyBlock(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "FinallyBlock")) return false;
     if (!nextTokenIs(builder_, KEYWORD_FINALLY)) return false;
@@ -848,9 +844,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, KEYWORD_FINALLY);
     result_ = result_ && Space(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, OPEN_BRACE);
-    result_ = result_ && Chunk(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, CLOSE_BRACE);
+    result_ = result_ && LambdaBlock(builder_, level_ + 1);
     exit_section_(builder_, marker_, FINALLY_BLOCK, result_);
     return result_;
   }
@@ -932,7 +926,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_IF Space Condition Space OPEN_BRACE Chunk CLOSE_BRACE (Space ElIfBlock)* (Space ElseBlock)?
+  // KEYWORD_IF Space Condition Space LambdaBlock (Space ElIfBlock)* (Space ElseBlock)?
   public static boolean IfCommand(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "IfCommand")) return false;
     if (!nextTokenIs(builder_, KEYWORD_IF)) return false;
@@ -942,29 +936,27 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = result_ && Space(builder_, level_ + 1);
     result_ = result_ && Condition(builder_, level_ + 1);
     result_ = result_ && Space(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, OPEN_BRACE);
-    result_ = result_ && Chunk(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, CLOSE_BRACE);
-    result_ = result_ && IfCommand_7(builder_, level_ + 1);
-    result_ = result_ && IfCommand_8(builder_, level_ + 1);
+    result_ = result_ && LambdaBlock(builder_, level_ + 1);
+    result_ = result_ && IfCommand_5(builder_, level_ + 1);
+    result_ = result_ && IfCommand_6(builder_, level_ + 1);
     exit_section_(builder_, marker_, IF_COMMAND, result_);
     return result_;
   }
 
   // (Space ElIfBlock)*
-  private static boolean IfCommand_7(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "IfCommand_7")) return false;
+  private static boolean IfCommand_5(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "IfCommand_5")) return false;
     while (true) {
       int pos_ = current_position_(builder_);
-      if (!IfCommand_7_0(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "IfCommand_7", pos_)) break;
+      if (!IfCommand_5_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "IfCommand_5", pos_)) break;
     }
     return true;
   }
 
   // Space ElIfBlock
-  private static boolean IfCommand_7_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "IfCommand_7_0")) return false;
+  private static boolean IfCommand_5_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "IfCommand_5_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = Space(builder_, level_ + 1);
@@ -974,15 +966,15 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   // (Space ElseBlock)?
-  private static boolean IfCommand_8(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "IfCommand_8")) return false;
-    IfCommand_8_0(builder_, level_ + 1);
+  private static boolean IfCommand_6(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "IfCommand_6")) return false;
+    IfCommand_6_0(builder_, level_ + 1);
     return true;
   }
 
   // Space ElseBlock
-  private static boolean IfCommand_8_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "IfCommand_8_0")) return false;
+  private static boolean IfCommand_6_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "IfCommand_6_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = Space(builder_, level_ + 1);
@@ -1203,6 +1195,20 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(builder_, level_, "LambdaArguments_2_0_1")) return false;
     Space(builder_, level_ + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // OPEN_BRACE Chunk CLOSE_BRACE
+  public static boolean LambdaBlock(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "LambdaBlock")) return false;
+    if (!nextTokenIs(builder_, OPEN_BRACE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, OPEN_BRACE);
+    result_ = result_ && Chunk(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, CLOSE_BRACE);
+    exit_section_(builder_, marker_, LAMBDA_BLOCK, result_);
+    return result_;
   }
 
   /* ********************************************************** */
@@ -1899,7 +1905,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KEYWORD_TRY Space OPEN_BRACE Chunk CLOSE_BRACE (Space ExceptBlock)? (Space ElseBlock)? (Space FinallyBlock)?
+  // KEYWORD_TRY Space LambdaBlock (Space ExceptBlock)? (Space ElseBlock)? (Space FinallyBlock)?
   public static boolean TryCommand(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "TryCommand")) return false;
     if (!nextTokenIs(builder_, KEYWORD_TRY)) return false;
@@ -1907,26 +1913,24 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, KEYWORD_TRY);
     result_ = result_ && Space(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, OPEN_BRACE);
-    result_ = result_ && Chunk(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, CLOSE_BRACE);
+    result_ = result_ && LambdaBlock(builder_, level_ + 1);
+    result_ = result_ && TryCommand_3(builder_, level_ + 1);
+    result_ = result_ && TryCommand_4(builder_, level_ + 1);
     result_ = result_ && TryCommand_5(builder_, level_ + 1);
-    result_ = result_ && TryCommand_6(builder_, level_ + 1);
-    result_ = result_ && TryCommand_7(builder_, level_ + 1);
     exit_section_(builder_, marker_, TRY_COMMAND, result_);
     return result_;
   }
 
   // (Space ExceptBlock)?
-  private static boolean TryCommand_5(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "TryCommand_5")) return false;
-    TryCommand_5_0(builder_, level_ + 1);
+  private static boolean TryCommand_3(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "TryCommand_3")) return false;
+    TryCommand_3_0(builder_, level_ + 1);
     return true;
   }
 
   // Space ExceptBlock
-  private static boolean TryCommand_5_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "TryCommand_5_0")) return false;
+  private static boolean TryCommand_3_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "TryCommand_3_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = Space(builder_, level_ + 1);
@@ -1936,15 +1940,15 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   // (Space ElseBlock)?
-  private static boolean TryCommand_6(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "TryCommand_6")) return false;
-    TryCommand_6_0(builder_, level_ + 1);
+  private static boolean TryCommand_4(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "TryCommand_4")) return false;
+    TryCommand_4_0(builder_, level_ + 1);
     return true;
   }
 
   // Space ElseBlock
-  private static boolean TryCommand_6_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "TryCommand_6_0")) return false;
+  private static boolean TryCommand_4_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "TryCommand_4_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = Space(builder_, level_ + 1);
@@ -1954,15 +1958,15 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   // (Space FinallyBlock)?
-  private static boolean TryCommand_7(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "TryCommand_7")) return false;
-    TryCommand_7_0(builder_, level_ + 1);
+  private static boolean TryCommand_5(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "TryCommand_5")) return false;
+    TryCommand_5_0(builder_, level_ + 1);
     return true;
   }
 
   // Space FinallyBlock
-  private static boolean TryCommand_7_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "TryCommand_7_0")) return false;
+  private static boolean TryCommand_5_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "TryCommand_5_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = Space(builder_, level_ + 1);

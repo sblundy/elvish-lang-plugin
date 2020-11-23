@@ -1,5 +1,6 @@
 package com.github.sblundy.elvish.psi
 
+import com.github.sblundy.elvish.psi.impl.ElvishLexicalScopeImpl
 import com.intellij.icons.AllIcons
 import com.intellij.lang.ASTNode
 import com.intellij.navigation.ItemPresentation
@@ -8,9 +9,7 @@ import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.util.IncorrectOperationException
 import javax.swing.Icon
 
-abstract class FnCommandBase(node: ASTNode) : ElvishLambdaBase(node), ElvishFunctionDeclaration, PsiNameIdentifierOwner {
-    override fun nameMatches(ref: ReferenceWithNamespacePsiElement): Boolean =
-        !ref.hasNamespace && getCommandName().textMatches(ref.targetElement)
+abstract class FnCommandBase(node: ASTNode) : ElvishLexicalScopeImpl(node), ElvishFunctionDeclaration, PsiNameIdentifierOwner, ElvishLexicalScope {
 
     override fun getNameIdentifier(): PsiElement? = getCommandName()
 

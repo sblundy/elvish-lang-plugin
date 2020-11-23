@@ -44,7 +44,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitCommandExpression(@NotNull ElvishCommandExpression o) {
-    visitReferenceWithNamespacePsiElement(o);
+    visitPsiElement(o);
   }
 
   public void visitCompound(@NotNull ElvishCompound o) {
@@ -72,7 +72,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitExceptBlock(@NotNull ElvishExceptBlock o) {
-    visitVariableDeclaringBlock(o);
+    visitLexicalScope(o);
   }
 
   public void visitExceptionCapture(@NotNull ElvishExceptionCapture o) {
@@ -89,10 +89,11 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitFnCommand(@NotNull ElvishFnCommand o) {
     visitFunctionDeclaration(o);
+    // visitLexicalScope(o);
   }
 
   public void visitForCommand(@NotNull ElvishForCommand o) {
-    visitVariableDeclaringBlock(o);
+    visitPsiElement(o);
   }
 
   public void visitIfCommand(@NotNull ElvishIfCommand o) {
@@ -108,10 +109,18 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitLambda(@NotNull ElvishLambda o) {
-    visitPsiElement(o);
+    visitLexicalScope(o);
   }
 
   public void visitLambdaArguments(@NotNull ElvishLambdaArguments o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLambdaBlock(@NotNull ElvishLambdaBlock o) {
+    visitLexicalScope(o);
+  }
+
+  public void visitLexicalScope(@NotNull ElvishLexicalScope o) {
     visitPsiElement(o);
   }
 
@@ -180,7 +189,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitVariableRef(@NotNull ElvishVariableRef o) {
-    visitReferenceWithNamespacePsiElement(o);
+    visitPsiElement(o);
   }
 
   public void visitWhileCommand(@NotNull ElvishWhileCommand o) {
@@ -205,14 +214,6 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitVariableDeclaration(@NotNull ElvishVariableDeclaration o) {
     visitPsiElement(o);
-  }
-
-  public void visitVariableDeclaringBlock(@NotNull ElvishVariableDeclaringBlock o) {
-    visitPsiElement(o);
-  }
-
-  public void visitReferenceWithNamespacePsiElement(@NotNull ReferenceWithNamespacePsiElement o) {
-    visitElement(o);
   }
 
   public void visitPsiElement(@NotNull PsiElement o) {

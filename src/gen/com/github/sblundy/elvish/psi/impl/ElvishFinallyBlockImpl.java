@@ -28,8 +28,8 @@ public class ElvishFinallyBlockImpl extends ASTWrapperPsiElement implements Elvi
 
   @Override
   @NotNull
-  public ElvishChunk getChunk() {
-    return findNotNullChildByClass(ElvishChunk.class);
+  public ElvishLambdaBlock getLambdaBlock() {
+    return findNotNullChildByClass(ElvishLambdaBlock.class);
   }
 
   @Override

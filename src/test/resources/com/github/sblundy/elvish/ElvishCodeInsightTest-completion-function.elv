@@ -2,4 +2,4 @@ fn laa [x]{
   echo $x
 }
 
-l<caret>
+l<caret>aa

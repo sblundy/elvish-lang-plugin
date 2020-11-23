@@ -64,9 +64,7 @@
   generateTokenAccessors(".*Capture")=true
 }
 script ::= Chunk
-Chunk ::= ChuckSep* ( Pipeline ChuckSep* )* {
-  extends="com.github.sblundy.elvish.psi.ElvishChunkBase"
-}
+Chunk ::= ChuckSep* ( Pipeline ChuckSep* )*
 private ChuckSep ::= PipelineSep | Space
 PipelineSep ::= EOL | SEMICOLON
 private Space ::= INLINE_WHITESPACE
@@ -74,6 +72,8 @@ private Pipeline ::= Form Space? PipelineExtension*
 private PipelineExtension ::= PIPE Space? (EOL Space?)? Form Space?
 private Form ::= AssignmentOnlyForm | SpecialCommand | CommandForm
 private AssignmentOnlyForm ::= Space? Assignment Space?
+
+fake LexicalScope ::= {}
 
 // Barewords and strings
 SingleQuoted ::= SINGLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* SINGLE_QUOTE
@@ -87,7 +87,6 @@ NamespaceName ::= (VariableName COLON)+
 VariableName ::= VARIABLE_CHAR+
 VariableRef ::= DOLLAR_SIGN AT_SYMBOL? VariableRefName Index* {
   extends="com.github.sblundy.elvish.psi.ElvishVariableRefBase"
-  implements="com.github.sblundy.elvish.psi.ReferenceWithNamespacePsiElement"
 }
 private VariableRefName ::= NamespaceName? VariableName
 Bareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|BACKSLASH|COMMA|<<parseKeywordAsBareword>>)+
@@ -115,16 +114,14 @@ MapPair ::= AMPERSAND Space? Compound EQUALS Space? Compound
 // Commands
 Assignment ::= (Variable Index* Space?)+ EQUALS Space? Compound {
   pin=2
-  extends="com.github.sblundy.elvish.psi.ElvishAssignmentBase"
 }
 
 private CommandForm ::= head (CommandSep+ argument)* AMPERSAND?
 private CommandSep ::= Space | CONTINUATION
 head ::= CommandExpression | SingleQuoted | DoubleQuoted | VariableRef | ExceptionCapture | OutputCapture
 argument ::=  Redir | MapPair | Compound | ExitusRedir
-CommandExpression ::= NamespaceName* CommandBareword{
+CommandExpression ::= NamespaceName? CommandBareword{
   extends="com.github.sblundy.elvish.psi.ElvishCommandExpressionBase"
-  implements="com.github.sblundy.elvish.psi.ReferenceWithNamespacePsiElement"
 }
 
 ExitusRedir ::= QUESTION '>' Space? Compound
@@ -136,7 +133,7 @@ ExceptionCapture ::= QUESTION OPEN_PARAN Chunk CLOSE_PARAN
 OutputCapture ::= OPEN_PARAN Chunk CLOSE_PARAN
 
 Lambda ::= LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
-  extends="com.github.sblundy.elvish.psi.ElvishLambdaBase"
+  extends="LexicalScope"
 }
 LambdaArguments ::=OPEN_BRACKET Space? ((parameter | MapPair) Space?)* CLOSE_BRACKET
 parameter ::= AT_SYMBOL? VariableName {
@@ -150,26 +147,27 @@ BracedSep ::= (Space | EOL)* COMMA (Space | EOL)*
 
 private SpecialCommand ::= DeleteCommand | UseCommand | LogicCommand | IfCommand | WhileCommand | ForCommand | TryCommand | FnCommand
 
+LambdaBlock ::= OPEN_BRACE Chunk CLOSE_BRACE {
+  extends="LexicalScope"
+}
 DeleteCommand ::= KEYWORD_DEL CommandSep* Variable Index*
 LogicCommand ::= LogicCMD (CommandSep* argument)* CommandSep*
 private LogicCMD ::= 'or' | 'and'
-IfCommand ::= KEYWORD_IF Space Condition Space OPEN_BRACE Chunk CLOSE_BRACE (Space ElIfBlock)* (Space ElseBlock)?
+IfCommand ::= KEYWORD_IF Space Condition Space LambdaBlock (Space ElIfBlock)* (Space ElseBlock)?
 Condition ::= VariableRef | ExceptionCapture | OutputCapture
-ElIfBlock ::= KEYWORD_ELIF Space Condition Space OPEN_BRACE Chunk CLOSE_BRACE
-ElseBlock ::= KEYWORD_ELSE Space OPEN_BRACE Chunk CLOSE_BRACE
+ElIfBlock ::= KEYWORD_ELIF Space Condition Space LambdaBlock
+ElseBlock ::= KEYWORD_ELSE Space LambdaBlock
 WhileCommand ::= KEYWORD_WHILE Space Condition Space OPEN_BRACE Chunk CLOSE_BRACE (Space ElseBlock)?
-ForCommand ::= KEYWORD_FOR Space Variable Space Collection Space OPEN_BRACE Chunk CLOSE_BRACE (Space ElseBlock)? {
-  implements="com.github.sblundy.elvish.psi.ElvishVariableDeclaringBlock"
-}
+ForCommand ::= KEYWORD_FOR Space Variable Space Collection Space OPEN_BRACE Chunk CLOSE_BRACE (Space ElseBlock)?
 Collection ::= List | Map | VariableRef | ExceptionCapture | OutputCapture
-TryCommand ::= KEYWORD_TRY Space OPEN_BRACE Chunk CLOSE_BRACE (Space ExceptBlock)? (Space ElseBlock)? (Space FinallyBlock)?
+TryCommand ::= KEYWORD_TRY Space LambdaBlock (Space ExceptBlock)? (Space ElseBlock)? (Space FinallyBlock)?
 ExceptBlock ::= KEYWORD_EXCEPT Space Variable Space OPEN_BRACE Chunk CLOSE_BRACE {
-  implements="com.github.sblundy.elvish.psi.ElvishVariableDeclaringBlock"
+  extends="LexicalScope"
 }
-FinallyBlock ::= KEYWORD_FINALLY Space OPEN_BRACE Chunk CLOSE_BRACE
+FinallyBlock ::= KEYWORD_FINALLY Space LambdaBlock
 FnCommand ::= KEYWORD_FN Space VariableName Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
   extends="com.github.sblundy.elvish.psi.FnCommandBase"
-  implements="com.github.sblundy.elvish.psi.ElvishFunctionDeclaration"
+  implements=["com.github.sblundy.elvish.psi.ElvishFunctionDeclaration" "LexicalScope"]
   methods=[commandName="VariableName"]
 }
 UseCommand ::= KEYWORD_USE Space (RelativeModuleSpec | LibModuleSpec) (Space ModuleAlias)?

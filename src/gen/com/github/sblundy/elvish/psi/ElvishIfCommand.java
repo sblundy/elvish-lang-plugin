@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ElvishIfCommand extends PsiElement {
 
   @NotNull
-  ElvishChunk getChunk();
-
-  @NotNull
   ElvishCondition getCondition();
 
   @NotNull
@@ -18,5 +15,8 @@ public interface ElvishIfCommand extends PsiElement {
 
   @Nullable
   ElvishElseBlock getElseBlock();
+
+  @NotNull
+  ElvishLambdaBlock getLambdaBlock();
 
 }

@@ -57,6 +57,19 @@ class ElvishUsageProviderTest {
     }
 
     @Test
+    fun testFindUsagesBuiltin() {
+        runTest {
+            var usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-builtin.elv")
+
+            Assert.assertNotNull(usages)
+            usages = usages.filter { it.file?.name == "ElvishUsageProviderTest-builtin.elv" }//HACK usages from other files are being returned
+            Assert.assertEquals(2, usages.size)
+            Assert.assertEquals(0, usages.firstOrNull()?.navigationOffset)
+            Assert.assertEquals(12, usages.drop(1).firstOrNull()?.navigationOffset)
+        }
+    }
+
+    @Test
     fun testFindUsagesParameter() {
         runTest {
             val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-lambda-parameter.elv")

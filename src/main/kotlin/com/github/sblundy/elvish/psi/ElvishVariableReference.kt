@@ -7,7 +7,6 @@ import com.intellij.icons.AllIcons
 import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
-import com.intellij.util.ArrayUtilRt
 import icons.ElvishIcons
 
 internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInElement: TextRange?) :
@@ -21,9 +20,58 @@ internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInEl
     }
 
     override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
-        val scope = ElvishPsiUtils.findParentScope(element) ?: return ResolveResult.EMPTY_ARRAY
+        val climber = object : ElvishScopeClimber() {
+            val name = element.variableName
+            val declarations = mutableListOf<ElvishVariableDeclaration>()
+            override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
+                val (d, c) = when (s) {
+                    is ElvishFile -> Pair(s.matchingVariables(), true)
+                    is BuiltinScope -> Pair(s.findVariables(name), true)
+                    is ElvishExceptBlock -> {
+                        val p = if (s.variable.matches()) {
+                            Pair(listOf(s.variable), false)
+                        } else {
+                            Pair(emptyList(), true)
+                        }
+                        Pair(p.first + s.chunk.matchingVariables(), p.second)
+                    }
+                    is ElvishFnCommand -> {
+                        val p = s.lambdaArguments?.parameterList?.find { it.matches() }?.let {
+                            Pair(listOf(it), false)
+                        }?: Pair(emptyList(), true)
+                        Pair(p.first + s.chunk.matchingVariables(), p.second)
+                    }
+                    is ElvishLambda -> {
+                        val p = s.lambdaArguments?.parameterList?.find { it.matches()}?.let {
+                            Pair(listOf(it), false)
+                        }?: Pair(emptyList(), true)
+                        Pair(p.first + s.chunk.matchingVariables(), p.second)
+                    }
+                    is ElvishLambdaBlock -> Pair(s.chunk.matchingVariables(), true)
+                    else -> Pair(emptyList(), true)
+                }
+                if (d.isNotEmpty()) {
+                    declarations += d
+                }
+                return c
+            }
 
-        return scope.findVariables(element).mapNotNull { declaration ->
+            fun ElvishFile.matchingVariables(): Collection<ElvishVariableDeclaration> {
+                return topLevelAssignments().flatMap { it.variableList.filter { vl -> vl.matches() } }
+            }
+
+            fun ElvishChunk.matchingVariables(): Collection<ElvishVariableDeclaration> {
+                return assignmentList.flatMap { it.variableList.filter { vl -> vl.matches() } }
+            }
+
+            fun ElvishVariable.matches(): Boolean = getVariableName().textMatches(name) && namespaceName == null
+
+            fun ElvishParameter.matches(): Boolean = textMatches(name)
+        }
+
+        climber.climb(element.parent)
+
+        return climber.declarations.map { declaration ->
             PsiElementResolveResult(declaration)
         }.toTypedArray()
     }
@@ -35,27 +83,51 @@ internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInEl
     }
 
     override fun getVariants(): Array<Any> {
-        val scope = ElvishPsiUtils.findParentScope(element) ?: return ArrayUtilRt.EMPTY_OBJECT_ARRAY
-        val variants = mutableListOf<Any>()
-        scope.processVariables { dec ->
-            when (dec) {
-                is ElvishParameter -> variants.add(dec.toLookupElement())
-                is ElvishVariable -> variants.add(dec.toLookupElement())
-                is ElvishPsiBuiltinVariable -> variants.add(dec.toLookupElement())
-                is ElvishPsiBuiltinValue -> variants.add(dec.toLookupElement())
-                else -> log.debug("unknown type:" + dec.javaClass.name)
+        val climber = object : ElvishScopeClimber() {
+            val variants = mutableListOf<LookupElement>()
+            override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
+                val variables = when (s) {
+                    is ElvishFile -> s.topLevelAssignments().flatMap { it.variableList }
+                    is BuiltinScope -> s.findVariables(null)
+                    is ElvishExceptBlock -> listOf(s.variable) + s.chunk.assignmentList.flatMap { it.variableList }
+                    is ElvishFnCommand -> {
+                        val p =s.lambdaArguments?.parameterList?: emptyList()
+                        p + s.chunk.assignmentList.flatMap { it.variableList }
+                    }
+                    is ElvishLambda -> {
+                        val p = s.lambdaArguments?.parameterList?: emptyList()
+                        p + s.chunk.assignmentList.flatMap { it.variableList }
+                    }
+                    is ElvishLambdaBlock -> s.chunk.assignmentList.flatMap { it.variableList }
+                    else -> emptyList()
+                }
+                if (variables.isNotEmpty()) {
+                    variants += variables.mapNotNull { dec -> when (dec) {
+                        is ElvishParameter -> dec.toLookupElement()
+                        is ElvishVariable -> dec.toLookupElement()
+                        is ElvishPsiBuiltinVariable -> dec.toLookupElement()
+                        is ElvishPsiBuiltinValue -> dec.toLookupElement()
+                        else -> null //TODO log error?
+                    }}
+                }
+                val functions:Collection<ElvishFunctionDeclaration> = when (s) {
+                    is ElvishFile -> s.topLevelFunctionsDeclarations().toList()
+                    is BuiltinScope -> s.findFnCommands(null)
+                    is ElvishLambdaBlock -> s.chunk.fnCommandList
+                    else -> emptyList()
+                }
+                if (functions.isNotEmpty()) {
+                    variants += functions.mapNotNull { when (it) {
+                        is ElvishFnCommand -> it.toLookupElement()
+                        is ElvishPsiBuiltinCommand -> it.toLookupElement()
+                        else -> null
+                    } }
+                }
+                return true
             }
-            true
         }
-        scope.processFnCommands { dec ->
-            when (dec) {
-                is ElvishFnCommand -> variants.add(dec.toLookupElement())
-                is ElvishPsiBuiltinCommand -> variants.add(dec.toLookupElement())
-                else -> log.debug("unknown type:" + dec.javaClass.name)
-            }
-            true
-        }
-        return variants.toTypedArray()
+        climber.climb(element.parent)
+        return climber.variants.toTypedArray()
     }
 }
 

@@ -49,5 +49,5 @@ class ElvishAnnotator : Annotator {
 }
 
 fun ElvishCommandExpression.isBuiltin(): Boolean {
-    return !hasNamespace && project.getBuiltinScope()?.findFnCommands(this)?.isNotEmpty() == true
+    return namespaceName == null && project.getBuiltinScope()?.findFnCommands(this)?.isNotEmpty() == true
 }

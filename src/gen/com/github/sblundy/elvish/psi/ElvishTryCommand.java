@@ -7,16 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishTryCommand extends PsiElement {
 
-  @NotNull
-  ElvishChunk getChunk();
-
   @Nullable
   ElvishElseBlock getElseBlock();
 
   @Nullable
-  ElvishExceptBlock getExceptBlock();
-
-  @Nullable
   ElvishFinallyBlock getFinallyBlock();
+
+  @NotNull
+  List<ElvishLexicalScope> getLexicalScopeList();
 
 }

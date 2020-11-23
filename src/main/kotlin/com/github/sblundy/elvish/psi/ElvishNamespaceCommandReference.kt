@@ -8,7 +8,7 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 import icons.ElvishIcons
 
-internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rangeInElement: TextRange?) :
+internal class ElvishNamespaceCommandReference(element: ElvishCommandExpressionBase, rangeInElement: TextRange?) :
     PsiReferenceBase<ElvishCommandExpressionBase?>(element, rangeInElement, true) {
     private val log = logger<ElvishCommandReference>()
 
@@ -19,13 +19,12 @@ internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rang
 
     private fun multiResolve(): Array<ResolveResult> {
         val climber = object : ElvishScopeClimber() {
-            val command = element.commandBareword
+            val name = element.commandBareword
+            val ns = element.namespaceName!!
             val declarations = mutableListOf<ElvishFunctionDeclaration>()
             override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
                 val d= when (s) {
-                    is ElvishFile -> s.matchingFnCommands()
-                    is BuiltinScope -> s.findFnCommands(command)
-                    is ElvishLambdaBlock -> s.chunk.matchingFnCommands()
+                    is BuiltinScope -> s.findFnCommands(ns, name)
                     else -> emptyList()
                 }
                 if (d.isNotEmpty()) {
@@ -33,12 +32,6 @@ internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rang
                 }
                 return d.isEmpty()
             }
-
-            fun ElvishFile.matchingFnCommands(): Collection<ElvishFunctionDeclaration> =
-                topLevelFunctionsDeclarations().filter { it.getCommandName().textMatches(command) }
-
-            fun ElvishChunk.matchingFnCommands(): Collection<ElvishFunctionDeclaration> =
-                fnCommandList.filter { it.getCommandName().textMatches(command) }
         }
 
         climber.climb(element.parent)

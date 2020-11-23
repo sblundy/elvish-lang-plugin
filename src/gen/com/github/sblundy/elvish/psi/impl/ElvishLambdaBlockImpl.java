@@ -10,14 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishLambdaImpl extends ElvishLexicalScopeImpl implements ElvishLambda {
+public class ElvishLambdaBlockImpl extends ElvishLexicalScopeImpl implements ElvishLambdaBlock {
 
-  public ElvishLambdaImpl(@NotNull ASTNode node) {
+  public ElvishLambdaBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitLambda(this);
+    visitor.visitLambdaBlock(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -29,12 +29,6 @@ public class ElvishLambdaImpl extends ElvishLexicalScopeImpl implements ElvishLa
   @NotNull
   public ElvishChunk getChunk() {
     return findNotNullChildByClass(ElvishChunk.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishLambdaArguments getLambdaArguments() {
-    return findChildByClass(ElvishLambdaArguments.class);
   }
 
 }

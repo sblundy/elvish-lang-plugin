@@ -23,8 +23,6 @@ abstract class ElvishParameterBase(node: ASTNode) : ASTWrapperPsiElement(node), 
         return this
     }
 
-    override fun nameMatches(ref: ReferenceWithNamespacePsiElement): Boolean = !ref.hasNamespace && getVariableName().textMatches(ref.targetElement)
-
     override fun getIcon(flags: Int): Icon? = AllIcons.Nodes.Parameter
 
     override fun getPresentation(): ItemPresentation? = ElvishBasicItemPresentation(getVariableName().text, AllIcons.Nodes.Parameter)

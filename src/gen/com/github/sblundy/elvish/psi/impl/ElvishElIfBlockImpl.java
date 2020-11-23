@@ -28,14 +28,14 @@ public class ElvishElIfBlockImpl extends ASTWrapperPsiElement implements ElvishE
 
   @Override
   @NotNull
-  public ElvishChunk getChunk() {
-    return findNotNullChildByClass(ElvishChunk.class);
+  public ElvishCondition getCondition() {
+    return findNotNullChildByClass(ElvishCondition.class);
   }
 
   @Override
   @NotNull
-  public ElvishCondition getCondition() {
-    return findNotNullChildByClass(ElvishCondition.class);
+  public ElvishLambdaBlock getLambdaBlock() {
+    return findNotNullChildByClass(ElvishLambdaBlock.class);
   }
 
 }

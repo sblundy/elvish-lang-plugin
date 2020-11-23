@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishCommandExpression extends ReferenceWithNamespacePsiElement {
+public interface ElvishCommandExpression extends PsiElement {
 
   @NotNull
   ElvishCommandBareword getCommandBareword();
 
-  @NotNull
-  List<ElvishNamespaceName> getNamespaceNameList();
+  @Nullable
+  ElvishNamespaceName getNamespaceName();
 
 }
