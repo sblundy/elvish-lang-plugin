@@ -8,12 +8,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishSingleQuotedImpl extends ASTWrapperPsiElement implements ElvishSingleQuoted {
+public class ElvishSingleQuotedImpl extends ASTWrapperElvishPsiElement implements ElvishSingleQuoted {
 
-  public ElvishSingleQuotedImpl(@NotNull ASTNode node) {
+  public ElvishSingleQuotedImpl(ASTNode node) {
     super(node);
   }
 

@@ -8,12 +8,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishElIfBlockImpl extends ASTWrapperPsiElement implements ElvishElIfBlock {
+public class ElvishElIfBlockImpl extends ASTWrapperElvishPsiElement implements ElvishElIfBlock {
 
-  public ElvishElIfBlockImpl(@NotNull ASTNode node) {
+  public ElvishElIfBlockImpl(ASTNode node) {
     super(node);
   }
 

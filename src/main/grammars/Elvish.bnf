@@ -5,7 +5,8 @@
   parserImports = [
     'static com.intellij.lang.parser.GeneratedParserUtilBase.*'
   ]
-  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+  extends="com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement"
+  implements="com.github.sblundy.elvish.psi.ElvishPsiElement"
 
   psiClassPrefix="Elvish"
   psiImplClassSuffix="Impl"

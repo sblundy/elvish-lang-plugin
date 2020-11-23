@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishLambdaArguments extends PsiElement {
+public interface ElvishLambdaArguments extends ElvishPsiElement {
 
   @NotNull
   List<ElvishMapPair> getMapPairList();

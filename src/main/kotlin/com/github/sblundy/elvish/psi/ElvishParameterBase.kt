@@ -1,7 +1,6 @@
 package com.github.sblundy.elvish.psi
 
 import com.github.sblundy.elvish.psi.ElvishPsiUtils.newNameElement
-import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.icons.AllIcons
 import com.intellij.lang.ASTNode
 import com.intellij.navigation.ItemPresentation
@@ -10,7 +9,7 @@ import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.util.IncorrectOperationException
 import javax.swing.Icon
 
-abstract class ElvishParameterBase(node: ASTNode) : ASTWrapperPsiElement(node), PsiNameIdentifierOwner, ElvishParameter {
+abstract class ElvishParameterBase(node: ASTNode) : ASTWrapperElvishPsiElement(node), PsiNameIdentifierOwner, ElvishParameter {
     override fun getNameIdentifier(): PsiElement? = getVariableName()
 
     override fun getName(): String? = getVariableName().text

@@ -41,7 +41,7 @@ internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rang
                 fnCommandList.filter { it.getCommandName().textMatches(command) }
         }
 
-        climber.climb(element.parent)
+        climber.climb(element)
 
         return climber.declarations.map { declaration ->
             PsiElementResolveResult(declaration)
@@ -75,7 +75,7 @@ internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rang
                 return true
             }
         }
-        climber.climb(element.parent)
+        climber.climb(element)
         return climber.variants.toTypedArray()
     }
 }

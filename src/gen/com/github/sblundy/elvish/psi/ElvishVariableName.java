@@ -5,6 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishVariableName extends PsiElement {
+public interface ElvishVariableName extends ElvishPsiElement {
 
 }

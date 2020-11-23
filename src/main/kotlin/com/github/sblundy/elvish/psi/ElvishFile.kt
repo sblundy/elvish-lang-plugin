@@ -11,6 +11,7 @@ import com.intellij.psi.FileViewProvider
 class ElvishFile(viewProvider: FileViewProvider): PsiFileBase(viewProvider, ElvishLanguage.INSTANCE), ElvishLexicalScope {
     override fun getFileType(): FileType = ElvishFileType.INSTANCE
     override fun toString(): String = "Elvish File"
+    override fun getScope(): ElvishLexicalScope? = project.getBuiltinScope()
 
     fun topLevelAssignments(): Array<ElvishAssignment> {
         return findChildrenByClass(ElvishChunk::class.java).flatMap { it ->it.assignmentList }.toTypedArray()

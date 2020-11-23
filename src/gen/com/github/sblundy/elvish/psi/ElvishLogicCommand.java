@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishLogicCommand extends PsiElement {
+public interface ElvishLogicCommand extends ElvishPsiElement {
 
   @NotNull
   List<ElvishArgument> getArgumentList();

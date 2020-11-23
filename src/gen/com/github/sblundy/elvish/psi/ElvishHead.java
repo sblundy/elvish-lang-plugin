@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishHead extends PsiElement {
+public interface ElvishHead extends ElvishPsiElement {
 
   @Nullable
   ElvishCommandExpression getCommandExpression();

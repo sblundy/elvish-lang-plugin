@@ -69,7 +69,7 @@ internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInEl
             fun ElvishParameter.matches(): Boolean = textMatches(name)
         }
 
-        climber.climb(element.parent)
+        climber.climb(element)
 
         return climber.declarations.map { declaration ->
             PsiElementResolveResult(declaration)
@@ -126,7 +126,7 @@ internal class ElvishVariableReference(element: ElvishVariableRefBase, rangeInEl
                 return true
             }
         }
-        climber.climb(element.parent)
+        climber.climb(element)
         return climber.variants.toTypedArray()
     }
 }

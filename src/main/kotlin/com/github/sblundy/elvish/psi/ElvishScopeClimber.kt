@@ -3,29 +3,15 @@ package com.github.sblundy.elvish.psi
 import com.intellij.psi.PsiElement
 
 abstract class ElvishScopeClimber {
-    fun climb(start: PsiElement) {
-        if (start is ElvishFile) {
-            return
-        }
-
+    fun climb(start: ElvishPsiElement) {
         var ctxt = start
-        var parent: PsiElement? = start.parent
-        while (parent != null) {
-            when (parent) {
-                is ElvishFile -> {
-                    if (visitScope(parent, ctxt)) {
-                        start.project.getBuiltinScope()?.let { visitScope(it, parent as PsiElement)}
-                    }
-                    return
-                }
-                is ElvishLexicalScope -> {
-                    if (!visitScope(parent, ctxt)) {
-                        return
-                    }
-                }
+        var scope = start.scope
+        while (scope != null) {
+            if (!visitScope(scope, ctxt)) {
+                return
             }
-            ctxt = parent
-            parent = parent.parent
+            ctxt = scope
+            scope = scope.scope
         }
     }
 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishOutputCapture extends PsiElement {
+public interface ElvishOutputCapture extends ElvishPsiElement {
 
   @NotNull
   ElvishChunk getChunk();

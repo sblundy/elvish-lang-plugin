@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishCondition extends PsiElement {
+public interface ElvishCondition extends ElvishPsiElement {
 
   @Nullable
   ElvishExceptionCapture getExceptionCapture();

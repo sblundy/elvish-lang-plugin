@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishDeleteCommand extends PsiElement {
+public interface ElvishDeleteCommand extends ElvishPsiElement {
 
   @NotNull
   List<ElvishIndexRange> getIndexRangeList();

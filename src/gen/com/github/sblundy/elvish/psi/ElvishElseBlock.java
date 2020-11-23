@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishElseBlock extends PsiElement {
+public interface ElvishElseBlock extends ElvishPsiElement {
 
   @NotNull
   ElvishLambdaBlock getLambdaBlock();

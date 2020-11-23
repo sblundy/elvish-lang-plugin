@@ -1,10 +1,8 @@
 package com.github.sblundy.elvish.psi
 
-import com.intellij.psi.PsiElement
-
 /**
  * Marker interface for variable declarations
  */
-interface ElvishVariableDeclaration : PsiElement {
+interface ElvishVariableDeclaration : ElvishPsiElement {
     fun getVariableName(): ElvishVariableName
 }

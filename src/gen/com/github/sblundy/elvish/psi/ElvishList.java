@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishList extends PsiElement {
+public interface ElvishList extends ElvishPsiElement {
 
   @NotNull
   ElvishArray getArray();

@@ -34,7 +34,7 @@ internal class ElvishNamespaceCommandReference(element: ElvishCommandExpressionB
             }
         }
 
-        climber.climb(element.parent)
+        climber.climb(element)
 
         return climber.declarations.map { declaration ->
             PsiElementResolveResult(declaration)
@@ -68,7 +68,7 @@ internal class ElvishNamespaceCommandReference(element: ElvishCommandExpressionB
                 return true
             }
         }
-        climber.climb(element.parent)
+        climber.climb(element)
         return climber.variants.toTypedArray()
     }
 }

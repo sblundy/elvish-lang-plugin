@@ -12,9 +12,9 @@ private val scopeKey = Key.create<BuiltinScope>("ElvishPsiUtils.BuiltinScope")
 
 internal class BuiltinScope(val version: ElvishLanguageVersion, manager: PsiManager) : FakePsiElement(),
     ElvishLexicalScope {
-    private val values = version.builtinValues.map { ElvishPsiBuiltinValue(it, manager) }
-    private val variables = version.builtinVariables.map { ElvishPsiBuiltinVariable(it, manager) }
-    private val functions = version.builtinFunctions.map { ElvishPsiBuiltinCommand(it, manager) }
+    private val values = version.builtinValues.map { ElvishPsiBuiltinValue(it, manager, this) }
+    private val variables = version.builtinVariables.map { ElvishPsiBuiltinVariable(it, manager, this) }
+    private val functions = version.builtinFunctions.map { ElvishPsiBuiltinCommand(it, manager, this) }
 
     fun findVariables(name: PsiElement?): Collection<ElvishVariableDeclaration> = name?.let {
         (values + variables).filter { it.textMatches(name) }
@@ -38,6 +38,7 @@ internal class BuiltinScope(val version: ElvishLanguageVersion, manager: PsiMana
         }
 
     override fun getParent(): PsiElement? = null
+    override fun getScope(): ElvishLexicalScope? = null
 }
 
 internal fun Project.getBuiltinScope(): BuiltinScope? {

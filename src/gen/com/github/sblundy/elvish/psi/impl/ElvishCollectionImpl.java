@@ -8,12 +8,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishCollectionImpl extends ASTWrapperPsiElement implements ElvishCollection {
+public class ElvishCollectionImpl extends ASTWrapperElvishPsiElement implements ElvishCollection {
 
-  public ElvishCollectionImpl(@NotNull ASTNode node) {
+  public ElvishCollectionImpl(ASTNode node) {
     super(node);
   }
 

@@ -50,7 +50,7 @@ internal class ElvishNamespaceVariableReference(element: ElvishVariableRefBase, 
             }
         }
 
-        climber.climb(element.parent)
+        climber.climb(element)
 
         return climber.declarations.map { declaration ->
             PsiElementResolveResult(declaration)
@@ -109,7 +109,7 @@ internal class ElvishNamespaceVariableReference(element: ElvishVariableRefBase, 
             }
         }
 
-        climber.climb(element.parent)
+        climber.climb(element)
         return climber.variants.toTypedArray()
     }
 }

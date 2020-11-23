@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishRedir extends PsiElement {
+public interface ElvishRedir extends ElvishPsiElement {
 
   @Nullable
   ElvishCompound getCompound();

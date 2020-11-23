@@ -3,7 +3,6 @@ package com.github.sblundy.elvish.psi;
 
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiElement;
 
 public class ElvishVisitor extends PsiElementVisitor {
 
@@ -216,7 +215,7 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitPsiElement(@NotNull PsiElement o) {
+  public void visitPsiElement(@NotNull ElvishPsiElement o) {
     visitElement(o);
   }
 

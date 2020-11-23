@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishBraced extends PsiElement {
+public interface ElvishBraced extends ElvishPsiElement {
 
   @NotNull
   List<ElvishBracedBareword> getBracedBarewordList();

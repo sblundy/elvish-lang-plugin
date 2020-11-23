@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishElIfBlock extends PsiElement {
+public interface ElvishElIfBlock extends ElvishPsiElement {
 
   @NotNull
   ElvishCondition getCondition();

@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishTryCommand extends PsiElement {
+public interface ElvishTryCommand extends ElvishPsiElement {
 
   @Nullable
   ElvishElseBlock getElseBlock();
