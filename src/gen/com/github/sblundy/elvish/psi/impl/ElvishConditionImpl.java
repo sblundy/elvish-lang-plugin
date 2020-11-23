@@ -34,6 +34,12 @@ public class ElvishConditionImpl extends ASTWrapperElvishPsiElement implements E
 
   @Override
   @Nullable
+  public ElvishNamespaceVariableRef getNamespaceVariableRef() {
+    return findChildByClass(ElvishNamespaceVariableRef.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishOutputCapture getOutputCapture() {
     return findChildByClass(ElvishOutputCapture.class);
   }

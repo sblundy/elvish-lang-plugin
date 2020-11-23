@@ -15,6 +15,7 @@ public interface ElvishTypes {
   IElementType BRACED = new ElvishElementType("BRACED");
   IElementType BRACED_BAREWORD = new ElvishElementType("BRACED_BAREWORD");
   IElementType BRACED_SEP = new ElvishElementType("BRACED_SEP");
+  IElementType BUILTIN_NAMESPACE = new ElvishElementType("BUILTIN_NAMESPACE");
   IElementType CHUNK = new ElvishElementType("CHUNK");
   IElementType COLLECTION = new ElvishElementType("COLLECTION");
   IElementType COMMAND_BAREWORD = new ElvishElementType("COMMAND_BAREWORD");
@@ -25,9 +26,11 @@ public interface ElvishTypes {
   IElementType DOUBLE_QUOTED = new ElvishElementType("DOUBLE_QUOTED");
   IElementType ELSE_BLOCK = new ElvishElementType("ELSE_BLOCK");
   IElementType EL_IF_BLOCK = new ElvishElementType("EL_IF_BLOCK");
+  IElementType ENV_VAR_NAMESPACE = new ElvishElementType("ENV_VAR_NAMESPACE");
   IElementType EXCEPTION_CAPTURE = new ElvishElementType("EXCEPTION_CAPTURE");
   IElementType EXCEPT_BLOCK = new ElvishElementType("EXCEPT_BLOCK");
   IElementType EXITUS_REDIR = new ElvishElementType("EXITUS_REDIR");
+  IElementType EXTERNALS_NAMESPACE = new ElvishElementType("EXTERNALS_NAMESPACE");
   IElementType FINALLY_BLOCK = new ElvishElementType("FINALLY_BLOCK");
   IElementType FN_COMMAND = new ElvishElementType("FN_COMMAND");
   IElementType FOR_COMMAND = new ElvishElementType("FOR_COMMAND");
@@ -40,11 +43,15 @@ public interface ElvishTypes {
   IElementType LAMBDA_BLOCK = new ElvishElementType("LAMBDA_BLOCK");
   IElementType LIB_MODULE_SPEC = new ElvishElementType("LIB_MODULE_SPEC");
   IElementType LIST = new ElvishElementType("LIST");
+  IElementType LOCAL_NAMESPACE = new ElvishElementType("LOCAL_NAMESPACE");
   IElementType LOGIC_COMMAND = new ElvishElementType("LOGIC_COMMAND");
   IElementType MAP = new ElvishElementType("MAP");
   IElementType MAP_PAIR = new ElvishElementType("MAP_PAIR");
   IElementType MODULE_ALIAS = new ElvishElementType("MODULE_ALIAS");
+  IElementType NAMESPACE_COMMAND_EXPRESSION = new ElvishElementType("NAMESPACE_COMMAND_EXPRESSION");
   IElementType NAMESPACE_NAME = new ElvishElementType("NAMESPACE_NAME");
+  IElementType NAMESPACE_VARIABLE = new ElvishElementType("NAMESPACE_VARIABLE");
+  IElementType NAMESPACE_VARIABLE_REF = new ElvishElementType("NAMESPACE_VARIABLE_REF");
   IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
   IElementType PARAMETER = new ElvishElementType("PARAMETER");
   IElementType PIPELINE_SEP = new ElvishElementType("PIPELINE_SEP");
@@ -52,6 +59,7 @@ public interface ElvishTypes {
   IElementType RELATIVE_MODULE_SPEC = new ElvishElementType("RELATIVE_MODULE_SPEC");
   IElementType SINGLE_QUOTED = new ElvishElementType("SINGLE_QUOTED");
   IElementType TRY_COMMAND = new ElvishElementType("TRY_COMMAND");
+  IElementType UP_NAMESPACE = new ElvishElementType("UP_NAMESPACE");
   IElementType USE_COMMAND = new ElvishElementType("USE_COMMAND");
   IElementType VARIABLE = new ElvishElementType("VARIABLE");
   IElementType VARIABLE_NAME = new ElvishElementType("VARIABLE_NAME");
@@ -124,6 +132,9 @@ public interface ElvishTypes {
       else if (type == BRACED_SEP) {
         return new ElvishBracedSepImpl(node);
       }
+      else if (type == BUILTIN_NAMESPACE) {
+        return new ElvishBuiltinNamespaceImpl(node);
+      }
       else if (type == CHUNK) {
         return new ElvishChunkImpl(node);
       }
@@ -154,6 +165,9 @@ public interface ElvishTypes {
       else if (type == EL_IF_BLOCK) {
         return new ElvishElIfBlockImpl(node);
       }
+      else if (type == ENV_VAR_NAMESPACE) {
+        return new ElvishEnvVarNamespaceImpl(node);
+      }
       else if (type == EXCEPTION_CAPTURE) {
         return new ElvishExceptionCaptureImpl(node);
       }
@@ -162,6 +176,9 @@ public interface ElvishTypes {
       }
       else if (type == EXITUS_REDIR) {
         return new ElvishExitusRedirImpl(node);
+      }
+      else if (type == EXTERNALS_NAMESPACE) {
+        return new ElvishExternalsNamespaceImpl(node);
       }
       else if (type == FINALLY_BLOCK) {
         return new ElvishFinallyBlockImpl(node);
@@ -199,6 +216,9 @@ public interface ElvishTypes {
       else if (type == LIST) {
         return new ElvishListImpl(node);
       }
+      else if (type == LOCAL_NAMESPACE) {
+        return new ElvishLocalNamespaceImpl(node);
+      }
       else if (type == LOGIC_COMMAND) {
         return new ElvishLogicCommandImpl(node);
       }
@@ -211,8 +231,17 @@ public interface ElvishTypes {
       else if (type == MODULE_ALIAS) {
         return new ElvishModuleAliasImpl(node);
       }
+      else if (type == NAMESPACE_COMMAND_EXPRESSION) {
+        return new ElvishNamespaceCommandExpressionImpl(node);
+      }
       else if (type == NAMESPACE_NAME) {
         return new ElvishNamespaceNameImpl(node);
+      }
+      else if (type == NAMESPACE_VARIABLE) {
+        return new ElvishNamespaceVariableImpl(node);
+      }
+      else if (type == NAMESPACE_VARIABLE_REF) {
+        return new ElvishNamespaceVariableRefImpl(node);
       }
       else if (type == OUTPUT_CAPTURE) {
         return new ElvishOutputCaptureImpl(node);
@@ -234,6 +263,9 @@ public interface ElvishTypes {
       }
       else if (type == TRY_COMMAND) {
         return new ElvishTryCommandImpl(node);
+      }
+      else if (type == UP_NAMESPACE) {
+        return new ElvishUpNamespaceImpl(node);
       }
       else if (type == USE_COMMAND) {
         return new ElvishUseCommandImpl(node);

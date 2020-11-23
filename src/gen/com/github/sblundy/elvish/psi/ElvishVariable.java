@@ -7,9 +7,6 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishVariable extends ElvishVariableDeclaration {
 
-  @Nullable
-  ElvishNamespaceName getNamespaceName();
-
   @NotNull
   ElvishVariableName getVariableName();
 

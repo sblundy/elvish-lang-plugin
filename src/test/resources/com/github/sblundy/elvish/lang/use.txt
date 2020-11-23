@@ -11,7 +11,7 @@ Elvish File
     ElvishPipelineSepImpl(PIPELINE_SEP)
       PsiElement(ElvishTokenType.EOL)('\n')
     ElvishHeadImpl(HEAD)
-      ElvishCommandExpressionImpl(COMMAND_EXPRESSION)
+      ElvishNamespaceCommandExpressionImpl(NAMESPACE_COMMAND_EXPRESSION)
         ElvishNamespaceNameImpl(NAMESPACE_NAME)
           ElvishVariableNameImpl(VARIABLE_NAME)
             PsiElement(ElvishTokenType.VARIABLE_CHAR)('re')

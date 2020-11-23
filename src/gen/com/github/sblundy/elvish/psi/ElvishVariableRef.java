@@ -13,9 +13,6 @@ public interface ElvishVariableRef extends ElvishPsiElement {
   @NotNull
   List<ElvishIndexSingle> getIndexSingleList();
 
-  @Nullable
-  ElvishNamespaceName getNamespaceName();
-
   @NotNull
   ElvishVariableName getVariableName();
 

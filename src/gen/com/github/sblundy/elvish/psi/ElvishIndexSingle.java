@@ -14,6 +14,9 @@ public interface ElvishIndexSingle extends ElvishPsiElement {
   List<ElvishExceptionCapture> getExceptionCaptureList();
 
   @NotNull
+  List<ElvishNamespaceVariableRef> getNamespaceVariableRefList();
+
+  @NotNull
   List<ElvishOutputCapture> getOutputCaptureList();
 
   @NotNull

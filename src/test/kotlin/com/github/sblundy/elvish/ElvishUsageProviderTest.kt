@@ -110,6 +110,28 @@ class ElvishUsageProviderTest {
     }
 
     @Test
+    fun testFindUsagesLocalNamespacedVar() {
+        runTest {
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-local-scope.elv")?.filter { it.file?.name == "ElvishUsageProviderTest-local-scope.elv" }
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(1, usages.size)
+            Assert.assertEquals(41, usages.firstOrNull()?.navigationOffset)
+        }
+    }
+
+    @Test
+    fun testFindUsagesUpNamespacedVar() {
+        runTest {
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-up-scope.elv")?.filter { it.file?.name == "ElvishUsageProviderTest-up-scope.elv" }
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(1, usages.size)
+            Assert.assertEquals(47, usages.firstOrNull()?.navigationOffset)
+        }
+    }
+
+    @Test
     fun testFindUsagesFnCommand() {
         runTest {
             val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-fn.elv")

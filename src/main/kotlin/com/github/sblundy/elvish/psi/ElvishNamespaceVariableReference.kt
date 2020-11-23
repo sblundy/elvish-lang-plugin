@@ -9,8 +9,8 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 import icons.ElvishIcons
 
-internal class ElvishNamespaceVariableReference(element: ElvishVariableRefBase, rangeInElement: TextRange?) :
-    PsiReferenceBase<ElvishVariableRefBase?>(element, rangeInElement, true),
+internal class ElvishNamespaceVariableReference(element: ElvishNamespaceVariableRef, rangeInElement: TextRange?) :
+    PsiReferenceBase<ElvishNamespaceVariableRef?>(element, rangeInElement, true),
     PsiPolyVariantReference {
     private val log = logger<ElvishNamespaceVariableReference>()
 
@@ -20,39 +20,33 @@ internal class ElvishNamespaceVariableReference(element: ElvishVariableRefBase, 
     }
 
     override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
-        val climber = object : ElvishScopeClimber() {
-            val name = element.variableName
-            val ns = element.namespaceName!!
-            val declarations = mutableListOf<ElvishVariableDeclaration>()
-            override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
-                val d = when (s) {
-                    is ElvishFile -> s.matchingVariables()
-                    is BuiltinScope -> s.findVariables(name)
-                    is ElvishLambdaBlock -> s.matchingVariables()
-                    else -> emptyList()
+        val declarations = when (element.namespaceIdentifier) {
+            is ElvishLocalNamespace -> {
+                val climber = object:ElvishVariableReference.VariableFinder(element.variableName) {
+                    override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
+                        super.visitScope(s, ctxt)
+                        return false
+                    }
                 }
-                if (d.isNotEmpty()) {
-                    declarations += d
-                }
-                return true
+                climber.climb(element)
+                climber.declarations
             }
-
-            fun ElvishFile.matchingVariables(): Collection<ElvishVariableDeclaration> {
-                return topLevelAssignments().flatMap { it.variableList.filter { vl -> vl.matches() } }
+            is ElvishUpNamespace -> {
+                val climber = ElvishVariableReference.VariableFinder(element.variableName)
+                element.scope?.let {climber.climb(it)}
+                climber.declarations
             }
-
-            fun ElvishLambdaBlock.matchingVariables(): Collection<ElvishVariableDeclaration> {
-                return chunk.assignmentList.flatMap { it.variableList.filter { vl -> vl.matches() } }
+            is ElvishBuiltinNamespace -> {
+                element.project.getBuiltinScope()?.findVariables(element.variableName) ?: emptyList()
             }
-
-            fun ElvishVariable.matches(): Boolean {
-                return getVariableName().textMatches(name) && namespaceName?.textMatches(ns)?: false
+            else -> {
+                val climber = DefaultVariableFinder()
+                climber.climb(element)
+                climber.declarations
             }
         }
 
-        climber.climb(element)
-
-        return climber.declarations.map { declaration ->
+        return declarations.map { declaration ->
             PsiElementResolveResult(declaration)
         }.toTypedArray()
     }
@@ -64,53 +58,108 @@ internal class ElvishNamespaceVariableReference(element: ElvishVariableRefBase, 
     }
 
     override fun getVariants(): Array<Any> {
-        val climber = object : ElvishScopeClimber() {
-            val ns = element.namespaceName!!
-            val variants = mutableListOf<LookupElement>()
-            override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
-                val variables = when (s) {
-                    is ElvishFile -> s.matchingVariables()
-                    is BuiltinScope -> s.findVariables(ns, null)
-                    is ElvishLambdaBlock -> s.matchingVariables()
-                    else -> emptyList()
-                }
-                if (variables.isNotEmpty()) {
-                    variants += variables.mapNotNull { when (it) {
-                        is ElvishParameter -> it.toLookupElement()
-                        is ElvishVariable -> it.toLookupElement()
+        val variants = when (element.namespaceIdentifier) {
+            is ElvishLocalNamespace -> {
+                val climber = ElvishVariableReference.VariableVariantFinder()
+
+                climber.climb(element)
+                climber.variants
+            }
+            is ElvishUpNamespace -> {
+                val climber = ElvishVariableReference.VariableVariantFinder()
+
+                climber.climb(element)
+                climber.variants
+            }
+            is ElvishBuiltinNamespace -> {
+                element.project.getBuiltinScope()?.findVariables(null)?.mapNotNull {
+                    when (it) {
                         is ElvishPsiBuiltinVariable -> it.toLookupElement()
                         is ElvishPsiBuiltinValue -> it.toLookupElement()
                         else -> null
-                    } }
-                }
-                val functions = when(s) {
-                    is BuiltinScope -> s.findFnCommands(ns, null)
-                    else -> emptyList()
-                }
-                if (functions.isNotEmpty()) {
-                    variants += functions.mapNotNull { when (it) {
-                        is ElvishPsiBuiltinCommand -> it.toLookupElement()
-                        else -> null
-                    } }
-                }
-                return true
+                    }
+                } ?: emptyList()
             }
+            else -> {
+                val climber = DefaultVariableVariantFinder()
 
-            fun ElvishFile.matchingVariables(): Collection<ElvishVariableDeclaration> {
-                return topLevelAssignments().flatMap { it.variableList.filter { vl -> vl.matches() } }
-            }
-
-            fun ElvishLambdaBlock.matchingVariables(): Collection<ElvishVariableDeclaration> {
-                return chunk.assignmentList.flatMap { it.variableList.filter { vl -> vl.matches() } }
-            }
-
-            fun ElvishVariable.matches(): Boolean {
-                return namespaceName?.textMatches(ns)?: false
+                climber.climb(element)
+                climber.variants
             }
         }
+        return variants.toTypedArray()
+    }
 
-        climber.climb(element)
-        return climber.variants.toTypedArray()
+    private inner class DefaultVariableFinder: ElvishScopeClimber() {
+        val name = element.variableName
+        val ns = element.namespaceIdentifier
+        val declarations = mutableListOf<ElvishVariableDeclaration>()
+        override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
+            val d = when (s) {
+                is ElvishFile -> s.matchingVariables()
+                is ElvishLambdaBlock -> s.matchingVariables()
+                else -> emptyList()
+            }
+            if (d.isNotEmpty()) {
+                declarations += d
+            }
+            return true
+        }
+
+        fun ElvishFile.matchingVariables(): Collection<ElvishVariableDeclaration> {
+            return topLevelAssignments().flatMap { it.namespaceVariableList.filter { vl -> vl.matches() } }
+        }
+
+        fun ElvishLambdaBlock.matchingVariables(): Collection<ElvishVariableDeclaration> {
+            return chunk.assignmentList.flatMap { it.namespaceVariableList.filter { vl -> vl.matches() } }
+        }
+
+        fun ElvishNamespaceVariable.matches(): Boolean {
+            return getVariableName().textMatches(name) && namespaceIdentifier.matches(ns)
+        }
+    }
+
+    private inner class DefaultVariableVariantFinder: ElvishScopeClimber() {
+        val ns = element.namespaceIdentifier
+        val variants = mutableListOf<LookupElement>()
+        override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
+            val variables = when (s) {
+                is ElvishFile -> s.matchingVariables()
+                is ElvishLambdaBlock -> s.matchingVariables()
+                else -> emptyList()
+            }
+            if (variables.isNotEmpty()) {
+                variants += variables.mapNotNull { when (it) {
+                    is ElvishNamespaceVariable -> it.toLookupElement()
+                    is ElvishPsiBuiltinVariable -> it.toLookupElement()
+                    is ElvishPsiBuiltinValue -> it.toLookupElement()
+                    else -> null
+                } }
+            }
+            val functions = when(s) {
+                is BuiltinScope -> s.findFnCommands(ns, null)
+                else -> emptyList()
+            }
+            if (functions.isNotEmpty()) {
+                variants += functions.mapNotNull { when (it) {
+                    is ElvishPsiBuiltinCommand -> it.toLookupElement()
+                    else -> null
+                } }
+            }
+            return true
+        }
+
+        fun ElvishFile.matchingVariables(): Collection<ElvishVariableDeclaration> {
+            return topLevelAssignments().flatMap { it.namespaceVariableList.filter { vl -> vl.matches() } }
+        }
+
+        fun ElvishLambdaBlock.matchingVariables(): Collection<ElvishVariableDeclaration> {
+            return chunk.assignmentList.flatMap { it.namespaceVariableList.filter { vl -> vl.matches() } }
+        }
+
+        fun ElvishNamespaceVariable.matches(): Boolean {
+            return namespaceIdentifier.matches(ns)
+        }
     }
 }
 
@@ -118,13 +167,8 @@ private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, "builtin:$name~").withIcon(ElvishIcons.BUILTIN_FUNCTION)
 }
 
-private fun ElvishParameter.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, getVariableName().text).withIcon(AllIcons.Nodes.Parameter)
-}
-
-private fun ElvishVariable.toLookupElement(): LookupElement {
-    val namespacePrefix = namespaceName?.let { namespaceName -> namespaceName.variableNameList.map { it.text }}?: emptyList()
-    val fullname = (namespacePrefix+getVariableName().text).joinToString(":")
+private fun ElvishNamespaceVariable.toLookupElement(): LookupElement {
+    val fullname = (namespaceIdentifier.text+getVariableName().text)
     return LookupElementBuilder.create(this, fullname)
         .withPresentableText(fullname).withIcon(AllIcons.Nodes.Variable)
 }

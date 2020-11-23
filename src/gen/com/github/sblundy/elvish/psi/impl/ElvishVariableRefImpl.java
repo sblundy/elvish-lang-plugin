@@ -39,12 +39,6 @@ public class ElvishVariableRefImpl extends ElvishVariableRefBase implements Elvi
   }
 
   @Override
-  @Nullable
-  public ElvishNamespaceName getNamespaceName() {
-    return findChildByClass(ElvishNamespaceName.class);
-  }
-
-  @Override
   @NotNull
   public ElvishVariableName getVariableName() {
     return findNotNullChildByClass(ElvishVariableName.class);

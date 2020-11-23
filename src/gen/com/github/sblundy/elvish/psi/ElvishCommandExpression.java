@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ElvishCommandExpression extends ElvishPsiElement {
 
   @NotNull
-  ElvishCommandBareword getCommandBareword();
-
-  @Nullable
-  ElvishNamespaceName getNamespaceName();
+  ElvishCommandBareword getCommandName();
 
 }

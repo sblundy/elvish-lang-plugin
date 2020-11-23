@@ -31,10 +31,6 @@ class ElvishPsiBuiltinCommand(override val builtin: String, manager: PsiManager,
     ElvishFunctionDeclaration {
     private val commandName = FakeVariableName(builtin, manager, owner)
     override fun getCommandName(): ElvishVariableName = commandName
-    override fun getScope(): ElvishLexicalScope? {
-        TODO("Not yet implemented")
-    }
-
     override val isDoNotUse: Boolean = builtin.startsWith('-') && builtin != "-"
     override fun getIcon(open: Boolean): Icon? = ElvishIcons.BUILTIN_FUNCTION
     override fun getPresentation(): ItemPresentation? = ElvishBasicItemPresentation(builtin, ElvishIcons.BUILTIN_FUNCTION)

@@ -11,6 +11,9 @@ public interface ElvishCondition extends ElvishPsiElement {
   ElvishExceptionCapture getExceptionCapture();
 
   @Nullable
+  ElvishNamespaceVariableRef getNamespaceVariableRef();
+
+  @Nullable
   ElvishOutputCapture getOutputCapture();
 
   @Nullable

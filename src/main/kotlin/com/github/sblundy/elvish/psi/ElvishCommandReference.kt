@@ -19,7 +19,7 @@ internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rang
 
     private fun multiResolve(): Array<ResolveResult> {
         val climber = object : ElvishScopeClimber() {
-            val command = element.commandBareword
+            val command = element.commandName
             val declarations = mutableListOf<ElvishFunctionDeclaration>()
             override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
                 val d= when (s) {
@@ -50,7 +50,7 @@ internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rang
 
     override fun handleElementRename(name: String): PsiElement {
         val ne = ElvishPsiUtils.newNameElement(name, element.project)
-        element.commandBareword.replace(ne)
+        element.commandName.replace(ne)
         return element
     }
 

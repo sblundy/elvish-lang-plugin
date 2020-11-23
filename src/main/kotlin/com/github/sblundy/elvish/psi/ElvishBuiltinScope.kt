@@ -20,8 +20,8 @@ internal class BuiltinScope(val version: ElvishLanguageVersion, manager: PsiMana
         (values + variables).filter { it.textMatches(name) }
     } ?: (values + variables)
 
-    fun findVariables(ns: ElvishNamespaceName, name: PsiElement?): Collection<ElvishVariableDeclaration> =
-        if (!(ns.variableNameList.size == 1 && ns.variableNameList[0].textMatches("builtin"))) {
+    fun findVariables(ns: ElvishNamespaceIdentifier, name: PsiElement?): Collection<ElvishVariableDeclaration> =
+        if (ns !is ElvishBuiltinNamespace) {
             emptyList()
         } else {
             findVariables(name)
@@ -30,8 +30,8 @@ internal class BuiltinScope(val version: ElvishLanguageVersion, manager: PsiMana
     fun findFnCommands(name: PsiElement?): Collection<ElvishFunctionDeclaration> =
         name?.let {functions.filter { it.textMatches(name) } }?: functions
 
-    fun findFnCommands(ns: ElvishNamespaceName, name: PsiElement?): Collection<ElvishFunctionDeclaration> =
-        if (!(ns.variableNameList.size == 1 && ns.variableNameList[0].textMatches("builtin"))) {
+    fun findFnCommands(ns: ElvishNamespaceIdentifier, name: PsiElement?): Collection<ElvishFunctionDeclaration> =
+        if (ns !is ElvishBuiltinNamespace) {
             emptyList()
         } else {
             findFnCommands(name)

@@ -38,6 +38,8 @@ public class ElvishParser implements PsiParser, LightPsiParser {
 
   public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[] {
     create_token_set_(EXCEPT_BLOCK, LAMBDA, LAMBDA_BLOCK),
+    create_token_set_(BUILTIN_NAMESPACE, ENV_VAR_NAMESPACE, EXTERNALS_NAMESPACE, LOCAL_NAMESPACE,
+      NAMESPACE_NAME, UP_NAMESPACE),
   };
 
   /* ********************************************************** */
@@ -108,12 +110,11 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (Variable Index* Space?)+ EQUALS Space? Compound
+  // ((NamespaceVariable | Variable) Index* Space?)+ EQUALS Space? Compound
   public static boolean Assignment(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Assignment")) return false;
-    if (!nextTokenIs(builder_, VARIABLE_CHAR)) return false;
     boolean result_, pinned_;
-    Marker marker_ = enter_section_(builder_, level_, _NONE_, ASSIGNMENT, null);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ASSIGNMENT, "<assignment>");
     result_ = Assignment_0(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, EQUALS);
     pinned_ = result_; // pin = 2
@@ -123,7 +124,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_ || pinned_;
   }
 
-  // (Variable Index* Space?)+
+  // ((NamespaceVariable | Variable) Index* Space?)+
   private static boolean Assignment_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Assignment_0")) return false;
     boolean result_;
@@ -138,15 +139,24 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // Variable Index* Space?
+  // (NamespaceVariable | Variable) Index* Space?
   private static boolean Assignment_0_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Assignment_0_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = Variable(builder_, level_ + 1);
+    result_ = Assignment_0_0_0(builder_, level_ + 1);
     result_ = result_ && Assignment_0_0_1(builder_, level_ + 1);
     result_ = result_ && Assignment_0_0_2(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // NamespaceVariable | Variable
+  private static boolean Assignment_0_0_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "Assignment_0_0_0")) return false;
+    boolean result_;
+    result_ = NamespaceVariable(builder_, level_ + 1);
+    if (!result_) result_ = Variable(builder_, level_ + 1);
     return result_;
   }
 
@@ -179,7 +189,6 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   // Space? Assignment Space?
   static boolean AssignmentOnlyForm(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "AssignmentOnlyForm")) return false;
-    if (!nextTokenIs(builder_, "", INLINE_WHITESPACE, VARIABLE_CHAR)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = AssignmentOnlyForm_0(builder_, level_ + 1);
@@ -406,6 +415,17 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // 'builtin:'
+  public static boolean BuiltinNamespace(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "BuiltinNamespace")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, BUILTIN_NAMESPACE, "<builtin namespace>");
+    result_ = consumeToken(builder_, "builtin:");
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // PipelineSep | Space
   static boolean ChuckSep(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "ChuckSep")) return false;
@@ -472,13 +492,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // List | Map | VariableRef | ExceptionCapture | OutputCapture
+  // List | Map | NamespaceVariableRef | VariableRef | ExceptionCapture | OutputCapture
   public static boolean Collection(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Collection")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, COLLECTION, "<collection>");
     result_ = List(builder_, level_ + 1);
     if (!result_) result_ = Map(builder_, level_ + 1);
+    if (!result_) result_ = NamespaceVariableRef(builder_, level_ + 1);
     if (!result_) result_ = VariableRef(builder_, level_ + 1);
     if (!result_) result_ = ExceptionCapture(builder_, level_ + 1);
     if (!result_) result_ = OutputCapture(builder_, level_ + 1);
@@ -516,22 +537,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NamespaceName? CommandBareword
+  // CommandBareword
   public static boolean CommandExpression(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "CommandExpression")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, COMMAND_EXPRESSION, "<command expression>");
-    result_ = CommandExpression_0(builder_, level_ + 1);
-    result_ = result_ && CommandBareword(builder_, level_ + 1);
+    result_ = CommandBareword(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
-  }
-
-  // NamespaceName?
-  private static boolean CommandExpression_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "CommandExpression_0")) return false;
-    NamespaceName(builder_, level_ + 1);
-    return true;
   }
 
   /* ********************************************************** */
@@ -637,12 +650,13 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VariableRef | ExceptionCapture | OutputCapture
+  // NamespaceVariableRef | VariableRef | ExceptionCapture | OutputCapture
   public static boolean Condition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Condition")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, CONDITION, "<condition>");
-    result_ = VariableRef(builder_, level_ + 1);
+    result_ = NamespaceVariableRef(builder_, level_ + 1);
+    if (!result_) result_ = VariableRef(builder_, level_ + 1);
     if (!result_) result_ = ExceptionCapture(builder_, level_ + 1);
     if (!result_) result_ = OutputCapture(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
@@ -782,6 +796,17 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // 'E:'
+  public static boolean EnvVarNamespace(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "EnvVarNamespace")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ENV_VAR_NAMESPACE, "<env var namespace>");
+    result_ = consumeToken(builder_, "E:");
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // KEYWORD_EXCEPT Space Variable Space OPEN_BRACE Chunk CLOSE_BRACE
   public static boolean ExceptBlock(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "ExceptBlock")) return false;
@@ -833,6 +858,17 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(builder_, level_, "ExitusRedir_2")) return false;
     Space(builder_, level_ + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // 'e:'
+  public static boolean ExternalsNamespace(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "ExternalsNamespace")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, EXTERNALS_NAMESPACE, "<externals namespace>");
+    result_ = consumeToken(builder_, "e:");
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
   }
 
   /* ********************************************************** */
@@ -1079,13 +1115,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VariableName | SingleQuoted | DoubleQuoted | VariableRef | ExceptionCapture | OutputCapture
+  // VariableName | SingleQuoted | DoubleQuoted | NamespaceVariableRef | VariableRef | ExceptionCapture | OutputCapture
   static boolean IndexValue(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "IndexValue")) return false;
     boolean result_;
     result_ = VariableName(builder_, level_ + 1);
     if (!result_) result_ = SingleQuoted(builder_, level_ + 1);
     if (!result_) result_ = DoubleQuoted(builder_, level_ + 1);
+    if (!result_) result_ = NamespaceVariableRef(builder_, level_ + 1);
     if (!result_) result_ = VariableRef(builder_, level_ + 1);
     if (!result_) result_ = ExceptionCapture(builder_, level_ + 1);
     if (!result_) result_ = OutputCapture(builder_, level_ + 1);
@@ -1311,6 +1348,17 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // 'local:'
+  public static boolean LocalNamespace(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "LocalNamespace")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, LOCAL_NAMESPACE, "<local namespace>");
+    result_ = consumeToken(builder_, "local:");
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // 'or' | 'and'
   static boolean LogicCMD(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "LogicCMD")) return false;
@@ -1524,6 +1572,30 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // (LocalNamespace | UpNamespace | ExternalsNamespace | BuiltinNamespace | NamespaceName)  CommandBareword
+  public static boolean NamespaceCommandExpression(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "NamespaceCommandExpression")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, NAMESPACE_COMMAND_EXPRESSION, "<namespace command expression>");
+    result_ = NamespaceCommandExpression_0(builder_, level_ + 1);
+    result_ = result_ && CommandBareword(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // LocalNamespace | UpNamespace | ExternalsNamespace | BuiltinNamespace | NamespaceName
+  private static boolean NamespaceCommandExpression_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "NamespaceCommandExpression_0")) return false;
+    boolean result_;
+    result_ = LocalNamespace(builder_, level_ + 1);
+    if (!result_) result_ = UpNamespace(builder_, level_ + 1);
+    if (!result_) result_ = ExternalsNamespace(builder_, level_ + 1);
+    if (!result_) result_ = BuiltinNamespace(builder_, level_ + 1);
+    if (!result_) result_ = NamespaceName(builder_, level_ + 1);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // (VariableName COLON)+
   public static boolean NamespaceName(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "NamespaceName")) return false;
@@ -1549,6 +1621,68 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = result_ && consumeToken(builder_, COLON);
     exit_section_(builder_, marker_, null, result_);
     return result_;
+  }
+
+  /* ********************************************************** */
+  // (LocalNamespace | UpNamespace | EnvVarNamespace | BuiltinNamespace | NamespaceName) VariableName
+  public static boolean NamespaceVariable(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "NamespaceVariable")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, NAMESPACE_VARIABLE, "<namespace variable>");
+    result_ = NamespaceVariable_0(builder_, level_ + 1);
+    result_ = result_ && VariableName(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // LocalNamespace | UpNamespace | EnvVarNamespace | BuiltinNamespace | NamespaceName
+  private static boolean NamespaceVariable_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "NamespaceVariable_0")) return false;
+    boolean result_;
+    result_ = LocalNamespace(builder_, level_ + 1);
+    if (!result_) result_ = UpNamespace(builder_, level_ + 1);
+    if (!result_) result_ = EnvVarNamespace(builder_, level_ + 1);
+    if (!result_) result_ = BuiltinNamespace(builder_, level_ + 1);
+    if (!result_) result_ = NamespaceName(builder_, level_ + 1);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // DOLLAR_SIGN (LocalNamespace | UpNamespace | EnvVarNamespace | BuiltinNamespace | NamespaceName) VariableName Index*
+  public static boolean NamespaceVariableRef(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "NamespaceVariableRef")) return false;
+    if (!nextTokenIs(builder_, DOLLAR_SIGN)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, DOLLAR_SIGN);
+    result_ = result_ && NamespaceVariableRef_1(builder_, level_ + 1);
+    result_ = result_ && VariableName(builder_, level_ + 1);
+    result_ = result_ && NamespaceVariableRef_3(builder_, level_ + 1);
+    exit_section_(builder_, marker_, NAMESPACE_VARIABLE_REF, result_);
+    return result_;
+  }
+
+  // LocalNamespace | UpNamespace | EnvVarNamespace | BuiltinNamespace | NamespaceName
+  private static boolean NamespaceVariableRef_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "NamespaceVariableRef_1")) return false;
+    boolean result_;
+    result_ = LocalNamespace(builder_, level_ + 1);
+    if (!result_) result_ = UpNamespace(builder_, level_ + 1);
+    if (!result_) result_ = EnvVarNamespace(builder_, level_ + 1);
+    if (!result_) result_ = BuiltinNamespace(builder_, level_ + 1);
+    if (!result_) result_ = NamespaceName(builder_, level_ + 1);
+    return result_;
+  }
+
+  // Index*
+  private static boolean NamespaceVariableRef_3(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "NamespaceVariableRef_3")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!Index(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "NamespaceVariableRef_3", pos_)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -1675,13 +1809,14 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // Bareword | SingleQuoted | DoubleQuoted | VariableRef | WILDCARD | TILDE | ExceptionCapture | OutputCapture | Lambda | List | Map | Braced
+  // Bareword | SingleQuoted | DoubleQuoted | NamespaceVariableRef | VariableRef | WILDCARD | TILDE | ExceptionCapture | OutputCapture | Lambda | List | Map | Braced
   static boolean Primary(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Primary")) return false;
     boolean result_;
     result_ = Bareword(builder_, level_ + 1);
     if (!result_) result_ = SingleQuoted(builder_, level_ + 1);
     if (!result_) result_ = DoubleQuoted(builder_, level_ + 1);
+    if (!result_) result_ = NamespaceVariableRef(builder_, level_ + 1);
     if (!result_) result_ = VariableRef(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, WILDCARD);
     if (!result_) result_ = consumeToken(builder_, TILDE);
@@ -1976,6 +2111,17 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // 'up:'
+  public static boolean UpNamespace(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "UpNamespace")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, UP_NAMESPACE, "<up namespace>");
+    result_ = consumeToken(builder_, "up:");
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // KEYWORD_USE Space (RelativeModuleSpec | LibModuleSpec) (Space ModuleAlias)?
   public static boolean UseCommand(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "UseCommand")) return false;
@@ -2018,23 +2164,15 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NamespaceName? VariableName
+  // VariableName
   public static boolean Variable(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "Variable")) return false;
     if (!nextTokenIs(builder_, VARIABLE_CHAR)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = Variable_0(builder_, level_ + 1);
-    result_ = result_ && VariableName(builder_, level_ + 1);
+    result_ = VariableName(builder_, level_ + 1);
     exit_section_(builder_, marker_, VARIABLE, result_);
     return result_;
-  }
-
-  // NamespaceName?
-  private static boolean Variable_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "Variable_0")) return false;
-    NamespaceName(builder_, level_ + 1);
-    return true;
   }
 
   /* ********************************************************** */
@@ -2055,7 +2193,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOLLAR_SIGN AT_SYMBOL? VariableRefName Index*
+  // DOLLAR_SIGN AT_SYMBOL? VariableName Index*
   public static boolean VariableRef(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "VariableRef")) return false;
     if (!nextTokenIs(builder_, DOLLAR_SIGN)) return false;
@@ -2063,7 +2201,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, DOLLAR_SIGN);
     result_ = result_ && VariableRef_1(builder_, level_ + 1);
-    result_ = result_ && VariableRefName(builder_, level_ + 1);
+    result_ = result_ && VariableName(builder_, level_ + 1);
     result_ = result_ && VariableRef_3(builder_, level_ + 1);
     exit_section_(builder_, marker_, VARIABLE_REF, result_);
     return result_;
@@ -2084,26 +2222,6 @@ public class ElvishParser implements PsiParser, LightPsiParser {
       if (!Index(builder_, level_ + 1)) break;
       if (!empty_element_parsed_guard_(builder_, "VariableRef_3", pos_)) break;
     }
-    return true;
-  }
-
-  /* ********************************************************** */
-  // NamespaceName? VariableName
-  static boolean VariableRefName(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "VariableRefName")) return false;
-    if (!nextTokenIs(builder_, VARIABLE_CHAR)) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = VariableRefName_0(builder_, level_ + 1);
-    result_ = result_ && VariableName(builder_, level_ + 1);
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
-  }
-
-  // NamespaceName?
-  private static boolean VariableRefName_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "VariableRefName_0")) return false;
-    NamespaceName(builder_, level_ + 1);
     return true;
   }
 
@@ -2159,14 +2277,16 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CommandExpression | SingleQuoted | DoubleQuoted | VariableRef | ExceptionCapture | OutputCapture
+  // NamespaceCommandExpression | CommandExpression | SingleQuoted | DoubleQuoted | NamespaceVariableRef | VariableRef | ExceptionCapture | OutputCapture
   public static boolean head(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "head")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, HEAD, "<head>");
-    result_ = CommandExpression(builder_, level_ + 1);
+    result_ = NamespaceCommandExpression(builder_, level_ + 1);
+    if (!result_) result_ = CommandExpression(builder_, level_ + 1);
     if (!result_) result_ = SingleQuoted(builder_, level_ + 1);
     if (!result_) result_ = DoubleQuoted(builder_, level_ + 1);
+    if (!result_) result_ = NamespaceVariableRef(builder_, level_ + 1);
     if (!result_) result_ = VariableRef(builder_, level_ + 1);
     if (!result_) result_ = ExceptionCapture(builder_, level_ + 1);
     if (!result_) result_ = OutputCapture(builder_, level_ + 1);

@@ -17,6 +17,9 @@ public interface ElvishAssignment extends ElvishPsiElement {
   List<ElvishIndexSingle> getIndexSingleList();
 
   @NotNull
+  List<ElvishNamespaceVariable> getNamespaceVariableList();
+
+  @NotNull
   List<ElvishVariable> getVariableList();
 
 }

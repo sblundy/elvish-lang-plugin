@@ -28,14 +28,8 @@ public class ElvishCommandExpressionImpl extends ElvishCommandExpressionBase imp
 
   @Override
   @NotNull
-  public ElvishCommandBareword getCommandBareword() {
+  public ElvishCommandBareword getCommandName() {
     return findNotNullChildByClass(ElvishCommandBareword.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishNamespaceName getNamespaceName() {
-    return findChildByClass(ElvishNamespaceName.class);
   }
 
 }

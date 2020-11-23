@@ -22,3 +22,15 @@ object ElvishPsiUtils {
         )
     }
 }
+
+fun ElvishNamespaceIdentifier.matches(other: ElvishNamespaceIdentifier): Boolean {
+    return when (this) {
+        is ElvishLocalNamespace -> (other is ElvishLocalNamespace)
+        is ElvishUpNamespace -> (other is ElvishUpNamespace)
+        is ElvishExternalsNamespace -> (other is ElvishExternalsNamespace)
+        is ElvishEnvVarNamespace -> (other is ElvishEnvVarNamespace)
+        is ElvishBuiltinNamespace -> (other is ElvishBuiltinNamespace)
+        is ElvishNamespaceName -> (other is ElvishNamespaceName) && this.textMatches(other)
+        else -> false
+    }
+}

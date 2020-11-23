@@ -46,6 +46,18 @@ public class ElvishHeadImpl extends ASTWrapperElvishPsiElement implements Elvish
 
   @Override
   @Nullable
+  public ElvishNamespaceCommandExpression getNamespaceCommandExpression() {
+    return findChildByClass(ElvishNamespaceCommandExpression.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishNamespaceVariableRef getNamespaceVariableRef() {
+    return findChildByClass(ElvishNamespaceVariableRef.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishOutputCapture getOutputCapture() {
     return findChildByClass(ElvishOutputCapture.class);
   }

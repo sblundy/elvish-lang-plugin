@@ -40,6 +40,12 @@ public class ElvishIndexRangeImpl extends ASTWrapperElvishPsiElement implements 
 
   @Override
   @NotNull
+  public List<ElvishNamespaceVariableRef> getNamespaceVariableRefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishNamespaceVariableRef.class);
+  }
+
+  @Override
+  @NotNull
   public List<ElvishOutputCapture> getOutputCaptureList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishOutputCapture.class);
   }

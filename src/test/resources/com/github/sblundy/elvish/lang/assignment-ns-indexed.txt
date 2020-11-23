@@ -1,7 +1,7 @@
 Elvish File
   ElvishChunkImpl(CHUNK)
     ElvishAssignmentImpl(ASSIGNMENT)
-      ElvishVariableImpl(VARIABLE)
+      ElvishNamespaceVariableImpl(NAMESPACE_VARIABLE)
         ElvishNamespaceNameImpl(NAMESPACE_NAME)
           ElvishVariableNameImpl(VARIABLE_NAME)
             PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')

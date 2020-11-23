@@ -17,6 +17,12 @@ public interface ElvishHead extends ElvishPsiElement {
   ElvishExceptionCapture getExceptionCapture();
 
   @Nullable
+  ElvishNamespaceCommandExpression getNamespaceCommandExpression();
+
+  @Nullable
+  ElvishNamespaceVariableRef getNamespaceVariableRef();
+
+  @Nullable
   ElvishOutputCapture getOutputCapture();
 
   @Nullable

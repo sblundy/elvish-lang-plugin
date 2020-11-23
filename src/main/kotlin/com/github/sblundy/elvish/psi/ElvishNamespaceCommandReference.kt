@@ -8,8 +8,8 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 import icons.ElvishIcons
 
-internal class ElvishNamespaceCommandReference(element: ElvishCommandExpressionBase, rangeInElement: TextRange?) :
-    PsiReferenceBase<ElvishCommandExpressionBase?>(element, rangeInElement, true) {
+internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandExpression, rangeInElement: TextRange?) :
+    PsiReferenceBase<ElvishNamespaceCommandExpression?>(element, rangeInElement, true) {
     private val log = logger<ElvishCommandReference>()
 
     override fun resolve(): PsiElement? {
@@ -19,8 +19,8 @@ internal class ElvishNamespaceCommandReference(element: ElvishCommandExpressionB
 
     private fun multiResolve(): Array<ResolveResult> {
         val climber = object : ElvishScopeClimber() {
-            val name = element.commandBareword
-            val ns = element.namespaceName!!
+            val name = element.commandName
+            val ns = element.namespaceIdentifier
             val declarations = mutableListOf<ElvishFunctionDeclaration>()
             override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
                 val d= when (s) {
@@ -43,7 +43,7 @@ internal class ElvishNamespaceCommandReference(element: ElvishCommandExpressionB
 
     override fun handleElementRename(name: String): PsiElement {
         val ne = ElvishPsiUtils.newNameElement(name, element.project)
-        element.commandBareword.replace(ne)
+        element.commandName.replace(ne)
         return element
     }
 

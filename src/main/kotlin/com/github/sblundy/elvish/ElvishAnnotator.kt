@@ -29,13 +29,13 @@ class ElvishAnnotator : Annotator {
             }
             else -> {
                 val attributes = when (element) {
-                    is ElvishCommandExpression -> if (element.isBuiltin()) {
-                        BUILTIN
-                    } else {
-                        COMMAND
-                    }
+                    is ElvishPsiBuiltinCommand -> BUILTIN
+                    is ElvishCommandExpression -> COMMAND
+                    is ElvishNamespaceCommandExpression -> COMMAND
                     is ElvishVariable -> VARIABLE
+                    is ElvishNamespaceVariable -> VARIABLE
                     is ElvishVariableRef -> VARIABLE_REF
+                    is ElvishNamespaceVariableRef -> VARIABLE_REF
                     is ElvishParameter -> PARAMETER
                     else -> null
                 }
@@ -46,8 +46,4 @@ class ElvishAnnotator : Annotator {
             }
         }
     }
-}
-
-fun ElvishCommandExpression.isBuiltin(): Boolean {
-    return namespaceName == null && project.getBuiltinScope()?.findFnCommands(this)?.isNotEmpty() == true
 }

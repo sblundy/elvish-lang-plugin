@@ -30,6 +30,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBuiltinNamespace(@NotNull ElvishBuiltinNamespace o) {
+    visitNamespaceIdentifier(o);
+  }
+
   public void visitChunk(@NotNull ElvishChunk o) {
     visitPsiElement(o);
   }
@@ -70,6 +74,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitEnvVarNamespace(@NotNull ElvishEnvVarNamespace o) {
+    visitNamespaceIdentifier(o);
+  }
+
   public void visitExceptBlock(@NotNull ElvishExceptBlock o) {
     visitLexicalScope(o);
   }
@@ -80,6 +88,10 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitExitusRedir(@NotNull ElvishExitusRedir o) {
     visitPsiElement(o);
+  }
+
+  public void visitExternalsNamespace(@NotNull ElvishExternalsNamespace o) {
+    visitNamespaceIdentifier(o);
   }
 
   public void visitFinallyBlock(@NotNull ElvishFinallyBlock o) {
@@ -131,6 +143,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitLocalNamespace(@NotNull ElvishLocalNamespace o) {
+    visitNamespaceIdentifier(o);
+  }
+
   public void visitLogicCommand(@NotNull ElvishLogicCommand o) {
     visitPsiElement(o);
   }
@@ -147,7 +163,23 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitNamespaceCommandExpression(@NotNull ElvishNamespaceCommandExpression o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamespaceIdentifier(@NotNull ElvishNamespaceIdentifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitNamespaceName(@NotNull ElvishNamespaceName o) {
+    visitNamespaceIdentifier(o);
+  }
+
+  public void visitNamespaceVariable(@NotNull ElvishNamespaceVariable o) {
+    visitVariableDeclaration(o);
+  }
+
+  public void visitNamespaceVariableRef(@NotNull ElvishNamespaceVariableRef o) {
     visitPsiElement(o);
   }
 
@@ -173,6 +205,10 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitTryCommand(@NotNull ElvishTryCommand o) {
     visitPsiElement(o);
+  }
+
+  public void visitUpNamespace(@NotNull ElvishUpNamespace o) {
+    visitNamespaceIdentifier(o);
   }
 
   public void visitUseCommand(@NotNull ElvishUseCommand o) {

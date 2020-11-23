@@ -9,24 +9,21 @@ import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.util.IncorrectOperationException
 import javax.swing.Icon
 
-abstract class ElvishVariableBase(node: ASTNode) : ASTWrapperElvishPsiElement(node), PsiNameIdentifierOwner {
-    override fun getNameIdentifier(): PsiElement? = variableName
+abstract class ElvishVariableBase(node: ASTNode) : ASTWrapperElvishPsiElement(node), PsiNameIdentifierOwner, ElvishVariable {
+    override fun getNameIdentifier(): PsiElement? = getVariableName()
 
-    override fun getName(): String? = variableName.text
+    override fun getName(): String? = getVariableName().text
 
     @Throws(IncorrectOperationException::class)
     override fun setName(name: String): PsiElement {
         val ne = newNameElement(name, project)
-        variableName.replace(ne)
+        getVariableName().replace(ne)
         return this
     }
 
-    override fun getTextOffset(): Int = variableName.textOffset
-
-    abstract val variableName: ElvishVariableName
-    abstract val namespaceName: ElvishNamespaceName?
+    override fun getTextOffset(): Int = getVariableName().textOffset
 
     override fun getIcon(flags: Int): Icon? = AllIcons.Nodes.Variable
 
-    override fun getPresentation(): ItemPresentation? = ElvishBasicItemPresentation(variableName.text, AllIcons.Nodes.Variable)
+    override fun getPresentation(): ItemPresentation? = ElvishBasicItemPresentation(getVariableName().text, AllIcons.Nodes.Variable)
 }

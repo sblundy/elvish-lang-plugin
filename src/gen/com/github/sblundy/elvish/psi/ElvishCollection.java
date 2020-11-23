@@ -17,6 +17,9 @@ public interface ElvishCollection extends ElvishPsiElement {
   ElvishMap getMap();
 
   @Nullable
+  ElvishNamespaceVariableRef getNamespaceVariableRef();
+
+  @Nullable
   ElvishOutputCapture getOutputCapture();
 
   @Nullable
