@@ -26,4 +26,10 @@ public class ElvishModuleAliasImpl extends ASTWrapperElvishPsiElement implements
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public ElvishVariableName getVariableName() {
+    return findNotNullChildByClass(ElvishVariableName.class);
+  }
+
 }

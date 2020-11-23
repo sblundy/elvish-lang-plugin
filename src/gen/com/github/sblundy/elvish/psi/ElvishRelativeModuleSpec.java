@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishRelativeModuleSpec extends ElvishPsiElement {
 
+  @NotNull
+  List<ElvishVariableName> getVariableNameList();
+
 }

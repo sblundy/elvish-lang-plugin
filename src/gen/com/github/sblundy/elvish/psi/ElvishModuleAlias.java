@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishModuleAlias extends ElvishPsiElement {
 
+  @NotNull
+  ElvishVariableName getVariableName();
+
 }

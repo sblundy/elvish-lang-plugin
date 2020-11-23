@@ -13,12 +13,8 @@ fun parseKeywordAsBareword(builder: PsiBuilder, @Suppress("UNUSED_PARAMETER") le
     return GeneratedParserUtilBase.consumeToken(builder, ElvishTypes.BAREWORD_CHAR)
 }
 
-fun parseIfFlag(builder: PsiBuilder, level: Int, flagName: String, ifParser: GeneratedParserUtilBase.Parser): Boolean {
+fun ifFlag(builder: PsiBuilder, level: Int, flagName: String): Boolean {
     val version = getLanguageLevel(builder)
     val flag = LanguageParseFlag.valueOf(flagName)
-    return if (version == null || version.parseFlags.contains(flag)) {
-        ifParser.parse(builder, level)
-    } else {
-        false
-    }
+    return version == null || version.parseFlags.contains(flag)
 }

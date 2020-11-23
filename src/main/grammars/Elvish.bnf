@@ -127,7 +127,7 @@ private Index ::= OPEN_BRACKET (IndexRange | IndexSingle) CLOSE_BRACKET
 private IndexValue ::= VariableName | SingleQuoted | DoubleQuoted | NamespaceVariableRef | VariableRef | ExceptionCapture | OutputCapture
 IndexSingle ::= IndexValue+
 IndexRange ::= IndexValue+ IndexRangeSeparator IndexValue+
-private IndexRangeSeparator ::= COLON | <<parseIfFlag "NewSliceIndex" NewSliceIndexString>>
+private IndexRangeSeparator ::= COLON | &NewSliceIndexFlag NewSliceIndexString
 private NewSliceIndexString ::= '..=' | '..'
 Array ::= ArraySpace* (Compound ArraySpace*)*
 private ArraySpace ::= Space | EOL
@@ -203,7 +203,11 @@ FnCommand ::= KEYWORD_FN Space VariableName Space LambdaArguments? OPEN_BRACE Ch
 }
 UseCommand ::= KEYWORD_USE Space (RelativeModuleSpec | LibModuleSpec) (Space ModuleAlias)?
 LibModuleSpec ::= (VARIABLE_CHAR+'.')* ModulePathSegment* (VariableName COLON)* VariableName
-RelativeModuleSpec ::= <<parseIfFlag "UseRelativeModules" RelativeModuleSpecInner>>
+RelativeModuleSpec ::= &UseRelativeModulesFlag RelativeModuleSpecInner
 private RelativeModuleSpecInner ::= ('./' | '../') (ModulePathSegment | './' | '../')* (VariableName COLON)* VariableName
 private ModulePathSegment ::= VARIABLE_CHAR+ BACKSLASH
-ModuleAlias ::= <<parseIfFlag "UseWithOptionalRename" VariableName>>
+ModuleAlias ::= &UseWithOptionalRenameFlag VariableName
+
+private external UseWithOptionalRenameFlag ::= ifFlag "UseWithOptionalRename"
+private external UseRelativeModulesFlag ::= ifFlag "UseRelativeModules"
+private external NewSliceIndexFlag ::= ifFlag "NewSliceIndex"
