@@ -17,6 +17,127 @@
         "styled",
         "styled-segment"
       ]
+    },
+    "modules": {
+      "edit": {
+        "variables": {
+          "removed": [
+            "-matcher",
+            "loc-pinned",
+            "loc-hidden"
+          ]
+        },
+        "modules": {
+          "completion": {
+            "variables": {
+              "added": [
+                "arg-completer"
+              ]
+            }
+          },
+          "history": {
+            "functions": {
+              "added": [
+                "fast-forward"
+              ]
+            }
+          },
+          "location": {
+            "variables": {
+              "added": [
+                "hidden",
+                "pinned"
+              ]
+            }
+          }
+        }
+      },
+      "epm": {
+        "functions": {
+          "added": [
+            "-debug",
+            "-domain-config",
+            "-domain-config-file",
+            "-error",
+            "-first-upper",
+            "-info",
+            "-merge",
+            "-package-domain",
+            "-package-metadata-file",
+            "-package-method",
+            "-package-op",
+            "-package-without-domain",
+            "-tilde-expand",
+            "-uninstall-package",
+            "-warn",
+            "-write-domain-config",
+            "dest",
+            "install",
+            "installed",
+            "is-installed",
+            "list",
+            "uninstall",
+            "upgrade",
+            "metadata",
+            "query"
+          ]
+        },
+        "variables": {
+          "added": [
+            "-data-dir",
+            "-default-domain-config",
+            "-lib-dir",
+            "debug-mode",
+            "-method-handler"
+          ]
+        },
+        "modules": {
+          "re": {
+            "functions": {
+              "added": [
+                "find",
+                "match",
+                "quote",
+                "replace",
+                "split"
+              ]
+            }
+          }
+        }
+      },
+      "store": {
+        "functions": {
+          "added": [
+            "del-dir"
+          ]
+        }
+      },
+      "str": {
+        "functions": {
+          "added": [
+            "compare",
+            "contains",
+            "contains-any",
+            "count",
+            "equal-fold",
+            "has-prefix",
+            "has-suffix",
+            "index",
+            "index-any",
+            "last-index",
+            "title",
+            "to-lower",
+            "to-title",
+            "to-upper",
+            "trim",
+            "trim-left",
+            "trim-prefix",
+            "trim-right",
+            "trim-space",
+            "trim-suffix"
+          ]
+        }
+      }
     }
   }
 }

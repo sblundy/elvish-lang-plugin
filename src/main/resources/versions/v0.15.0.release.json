@@ -16,6 +16,16 @@
         "-source",
         "esleep"
       ]
+    },
+    "modules": {
+      "str": {
+        "functions": {
+          "added": [
+            "from-codepoints",
+            "to-codepoints"
+          ]
+        }
+      }
     }
   },
   "parseFlags": {"added": ["NewSliceIndex"]}

@@ -19,7 +19,120 @@
         "only-bytes",
         "only-values"
       ]
+    },
+    "modules": {
+      "edit": {
+        "functions": {
+          "added": [
+            "close-listing",
+            "kill-word-left",
+            "kill-word-right"
+          ],
+          "removed": [
+            "-narrow-read",
+            "insert-key",
+            "styled"
+          ]
+        },
+        "modules": {
+          "completion": {
+            "functions": {
+              "removed": [
+                "default",
+                "trigger-filter"
+              ]
+            }
+          },
+          "history": {
+            "functions": {
+              "removed": [
+                "default",
+                "list"
+              ]
+            }
+          },
+          "insert": {
+            "functions": {
+              "removed": [
+                "default",
+                "start"
+              ]
+            }
+          },
+          "-instant": {
+            "functions": {
+              "added": [
+                "start"
+              ]
+            }
+          },
+          "lastcmd": {
+            "functions": {
+              "removed": [
+                "accept-line"
+              ]
+            }
+          },
+          "listing": {
+            "functions": {
+              "added": [
+                "start-custom"
+              ],
+              "removed": [
+                "backspace",
+                "default"
+              ]
+            }
+          },
+          "location": {
+            "functions": {
+              "removed": [
+                "match-dir-pattern"
+              ]
+            },
+            "variables": {
+              "removed": [
+                "matcher"
+              ]
+            }
+          },
+          "narrow": {
+            "functions": {
+              "removed": [
+                "accept",
+                "accept-close",
+                "backspace",
+                "default",
+                "down",
+                "down-cycle",
+                "page-down",
+                "page-up",
+                "toggle-ignore-case",
+                "toggle-ignore-duplication",
+                "up",
+                "up-cycle"
+              ]
+            },
+            "variables": {
+              "removed": [
+                "binding"
+              ]
+            }
+          },
+          "navigation": {
+            "functions": {
+              "removed": [
+                "default"
+              ]
+            }
+          }
+        }
+      }
     }
   },
-  "parseFlags": {"added": ["UseWithOptionalRename"]}
+  "parseFlags": {
+    "added": [
+      "UseWithOptionalRename"
+    ]
+  }
 }

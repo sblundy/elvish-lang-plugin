@@ -20,6 +20,94 @@
         "splits",
         "-time"
       ]
+    },
+    "modules": {
+      "edit": {
+        "variables": {
+          "added": [
+            "add-cmd-filters",
+            "exceptions",
+            "small-word-abbr"
+          ]
+        },
+        "modules": {
+          "navigation": {
+            "variables": {
+              "added": ["width-ratio"]
+            }
+          }
+        }
+      },
+      "math": {
+        "functions": {
+          "added": [
+            "abs",
+            "acos",
+            "acosh",
+            "asin",
+            "asinh",
+            "atan",
+            "atanh",
+            "ceil",
+            "cos",
+            "cosh",
+            "floor",
+            "is-inf",
+            "is-nan",
+            "log",
+            "log10",
+            "log2",
+            "max",
+            "min",
+            "pow",
+            "pow10",
+            "round",
+            "round-to-even",
+            "sin",
+            "sinh",
+            "sqrt",
+            "tan",
+            "tanh",
+            "trunc"
+          ]
+        },
+        "values": {
+          "added": [
+            "e",
+            "pi"
+          ]
+        }
+      },
+      "platform": {
+        "functions": {
+          "added": [
+            "hostname"
+          ]
+        },
+        "values": {
+          "added": [
+            "arch",
+            "is-unix",
+            "is-windows",
+            "os"
+          ]
+        }
+      },
+
+      "str": {
+        "functions": {
+          "added": [
+            "join"
+          ]
+        }
+      },
+      "unix": {
+        "variables": {
+          "added": [
+            "umask"
+          ]
+        }
+      }
     }
   },
   "parseFlags": {"added": ["CarrotContinuation", "UseRelativeModules"]}

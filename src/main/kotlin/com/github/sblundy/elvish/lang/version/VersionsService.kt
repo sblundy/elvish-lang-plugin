@@ -46,7 +46,8 @@ data class ElvishLanguageVersion(
 data class ElvishModule(
     val values: Map<String, ElvishValue>,
     val variables: Map<String, ElvishVariable>,
-    val functions: Map<String, ElvishFunction>
+    val functions: Map<String, ElvishFunction>,
+    val modules: Map<String, ElvishModule>
 )
 
 data class ElvishValue(val deprecated: Boolean = false)
@@ -90,7 +91,7 @@ private fun convertDefsToVersions(defs: Sequence<VersionDef>): List<ElvishLangua
     val vd = orderVersionDefs(defs)
     //TODO make this more resistant to non-linear version trees
     var versions = listOf<ElvishLanguageVersion>()
-    var previous = ElvishLanguageVersion("", ElvishModule(emptyMap(), emptyMap(), emptyMap()), release = false)
+    var previous = ElvishLanguageVersion("", ElvishModule(emptyMap(), emptyMap(), emptyMap(), emptyMap()), release = false)
     for (def in vd.reversed()) {
         val flags =
             (previous.parseFlags + def.parseFlags.added.map { LanguageParseFlag.valueOf(it) }) - def.parseFlags.removed.map {
@@ -135,10 +136,25 @@ private fun ElvishModule.applyDiff(diff: ModuleDef): ElvishModule {
         m[name] = ElvishFunction(deprecated = true)
         m
     }
+
+    val builtinModules = diff.modules.map {(name, modDiff) ->
+        val t = modules[name]?: ElvishModule(emptyMap(), emptyMap(), emptyMap(), emptyMap())
+        val mod = t.applyDiff(modDiff)
+        Pair(name, mod)
+    }.fold(modules.toMutableMap()) {
+        m, (name, mod) ->
+        if (mod.values.isEmpty() && mod.variables.isEmpty() && mod.functions.isEmpty() && mod.modules.isEmpty()) {
+            m.remove(name)
+        } else {
+            m[name] = mod
+        }
+        m
+    }
     return ElvishModule(
         builtinValues - diff.values.removed,
         builtinVariables - diff.variables.removed,
-        builtinFunctions - diff.functions.removed
+        builtinFunctions - diff.functions.removed,
+        builtinModules.toMap()
     )
 }
 
@@ -226,7 +242,8 @@ private data class VersionDef(
 private data class ModuleDef(
     val values: VersionChanges = VersionChanges(),
     val variables: VersionChanges = VersionChanges(),
-    val functions: VersionChanges = VersionChanges()
+    val functions: VersionChanges = VersionChanges(),
+    val modules: Map<String, ModuleDef> = emptyMap()
 )
 
 @Serializable

@@ -122,6 +122,277 @@
         "to-string",
         "wcswidth"
       ]
+    },
+    "modules": {
+      "edit": {
+        "functions": {
+          "added": [
+            "-dump-buf",
+            "-narrow-read",
+            "binding-table",
+            "command-history",
+            "complete-filename",
+            "complete-getopt",
+            "complete-sudo",
+            "complex-candidate",
+            "end-of-history",
+            "insert-at-dot",
+            "insert-key",
+            "insert-last-word",
+            "insert-raw",
+            "key",
+            "kill-line-left",
+            "kill-line-right",
+            "kill-rune-left",
+            "kill-rune-right",
+            "kill-small-word-left",
+            "kill-word-left",
+            "match-prefix",
+            "match-subseq",
+            "match-substr",
+            "move-dot-down",
+            "move-dot-eol",
+            "move-dot-left",
+            "move-dot-left-word",
+            "move-dot-right",
+            "move-dot-right-word",
+            "move-dot-sol",
+            "move-dot-up",
+            "redraw",
+            "replace-input",
+            "return-eof",
+            "return-line",
+            "smart-enter",
+            "styled",
+            "toggle-quote-paste",
+            "wordify"
+          ]
+        },
+        "variables": {
+          "added": [
+            "-dot",
+            "-prompt-eagerness",
+            "-rprompt-eagerness",
+            "abbr",
+            "after-readline",
+            "before-readline",
+            "current-command",
+            "max-height",          
+            "prompt",
+            "prompt-stale-threshold",
+            "prompt-stale-transform",
+            "rprompt",
+            "rprompt-persistent",
+            "rprompt-stale-threshold",
+            "rprompt-stale-transform",
+            "selected-file"
+          ]
+        },
+        "modules": {
+          "command": {
+            "functions": {
+              "added": [
+                "default",
+                "start"
+              ]
+            },
+            "variables": {
+              "added": [
+                "binding"
+              ]
+            }
+          },
+          "completion": {
+            "functions": {
+              "added": [
+                "accept",
+                "down-cycle",
+                "start,",
+                "left",
+                "trigger-filter",
+                "up",
+                "default",
+                "right",
+                "up-cycle",
+                "down",
+                "smart-start"
+              ]
+            },
+            "variables": {
+              "added": [
+                "binding",
+                "matcher"
+              ]
+            }
+          },
+          "histlist": {
+            "functions": {
+              "added": [
+                "start",
+                "toggle-case-sensitivity",
+                "toggle-dedup"
+              ]
+            },
+            "variables": {
+              "added": [
+                "binding"
+              ]
+            }
+          },
+          "history": {
+            "functions": {
+              "added": [
+                "default",
+                "down",
+                "down-or-quit",
+                "start",
+                "up"
+              ]
+            },
+            "variables": {
+              "added": [
+                "binding",
+                "list"
+              ]
+            }
+          },
+          "insert": {
+            "functions": {
+              "added": [
+                "default",
+                "start"
+              ]
+            },
+            "variables": {
+              "added": [
+                "binding"
+              ]
+            }
+          },
+          "lastcmd": {
+            "functions": {
+              "added": [
+                "accept-line",
+                "start"
+              ]
+            },
+            "variables": {
+              "added": [
+                "binding"
+              ]
+            }
+          },
+          "listing": {
+            "functions": {
+              "added": [
+                "accept",
+                "accept-close",
+                "backspace",
+                "default",
+                "down",
+                "down-cycle",
+                "page-down",
+                "page-up",
+                "up",
+                "up-cycle"
+              ]
+            },
+            "variables": {
+              "added": [
+                "binding"
+              ]
+            }
+          },
+          "location": {
+            "functions": {
+              "added": [
+                "match-dir-pattern",
+                "start"
+              ]
+            },
+            "variables": {
+              "added": [
+                "binding",
+                "matcher",
+                "workspaces"
+              ]
+            }
+          },
+          "narrow": {
+            "functions": {
+              "added": [
+                "accept",
+                "accept-close",
+                "backspace",
+                "default",
+                "down",
+                "down-cycle",
+                "page-down",
+                "page-up",
+                "toggle-ignore-case",
+                "toggle-ignore-duplication",
+                "up",
+                "up-cycle"
+              ]
+            },
+            "variables": {
+              "added": [
+                "binding"
+              ]
+            }
+          },
+          "navigation": {
+            "functions": {
+              "added": [
+                "default",
+                "down",
+                "file-preview-down",
+                "file-preview-up",
+                "insert-selected",
+                "insert-selected-and-quit",
+                "left",
+                "page-down",
+                "page-up",
+                "right",
+                "start",
+                "trigger-filter",
+                "trigger-shown-hidden",
+                "up"
+              ]
+            },
+            "variables": {
+              "added": [
+                "binding"
+              ]
+            }
+          }
+        }
+      },
+      "re": {
+        "functions": {
+          "added": [
+            "find",
+            "match",
+            "quote",
+            "replace",
+            "split"
+          ]
+        }
+      },
+      "readline-binding": {
+        "variables": {
+          "added": [
+            "b"
+          ]
+        }
+      },
+      "store": {
+        "functions": {
+          "added": [
+            "del-cmd"
+          ]
+        }
+      }
     }
   }
 }
