@@ -40,6 +40,11 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
 
+    <projectListeners>
+        <listener class="com.github.sblundy.elvish.lang.ReparseListener"
+                  topic="com.github.sblundy.elvish.settings.ElvishSettings$Listener"/>
+    </projectListeners>
+
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Elvish" language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishFileType" fieldName="INSTANCE" extensions="elv"/>
         <lang.parserDefinition language="Elvish" implementationClass="com.github.sblundy.elvish.lang.ElvishParserDefinition"/>
@@ -68,7 +73,6 @@
                          bundle="com.github.sblundy.elvish.ElvishBundle" key="inspection.deprecated.label"
                          implementationClass="com.github.sblundy.elvish.codeInspections.DeprecatedInspection"/>
     </extensions>
-
     <actions>
         <!-- Add your actions here -->
     </actions>

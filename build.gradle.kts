@@ -7,9 +7,9 @@ import org.jetbrains.intellij.tasks.PublishTask
 import org.jetbrains.intellij.tasks.RunIdeTask
 
 plugins {
-    id("org.jetbrains.intellij") version "0.6.2"
+    id("org.jetbrains.intellij") version "0.6.4"
     java
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.4.20"
     kotlin("plugin.serialization") version "1.4.10"
     id("org.jetbrains.grammarkit") version "2020.2.1"
 }

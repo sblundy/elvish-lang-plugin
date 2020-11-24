@@ -20,16 +20,16 @@ import javax.swing.JList
 private val DEFAULT_LANGUAGE_VERSION: ElvishLanguageVersion? = null
 
 class ElvishSettingsConfigurable internal constructor(private val project: Project) :
-    ConfigurableBase<ElvishSettingsConfigurableUi, ElvishSettings.ElvishLanguageOptions>("elvish", "Elvish", null),
+    ConfigurableBase<ElvishSettingsConfigurableUi, ElvishSettings>("elvish", "Elvish", null),
     SearchableConfigurable {
-    override fun getSettings(): ElvishSettings.ElvishLanguageOptions {
-        return ElvishSettings.getInstance(project).state
+    override fun getSettings(): ElvishSettings {
+        return ElvishSettings.getInstance(project)
     }
 
     override fun createUi(): ElvishSettingsConfigurableUi = ElvishSettingsConfigurableUi()
 }
 
-class ElvishSettingsConfigurableUi : ConfigurableUi<ElvishSettings.ElvishLanguageOptions> {
+class ElvishSettingsConfigurableUi : ConfigurableUi<ElvishSettings> {
     private val log = logger<ElvishSettingsConfigurableUi>()
     private val model = DefaultComboBoxModel(VersionsService.getInstance().versions.let {
         listOf(DEFAULT_LANGUAGE_VERSION).plus(it)
@@ -41,17 +41,17 @@ class ElvishSettingsConfigurableUi : ConfigurableUi<ElvishSettings.ElvishLanguag
             model.selectedItem = value
         }
 
-    override fun reset(settings: ElvishSettings.ElvishLanguageOptions) {
+    override fun reset(settings: ElvishSettings) {
         log.debug("in reset($settings)")
         selectedVersion = settings.languageVersion?.let { VersionsService.getInstance().getVersion(it) }
     }
 
-    override fun isModified(settings: ElvishSettings.ElvishLanguageOptions): Boolean {
+    override fun isModified(settings: ElvishSettings): Boolean {
         log.debug("in isModified($settings)/${model.selectedItem}")
         return selectedVersion != settings.languageVersion?.let { VersionsService.getInstance().getVersion(it) }
     }
 
-    override fun apply(settings: ElvishSettings.ElvishLanguageOptions) {
+    override fun apply(settings: ElvishSettings) {
         log.debug("in apply($settings)")
         settings.languageVersion = selectedVersion?.name
     }

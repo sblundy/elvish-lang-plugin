@@ -31,7 +31,7 @@ class ElvishParserDefinition : ParserDefinition {
             project?.let {
                 val settings = ElvishSettings.getInstance(project)
                 val vs = VersionsService.getInstance()
-                val version = settings.state.languageVersion?.let {
+                val version = settings.languageVersion?.let {
                     vs.getVersion(it) ?: vs.latestRelease
                 } ?: vs.latestRelease
                 version?.let { setLanguageLevel(builder, version) }
@@ -77,7 +77,7 @@ fun Project?.currentVersionParseFlags():EnumSet<LanguageParseFlag> {
     return this?.let {
         val settings = ElvishSettings.getInstance(this)
         val vs = VersionsService.getInstance()
-        val version = settings.state.languageVersion?.let {
+        val version = settings.languageVersion?.let {
             vs.getVersion(it) ?: vs.latestRelease
         } ?: vs.latestRelease
         version?.let { version.parseFlags }

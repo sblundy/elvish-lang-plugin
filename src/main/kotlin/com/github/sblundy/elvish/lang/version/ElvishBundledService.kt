@@ -20,6 +20,6 @@ class ElvishBundledService {
         val settings = ElvishSettings.getInstance(project)
         val vs = VersionsService.getInstance()
         //TODO warning on unknown version?
-        return settings.state.languageVersion?.let { vs.getVersion(it) ?: vs.latestRelease } ?: vs.latestRelease
+        return settings.languageVersion?.let { vs.getVersion(it) ?: vs.latestRelease } ?: vs.latestRelease
     }
 }
