@@ -64,6 +64,7 @@
         <projectConfigurable instance="com.github.sblundy.elvish.settings.ElvishSettingsConfigurable"
                              groupId="language"/>
         <projectService serviceImplementation="com.github.sblundy.elvish.settings.ElvishSettings"/>
+        <projectService serviceImplementation="com.github.sblundy.elvish.lang.BaseScopeHolder"/>
 
         <applicationService serviceImplementation="com.github.sblundy.elvish.lang.version.ElvishBundledService"/>
         <applicationService serviceImplementation="com.github.sblundy.elvish.lang.version.VersionsService" />
