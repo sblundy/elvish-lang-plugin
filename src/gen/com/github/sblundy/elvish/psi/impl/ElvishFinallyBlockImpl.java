@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishFinallyBlockImpl extends ASTWrapperElvishPsiElement implements ElvishFinallyBlock {
 
-  public ElvishFinallyBlockImpl(ASTNode node) {
+  public ElvishFinallyBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 

@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishRedirImpl extends ASTWrapperElvishPsiElement implements ElvishRedir {
 
-  public ElvishRedirImpl(ASTNode node) {
+  public ElvishRedirImpl(@NotNull ASTNode node) {
     super(node);
   }
 

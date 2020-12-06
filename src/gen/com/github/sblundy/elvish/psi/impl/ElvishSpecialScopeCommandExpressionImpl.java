@@ -8,12 +8,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ElvishSpecialScopeCommandExpressionBase;
 import com.github.sblundy.elvish.psi.*;
+import com.intellij.psi.PsiReference;
 
-public class ElvishSpecialScopeCommandExpressionImpl extends ElvishSpecialScopeCommandExpressionBase implements ElvishSpecialScopeCommandExpression {
+public class ElvishSpecialScopeCommandExpressionImpl extends ElvishCommandImpl implements ElvishSpecialScopeCommandExpression {
 
-  public ElvishSpecialScopeCommandExpressionImpl(ASTNode node) {
+  public ElvishSpecialScopeCommandExpressionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -34,8 +34,8 @@ public class ElvishSpecialScopeCommandExpressionImpl extends ElvishSpecialScopeC
 
   @Override
   @NotNull
-  public ElvishCommandBareword getCommandName() {
-    return findNotNullChildByClass(ElvishCommandBareword.class);
+  public PsiReference getReference() {
+    return ElvishPsiImplUtil.getReference(this);
   }
 
 }

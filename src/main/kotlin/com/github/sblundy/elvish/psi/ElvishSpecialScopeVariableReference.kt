@@ -18,7 +18,7 @@ internal abstract class ElvishSpecialScopeVariableReference<T: ElvishPsiElement>
     override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
         val declarations = when (getNamespaceIdentifier()) {
             is ElvishLocalNamespace -> {
-                val climber = object : ElvishVariableReference.VariableFinder(getVariableName()) {
+                val climber = object : ElvishVariableAssignmentReference.VariableFinder(getVariableName()) {
                     override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
                         super.visitScope(s, ctxt)
                         return false
@@ -28,7 +28,7 @@ internal abstract class ElvishSpecialScopeVariableReference<T: ElvishPsiElement>
                 climber.declarations
             }
             is ElvishUpNamespace -> {
-                val climber = ElvishVariableReference.VariableFinder(getVariableName())
+                val climber = ElvishVariableAssignmentReference.VariableFinder(getVariableName())
                 element.scope?.let { climber.climb(it) }
                 climber.declarations
             }
@@ -50,13 +50,13 @@ internal abstract class ElvishSpecialScopeVariableReference<T: ElvishPsiElement>
     override fun getVariants(): Array<Any> {
         val variants = when (getNamespaceIdentifier()) {
             is ElvishLocalNamespace -> {
-                val climber = ElvishVariableReference.VariableVariantFinder()
+                val climber = ElvishVariableAssignmentReference.VariableVariantFinder()
 
                 climber.climb(element)
                 climber.variants
             }
             is ElvishUpNamespace -> {
-                val climber = ElvishVariableReference.VariableVariantFinder()
+                val climber = ElvishVariableAssignmentReference.VariableVariantFinder()
 
                 climber.climb(element)
                 climber.variants

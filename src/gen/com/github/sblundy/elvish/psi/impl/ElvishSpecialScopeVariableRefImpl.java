@@ -8,12 +8,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ElvishSpecialScopeVariableRefBase;
 import com.github.sblundy.elvish.psi.*;
+import com.intellij.psi.PsiReference;
 
-public class ElvishSpecialScopeVariableRefImpl extends ElvishSpecialScopeVariableRefBase implements ElvishSpecialScopeVariableRef {
+public class ElvishSpecialScopeVariableRefImpl extends ElvishVariableReferenceImpl implements ElvishSpecialScopeVariableRef {
 
-  public ElvishSpecialScopeVariableRefImpl(ASTNode node) {
+  public ElvishSpecialScopeVariableRefImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -46,8 +46,8 @@ public class ElvishSpecialScopeVariableRefImpl extends ElvishSpecialScopeVariabl
 
   @Override
   @NotNull
-  public ElvishVariableName getVariableName() {
-    return findNotNullChildByClass(ElvishVariableName.class);
+  public PsiReference getReference() {
+    return ElvishPsiImplUtil.getReference(this);
   }
 
 }

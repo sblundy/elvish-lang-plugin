@@ -3,6 +3,7 @@ package com.github.sblundy.elvish.psi;
 
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.PsiNameIdentifierOwner;
 
 public class ElvishVisitor extends PsiElementVisitor {
 
@@ -95,7 +96,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitExternalVariableReference(@NotNull ElvishExternalVariableReference o) {
-    visitPsiElement(o);
+    visitVariableReference(o);
   }
 
   public void visitExternalsNamespace(@NotNull ElvishExternalsNamespace o) {
@@ -109,6 +110,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   public void visitFnCommand(@NotNull ElvishFnCommand o) {
     visitFunctionDeclaration(o);
     // visitLexicalScope(o);
+    // visitPsiNameIdentifierOwner(o);
   }
 
   public void visitForCommand(@NotNull ElvishForCommand o) {
@@ -160,8 +162,9 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitLocalScopeVariableAssignment(@NotNull ElvishLocalScopeVariableAssignment o) {
-    visitVariableDeclaration(o);
-    // visitVariableAssignment(o);
+    visitVariableAssignment(o);
+    // visitVariableDeclaration(o);
+    // visitPsiNameIdentifierOwner(o);
   }
 
   public void visitLogicCommand(@NotNull ElvishLogicCommand o) {
@@ -230,7 +233,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitSpecialScopeVariableRef(@NotNull ElvishSpecialScopeVariableRef o) {
-    visitPsiElement(o);
+    visitVariableReference(o);
   }
 
   public void visitTryCommand(@NotNull ElvishTryCommand o) {
@@ -250,8 +253,9 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitVariable(@NotNull ElvishVariable o) {
-    visitVariableDeclaration(o);
-    // visitVariableAssignment(o);
+    visitVariableAssignment(o);
+    // visitVariableDeclaration(o);
+    // visitPsiNameIdentifierOwner(o);
   }
 
   public void visitVariableAssignment(@NotNull ElvishVariableAssignment o) {
@@ -267,6 +271,10 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitVariableRef(@NotNull ElvishVariableRef o) {
+    visitVariableReference(o);
+  }
+
+  public void visitVariableReference(@NotNull ElvishVariableReference o) {
     visitPsiElement(o);
   }
 
@@ -284,6 +292,7 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitParameter(@NotNull ElvishParameter o) {
     visitVariableDeclaration(o);
+    // visitPsiNameIdentifierOwner(o);
   }
 
   public void visitPsiElement(@NotNull ElvishPsiElement o) {

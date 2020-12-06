@@ -14,21 +14,15 @@ public interface ElvishIndexRange extends ElvishPsiElement {
   List<ElvishExceptionCapture> getExceptionCaptureList();
 
   @NotNull
-  List<ElvishNamespaceVariableRef> getNamespaceVariableRefList();
-
-  @NotNull
   List<ElvishOutputCapture> getOutputCaptureList();
 
   @NotNull
   List<ElvishSingleQuoted> getSingleQuotedList();
 
   @NotNull
-  List<ElvishSpecialScopeVariableRef> getSpecialScopeVariableRefList();
-
-  @NotNull
   List<ElvishVariableName> getVariableNameList();
 
   @NotNull
-  List<ElvishVariableRef> getVariableRefList();
+  List<ElvishVariableReference> getVariableReferenceList();
 
 }

@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishNamespaceIdentifierImpl extends ASTWrapperElvishPsiElement implements ElvishNamespaceIdentifier {
 
-  public ElvishNamespaceIdentifierImpl(ASTNode node) {
+  public ElvishNamespaceIdentifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 

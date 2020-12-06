@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishExceptBlockImpl extends ElvishLexicalScopeImpl implements ElvishExceptBlock {
 
-  public ElvishExceptBlockImpl(ASTNode node) {
+  public ElvishExceptBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 

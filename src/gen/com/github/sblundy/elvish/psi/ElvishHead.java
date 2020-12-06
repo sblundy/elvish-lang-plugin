@@ -8,16 +8,13 @@ import com.intellij.psi.PsiElement;
 public interface ElvishHead extends ElvishPsiElement {
 
   @Nullable
-  ElvishCommandExpression getCommandExpression();
+  ElvishCommand getCommand();
 
   @Nullable
   ElvishDoubleQuoted getDoubleQuoted();
 
   @Nullable
   ElvishExceptionCapture getExceptionCapture();
-
-  @Nullable
-  ElvishNamespaceCommandExpression getNamespaceCommandExpression();
 
   @Nullable
   ElvishNamespaceVariableRef getNamespaceVariableRef();
@@ -27,9 +24,6 @@ public interface ElvishHead extends ElvishPsiElement {
 
   @Nullable
   ElvishSingleQuoted getSingleQuoted();
-
-  @Nullable
-  ElvishSpecialScopeCommandExpression getSpecialScopeCommandExpression();
 
   @Nullable
   ElvishSpecialScopeVariableRef getSpecialScopeVariableRef();

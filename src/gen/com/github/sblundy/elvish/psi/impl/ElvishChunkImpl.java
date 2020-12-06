@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishChunkImpl extends ASTWrapperElvishPsiElement implements ElvishChunk {
 
-  public ElvishChunkImpl(ASTNode node) {
+  public ElvishChunkImpl(@NotNull ASTNode node) {
     super(node);
   }
 

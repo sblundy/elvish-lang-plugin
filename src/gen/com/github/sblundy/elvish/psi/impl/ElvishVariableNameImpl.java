@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishVariableNameImpl extends ASTWrapperElvishPsiElement implements ElvishVariableName {
 
-  public ElvishVariableNameImpl(ASTNode node) {
+  public ElvishVariableNameImpl(@NotNull ASTNode node) {
     super(node);
   }
 

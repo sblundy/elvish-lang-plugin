@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishBarewordImpl extends ASTWrapperElvishPsiElement implements ElvishBareword {
 
-  public ElvishBarewordImpl(ASTNode node) {
+  public ElvishBarewordImpl(@NotNull ASTNode node) {
     super(node);
   }
 

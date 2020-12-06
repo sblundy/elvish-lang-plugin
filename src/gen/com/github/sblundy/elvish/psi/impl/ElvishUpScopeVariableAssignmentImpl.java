@@ -8,12 +8,14 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ElvishUpScopeVariableBase;
 import com.github.sblundy.elvish.psi.*;
+import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiReference;
+import javax.swing.Icon;
 
-public class ElvishUpScopeVariableAssignmentImpl extends ElvishUpScopeVariableBase implements ElvishUpScopeVariableAssignment {
+public class ElvishUpScopeVariableAssignmentImpl extends ElvishVariableAssignmentImpl implements ElvishUpScopeVariableAssignment {
 
-  public ElvishUpScopeVariableAssignmentImpl(ASTNode node) {
+  public ElvishUpScopeVariableAssignmentImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -28,14 +30,37 @@ public class ElvishUpScopeVariableAssignmentImpl extends ElvishUpScopeVariableBa
 
   @Override
   @NotNull
-  public ElvishVariableName getVariableName() {
-    return findNotNullChildByClass(ElvishVariableName.class);
+  public ElvishUpNamespace getNamespaceIdentifier() {
+    return findNotNullChildByClass(ElvishUpNamespace.class);
   }
 
   @Override
   @NotNull
-  public ElvishUpNamespace getNamespaceIdentifier() {
-    return findNotNullChildByClass(ElvishUpNamespace.class);
+  public String getName() {
+    return ElvishPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public int getTextOffset() {
+    return ElvishPsiImplUtil.getTextOffset(this);
+  }
+
+  @Override
+  @NotNull
+  public Icon getIcon(int p1) {
+    return ElvishPsiImplUtil.getIcon(this, p1);
+  }
+
+  @Override
+  @NotNull
+  public ItemPresentation getPresentation() {
+    return ElvishPsiImplUtil.getPresentation(this);
+  }
+
+  @Override
+  @Nullable
+  public PsiReference getReference() {
+    return ElvishPsiImplUtil.getReference(this);
   }
 
 }

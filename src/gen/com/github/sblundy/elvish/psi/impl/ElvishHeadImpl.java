@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishHeadImpl extends ASTWrapperElvishPsiElement implements ElvishHead {
 
-  public ElvishHeadImpl(ASTNode node) {
+  public ElvishHeadImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -28,8 +28,8 @@ public class ElvishHeadImpl extends ASTWrapperElvishPsiElement implements Elvish
 
   @Override
   @Nullable
-  public ElvishCommandExpression getCommandExpression() {
-    return findChildByClass(ElvishCommandExpression.class);
+  public ElvishCommand getCommand() {
+    return findChildByClass(ElvishCommand.class);
   }
 
   @Override
@@ -42,12 +42,6 @@ public class ElvishHeadImpl extends ASTWrapperElvishPsiElement implements Elvish
   @Nullable
   public ElvishExceptionCapture getExceptionCapture() {
     return findChildByClass(ElvishExceptionCapture.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishNamespaceCommandExpression getNamespaceCommandExpression() {
-    return findChildByClass(ElvishNamespaceCommandExpression.class);
   }
 
   @Override
@@ -66,12 +60,6 @@ public class ElvishHeadImpl extends ASTWrapperElvishPsiElement implements Elvish
   @Nullable
   public ElvishSingleQuoted getSingleQuoted() {
     return findChildByClass(ElvishSingleQuoted.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishSpecialScopeCommandExpression getSpecialScopeCommandExpression() {
-    return findChildByClass(ElvishSpecialScopeCommandExpression.class);
   }
 
   @Override

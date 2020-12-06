@@ -27,7 +27,7 @@ class ElvishFile(viewProvider: FileViewProvider): PsiFileBase(viewProvider, Elvi
     }
 
     override fun exportedVariables(): Collection<ElvishVariableDeclaration> {
-        return topLevelAssignments().flatMap { it.variableList }
+        return topLevelAssignments().flatMap { it.variableAssignmentList }.filterIsInstance(ElvishVariable::class.java)
     }
 
     override fun exportedFunctions(): Collection<ElvishFunctionDeclaration> {

@@ -8,8 +8,8 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 import icons.ElvishIcons
 
-internal class ElvishCommandReference(element: ElvishCommandExpressionBase, rangeInElement: TextRange?) :
-    PsiReferenceBase<ElvishCommandExpressionBase?>(element, rangeInElement, true) {
+internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInElement: TextRange?) :
+    PsiReferenceBase<ElvishCommandExpression?>(element, rangeInElement, true) {
     private val log = logger<ElvishCommandReference>()
 
     override fun resolve(): PsiElement? {

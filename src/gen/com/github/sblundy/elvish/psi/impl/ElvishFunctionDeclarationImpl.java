@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishFunctionDeclarationImpl extends ASTWrapperElvishPsiElement implements ElvishFunctionDeclaration {
 
-  public ElvishFunctionDeclarationImpl(ASTNode node) {
+  public ElvishFunctionDeclarationImpl(@NotNull ASTNode node) {
     super(node);
   }
 

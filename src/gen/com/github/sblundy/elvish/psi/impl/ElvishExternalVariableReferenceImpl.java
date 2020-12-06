@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishExternalVariableReferenceImpl extends ASTWrapperElvishPsiElement implements ElvishExternalVariableReference {
+public class ElvishExternalVariableReferenceImpl extends ElvishVariableReferenceImpl implements ElvishExternalVariableReference {
 
-  public ElvishExternalVariableReferenceImpl(ASTNode node) {
+  public ElvishExternalVariableReferenceImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -30,12 +29,6 @@ public class ElvishExternalVariableReferenceImpl extends ASTWrapperElvishPsiElem
   @NotNull
   public ElvishNamespaceIdentifier getNamespaceIdentifier() {
     return findNotNullChildByClass(ElvishNamespaceIdentifier.class);
-  }
-
-  @Override
-  @NotNull
-  public ElvishVariableName getVariableName() {
-    return findNotNullChildByClass(ElvishVariableName.class);
   }
 
 }

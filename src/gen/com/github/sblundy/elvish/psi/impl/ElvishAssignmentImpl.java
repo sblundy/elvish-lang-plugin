@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishAssignmentImpl extends ASTWrapperElvishPsiElement implements ElvishAssignment {
 
-  public ElvishAssignmentImpl(ASTNode node) {
+  public ElvishAssignmentImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -40,26 +40,8 @@ public class ElvishAssignmentImpl extends ASTWrapperElvishPsiElement implements 
 
   @Override
   @NotNull
-  public List<ElvishLocalScopeVariableAssignment> getLocalScopeVariableAssignmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLocalScopeVariableAssignment.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishNamespaceVariableAssignment> getNamespaceVariableAssignmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishNamespaceVariableAssignment.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishUpScopeVariableAssignment> getUpScopeVariableAssignmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishUpScopeVariableAssignment.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishVariable> getVariableList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariable.class);
+  public List<ElvishVariableAssignment> getVariableAssignmentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableAssignment.class);
   }
 
   @Override

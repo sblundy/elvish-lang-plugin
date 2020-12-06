@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishDoubleQuotedImpl extends ASTWrapperElvishPsiElement implements ElvishDoubleQuoted {
 
-  public ElvishDoubleQuotedImpl(ASTNode node) {
+  public ElvishDoubleQuotedImpl(@NotNull ASTNode node) {
     super(node);
   }
 

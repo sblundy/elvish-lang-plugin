@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishLexicalScopeImpl extends ASTWrapperElvishPsiElement implements ElvishLexicalScope {
 
-  public ElvishLexicalScopeImpl(ASTNode node) {
+  public ElvishLexicalScopeImpl(@NotNull ASTNode node) {
     super(node);
   }
 

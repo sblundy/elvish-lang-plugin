@@ -4,8 +4,9 @@ package com.github.sblundy.elvish.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiReference;
 
-public interface ElvishSpecialScopeVariableRef extends ElvishPsiElement {
+public interface ElvishSpecialScopeVariableRef extends ElvishVariableReference {
 
   @NotNull
   List<ElvishIndexRange> getIndexRangeList();
@@ -17,6 +18,6 @@ public interface ElvishSpecialScopeVariableRef extends ElvishPsiElement {
   ElvishNamespaceIdentifier getNamespaceIdentifier();
 
   @NotNull
-  ElvishVariableName getVariableName();
+  PsiReference getReference();
 
 }

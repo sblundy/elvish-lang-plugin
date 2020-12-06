@@ -9,10 +9,10 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 import icons.ElvishIcons
 
-internal class ElvishVariableReference(element: ElvishVariableRef, rangeInElement: TextRange?) :
+internal class ElvishVariableAssignmentReference(element: ElvishVariableRef, rangeInElement: TextRange?) :
     PsiReferenceBase<ElvishVariableRef?>(element, rangeInElement, true),
     PsiPolyVariantReference {
-    private val log = logger<ElvishVariableReference>()
+    private val log = logger<ElvishVariableAssignmentReference>()
 
     override fun resolve(): PsiElement? {
         val results = multiResolve(false)
@@ -77,38 +77,27 @@ internal class ElvishVariableReference(element: ElvishVariableRef, rangeInElemen
         }
 
         private fun ElvishFile.matchingVariables(): Collection<ElvishVariableDeclaration> {
-            return topLevelAssignments().flatMap { it.variableList.filter { vl -> vl.matches() } }
+            return topLevelAssignments().flatMap { it.variableAssignmentList.filterIsInstance(ElvishVariable::class.java).filter { vl -> vl.matches() } }
         }
 
         private fun ElvishChunk.matchingVariables(): Pair<Collection<ElvishVariableAssignment>, Boolean> {
-            val variables = assignmentList.flatMap { it.variableList.filter { vl -> vl.matches() } }
-            val upLocal = this.matchingUpLocalVariables()
-            if (upLocal.isEmpty() || !upLocal.any { it.second }) {
+            val variables = assignmentList.flatMap {
+                it.variableAssignmentList.filter { vl -> vl.matches() }
+            }
+            val anyLocal = variables.any {
+                it is ElvishLocalScopeVariableAssignment
+            }
+            val anyUp = variables.any { it is ElvishUpNamespace }
+            if (!anyLocal) {
                 return Pair(variables, true)
+            } else if (!anyUp) {
+                return Pair(variables, false)
             }
 
-            return Pair(variables + upLocal.mapNotNull {
-                if (it.second) {
-                    it.first
-                } else {
-                    null
-                }
-            }, false)
+            return Pair(variables.filterNot { it is ElvishUpNamespace }, false)
         }
 
-        fun ElvishChunk.matchingUpLocalVariables(): Collection<Pair<ElvishVariableAssignment, Boolean>> {
-            return assignmentList.flatMap {
-                it.upScopeVariableAssignmentList.filter { vl ->
-                    vl.variableName.textMatches(name)
-                }.mapNotNull { vl -> Pair(vl, false) }
-            } + assignmentList.flatMap {
-                it.localScopeVariableAssignmentList.filter { vl ->
-                    vl.variableName.textMatches(name)
-                }.map { vl -> Pair(vl, true) }
-            }
-        }
-
-        fun ElvishVariable.matches(): Boolean = variableName.textMatches(name)
+        fun ElvishVariableAssignment.matches(): Boolean = variableName.textMatches(name)
 
         fun ElvishParameter.matches(): Boolean = textMatches(name)
 
@@ -121,18 +110,18 @@ internal class ElvishVariableReference(element: ElvishVariableRef, rangeInElemen
         val variants = mutableListOf<LookupElement>()
         override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
             val variables = when (s) {
-                is ElvishFile -> s.topLevelAssignments().flatMap { it.variableList }
+                is ElvishFile -> s.topLevelAssignments().flatMap { it.variableAssignmentList }
                 is BuiltinScope -> s.findVariables(null)
-                is ElvishExceptBlock -> listOf(s.variable) + s.chunk.assignmentList.flatMap { it.variableList }
+                is ElvishExceptBlock -> listOf(s.variable) + s.chunk.assignmentList.flatMap { it.variableAssignmentList }
                 is ElvishFnCommand -> {
                     val p =s.lambdaArguments?.parameterList?: emptyList()
-                    p + s.chunk.assignmentList.flatMap { it.variableList }
+                    p + s.chunk.assignmentList.flatMap { it.variableAssignmentList }
                 }
                 is ElvishLambda -> {
                     val p = s.lambdaArguments?.parameterList?: emptyList()
-                    p + s.chunk.assignmentList.flatMap { it.variableList }
+                    p + s.chunk.assignmentList.flatMap { it.variableAssignmentList }
                 }
-                is ElvishLambdaBlock -> s.chunk.assignmentList.flatMap { it.variableList }
+                is ElvishLambdaBlock -> s.chunk.assignmentList.flatMap { it.variableAssignmentList }
                 else -> emptyList()
             }
             if (variables.isNotEmpty()) {

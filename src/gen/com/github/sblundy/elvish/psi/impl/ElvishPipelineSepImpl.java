@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishPipelineSepImpl extends ASTWrapperElvishPsiElement implements ElvishPipelineSep {
 
-  public ElvishPipelineSepImpl(ASTNode node) {
+  public ElvishPipelineSepImpl(@NotNull ASTNode node) {
     super(node);
   }
 

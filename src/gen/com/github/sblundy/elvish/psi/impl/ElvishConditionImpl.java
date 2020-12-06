@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishConditionImpl extends ASTWrapperElvishPsiElement implements ElvishCondition {
 
-  public ElvishConditionImpl(ASTNode node) {
+  public ElvishConditionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -34,26 +34,14 @@ public class ElvishConditionImpl extends ASTWrapperElvishPsiElement implements E
 
   @Override
   @Nullable
-  public ElvishNamespaceVariableRef getNamespaceVariableRef() {
-    return findChildByClass(ElvishNamespaceVariableRef.class);
-  }
-
-  @Override
-  @Nullable
   public ElvishOutputCapture getOutputCapture() {
     return findChildByClass(ElvishOutputCapture.class);
   }
 
   @Override
   @Nullable
-  public ElvishSpecialScopeVariableRef getSpecialScopeVariableRef() {
-    return findChildByClass(ElvishSpecialScopeVariableRef.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishVariableRef getVariableRef() {
-    return findChildByClass(ElvishVariableRef.class);
+  public ElvishVariableReference getVariableReference() {
+    return findChildByClass(ElvishVariableReference.class);
   }
 
 }

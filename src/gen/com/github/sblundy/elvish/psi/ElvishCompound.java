@@ -35,18 +35,12 @@ public interface ElvishCompound extends ElvishPsiElement {
   List<ElvishMap> getMapList();
 
   @NotNull
-  List<ElvishNamespaceVariableRef> getNamespaceVariableRefList();
-
-  @NotNull
   List<ElvishOutputCapture> getOutputCaptureList();
 
   @NotNull
   List<ElvishSingleQuoted> getSingleQuotedList();
 
   @NotNull
-  List<ElvishSpecialScopeVariableRef> getSpecialScopeVariableRefList();
-
-  @NotNull
-  List<ElvishVariableRef> getVariableRefList();
+  List<ElvishVariableReference> getVariableReferenceList();
 
 }

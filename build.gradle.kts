@@ -78,6 +78,13 @@ val generateParser = task<GenerateParser>("generateParser") {
     pathToParser = "/com/github/sblundy/elvish/lang/ElvishParser.java"
     pathToPsiRoot = "/com/github/sblundy/elvish/psi"
     purgeOldFiles = true
+    doFirst {
+        val f = project.files(sourceSets["main"].runtimeClasspath)
+        classpath += f
+    }
+    doLast {
+        println(classpath.files)
+    }
 }
 
 tasks.withType<KotlinCompile> {

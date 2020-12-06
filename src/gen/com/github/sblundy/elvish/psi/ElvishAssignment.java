@@ -14,16 +14,7 @@ public interface ElvishAssignment extends ElvishPsiElement {
   List<ElvishIndexSingle> getIndexSingleList();
 
   @NotNull
-  List<ElvishLocalScopeVariableAssignment> getLocalScopeVariableAssignmentList();
-
-  @NotNull
-  List<ElvishNamespaceVariableAssignment> getNamespaceVariableAssignmentList();
-
-  @NotNull
-  List<ElvishUpScopeVariableAssignment> getUpScopeVariableAssignmentList();
-
-  @NotNull
-  List<ElvishVariable> getVariableList();
+  List<ElvishVariableAssignment> getVariableAssignmentList();
 
   @Nullable
   ElvishCompound getValue();

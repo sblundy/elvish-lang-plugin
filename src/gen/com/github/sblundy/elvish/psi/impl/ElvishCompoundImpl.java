@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishCompoundImpl extends ASTWrapperElvishPsiElement implements ElvishCompound {
 
-  public ElvishCompoundImpl(ASTNode node) {
+  public ElvishCompoundImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -82,12 +82,6 @@ public class ElvishCompoundImpl extends ASTWrapperElvishPsiElement implements El
 
   @Override
   @NotNull
-  public List<ElvishNamespaceVariableRef> getNamespaceVariableRefList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishNamespaceVariableRef.class);
-  }
-
-  @Override
-  @NotNull
   public List<ElvishOutputCapture> getOutputCaptureList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishOutputCapture.class);
   }
@@ -100,14 +94,8 @@ public class ElvishCompoundImpl extends ASTWrapperElvishPsiElement implements El
 
   @Override
   @NotNull
-  public List<ElvishSpecialScopeVariableRef> getSpecialScopeVariableRefList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishSpecialScopeVariableRef.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishVariableRef> getVariableRefList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableRef.class);
+  public List<ElvishVariableReference> getVariableReferenceList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableReference.class);
   }
 
 }

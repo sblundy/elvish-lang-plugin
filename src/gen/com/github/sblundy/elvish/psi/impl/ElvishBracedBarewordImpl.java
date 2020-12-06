@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishBracedBarewordImpl extends ASTWrapperElvishPsiElement implements ElvishBracedBareword {
 
-  public ElvishBracedBarewordImpl(ASTNode node) {
+  public ElvishBracedBarewordImpl(@NotNull ASTNode node) {
     super(node);
   }
 

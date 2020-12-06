@@ -10,6 +10,7 @@
 
   psiClassPrefix="Elvish"
   psiImplClassSuffix="Impl"
+  psiImplUtilClass="com.github.sblundy.elvish.psi.ElvishPsiImplUtil"
   psiPackage="com.github.sblundy.elvish.psi"
   psiImplPackage="com.github.sblundy.elvish.psi.impl"
 
@@ -76,7 +77,10 @@ private AssignmentOnlyForm ::= Space? Assignment Space?
 
 fake LexicalScope ::= {}
 fake NamespaceIdentifier ::= {}
-fake ExternalVariableReference ::= NamespaceIdentifier VariableName
+fake VariableReference ::= VariableName
+fake ExternalVariableReference ::= NamespaceIdentifier VariableName {
+  extends=VariableReference
+}
 fake VariableDeclaration ::= VariableName
 fake VariableAssignment ::= VariableName
 fake FunctionDeclaration ::= VariableName {
@@ -87,28 +91,29 @@ SingleQuoted ::= SINGLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_T
 DoubleQuoted ::= DOUBLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* DOUBLE_QUOTE
 private Primary ::= Bareword | SingleQuoted | DoubleQuoted | SpecialScopeVariableRef | NamespaceVariableRef | VariableRef | WILDCARD | TILDE | ExceptionCapture | OutputCapture | Lambda | List | Map | Braced
 Variable ::= VariableName {
-  extends="com.github.sblundy.elvish.psi.ElvishVariableBase"
+  extends="VariableAssignment"
   implements=[
    "VariableDeclaration"
-   "VariableAssignment"
+   "com.intellij.psi.PsiNameIdentifierOwner"
   ]
+  methods=[getNameIdentifier getName setName getTextOffset getIcon getPresentation]
 }
 LocalScopeVariableAssignment ::= LocalNamespace VariableName {
-  extends="com.github.sblundy.elvish.psi.ElvishVariableBase"
+  extends="VariableAssignment"
   implements=[
    "VariableDeclaration"
-   "VariableAssignment"
+   "com.intellij.psi.PsiNameIdentifierOwner"
   ]
-  methods=[NamespaceIdentifier="LocalNamespace"]
+  methods=[NamespaceIdentifier="LocalNamespace" getNameIdentifier getName setName getTextOffset getIcon getPresentation]
 }
 UpScopeVariableAssignment ::= UpNamespace VariableName {
-  extends="com.github.sblundy.elvish.psi.ElvishUpScopeVariableBase"
-  implements="VariableAssignment"
-  methods=[NamespaceIdentifier="UpNamespace"]
+  extends="VariableAssignment"
+  methods=[NamespaceIdentifier="UpNamespace" getName getTextOffset getIcon getPresentation getReference]
 }
 NamespaceVariableAssignment ::= (EnvVarNamespace | BuiltinNamespace | NamespaceName) VariableName {
-  extends="com.github.sblundy.elvish.psi.ElvishNamespaceVariableBase"
-  implements=["VariableAssignment" "ExternalVariableReference" ]
+  extends="VariableAssignment"
+  implements="ExternalVariableReference"
+  methods=[getName isWritable getTextOffset getIcon getPresentation getReference]
 }
 NamespaceName ::= (VariableName COLON)+ {
   extends="NamespaceIdentifier"
@@ -130,14 +135,17 @@ BuiltinNamespace ::= 'builtin:' {
 }
 VariableName ::= VARIABLE_CHAR+
 VariableRef ::= DOLLAR_SIGN AT_SYMBOL? VariableName Index* {
-  extends="com.github.sblundy.elvish.psi.ElvishVariableRefBase"
+  extends=VariableReference
+  methods=[getReference]
+
 }
 SpecialScopeVariableRef ::= DOLLAR_SIGN AT_SYMBOL? (LocalNamespace | UpNamespace) VariableName Index* {
-  extends="com.github.sblundy.elvish.psi.ElvishSpecialScopeVariableRefBase"
+  extends=VariableReference
+  methods=[getReference]
 }
 NamespaceVariableRef ::= DOLLAR_SIGN (EnvVarNamespace | BuiltinNamespace | NamespaceName) VariableName Index* {
-  extends="com.github.sblundy.elvish.psi.ElvishNamespaceVariableRefBase"
-  implements="ExternalVariableReference"
+  extends="ExternalVariableReference"
+  methods=[getReference]
 }
 
 Bareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|BACKSLASH|COMMA|<<parseKeywordAsBareword>>)+
@@ -176,19 +184,16 @@ fake Command ::= CommandBareword {
   methods=[commandName="CommandBareword"]
 }
 CommandExpression ::= CommandBareword {
-  extends="com.github.sblundy.elvish.psi.ElvishCommandExpressionBase"
-  implements="Command"
-  methods=[commandName="CommandBareword"]
+  extends="Command"
+  methods=[commandName="CommandBareword" getReference]
 }
 SpecialScopeCommandExpression ::= (LocalNamespace | UpNamespace) CommandBareword {
-  extends="com.github.sblundy.elvish.psi.ElvishSpecialScopeCommandExpressionBase"
-  implements="Command"
-  methods=[commandName="CommandBareword"]
+  extends="Command"
+  methods=[commandName="CommandBareword" getReference]
 }
 NamespaceCommandExpression ::= (ExternalsNamespace | BuiltinNamespace | NamespaceName)  CommandBareword {
-  extends="com.github.sblundy.elvish.psi.ElvishNamespaceCommandExpressionBase"
-  implements="Command"
-  methods=[commandName="CommandBareword"]
+  extends="Command"
+  methods=[commandName="CommandBareword" getReference]
 }
 
 ExitusRedir ::= QUESTION '>' Space? Compound
@@ -204,8 +209,9 @@ Lambda ::= LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
 }
 LambdaArguments ::=OPEN_BRACKET Space? ((parameter | MapPair) Space?)* CLOSE_BRACKET
 parameter ::= AT_SYMBOL? VariableName {
-  extends="com.github.sblundy.elvish.psi.ElvishParameterBase"
-  implements="VariableDeclaration"
+  extends="VariableDeclaration"
+  implements=["com.intellij.psi.PsiNameIdentifierOwner"]
+  methods=[getNameIdentifier getName setName getIcon getPresentation]
 }
 Braced ::= OPEN_BRACE (Space | EOL)* BracedBareword (BracedSep* BracedBareword)* (Space | EOL)* CLOSE_BRACE
 BracedSep ::= (Space | EOL)* COMMA (Space | EOL)*
@@ -233,9 +239,9 @@ ExceptBlock ::= KEYWORD_EXCEPT Space Variable Space OPEN_BRACE Chunk CLOSE_BRACE
 }
 FinallyBlock ::= KEYWORD_FINALLY Space LambdaBlock
 FnCommand ::= KEYWORD_FN Space VariableName Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
-  extends="com.github.sblundy.elvish.psi.FnCommandBase"
-  implements=["FunctionDeclaration" "LexicalScope"]
-  methods=[commandName="VariableName"]
+  extends="FunctionDeclaration"
+  implements=["LexicalScope" "com.intellij.psi.PsiNameIdentifierOwner"]
+  methods=[commandName="VariableName" getNameIdentifier getName setName getTextOffset getIcon getPresentation]
 }
 UseCommand ::= KEYWORD_USE Space (RelativeModuleSpec | LibModuleSpec) (Space ModuleAlias)?
 fake ModuleSpec ::= {}
