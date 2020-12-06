@@ -44,13 +44,14 @@ public interface ElvishTypes {
   IElementType LIB_MODULE_SPEC = new ElvishElementType("LIB_MODULE_SPEC");
   IElementType LIST = new ElvishElementType("LIST");
   IElementType LOCAL_NAMESPACE = new ElvishElementType("LOCAL_NAMESPACE");
+  IElementType LOCAL_SCOPE_VARIABLE_ASSIGNMENT = new ElvishElementType("LOCAL_SCOPE_VARIABLE_ASSIGNMENT");
   IElementType LOGIC_COMMAND = new ElvishElementType("LOGIC_COMMAND");
   IElementType MAP = new ElvishElementType("MAP");
   IElementType MAP_PAIR = new ElvishElementType("MAP_PAIR");
   IElementType MODULE_ALIAS = new ElvishElementType("MODULE_ALIAS");
   IElementType NAMESPACE_COMMAND_EXPRESSION = new ElvishElementType("NAMESPACE_COMMAND_EXPRESSION");
   IElementType NAMESPACE_NAME = new ElvishElementType("NAMESPACE_NAME");
-  IElementType NAMESPACE_VARIABLE = new ElvishElementType("NAMESPACE_VARIABLE");
+  IElementType NAMESPACE_VARIABLE_ASSIGNMENT = new ElvishElementType("NAMESPACE_VARIABLE_ASSIGNMENT");
   IElementType NAMESPACE_VARIABLE_REF = new ElvishElementType("NAMESPACE_VARIABLE_REF");
   IElementType OUTPUT_CAPTURE = new ElvishElementType("OUTPUT_CAPTURE");
   IElementType PARAMETER = new ElvishElementType("PARAMETER");
@@ -58,8 +59,11 @@ public interface ElvishTypes {
   IElementType REDIR = new ElvishElementType("REDIR");
   IElementType RELATIVE_MODULE_SPEC = new ElvishElementType("RELATIVE_MODULE_SPEC");
   IElementType SINGLE_QUOTED = new ElvishElementType("SINGLE_QUOTED");
+  IElementType SPECIAL_SCOPE_COMMAND_EXPRESSION = new ElvishElementType("SPECIAL_SCOPE_COMMAND_EXPRESSION");
+  IElementType SPECIAL_SCOPE_VARIABLE_REF = new ElvishElementType("SPECIAL_SCOPE_VARIABLE_REF");
   IElementType TRY_COMMAND = new ElvishElementType("TRY_COMMAND");
   IElementType UP_NAMESPACE = new ElvishElementType("UP_NAMESPACE");
+  IElementType UP_SCOPE_VARIABLE_ASSIGNMENT = new ElvishElementType("UP_SCOPE_VARIABLE_ASSIGNMENT");
   IElementType USE_COMMAND = new ElvishElementType("USE_COMMAND");
   IElementType VARIABLE = new ElvishElementType("VARIABLE");
   IElementType VARIABLE_NAME = new ElvishElementType("VARIABLE_NAME");
@@ -219,6 +223,9 @@ public interface ElvishTypes {
       else if (type == LOCAL_NAMESPACE) {
         return new ElvishLocalNamespaceImpl(node);
       }
+      else if (type == LOCAL_SCOPE_VARIABLE_ASSIGNMENT) {
+        return new ElvishLocalScopeVariableAssignmentImpl(node);
+      }
       else if (type == LOGIC_COMMAND) {
         return new ElvishLogicCommandImpl(node);
       }
@@ -237,8 +244,8 @@ public interface ElvishTypes {
       else if (type == NAMESPACE_NAME) {
         return new ElvishNamespaceNameImpl(node);
       }
-      else if (type == NAMESPACE_VARIABLE) {
-        return new ElvishNamespaceVariableImpl(node);
+      else if (type == NAMESPACE_VARIABLE_ASSIGNMENT) {
+        return new ElvishNamespaceVariableAssignmentImpl(node);
       }
       else if (type == NAMESPACE_VARIABLE_REF) {
         return new ElvishNamespaceVariableRefImpl(node);
@@ -261,11 +268,20 @@ public interface ElvishTypes {
       else if (type == SINGLE_QUOTED) {
         return new ElvishSingleQuotedImpl(node);
       }
+      else if (type == SPECIAL_SCOPE_COMMAND_EXPRESSION) {
+        return new ElvishSpecialScopeCommandExpressionImpl(node);
+      }
+      else if (type == SPECIAL_SCOPE_VARIABLE_REF) {
+        return new ElvishSpecialScopeVariableRefImpl(node);
+      }
       else if (type == TRY_COMMAND) {
         return new ElvishTryCommandImpl(node);
       }
       else if (type == UP_NAMESPACE) {
         return new ElvishUpNamespaceImpl(node);
+      }
+      else if (type == UP_SCOPE_VARIABLE_ASSIGNMENT) {
+        return new ElvishUpScopeVariableAssignmentImpl(node);
       }
       else if (type == USE_COMMAND) {
         return new ElvishUseCommandImpl(node);

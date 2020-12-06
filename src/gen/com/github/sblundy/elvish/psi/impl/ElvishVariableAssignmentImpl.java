@@ -8,28 +8,22 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ElvishNamespaceVariableBase;
+import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishNamespaceVariableImpl extends ElvishNamespaceVariableBase implements ElvishNamespaceVariable {
+public class ElvishVariableAssignmentImpl extends ASTWrapperElvishPsiElement implements ElvishVariableAssignment {
 
-  public ElvishNamespaceVariableImpl(ASTNode node) {
+  public ElvishVariableAssignmentImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitNamespaceVariable(this);
+    visitor.visitVariableAssignment(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public ElvishNamespaceIdentifier getNamespaceIdentifier() {
-    return findNotNullChildByClass(ElvishNamespaceIdentifier.class);
   }
 
   @Override

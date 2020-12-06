@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishNamespaceCommandExpression extends ElvishPsiElement {
+public interface ElvishNamespaceCommandExpression extends ElvishCommand {
 
   @NotNull
   ElvishNamespaceIdentifier getNamespaceIdentifier();

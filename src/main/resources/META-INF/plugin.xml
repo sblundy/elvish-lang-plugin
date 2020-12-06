@@ -66,6 +66,9 @@
         <projectService serviceImplementation="com.github.sblundy.elvish.settings.ElvishSettings"/>
         <projectService serviceImplementation="com.github.sblundy.elvish.lang.BaseScopeHolder"/>
 
+        <projectService serviceImplementation="com.github.sblundy.elvish.lang.ModuleManager"/>
+        <applicationService serviceImplementation="com.github.sblundy.elvish.lang.ElvishGlobalLibraryManager"/>
+
         <applicationService serviceImplementation="com.github.sblundy.elvish.lang.version.ElvishBundledService"/>
         <applicationService serviceImplementation="com.github.sblundy.elvish.lang.version.VersionsService" />
 

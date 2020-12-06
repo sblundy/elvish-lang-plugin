@@ -1,3 +1,4 @@
+use ./yy
 yy:x<caret>x = 'a'
 
 echo $yy:xx

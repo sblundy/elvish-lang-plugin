@@ -18,25 +18,21 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
     }
 
     private fun multiResolve(): Array<ResolveResult> {
-        val climber = object : ElvishScopeClimber() {
-            val name = element.commandName
-            val ns = element.namespaceIdentifier
-            val declarations = mutableListOf<ElvishFunctionDeclaration>()
-            override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
-                val d= when (s) {
-                    is BuiltinScope -> s.findFnCommands(ns, name)
-                    else -> emptyList()
-                }
-                if (d.isNotEmpty()) {
-                    declarations += d
-                }
-                return d.isEmpty()
+        val declarations = when (element.namespaceIdentifier) {
+            is ElvishBuiltinNamespace -> {
+                element.project.getBuiltinScope()?.findFnCommands(element.commandName) ?: emptyList()
             }
+            is ElvishNamespaceName -> {
+                val climber = NamespaceModuleFinder(element.namespaceIdentifier as ElvishNamespaceName, element.project)
+                climber.climb(element)
+                climber.declarations.mapNotNull {
+                    it?.exportedFunction(element.commandName)
+                }
+            }
+            else -> emptyList()//TODO handle?
         }
 
-        climber.climb(element)
-
-        return climber.declarations.map { declaration ->
+        return declarations.map { declaration ->
             PsiElementResolveResult(declaration)
         }.toTypedArray()
     }
@@ -48,33 +44,35 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
     }
 
     override fun getVariants(): Array<Any> {
-        val climber = object : ElvishScopeClimber() {
-            val variants = mutableListOf<LookupElement>()
-            override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
-                val functions:Collection<ElvishFunctionDeclaration> = when (s) {
-                    is ElvishFile -> s.topLevelFunctionsDeclarations().toList()
-                    is BuiltinScope -> s.findFnCommands(null)
-                    is ElvishLambdaBlock -> s.chunk.fnCommandList
-                    else -> emptyList()
-                }
-
-                if (functions.isNotEmpty()) {
-                    variants += functions.mapNotNull { when (it) {
-                        is ElvishFnCommand -> it.toLookupElement()
+        val variants = when (element.namespaceIdentifier) {
+            is ElvishBuiltinNamespace -> {
+                element.project.getBuiltinScope()?.findFnCommands(null)?.mapNotNull {
+                    when (it) {
                         is ElvishPsiBuiltinCommand -> it.toLookupElement()
                         else -> null
-                    } }
-                }
-                return true
+                    }
+                } ?: emptyList()
             }
+            is ElvishNamespaceName -> {
+                val ns = element.namespaceIdentifier as ElvishNamespaceName
+                val climber = NamespaceModuleFinder(ns, element.project)
+
+                climber.climb(element)
+                climber.declarations.flatMap {
+                    it?.exportedFunctions()?: emptyList()
+                }.map {
+                    (it as ElvishFnCommand).toLookupElement(ns)
+                }
+            }
+            else -> emptyList() //TODO handle?
         }
-        climber.climb(element)
-        return climber.variants.toTypedArray()
+        return variants.toTypedArray()
     }
 }
 
-private fun ElvishFnCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, this.getCommandName().text).withIcon(AllIcons.Nodes.Function)
+private fun ElvishFnCommand.toLookupElement(ns: ElvishNamespaceName): LookupElement {
+    val fullText = ns.text + getCommandName().text
+    return LookupElementBuilder.create(this, fullText).withIcon(AllIcons.Nodes.Function)
 }
 
 private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {

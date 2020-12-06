@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishNamespaceVariableRef extends ElvishPsiElement {
+public interface ElvishNamespaceVariableRef extends ElvishExternalVariableReference {
 
   @NotNull
   List<ElvishIndexRange> getIndexRangeList();

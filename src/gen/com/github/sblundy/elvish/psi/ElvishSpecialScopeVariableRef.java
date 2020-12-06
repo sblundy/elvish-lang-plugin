@@ -5,7 +5,13 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishNamespaceVariable extends ElvishVariableDeclaration {
+public interface ElvishSpecialScopeVariableRef extends ElvishPsiElement {
+
+  @NotNull
+  List<ElvishIndexRange> getIndexRangeList();
+
+  @NotNull
+  List<ElvishIndexSingle> getIndexSingleList();
 
   @NotNull
   ElvishNamespaceIdentifier getNamespaceIdentifier();

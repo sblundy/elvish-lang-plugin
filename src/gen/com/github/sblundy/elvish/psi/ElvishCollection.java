@@ -23,6 +23,9 @@ public interface ElvishCollection extends ElvishPsiElement {
   ElvishOutputCapture getOutputCapture();
 
   @Nullable
+  ElvishSpecialScopeVariableRef getSpecialScopeVariableRef();
+
+  @Nullable
   ElvishVariableRef getVariableRef();
 
 }

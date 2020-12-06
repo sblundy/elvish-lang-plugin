@@ -58,6 +58,12 @@ public class ElvishCollectionImpl extends ASTWrapperElvishPsiElement implements 
 
   @Override
   @Nullable
+  public ElvishSpecialScopeVariableRef getSpecialScopeVariableRef() {
+    return findChildByClass(ElvishSpecialScopeVariableRef.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishVariableRef getVariableRef() {
     return findChildByClass(ElvishVariableRef.class);
   }

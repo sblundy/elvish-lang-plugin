@@ -100,6 +100,12 @@ public class ElvishCompoundImpl extends ASTWrapperElvishPsiElement implements El
 
   @Override
   @NotNull
+  public List<ElvishSpecialScopeVariableRef> getSpecialScopeVariableRefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishSpecialScopeVariableRef.class);
+  }
+
+  @Override
+  @NotNull
   public List<ElvishVariableRef> getVariableRefList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableRef.class);
   }

@@ -57,7 +57,7 @@ class ElvishRefactoringTest {
     @Test
     fun testRenameNamespacedVar() {
         runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishRefactoringTest-rename-ns-var.elv")
+            myFixture.configureByFiles(myFullDataPath + "ElvishRefactoringTest-rename-ns-var.elv", myFullDataPath + "yy.elv")
             myFixture.renameElementAtCaret("zz")
             myFixture.checkResultByFile(myFullDataPath + "ElvishRefactoringTest-rename-ns-var.elv", myFullDataPath + "ElvishRefactoringTest-rename-ns-var-after.elv", false)
         }

@@ -28,20 +28,14 @@ public class ElvishUseCommandImpl extends ASTWrapperElvishPsiElement implements 
 
   @Override
   @Nullable
-  public ElvishLibModuleSpec getLibModuleSpec() {
-    return findChildByClass(ElvishLibModuleSpec.class);
-  }
-
-  @Override
-  @Nullable
   public ElvishModuleAlias getModuleAlias() {
     return findChildByClass(ElvishModuleAlias.class);
   }
 
   @Override
-  @Nullable
-  public ElvishRelativeModuleSpec getRelativeModuleSpec() {
-    return findChildByClass(ElvishRelativeModuleSpec.class);
+  @NotNull
+  public ElvishModuleSpec getModuleSpec() {
+    return findNotNullChildByClass(ElvishModuleSpec.class);
   }
 
 }

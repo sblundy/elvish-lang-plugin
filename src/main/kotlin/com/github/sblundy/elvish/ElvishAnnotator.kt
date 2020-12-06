@@ -32,8 +32,7 @@ class ElvishAnnotator : Annotator {
                     is ElvishPsiBuiltinCommand -> BUILTIN
                     is ElvishCommandExpression -> COMMAND
                     is ElvishNamespaceCommandExpression -> COMMAND
-                    is ElvishVariable -> VARIABLE
-                    is ElvishNamespaceVariable -> VARIABLE
+                    is ElvishVariableAssignment -> VARIABLE
                     is ElvishVariableRef -> VARIABLE_REF
                     is ElvishNamespaceVariableRef -> VARIABLE_REF
                     is ElvishParameter -> PARAMETER

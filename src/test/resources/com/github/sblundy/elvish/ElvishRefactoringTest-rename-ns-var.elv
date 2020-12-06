@@ -1,3 +1,4 @@
+use ./yy
 yy:x<caret>x = 'a'
 xx = 'b'
 

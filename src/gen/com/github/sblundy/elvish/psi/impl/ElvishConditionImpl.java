@@ -46,6 +46,12 @@ public class ElvishConditionImpl extends ASTWrapperElvishPsiElement implements E
 
   @Override
   @Nullable
+  public ElvishSpecialScopeVariableRef getSpecialScopeVariableRef() {
+    return findChildByClass(ElvishSpecialScopeVariableRef.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishVariableRef getVariableRef() {
     return findChildByClass(ElvishVariableRef.class);
   }

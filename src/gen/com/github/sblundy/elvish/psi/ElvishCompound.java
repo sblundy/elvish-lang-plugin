@@ -44,6 +44,9 @@ public interface ElvishCompound extends ElvishPsiElement {
   List<ElvishSingleQuoted> getSingleQuotedList();
 
   @NotNull
+  List<ElvishSpecialScopeVariableRef> getSpecialScopeVariableRefList();
+
+  @NotNull
   List<ElvishVariableRef> getVariableRefList();
 
 }

@@ -23,6 +23,9 @@ public interface ElvishIndexRange extends ElvishPsiElement {
   List<ElvishSingleQuoted> getSingleQuotedList();
 
   @NotNull
+  List<ElvishSpecialScopeVariableRef> getSpecialScopeVariableRefList();
+
+  @NotNull
   List<ElvishVariableName> getVariableNameList();
 
   @NotNull

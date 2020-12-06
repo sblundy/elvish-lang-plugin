@@ -42,7 +42,7 @@ internal class ElvishVariableReference(element: ElvishVariableRef, rangeInElemen
     }
 
     internal open class VariableFinder(private val name: ElvishVariableName): ElvishScopeClimber() {
-        val declarations = mutableListOf<ElvishVariableDeclaration>()
+        val declarations = mutableListOf<ElvishPsiElement>()
         override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
             val (d, c) = when (s) {
                 is ElvishFile -> Pair(s.matchingVariables(), true)
@@ -76,11 +76,11 @@ internal class ElvishVariableReference(element: ElvishVariableRef, rangeInElemen
             return c
         }
 
-        fun ElvishFile.matchingVariables(): Collection<ElvishVariableDeclaration> {
+        private fun ElvishFile.matchingVariables(): Collection<ElvishVariableDeclaration> {
             return topLevelAssignments().flatMap { it.variableList.filter { vl -> vl.matches() } }
         }
 
-        fun ElvishChunk.matchingVariables(): Pair<Collection<ElvishVariableDeclaration>, Boolean> {
+        private fun ElvishChunk.matchingVariables(): Pair<Collection<ElvishVariableAssignment>, Boolean> {
             val variables = assignmentList.flatMap { it.variableList.filter { vl -> vl.matches() } }
             val upLocal = this.matchingUpLocalVariables()
             if (upLocal.isEmpty() || !upLocal.any { it.second }) {
@@ -96,25 +96,23 @@ internal class ElvishVariableReference(element: ElvishVariableRef, rangeInElemen
             }, false)
         }
 
-        fun ElvishChunk.matchingUpLocalVariables(): Collection<Pair<ElvishVariableDeclaration, Boolean>> {
+        fun ElvishChunk.matchingUpLocalVariables(): Collection<Pair<ElvishVariableAssignment, Boolean>> {
             return assignmentList.flatMap {
-                it.namespaceVariableList.filter { vl ->
-                    vl.getVariableName().textMatches(name)
-                }.mapNotNull { vl ->
-                    when (vl.namespaceIdentifier) {
-                        is ElvishLocalNamespace -> Pair(vl, true)
-                        is ElvishUpNamespace -> Pair(vl, false)
-                        else -> null
-                    }
-                }
+                it.upScopeVariableAssignmentList.filter { vl ->
+                    vl.variableName.textMatches(name)
+                }.mapNotNull { vl -> Pair(vl, false) }
+            } + assignmentList.flatMap {
+                it.localScopeVariableAssignmentList.filter { vl ->
+                    vl.variableName.textMatches(name)
+                }.map { vl -> Pair(vl, true) }
             }
         }
 
-        fun ElvishVariable.matches(): Boolean = getVariableName().textMatches(name)
+        fun ElvishVariable.matches(): Boolean = variableName.textMatches(name)
 
         fun ElvishParameter.matches(): Boolean = textMatches(name)
 
-        fun Pair<Collection<ElvishVariableDeclaration>, Boolean>.and(p: Pair<Collection<ElvishVariableDeclaration>, Boolean>): Pair<Collection<ElvishVariableDeclaration>, Boolean> {
+        fun Pair<Collection<ElvishVariableDeclaration>, Boolean>.and(p: Pair<Collection<ElvishVariableAssignment>, Boolean>): Pair<Collection<ElvishPsiElement>, Boolean> {
             return Pair(this.first + p.first, this.second && p.second)
         }
     }

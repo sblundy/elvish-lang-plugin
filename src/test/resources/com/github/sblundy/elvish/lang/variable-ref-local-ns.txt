@@ -7,7 +7,7 @@ Elvish File
     PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
     ElvishArgumentImpl(ARGUMENT)
       ElvishCompoundImpl(COMPOUND)
-        ElvishNamespaceVariableRefImpl(NAMESPACE_VARIABLE_REF)
+        ElvishSpecialScopeVariableRefImpl(SPECIAL_SCOPE_VARIABLE_REF)
           PsiElement(ElvishTokenType.$)('$')
           ElvishLocalNamespaceImpl(LOCAL_NAMESPACE)
             PsiElement(ElvishTokenType.VARIABLE_CHAR)('local')

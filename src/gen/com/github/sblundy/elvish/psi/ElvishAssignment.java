@@ -7,9 +7,6 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishAssignment extends ElvishPsiElement {
 
-  @Nullable
-  ElvishCompound getCompound();
-
   @NotNull
   List<ElvishIndexRange> getIndexRangeList();
 
@@ -17,9 +14,18 @@ public interface ElvishAssignment extends ElvishPsiElement {
   List<ElvishIndexSingle> getIndexSingleList();
 
   @NotNull
-  List<ElvishNamespaceVariable> getNamespaceVariableList();
+  List<ElvishLocalScopeVariableAssignment> getLocalScopeVariableAssignmentList();
+
+  @NotNull
+  List<ElvishNamespaceVariableAssignment> getNamespaceVariableAssignmentList();
+
+  @NotNull
+  List<ElvishUpScopeVariableAssignment> getUpScopeVariableAssignmentList();
 
   @NotNull
   List<ElvishVariable> getVariableList();
+
+  @Nullable
+  ElvishCompound getValue();
 
 }

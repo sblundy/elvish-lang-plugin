@@ -1,3 +1,4 @@
+use ./yy
 yy:zz = 'a'
 xx = 'b'
 

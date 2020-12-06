@@ -70,6 +70,18 @@ public class ElvishHeadImpl extends ASTWrapperElvishPsiElement implements Elvish
 
   @Override
   @Nullable
+  public ElvishSpecialScopeCommandExpression getSpecialScopeCommandExpression() {
+    return findChildByClass(ElvishSpecialScopeCommandExpression.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishSpecialScopeVariableRef getSpecialScopeVariableRef() {
+    return findChildByClass(ElvishSpecialScopeVariableRef.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishVariableRef getVariableRef() {
     return findChildByClass(ElvishVariableRef.class);
   }

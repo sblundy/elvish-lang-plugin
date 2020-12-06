@@ -58,6 +58,12 @@ public class ElvishIndexSingleImpl extends ASTWrapperElvishPsiElement implements
 
   @Override
   @NotNull
+  public List<ElvishSpecialScopeVariableRef> getSpecialScopeVariableRefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishSpecialScopeVariableRef.class);
+  }
+
+  @Override
+  @NotNull
   public List<ElvishVariableName> getVariableNameList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableName.class);
   }

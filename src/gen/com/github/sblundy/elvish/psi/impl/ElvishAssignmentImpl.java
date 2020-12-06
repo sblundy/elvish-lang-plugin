@@ -27,12 +27,6 @@ public class ElvishAssignmentImpl extends ASTWrapperElvishPsiElement implements 
   }
 
   @Override
-  @Nullable
-  public ElvishCompound getCompound() {
-    return findChildByClass(ElvishCompound.class);
-  }
-
-  @Override
   @NotNull
   public List<ElvishIndexRange> getIndexRangeList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexRange.class);
@@ -46,14 +40,32 @@ public class ElvishAssignmentImpl extends ASTWrapperElvishPsiElement implements 
 
   @Override
   @NotNull
-  public List<ElvishNamespaceVariable> getNamespaceVariableList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishNamespaceVariable.class);
+  public List<ElvishLocalScopeVariableAssignment> getLocalScopeVariableAssignmentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLocalScopeVariableAssignment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishNamespaceVariableAssignment> getNamespaceVariableAssignmentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishNamespaceVariableAssignment.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishUpScopeVariableAssignment> getUpScopeVariableAssignmentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishUpScopeVariableAssignment.class);
   }
 
   @Override
   @NotNull
   public List<ElvishVariable> getVariableList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariable.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishCompound getValue() {
+    return findChildByClass(ElvishCompound.class);
   }
 
 }

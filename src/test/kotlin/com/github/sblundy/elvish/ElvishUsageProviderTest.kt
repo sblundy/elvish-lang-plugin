@@ -102,17 +102,17 @@ class ElvishUsageProviderTest {
     @Test
     fun testFindUsagesNamespacedVar() {
         runTest {
-            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-ns-var.elv")
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-ns-var.elv", myFullDataPath + "yy.elv")
 
             Assert.assertNotNull(usages)
-            Assert.assertEquals(1, usages.size)
+            Assert.assertEquals(2, usages.size)
         }
     }
 
     @Test
     fun testFindUsagesLocalNamespacedVar() {
         runTest {
-            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-local-scope.elv")?.filter { it.file?.name == "ElvishUsageProviderTest-local-scope.elv" }
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-local-scope.elv", myFullDataPath + "yy.elv").filter { it.file?.name == "ElvishUsageProviderTest-local-scope.elv" }
 
             Assert.assertNotNull(usages)
             Assert.assertEquals(1, usages.size)
@@ -121,12 +121,23 @@ class ElvishUsageProviderTest {
     }
 
     @Test
-    fun testFindUsagesUpNamespacedVar() {
+    fun testFindUsagesLocalNamespacedVarRef() {
         runTest {
-            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-up-scope.elv")?.filter { it.file?.name == "ElvishUsageProviderTest-up-scope.elv" }
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-local-scope-ref.elv", myFullDataPath + "yy.elv").filter { it.file?.name == "ElvishUsageProviderTest-local-scope-ref.elv" }
 
             Assert.assertNotNull(usages)
-            Assert.assertEquals(1, usages.size)
+            Assert.assertEquals(usages.mapNotNull { it.element?.text + "<${it.navigationOffset}>" }.joinToString(","), 1, usages.size)
+            Assert.assertEquals(41, usages.firstOrNull()?.navigationOffset)
+        }
+    }
+
+    @Test
+    fun testFindUsagesUpNamespacedVar() {
+        runTest {
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-up-scope.elv").filter { it.file?.name == "ElvishUsageProviderTest-up-scope.elv" }
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(usages.mapNotNull { it.element?.text }.joinToString(","), 1, usages.size)
             Assert.assertEquals(47, usages.firstOrNull()?.navigationOffset)
         }
     }

@@ -8,12 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishUseCommand extends ElvishPsiElement {
 
   @Nullable
-  ElvishLibModuleSpec getLibModuleSpec();
-
-  @Nullable
   ElvishModuleAlias getModuleAlias();
 
-  @Nullable
-  ElvishRelativeModuleSpec getRelativeModuleSpec();
+  @NotNull
+  ElvishModuleSpec getModuleSpec();
 
 }

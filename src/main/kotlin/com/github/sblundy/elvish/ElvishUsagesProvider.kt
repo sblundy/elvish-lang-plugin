@@ -10,18 +10,16 @@ class ElvishUsagesProvider : FindUsagesProvider {
 
     override fun getDescriptiveName(element: PsiElement): String {
         return when (element) {
-            is ElvishVariable -> element.text
-            is ElvishNamespaceVariable -> element.text
+            is ElvishVariableAssignment -> element.text
             is ElvishParameter -> element.text
-            is ElvishFnCommand -> element.getCommandName().text
+            is ElvishFnCommand -> element.commandName.text
             else -> ""
         }
     }
 
     override fun getType(element: PsiElement): String {
         return when (element) {
-            is ElvishVariable -> "variable"
-            is ElvishNamespaceVariable -> "variable"
+            is ElvishVariableAssignment -> "variable"
             is ElvishVariableRef -> "variable"
             is ElvishNamespaceVariableRef -> "variable"
             is ElvishParameter -> "parameter"
@@ -33,11 +31,10 @@ class ElvishUsagesProvider : FindUsagesProvider {
         }
     }
 
-    override fun getHelpId(psiElement: PsiElement): String? = HelpID.FIND_OTHER_USAGES
+    override fun getHelpId(psiElement: PsiElement): String = HelpID.FIND_OTHER_USAGES
 
     override fun canFindUsagesFor(psiElement: PsiElement): Boolean =
-        psiElement is ElvishVariable ||
-                psiElement is ElvishNamespaceVariable ||
+        psiElement is ElvishVariableAssignment ||
                 psiElement is ElvishParameter ||
                 psiElement is ElvishFnCommand ||
                 psiElement is ElvishPsiBuiltinCommand ||

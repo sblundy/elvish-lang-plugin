@@ -29,6 +29,12 @@ public interface ElvishHead extends ElvishPsiElement {
   ElvishSingleQuoted getSingleQuoted();
 
   @Nullable
+  ElvishSpecialScopeCommandExpression getSpecialScopeCommandExpression();
+
+  @Nullable
+  ElvishSpecialScopeVariableRef getSpecialScopeVariableRef();
+
+  @Nullable
   ElvishVariableRef getVariableRef();
 
 }
