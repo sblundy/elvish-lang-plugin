@@ -71,11 +71,11 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
                 climber.declarations.flatMap {
                     it?.exportedVariables() ?: emptyList()
                 }.map {
-                    (it as ElvishVariable).toLookupElement(ns)
+                    (it as ElvishVariable).toLookupElement()
                 } + climber.declarations.flatMap {
                     it?.exportedFunctions() ?: emptyList()
                 }.map {
-                    (it as ElvishFnCommand).toLookupElement(ns)
+                    (it as ElvishFnCommand).toLookupElement()
                 }
             }
             else -> emptyList() //TODO handle?
@@ -96,12 +96,10 @@ private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, "$name~").withIcon(ElvishIcons.BUILTIN_FUNCTION)
 }
 
-private fun ElvishVariable.toLookupElement(ns: ElvishNamespaceName): LookupElement {
-    val fullText = ns.text + variableName.text
-    return LookupElementBuilder.create(this, fullText).withIcon(AllIcons.Nodes.Variable)
+private fun ElvishVariable.toLookupElement(): LookupElement {
+    return LookupElementBuilder.create(this, variableName.text).withIcon(AllIcons.Nodes.Variable)
 }
 
-private fun ElvishFnCommand.toLookupElement(ns: ElvishNamespaceName): LookupElement {
-    val fullText = ns.text + commandName.text + "~"
-    return LookupElementBuilder.create(this, fullText).withIcon(AllIcons.Nodes.Function)
+private fun ElvishFnCommand.toLookupElement(): LookupElement {
+    return LookupElementBuilder.create(this, "${commandName.text}~").withIcon(AllIcons.Nodes.Function)
 }

@@ -61,7 +61,7 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
                 climber.declarations.flatMap {
                     it?.exportedFunctions()?: emptyList()
                 }.map {
-                    (it as ElvishFnCommand).toLookupElement(ns)
+                    (it as ElvishFnCommand).toLookupElement()
                 }
             }
             else -> emptyList() //TODO handle?
@@ -70,9 +70,8 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
     }
 }
 
-private fun ElvishFnCommand.toLookupElement(ns: ElvishNamespaceName): LookupElement {
-    val fullText = ns.text + getCommandName().text
-    return LookupElementBuilder.create(this, fullText).withIcon(AllIcons.Nodes.Function)
+private fun ElvishFnCommand.toLookupElement(): LookupElement {
+    return LookupElementBuilder.create(this, commandName.text).withIcon(AllIcons.Nodes.Function)
 }
 
 private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {

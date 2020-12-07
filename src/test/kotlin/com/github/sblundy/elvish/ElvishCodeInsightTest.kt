@@ -103,8 +103,8 @@ class ElvishCodeInsightTest {
 
             val lookupStrings = myFixture.lookupElementStrings?: listOf()
 
-            Assert.assertTrue(lookupStrings.contains("yy:xx"))
-            Assert.assertTrue(lookupStrings.contains("yy:yy~"))
+            Assert.assertTrue(lookupStrings.contains("xx"))
+            Assert.assertTrue(lookupStrings.contains("yy~"))
         }
     }
 
@@ -116,7 +116,7 @@ class ElvishCodeInsightTest {
 
             val lookupStrings = myFixture.lookupElementStrings?: listOf()
 
-            Assert.assertTrue(lookupStrings.contains("yy:yy"))
+            Assert.assertTrue(lookupStrings.contains("yy"))
         }
     }
 
