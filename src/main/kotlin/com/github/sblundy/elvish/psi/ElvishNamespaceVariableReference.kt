@@ -47,13 +47,21 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
     override fun getVariants(): Array<Any> {
         val variants = when (element.namespaceIdentifier) {
             is ElvishBuiltinNamespace -> {
-                element.project.getBuiltinScope()?.findVariables(null)?.mapNotNull {
-                    when (it) {
-                        is ElvishPsiBuiltinVariable -> it.toLookupElement()
-                        is ElvishPsiBuiltinValue -> it.toLookupElement()
-                        else -> null
+                element.project.getBuiltinScope()?.let { builtin ->
+                    builtin.findVariables(null).mapNotNull {
+                        when (it) {
+                            is ElvishPsiBuiltinVariable -> it.toLookupElement()
+                            is ElvishPsiBuiltinValue -> it.toLookupElement()
+                            else -> null
+                        }
+                    } + builtin.findFnCommands(null).mapNotNull {
+                        when (it) {
+                            is ElvishPsiBuiltinCommand -> it.toLookupElement()
+                            else -> null
+                        }
                     }
-                } ?: emptyList()
+
+                }?: emptyList()
             }
             is ElvishNamespaceName -> {
                 val ns = element.namespaceIdentifier as ElvishNamespaceName
@@ -82,6 +90,10 @@ private fun ElvishPsiBuiltinVariable.toLookupElement(): LookupElement {
 
 private fun ElvishPsiBuiltinValue.toLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.BUILTIN_VALUE)
+}
+
+private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
+    return LookupElementBuilder.create(this, "$name~").withIcon(ElvishIcons.BUILTIN_FUNCTION)
 }
 
 private fun ElvishVariable.toLookupElement(ns: ElvishNamespaceName): LookupElement {

@@ -1,0 +1,3 @@
+use ./yy
+
+yy:<caret>
