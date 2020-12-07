@@ -1,12 +1,9 @@
 package com.github.sblundy.elvish.psi
 
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.icons.AllIcons
 import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
-import icons.ElvishIcons
 
 internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInElement: TextRange?) :
     PsiReferenceBase<ElvishCommandExpression?>(element, rangeInElement, true) {
@@ -62,6 +59,7 @@ internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInE
     }
 
     internal class CommandVariantFinder(): ElvishScopeClimber() {
+        private val log = logger<CommandVariantFinder>()
         val variants = mutableListOf<LookupElement>()
         override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
             val functions:Collection<ElvishFunctionDeclaration> = when (s) {
@@ -75,18 +73,10 @@ internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInE
                 variants += functions.mapNotNull { when (it) {
                     is ElvishFnCommand -> it.toLookupElement()
                     is ElvishPsiBuiltinCommand -> it.toLookupElement()
-                    else -> null
+                    else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
                 } }
             }
             return true
         }
     }
-}
-
-private fun ElvishFnCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, this.getCommandName().text).withIcon(AllIcons.Nodes.Function)
-}
-
-private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, this.name).withIcon(ElvishIcons.BUILTIN_FUNCTION)
 }

@@ -1,13 +1,9 @@
 package com.github.sblundy.elvish.psi
 
 import com.github.sblundy.elvish.psi.ElvishPsiUtils.newNameElement
-import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.icons.AllIcons
 import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
-import icons.ElvishIcons
 
 internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableReference, rangeInElement: TextRange?) :
     PsiReferenceBase<ElvishExternalVariableReference?>(element, rangeInElement, true),
@@ -52,12 +48,12 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
                         when (it) {
                             is ElvishPsiBuiltinVariable -> it.toLookupElement()
                             is ElvishPsiBuiltinValue -> it.toLookupElement()
-                            else -> null
+                            else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
                         }
                     } + builtin.findFnCommands(null).mapNotNull {
                         when (it) {
-                            is ElvishPsiBuiltinCommand -> it.toLookupElement()
-                            else -> null
+                            is ElvishPsiBuiltinCommand -> it.toVariableLookupElement()
+                            else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
                         }
                     }
 
@@ -70,36 +66,25 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
                 climber.climb(element)
                 climber.declarations.flatMap {
                     it?.exportedVariables() ?: emptyList()
-                }.map {
-                    (it as ElvishVariable).toLookupElement()
+                }.mapNotNull {
+                    when (it) {
+                        is ElvishVariable -> it.toLookupElement()
+                        is ElvishPsiBuiltinValue -> it.toLookupElement()
+                        is ElvishPsiBuiltinVariable -> it.toLookupElement()
+                        else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
+                    }
                 } + climber.declarations.flatMap {
                     it?.exportedFunctions() ?: emptyList()
-                }.map {
-                    (it as ElvishFnCommand).toLookupElement()
+                }.mapNotNull {
+                    when (it) {
+                        is ElvishFnCommand -> it.toVariableLookupElement()
+                        is ElvishPsiBuiltinCommand -> it.toVariableLookupElement()
+                        else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
+                    }
                 }
             }
             else -> emptyList() //TODO handle?
         }
         return variants.toTypedArray()
     }
-}
-
-private fun ElvishPsiBuiltinVariable.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.BUILTIN_VARIABLE)
-}
-
-private fun ElvishPsiBuiltinValue.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.BUILTIN_VALUE)
-}
-
-private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, "$name~").withIcon(ElvishIcons.BUILTIN_FUNCTION)
-}
-
-private fun ElvishVariable.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, variableName.text).withIcon(AllIcons.Nodes.Variable)
-}
-
-private fun ElvishFnCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, "${commandName.text}~").withIcon(AllIcons.Nodes.Function)
 }

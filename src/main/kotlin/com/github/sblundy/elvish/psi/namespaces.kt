@@ -15,12 +15,14 @@ class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val pro
                 if (m.isNotEmpty()) {
                     val mgr = ModuleManager.getInstance(project)
                     m.map {
-                        when(val spec = it.moduleSpec) {
+                        when (val spec = it.moduleSpec) {
                             is ElvishLibModuleSpec -> mgr.findModule(spec)
                             is ElvishRelativeModuleSpec -> mgr.findModule(s, spec)
                             else -> null
                         }
                     }
+                } else if (ns.variableNameList.isNotEmpty() && ns.variableNameList[0].textMatches("edit")) {
+                    project.getBuiltinScope()?.findModule(ns)?.let {listOf(it)}?: emptyList()
                 } else {
                     emptyList()
                 }

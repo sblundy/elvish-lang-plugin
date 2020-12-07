@@ -1,12 +1,8 @@
 package com.github.sblundy.elvish.psi
 
-import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.icons.AllIcons
 import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
-import icons.ElvishIcons
 
 internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandExpression, rangeInElement: TextRange?) :
     PsiReferenceBase<ElvishNamespaceCommandExpression?>(element, rangeInElement, true) {
@@ -49,7 +45,7 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
                 element.project.getBuiltinScope()?.findFnCommands(null)?.mapNotNull {
                     when (it) {
                         is ElvishPsiBuiltinCommand -> it.toLookupElement()
-                        else -> null
+                        else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
                     }
                 } ?: emptyList()
             }
@@ -60,20 +56,16 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
                 climber.climb(element)
                 climber.declarations.flatMap {
                     it?.exportedFunctions()?: emptyList()
-                }.map {
-                    (it as ElvishFnCommand).toLookupElement()
+                }.mapNotNull {
+                    when(it) {
+                        is ElvishFnCommand -> it.toLookupElement()
+                        is ElvishPsiBuiltinCommand -> it.toLookupElement()
+                        else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
+                    }
                 }
             }
             else -> emptyList() //TODO handle?
         }
         return variants.toTypedArray()
     }
-}
-
-private fun ElvishFnCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, commandName.text).withIcon(AllIcons.Nodes.Function)
-}
-
-private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, this.name).withIcon(ElvishIcons.BUILTIN_FUNCTION)
 }

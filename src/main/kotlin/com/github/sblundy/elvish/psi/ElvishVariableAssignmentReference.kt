@@ -2,12 +2,9 @@ package com.github.sblundy.elvish.psi
 
 import com.github.sblundy.elvish.psi.ElvishPsiUtils.newNameElement
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.icons.AllIcons
 import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
-import icons.ElvishIcons
 
 internal class ElvishVariableAssignmentReference(element: ElvishVariableRef, rangeInElement: TextRange?) :
     PsiReferenceBase<ElvishVariableRef?>(element, rangeInElement, true),
@@ -107,6 +104,7 @@ internal class ElvishVariableAssignmentReference(element: ElvishVariableRef, ran
     }
 
     internal class VariableVariantFinder: ElvishScopeClimber() {
+        private val log = logger<VariableVariantFinder>()
         val variants = mutableListOf<LookupElement>()
         override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
             val variables = when (s) {
@@ -130,7 +128,7 @@ internal class ElvishVariableAssignmentReference(element: ElvishVariableRef, ran
                     is ElvishVariable -> dec.toLookupElement()
                     is ElvishPsiBuiltinVariable -> dec.toLookupElement()
                     is ElvishPsiBuiltinValue -> dec.toLookupElement()
-                    else -> null //TODO log error?
+                    else -> {log.warn("unrecognized:"+ dec.javaClass.name); null}
                 }}
             }
             val functions:Collection<ElvishFunctionDeclaration> = when (s) {
@@ -141,38 +139,12 @@ internal class ElvishVariableAssignmentReference(element: ElvishVariableRef, ran
             }
             if (functions.isNotEmpty()) {
                 variants += functions.mapNotNull { when (it) {
-                    is ElvishFnCommand -> it.toLookupElement()
-                    is ElvishPsiBuiltinCommand -> it.toLookupElement()
-                    else -> null
+                    is ElvishFnCommand -> it.toVariableLookupElement()
+                    is ElvishPsiBuiltinCommand -> it.toVariableLookupElement()
+                    else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
                 } }
             }
             return true
         }
     }
-}
-
-private fun ElvishFnCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, getCommandName().text + "~").withIcon(AllIcons.Nodes.Function)
-}
-
-private fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, "$name~").withIcon(ElvishIcons.BUILTIN_FUNCTION)
-}
-
-private fun ElvishParameter.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, getVariableName().text).withIcon(AllIcons.Nodes.Parameter)
-}
-
-private fun ElvishVariable.toLookupElement(): LookupElement {
-    val fullname = getVariableName().text
-    return LookupElementBuilder.create(this, fullname)
-        .withPresentableText(fullname).withIcon(AllIcons.Nodes.Variable)
-}
-
-private fun ElvishPsiBuiltinVariable.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.BUILTIN_VARIABLE)
-}
-
-private fun ElvishPsiBuiltinValue.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.BUILTIN_VALUE)
 }

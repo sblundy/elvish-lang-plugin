@@ -176,6 +176,30 @@ class ElvishUsageProviderTest {
             Assert.assertEquals(127, usages.firstOrNull()?.navigationOffset)
         }
     }
+
+    @Test
+    fun testFindUsagesEditVarRef() {
+        runTest {
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-edit-command.elv")
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(usages.mapNotNull { it.element?.text }.joinToString(","), 2, usages.size)
+            Assert.assertEquals(5, usages.firstOrNull()?.navigationOffset)
+            Assert.assertEquals(46, usages.drop(1).firstOrNull()?.navigationOffset)
+        }
+    }
+
+    @Test
+    fun testFindUsagesEditCommand() {
+        runTest {
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-edit-var-ref.elv")
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(2, usages.size)
+            Assert.assertEquals(11, usages.firstOrNull()?.navigationOffset)
+            Assert.assertEquals(42, usages.drop(1).firstOrNull()?.navigationOffset)
+        }
+    }
 }
 
 fun runTest(t : () -> Unit) {
