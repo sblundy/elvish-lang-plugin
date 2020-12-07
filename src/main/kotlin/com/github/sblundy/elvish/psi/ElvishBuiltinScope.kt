@@ -55,6 +55,7 @@ internal class BuiltinScope(val version: ElvishLanguageVersion, mgr: PsiManager)
         private val values = m.values.keys.map { ElvishPsiBuiltinValue(it, mgr, this) }
         private val variables = m.variables.keys.map { ElvishPsiBuiltinVariable(it, mgr, this) }
         private val functions = m.functions.keys.map { ElvishPsiBuiltinCommand(it, mgr, this) }
+        private val childNames = m.modules.keys
         override fun exportedVariables(): Collection<ElvishVariableDeclaration> {
             return variables + values
         }
@@ -62,6 +63,8 @@ internal class BuiltinScope(val version: ElvishLanguageVersion, mgr: PsiManager)
         override fun exportedFunctions(): Collection<ElvishFunctionDeclaration> {
             return functions
         }
+
+        override fun childModuleNames(): Collection<String> = childNames
 
         override fun getParent(): PsiElement? = null
 

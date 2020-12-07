@@ -9,4 +9,5 @@ interface ElvishModule {
     fun exportedVariable(name: PsiElement): ElvishVariableDeclaration? = exportedVariables().find { it.getVariableName().textMatches(name) }
     fun exportedFunctions(): Collection<ElvishFunctionDeclaration>
     fun exportedFunction(name: PsiElement): ElvishFunctionDeclaration? = exportedFunctions().find { it.getCommandName().textMatches(name) }
+    fun childModuleNames(): Collection<String> = emptyList()
 }

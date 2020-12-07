@@ -37,3 +37,7 @@ internal fun ElvishPsiBuiltinVariable.toLookupElement(): LookupElement {
 internal fun ElvishPsiBuiltinValue.toLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.BUILTIN_VALUE)
 }
+
+internal fun toNSLookupElement(name: String): LookupElement {
+    return LookupElementBuilder.create("$name:").withIcon(AllIcons.Nodes.Module)
+}

@@ -62,7 +62,7 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
                         is ElvishPsiBuiltinCommand -> it.toLookupElement()
                         else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
                     }
-                }
+                } + climber.declarations.flatMap { it?.childModuleNames()?.map { name -> toNSLookupElement(name) }?: emptyList() }
             }
             else -> emptyList() //TODO handle?
         }

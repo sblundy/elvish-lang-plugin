@@ -169,4 +169,31 @@ class ElvishCodeInsightTest {
             Assert.assertTrue(lookupStrings.contains("x"))
         }
     }
+
+    @Test
+    fun testCompleteEditVariableRef() {
+        runTest {
+            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-edit-ns-var-ref.elv")
+            myFixture.complete(CompletionType.BASIC, 1)
+
+            val lookupStrings = myFixture.lookupElementStrings?: listOf()
+
+            Assert.assertTrue(lookupStrings.contains("prompt"))
+            Assert.assertTrue(lookupStrings.contains("complex-candidate~"))
+            Assert.assertTrue(lookupStrings.contains("completion:"))
+        }
+    }
+
+    @Test
+    fun testCompleteEditCommand() {
+        runTest {
+            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-edit-ns-command.elv")
+            myFixture.complete(CompletionType.BASIC, 1)
+
+            val lookupStrings = myFixture.lookupElementStrings?: listOf()
+
+            Assert.assertTrue(lookupStrings.contains("complex-candidate"))
+            Assert.assertTrue(lookupStrings.contains("completion:"))
+        }
+    }
 }
