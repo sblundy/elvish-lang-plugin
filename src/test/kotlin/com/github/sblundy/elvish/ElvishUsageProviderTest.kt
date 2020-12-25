@@ -89,6 +89,29 @@ class ElvishUsageProviderTest {
 
             Assert.assertNotNull(usages)
             Assert.assertEquals(1, usages.size)
+            Assert.assertEquals(18, usages.firstOrNull()?.navigationOffset)
+        }
+    }
+
+    @Test
+    fun testFindUsages1stParameter() {
+        runTest {
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-lambda-parameter-1st.elv")
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(1, usages.size)
+            Assert.assertEquals(21, usages.firstOrNull()?.navigationOffset)
+        }
+    }
+
+    @Test
+    fun testFindUsages2ndParameter() {
+        runTest {
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-lambda-parameter-2nd.elv")
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(1, usages.size)
+            Assert.assertEquals(21, usages.firstOrNull()?.navigationOffset)
         }
     }
 

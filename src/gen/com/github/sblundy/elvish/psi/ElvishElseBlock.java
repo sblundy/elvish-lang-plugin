@@ -7,8 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishElseBlock extends ElvishPsiElement {
 
-  @NotNull
+  @Nullable
   ElvishLambdaBlock getLambdaBlock();
+
+  @Nullable
+  PsiElement getEol();
 
   @NotNull
   PsiElement getInlineWhitespace();

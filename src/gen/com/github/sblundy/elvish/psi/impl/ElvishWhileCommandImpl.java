@@ -27,9 +27,9 @@ public class ElvishWhileCommandImpl extends ASTWrapperElvishPsiElement implement
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ElvishChunk getChunk() {
-    return findNotNullChildByClass(ElvishChunk.class);
+    return findChildByClass(ElvishChunk.class);
   }
 
   @Override
@@ -42,6 +42,12 @@ public class ElvishWhileCommandImpl extends ASTWrapperElvishPsiElement implement
   @Nullable
   public ElvishElseBlock getElseBlock() {
     return findChildByClass(ElvishElseBlock.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getEol() {
+    return findChildByType(EOL);
   }
 
 }

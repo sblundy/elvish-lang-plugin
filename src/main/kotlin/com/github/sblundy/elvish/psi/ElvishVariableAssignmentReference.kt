@@ -96,7 +96,7 @@ internal class ElvishVariableAssignmentReference(element: ElvishVariableRef, ran
 
         fun ElvishVariableAssignment.matches(): Boolean = variableName.textMatches(name)
 
-        fun ElvishParameter.matches(): Boolean = textMatches(name)
+        fun ElvishParameter.matches(): Boolean = variableName.textMatches(this@VariableFinder.name)
 
         fun Pair<Collection<ElvishVariableDeclaration>, Boolean>.and(p: Pair<Collection<ElvishVariableAssignment>, Boolean>): Pair<Collection<ElvishPsiElement>, Boolean> {
             return Pair(this.first + p.first, this.second && p.second)

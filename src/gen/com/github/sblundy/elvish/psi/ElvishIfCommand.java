@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishIfCommand extends ElvishPsiElement {
 
-  @NotNull
+  @Nullable
   ElvishCondition getCondition();
 
   @NotNull
@@ -16,7 +16,10 @@ public interface ElvishIfCommand extends ElvishPsiElement {
   @Nullable
   ElvishElseBlock getElseBlock();
 
-  @NotNull
+  @Nullable
   ElvishLambdaBlock getLambdaBlock();
+
+  @Nullable
+  PsiElement getEol();
 
 }

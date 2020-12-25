@@ -27,9 +27,15 @@ public class ElvishElseBlockImpl extends ASTWrapperElvishPsiElement implements E
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ElvishLambdaBlock getLambdaBlock() {
-    return findNotNullChildByClass(ElvishLambdaBlock.class);
+    return findChildByClass(ElvishLambdaBlock.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getEol() {
+    return findChildByType(EOL);
   }
 
   @Override

@@ -33,13 +33,15 @@ internal class BuiltinScope(val version: ElvishLanguageVersion, mgr: PsiManager)
     fun findFnCommands(name: PsiElement?): Collection<ElvishFunctionDeclaration> =
         name?.let {functions.filter { it.textMatches(name) } }?: functions
 
-    fun findModule(ns: ElvishNamespaceName): ElvishModule? {
-        val base = ns.variableNameList.first().text
+    fun findModule(ns: ElvishNamespaceName): ElvishModule? = findModule(ns.variableNameList)
+
+    fun findModule(ns: List<ElvishVariableName>): ElvishModule? {
+        val base = ns.first().text
         if (base !in baseModuleNames) {
             return null
         }
 
-        val key = listOf(base) + ns.variableNameList.drop(1).map { it.text }
+        val key = listOf(base) + ns.drop(1).map { it.text }
 
         return modules[key]?.value
     }

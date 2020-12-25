@@ -33,7 +33,11 @@ class ModuleManager(val project: Project) {
     fun findModule(ns: ElvishLibModuleSpec): ElvishModule? {
         val rawPath = ns.text.split(":")
 
-        val vf = ElvishGlobalLibraryManager.getInstance().libraryFile(rawPath) ?: return null
+        val vf = ElvishGlobalLibraryManager.getInstance().libraryFile(rawPath) ?: return findBuiltinModule(ns)
         return PsiManager.getInstance(project).findFile(vf) as? ElvishFile
+    }
+
+    fun findBuiltinModule(ns: ElvishLibModuleSpec): ElvishModule? {
+        return ns.project.getBuiltinScope()?.findModule(ns.variableNameList)
     }
 }

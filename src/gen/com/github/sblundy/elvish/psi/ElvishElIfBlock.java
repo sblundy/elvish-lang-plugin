@@ -10,7 +10,10 @@ public interface ElvishElIfBlock extends ElvishPsiElement {
   @NotNull
   ElvishCondition getCondition();
 
-  @NotNull
+  @Nullable
   ElvishLambdaBlock getLambdaBlock();
+
+  @Nullable
+  PsiElement getEol();
 
 }

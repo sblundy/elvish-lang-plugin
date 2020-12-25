@@ -2,6 +2,7 @@
 
 package com.github.sblundy.elvish.lang
 
+import com.github.sblundy.elvish.ElvishBundle
 import com.github.sblundy.elvish.lang.version.LanguageParseFlag
 import com.github.sblundy.elvish.psi.ElvishTypes
 import com.intellij.lang.PsiBuilder
@@ -17,4 +18,9 @@ fun ifFlag(builder: PsiBuilder, level: Int, flagName: String): Boolean {
     val version = getLanguageLevel(builder)
     val flag = LanguageParseFlag.valueOf(flagName)
     return version == null || version.parseFlags.contains(flag)
+}
+
+fun missingLambdaBody(builder: PsiBuilder, level: Int): Boolean {
+    builder.error(ElvishBundle.message("psi.error.lambda.missing"))
+    return true
 }

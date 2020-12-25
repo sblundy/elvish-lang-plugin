@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ElvishForCommand extends ElvishPsiElement {
 
-  @NotNull
+  @Nullable
   ElvishChunk getChunk();
 
   @NotNull
@@ -18,5 +18,8 @@ public interface ElvishForCommand extends ElvishPsiElement {
 
   @NotNull
   ElvishVariable getVariable();
+
+  @Nullable
+  PsiElement getEol();
 
 }
