@@ -27,20 +27,11 @@ class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val pro
                     emptyList()
                 }
             }
+            is ElvishFnCommand -> {
+                findMod(s.matchingUseCommands(), s.containingFile as ElvishFile)
+            }
             is ElvishLambdaBlock -> {
-                val m = s.matchingUseCommands()
-                if (m.isNotEmpty()) {
-                    val mgr = ModuleManager.getInstance(project)
-                    m.map {
-                        when(val spec = it.moduleSpec) {
-                            is ElvishLibModuleSpec -> mgr.findModule(spec)
-                            is ElvishRelativeModuleSpec -> mgr.findModule(s.containingFile as ElvishFile, spec)
-                            else -> null
-                        }
-                    }
-                } else {
-                    emptyList()
-                }
+                findMod(s.matchingUseCommands(), s.containingFile as ElvishFile)
             }
             else -> emptyList()
         }
@@ -55,8 +46,27 @@ class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val pro
         return topLevelUseCommands().filter { it.matches(ns) }
     }
 
+    private fun ElvishFnCommand.matchingUseCommands(): Collection<ElvishUseCommand> {
+        return chunk.useCommandList.filter { it.matches(ns) }
+    }
+
     private fun ElvishLambdaBlock.matchingUseCommands(): Collection<ElvishUseCommand> {
         return chunk.useCommandList.filter { it.matches(ns) }
+    }
+
+    private fun findMod(m :Collection<ElvishUseCommand>, file: ElvishFile): List<ElvishModule?> {
+        return if (m.isNotEmpty()) {
+            val mgr = ModuleManager.getInstance(project)
+            m.map {
+                when(val spec = it.moduleSpec) {
+                    is ElvishLibModuleSpec -> mgr.findModule(spec)
+                    is ElvishRelativeModuleSpec -> mgr.findModule(file, spec)
+                    else -> null
+                }
+            }
+        } else {
+            emptyList()
+        }
     }
 }
 
