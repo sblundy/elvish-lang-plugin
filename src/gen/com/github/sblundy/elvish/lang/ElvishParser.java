@@ -1113,7 +1113,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IndexValue+ IndexRangeSeparator IndexValue+
+  // IndexValue* IndexRangeSeparator IndexValue*
   public static boolean IndexRange(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "IndexRange")) return false;
     boolean result_;
@@ -1125,34 +1125,26 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // IndexValue+
+  // IndexValue*
   private static boolean IndexRange_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "IndexRange_0")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = IndexValue(builder_, level_ + 1);
-    while (result_) {
+    while (true) {
       int pos_ = current_position_(builder_);
       if (!IndexValue(builder_, level_ + 1)) break;
       if (!empty_element_parsed_guard_(builder_, "IndexRange_0", pos_)) break;
     }
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
+    return true;
   }
 
-  // IndexValue+
+  // IndexValue*
   private static boolean IndexRange_2(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "IndexRange_2")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = IndexValue(builder_, level_ + 1);
-    while (result_) {
+    while (true) {
       int pos_ = current_position_(builder_);
       if (!IndexValue(builder_, level_ + 1)) break;
       if (!empty_element_parsed_guard_(builder_, "IndexRange_2", pos_)) break;
     }
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
+    return true;
   }
 
   /* ********************************************************** */

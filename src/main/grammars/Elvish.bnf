@@ -159,7 +159,7 @@ private Index ::= OPEN_BRACKET (IndexRange | IndexSingle) CLOSE_BRACKET
 { pin=1 }
 private IndexValue ::= VariableName | SingleQuoted | DoubleQuoted | SpecialScopeVariableRef | NamespaceVariableRef | VariableRef | ExceptionCapture | OutputCapture
 IndexSingle ::= IndexValue+
-IndexRange ::= IndexValue+ IndexRangeSeparator IndexValue+
+IndexRange ::= IndexValue* IndexRangeSeparator IndexValue*
 private IndexRangeSeparator ::= COLON | &NewSliceIndexFlag NewSliceIndexString
 private NewSliceIndexString ::= '..=' | '..'
 Array ::= ArraySpace* (Compound ArraySpace*)*

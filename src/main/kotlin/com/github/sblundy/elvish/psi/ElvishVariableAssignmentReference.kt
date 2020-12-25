@@ -59,7 +59,9 @@ internal class ElvishVariableAssignmentReference(element: ElvishVariableRef, ran
                     p.and(s.chunk.matchingVariables())
                 }
                 is ElvishLambda -> {
-                    val p = s.lambdaArguments?.parameterList?.find { it.matches() }?.let {
+                    val p = s.lambdaArguments?.parameterList?.find {
+                        it.matches()
+                    }?.let {
                         Pair(listOf(it), false)
                     } ?: Pair(emptyList(), true)
                     p.and(s.chunk.matchingVariables())
