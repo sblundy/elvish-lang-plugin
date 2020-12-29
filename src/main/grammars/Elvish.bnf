@@ -75,7 +75,16 @@ private PipelineExtension ::= PIPE Space? (EOL Space?)? Form Space?
 private Form ::= AssignmentOnlyForm | SpecialCommand | CommandForm
 private AssignmentOnlyForm ::= Space? Assignment Space?
 
-fake LexicalScope ::= {}
+fake Block ::= {}
+fake LexicalScope ::= {
+  extends=Block
+}
+fake LambdaScope ::= LambdaArguments? Chunk {
+  extends=LexicalScope
+}
+fake ChunkBlock ::= Chunk {
+  extends=Block
+}
 fake NamespaceIdentifier ::= {}
 fake VariableReference ::= VariableName
 fake ExternalVariableReference ::= NamespaceIdentifier VariableName {
@@ -205,7 +214,7 @@ ExceptionCapture ::= QUESTION OPEN_PARAN Chunk CLOSE_PARAN
 OutputCapture ::= OPEN_PARAN Chunk CLOSE_PARAN
 
 Lambda ::= LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
-  extends="LexicalScope"
+  extends="LambdaScope"
 }
 LambdaArguments ::=OPEN_BRACKET Space? ((parameter | MapPair) Space?)* CLOSE_BRACKET
 parameter ::= AT_SYMBOL? VariableName {
@@ -220,29 +229,44 @@ BracedSep ::= (Space | EOL)* COMMA (Space | EOL)*
 
 private SpecialCommand ::= DeleteCommand | UseCommand | LogicCommand | IfCommand | WhileCommand | ForCommand | TryCommand | FnCommand
 
-LambdaBlock ::= OPEN_BRACE Chunk CLOSE_BRACE
+private LambdaBlock ::= OPEN_BRACE Chunk CLOSE_BRACE
 DeleteCommand ::= KEYWORD_DEL CommandSep* (LocalNamespace | EnvVarNamespace)? Variable Index*
 LogicCommand ::= LogicCMD (CommandSep* argument)* CommandSep*
 private LogicCMD ::= 'or' | 'and'
 private MissingLambda ::= EOL <<missingLambdaBody>>
-IfCommand ::= KEYWORD_IF Space Condition Space (IfBody | MissingLambda)  { pin=1 }
+IfCommand ::= KEYWORD_IF Space Condition Space (IfBody | MissingLambda)  {
+  pin=1
+  extends=ChunkBlock
+}
 private IfBody ::= LambdaBlock (Space ElIfBlock)* (Space ElseBlock)?
 Condition ::= SpecialScopeVariableRef | NamespaceVariableRef | VariableRef | ExceptionCapture | OutputCapture
-ElIfBlock ::= KEYWORD_ELIF Space Condition Space (LambdaBlock | MissingLambda)
-ElseBlock ::= KEYWORD_ELSE Space (LambdaBlock | MissingLambda)
-WhileCommand ::= KEYWORD_WHILE Space Condition Space (WhileCommandBody | MissingLambda)
+ElIfBlock ::= KEYWORD_ELIF Space Condition Space (LambdaBlock | MissingLambda) {
+  extends=ChunkBlock
+}
+ElseBlock ::= KEYWORD_ELSE Space (LambdaBlock | MissingLambda) {
+  extends=ChunkBlock
+}
+WhileCommand ::= KEYWORD_WHILE Space Condition Space (WhileCommandBody | MissingLambda) {
+  extends=ChunkBlock
+}
 private WhileCommandBody ::= OPEN_BRACE Chunk CLOSE_BRACE (Space ElseBlock)?
-ForCommand ::= KEYWORD_FOR Space Variable Space Collection Space (ForCommandBody | MissingLambda)
+ForCommand ::= KEYWORD_FOR Space Variable Space Collection Space (ForCommandBody | MissingLambda) {
+  extends=ChunkBlock
+}
 private ForCommandBody ::= OPEN_BRACE Chunk CLOSE_BRACE (Space ElseBlock)?
 Collection ::= List | Map | SpecialScopeVariableRef | NamespaceVariableRef | VariableRef | ExceptionCapture | OutputCapture
-TryCommand ::= KEYWORD_TRY Space LambdaBlock (Space ExceptBlock)? (Space ElseBlock)? (Space FinallyBlock)?
-ExceptBlock ::= KEYWORD_EXCEPT Space Variable Space OPEN_BRACE Chunk CLOSE_BRACE {
-  extends="LexicalScope"
+TryCommand ::= KEYWORD_TRY Space LambdaBlock (Space ExceptBlock)? (Space ElseBlock)? (Space FinallyBlock)? {
+  extends=ChunkBlock
 }
-FinallyBlock ::= KEYWORD_FINALLY Space LambdaBlock
+ExceptBlock ::= KEYWORD_EXCEPT Space Variable Space OPEN_BRACE Chunk CLOSE_BRACE {
+  extends=ChunkBlock
+}
+FinallyBlock ::= KEYWORD_FINALLY Space LambdaBlock {
+  extends=ChunkBlock
+}
 FnCommand ::= KEYWORD_FN Space VariableName Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
   extends="FunctionDeclaration"
-  implements=["LexicalScope" "com.intellij.psi.PsiNameIdentifierOwner"]
+  implements=["LambdaScope" "com.intellij.psi.PsiNameIdentifierOwner"]
   methods=[commandName="VariableName" getNameIdentifier getName setName getTextOffset getIcon getPresentation]
 }
 UseCommand ::= KEYWORD_USE Space (RelativeModuleSpec | LibModuleSpec) (Space ModuleAlias)?

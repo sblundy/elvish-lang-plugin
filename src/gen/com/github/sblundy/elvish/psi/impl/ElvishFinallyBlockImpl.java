@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishFinallyBlockImpl extends ASTWrapperElvishPsiElement implements ElvishFinallyBlock {
+public class ElvishFinallyBlockImpl extends ElvishChunkBlockImpl implements ElvishFinallyBlock {
 
   public ElvishFinallyBlockImpl(@NotNull ASTNode node) {
     super(node);
@@ -24,12 +23,6 @@ public class ElvishFinallyBlockImpl extends ASTWrapperElvishPsiElement implement
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public ElvishLambdaBlock getLambdaBlock() {
-    return findNotNullChildByClass(ElvishLambdaBlock.class);
   }
 
   @Override

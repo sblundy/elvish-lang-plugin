@@ -34,6 +34,12 @@ public class ElvishChunkImpl extends ASTWrapperElvishPsiElement implements Elvis
 
   @Override
   @NotNull
+  public List<ElvishChunkBlock> getChunkBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishChunkBlock.class);
+  }
+
+  @Override
+  @NotNull
   public List<ElvishDeleteCommand> getDeleteCommandList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishDeleteCommand.class);
   }
@@ -42,18 +48,6 @@ public class ElvishChunkImpl extends ASTWrapperElvishPsiElement implements Elvis
   @NotNull
   public List<ElvishFnCommand> getFnCommandList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishFnCommand.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishForCommand> getForCommandList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishForCommand.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishIfCommand> getIfCommandList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIfCommand.class);
   }
 
   @Override
@@ -70,20 +64,8 @@ public class ElvishChunkImpl extends ASTWrapperElvishPsiElement implements Elvis
 
   @Override
   @NotNull
-  public List<ElvishTryCommand> getTryCommandList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishTryCommand.class);
-  }
-
-  @Override
-  @NotNull
   public List<ElvishUseCommand> getUseCommandList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishUseCommand.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishWhileCommand> getWhileCommandList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishWhileCommand.class);
   }
 
   @Override

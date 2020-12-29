@@ -10,14 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishElIfBlockImpl extends ElvishChunkBlockImpl implements ElvishElIfBlock {
+public class ElvishChunkBlockImpl extends ElvishBlockImpl implements ElvishChunkBlock {
 
-  public ElvishElIfBlockImpl(@NotNull ASTNode node) {
+  public ElvishChunkBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitElIfBlock(this);
+    visitor.visitChunkBlock(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -26,21 +26,9 @@ public class ElvishElIfBlockImpl extends ElvishChunkBlockImpl implements ElvishE
   }
 
   @Override
-  @Nullable
-  public ElvishChunk getChunk() {
-    return findChildByClass(ElvishChunk.class);
-  }
-
-  @Override
   @NotNull
-  public ElvishCondition getCondition() {
-    return findNotNullChildByClass(ElvishCondition.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getEol() {
-    return findChildByType(EOL);
+  public ElvishChunk getChunk() {
+    return findNotNullChildByClass(ElvishChunk.class);
   }
 
 }

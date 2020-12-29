@@ -9,7 +9,7 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.util.IncorrectOperationException;
 import javax.swing.Icon;
 
-public interface ElvishFnCommand extends ElvishFunctionDeclaration, ElvishLexicalScope, PsiNameIdentifierOwner {
+public interface ElvishFnCommand extends ElvishFunctionDeclaration, ElvishLambdaScope, PsiNameIdentifierOwner {
 
   @NotNull
   ElvishChunk getChunk();

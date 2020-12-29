@@ -11,16 +11,13 @@ public interface ElvishChunk extends ElvishPsiElement {
   List<ElvishAssignment> getAssignmentList();
 
   @NotNull
+  List<ElvishChunkBlock> getChunkBlockList();
+
+  @NotNull
   List<ElvishDeleteCommand> getDeleteCommandList();
 
   @NotNull
   List<ElvishFnCommand> getFnCommandList();
-
-  @NotNull
-  List<ElvishForCommand> getForCommandList();
-
-  @NotNull
-  List<ElvishIfCommand> getIfCommandList();
 
   @NotNull
   List<ElvishLogicCommand> getLogicCommandList();
@@ -29,13 +26,7 @@ public interface ElvishChunk extends ElvishPsiElement {
   List<ElvishPipelineSep> getPipelineSepList();
 
   @NotNull
-  List<ElvishTryCommand> getTryCommandList();
-
-  @NotNull
   List<ElvishUseCommand> getUseCommandList();
-
-  @NotNull
-  List<ElvishWhileCommand> getWhileCommandList();
 
   @NotNull
   List<ElvishArgument> getArgumentList();

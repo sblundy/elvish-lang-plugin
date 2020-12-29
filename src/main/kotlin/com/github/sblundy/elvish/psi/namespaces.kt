@@ -5,53 +5,64 @@ import com.github.sblundy.elvish.lang.ModuleManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 
-class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val project: Project): ElvishScopeClimber() {
-    val declarations = mutableListOf<ElvishModule?>()
+class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val project: Project): ElvishBlockClimber() {
+    val declarations = mutableListOf<ElvishModule>()
 
-    override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
-        val d = when (s) {
-            is ElvishFile -> {
-                val m = s.matchingUseCommands()
-                if (m.isNotEmpty()) {
-                    val mgr = ModuleManager.getInstance(project)
-                    m.map {
-                        when (val spec = it.moduleSpec) {
-                            is ElvishLibModuleSpec -> mgr.findModule(spec)
-                            is ElvishRelativeModuleSpec -> mgr.findModule(s, spec)
-                            else -> null
-                        }
+    override fun visitElvishFile(s: ElvishFile, ctxt: PsiElement): Boolean {
+        val m = s.matchingUseCommands()
+        if (m.isNotEmpty()) {
+            val mgr = ModuleManager.getInstance(project)
+            m.map { cmd ->
+                when (val spec = cmd.moduleSpec) {
+                    is ElvishLibModuleSpec -> {
+                        mgr.findModule(spec)?.let {declarations += it; return false}
                     }
-                } else if (ns.variableNameList.isNotEmpty() && ns.variableNameList[0].textMatches("edit")) {
-                    project.getBuiltinScope()?.findModule(ns)?.let {listOf(it)}?: emptyList()
-                } else {
-                    emptyList()
+                    is ElvishRelativeModuleSpec -> {
+                        mgr.findModule(s, spec)?.let {declarations += it; return false}
+                    }
+                    else -> {}
                 }
             }
-            is ElvishFnCommand -> {
-                findMod(s.matchingUseCommands(), s.containingFile as ElvishFile)
-            }
-            is ElvishLambdaBlock -> {
-                val file = (s as ElvishLambdaBlock).containingFile
-                findMod(s.matchingUseCommands(), file as ElvishFile)
-            }
-            else -> emptyList()
+        } else if (ns.variableNameList.isNotEmpty() && ns.variableNameList[0].textMatches("edit")) {
+            project.getBuiltinScope()?.findModule(ns)?.let {declarations += it; return false}
         }
+
+        return super.visitElvishFile(s, ctxt)
+    }
+
+    override fun visitLambdaScope(s: ElvishLambdaScope, ctxt: PsiElement): Boolean {
+        val d = findMod(s.matchingUseCommands(), s.containingFile as ElvishFile).filterNotNull()
+
         if (d.isNotEmpty()) {
             declarations += d
             return false
         }
-        return true
+        return super.visitLambdaScope(s, ctxt)
+    }
+
+    override fun visitChunkBlock(s: ElvishChunkBlock, ctxt: PsiElement): Boolean {
+        val file = s.containingFile
+        val d = findMod(s.matchingUseCommands(), file as ElvishFile).filterNotNull()
+        if (d.isNotEmpty()) {
+            declarations += d
+            return false
+        }
+        return super.visitChunkBlock(s, ctxt)
     }
 
     private fun ElvishFile.matchingUseCommands(): Collection<ElvishUseCommand> {
         return topLevelUseCommands().filter { it.matches(ns) }
     }
 
-    private fun ElvishFnCommand.matchingUseCommands(): Collection<ElvishUseCommand> {
+    private fun ElvishLambdaScope.matchingUseCommands(): Collection<ElvishUseCommand> {
         return chunk.useCommandList.filter { it.matches(ns) }
     }
 
-    private fun ElvishLambdaBlock.matchingUseCommands(): Collection<ElvishUseCommand> {
+    private fun ElvishLambda.matchingUseCommands(): Collection<ElvishUseCommand> {
+        return chunk.useCommandList.filter { it.matches(ns) }
+    }
+
+    private fun ElvishChunkBlock.matchingUseCommands(): Collection<ElvishUseCommand> {
         return chunk.useCommandList.filter { it.matches(ns) }
     }
 

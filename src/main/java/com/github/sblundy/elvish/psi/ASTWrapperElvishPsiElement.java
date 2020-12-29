@@ -12,6 +12,19 @@ public abstract class ASTWrapperElvishPsiElement extends ASTWrapperPsiElement im
     }
 
     @Override
+    public @Nullable ElvishBlock getBlock() {
+        PsiElement parent = getParent();
+        while (parent != null) {
+            if (parent instanceof ElvishBlock) {
+                return (ElvishBlock) parent;
+            }
+
+            parent = parent.getParent();
+        }
+        return null;
+    }
+
+    @Override
     public @Nullable ElvishLexicalScope getScope() {
         PsiElement parent = getParent();
         while (parent != null) {

@@ -10,7 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishExceptBlockImpl extends ElvishLexicalScopeImpl implements ElvishExceptBlock {
+public class ElvishExceptBlockImpl extends ElvishChunkBlockImpl implements ElvishExceptBlock {
 
   public ElvishExceptBlockImpl(@NotNull ASTNode node) {
     super(node);
@@ -23,12 +23,6 @@ public class ElvishExceptBlockImpl extends ElvishLexicalScopeImpl implements Elv
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public ElvishChunk getChunk() {
-    return findNotNullChildByClass(ElvishChunk.class);
   }
 
   @Override

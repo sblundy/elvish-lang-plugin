@@ -17,8 +17,8 @@ internal class ElvishSpecialScopeCommandReference(element: ElvishSpecialScopeCom
         val declarations = when (element.namespaceIdentifier) {
             is ElvishLocalNamespace -> {
                 val climber = object:ElvishCommandReference.CommandFinder(element.commandName) {
-                    override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
-                        super.visitScope(s, ctxt)
+                    override fun visitLexicalScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
+                        super.visitLexicalScope(s, ctxt)
                         return false
                     }
                 }

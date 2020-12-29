@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishIfCommandImpl extends ASTWrapperElvishPsiElement implements ElvishIfCommand {
+public class ElvishIfCommandImpl extends ElvishChunkBlockImpl implements ElvishIfCommand {
 
   public ElvishIfCommandImpl(@NotNull ASTNode node) {
     super(node);
@@ -28,26 +27,20 @@ public class ElvishIfCommandImpl extends ASTWrapperElvishPsiElement implements E
 
   @Override
   @Nullable
-  public ElvishCondition getCondition() {
-    return findChildByClass(ElvishCondition.class);
+  public ElvishChunk getChunk() {
+    return findChildByClass(ElvishChunk.class);
   }
 
   @Override
   @NotNull
-  public List<ElvishElIfBlock> getElIfBlockList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishElIfBlock.class);
+  public List<ElvishChunkBlock> getChunkBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishChunkBlock.class);
   }
 
   @Override
   @Nullable
-  public ElvishElseBlock getElseBlock() {
-    return findChildByClass(ElvishElseBlock.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishLambdaBlock getLambdaBlock() {
-    return findChildByClass(ElvishLambdaBlock.class);
+  public ElvishCondition getCondition() {
+    return findChildByClass(ElvishCondition.class);
   }
 
   @Override

@@ -5,18 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishTryCommand extends ElvishPsiElement {
-
-  @Nullable
-  ElvishElseBlock getElseBlock();
-
-  @Nullable
-  ElvishExceptBlock getExceptBlock();
-
-  @Nullable
-  ElvishFinallyBlock getFinallyBlock();
+public interface ElvishTryCommand extends ElvishChunkBlock {
 
   @NotNull
-  ElvishLambdaBlock getLambdaBlock();
+  List<ElvishChunkBlock> getChunkBlockList();
 
 }

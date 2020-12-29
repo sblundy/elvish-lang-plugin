@@ -36,21 +36,43 @@ internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInE
         return climber.variants.toTypedArray()
     }
 
-    internal open class CommandFinder(val command: ElvishCommandBareword) : ElvishScopeClimber() {
+    internal open class CommandFinder(val command: ElvishCommandBareword) : ElvishBlockClimber() {
         val declarations = mutableListOf<ElvishFunctionDeclaration>()
-        override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
-            val d= when (s) {
-                is ElvishFile -> s.matchingFnCommands()
-                is BuiltinScope -> s.findFnCommands(command)
-                is ElvishFnCommand -> s.chunk.matchingFnCommands()
-                is ElvishLambda -> s.chunk.matchingFnCommands()
-                is ElvishLambdaBlock -> s.chunk.matchingFnCommands()
-                else -> emptyList()
-            }
+        override fun visitElvishFile(s: ElvishFile, ctxt: PsiElement): Boolean {
+            val d = s.matchingFnCommands()
+
             if (d.isNotEmpty()) {
                 declarations += d
             }
-            return d.isEmpty()
+            return d.isEmpty() && return super.visitElvishFile(s, ctxt)
+        }
+
+        override fun visitBuiltinScope(s: BuiltinScope, ctxt: PsiElement): Boolean {
+            val d = s.findFnCommands(command)
+
+            if (d.isNotEmpty()) {
+                declarations += d
+            }
+            return d.isEmpty() && return super.visitBuiltinScope(s, ctxt)
+        }
+
+        override fun visitLambdaScope(s: ElvishLambdaScope, ctxt: PsiElement): Boolean {
+            val d = s.chunk.matchingFnCommands()
+
+            if (d.isNotEmpty()) {
+                declarations += d
+            }
+            return d.isEmpty() && return super.visitLambdaScope(s, ctxt)
+        }
+
+        override fun visitChunkBlock(s: ElvishChunkBlock, ctxt: PsiElement): Boolean {
+            val d = s.chunk.matchingFnCommands()
+
+            if (d.isNotEmpty()) {
+                declarations += d
+            }
+
+            return d.isEmpty() && super.visitChunkBlock(s, ctxt)
         }
 
         fun ElvishFile.matchingFnCommands(): Collection<ElvishFunctionDeclaration> =
@@ -60,27 +82,43 @@ internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInE
             fnCommandList.filter { it.commandName.textMatches(command) }
     }
 
-    internal class CommandVariantFinder(): ElvishScopeClimber() {
+    internal class CommandVariantFinder : ElvishBlockClimber() {
         private val log = logger<CommandVariantFinder>()
         val variants = mutableListOf<LookupElement>()
-        override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
-            val functions:Collection<ElvishFunctionDeclaration> = when (s) {
-                is ElvishFile -> s.topLevelFunctionsDeclarations().toList()
-                is BuiltinScope -> s.findFnCommands(null)
-                is ElvishFnCommand -> s.chunk.fnCommandList
-                is ElvishLambda -> s.chunk.fnCommandList
-                is ElvishLambdaBlock -> s.chunk.fnCommandList
-                else -> emptyList()
-            }
+        override fun visitElvishFile(s: ElvishFile, ctxt: PsiElement): Boolean {
+            val functions = s.topLevelFunctionsDeclarations().toList()
+            addAll(functions)
+            return super.visitElvishFile(s, ctxt)
+        }
 
-            if (functions.isNotEmpty()) {
-                variants += functions.mapNotNull { when (it) {
+        override fun visitBuiltinScope(s: BuiltinScope, ctxt: PsiElement): Boolean {
+            val functions = s.findFnCommands(null)
+            addAll(functions)
+            return super.visitBuiltinScope(s, ctxt)
+        }
+
+        override fun visitLambdaScope(s: ElvishLambdaScope, ctxt: PsiElement): Boolean {
+            val functions = s.chunk.fnCommandList
+            addAll(functions)
+            return super.visitLambdaScope(s, ctxt)
+        }
+
+        override fun visitChunkBlock(s: ElvishChunkBlock, ctxt: PsiElement): Boolean {
+            val functions = s.chunk.fnCommandList
+            addAll(functions)
+            return super.visitChunkBlock(s, ctxt)
+        }
+
+        private fun addAll(functions: Collection<ElvishFunctionDeclaration>) {
+            variants += functions.mapNotNull {
+                when (it) {
                     is ElvishFnCommand -> it.toLookupElement()
                     is ElvishPsiBuiltinCommand -> it.toLookupElement()
-                    else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
-                } }
+                    else -> {
+                        log.warn("unrecognized:" + it.javaClass.name); null
+                    }
+                }
             }
-            return true
         }
     }
 }

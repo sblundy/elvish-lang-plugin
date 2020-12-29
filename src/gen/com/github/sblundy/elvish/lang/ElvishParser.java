@@ -37,13 +37,15 @@ public class ElvishParser implements PsiParser, LightPsiParser {
   }
 
   public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[] {
-    create_token_set_(EXCEPT_BLOCK, LAMBDA),
     create_token_set_(LIB_MODULE_SPEC, RELATIVE_MODULE_SPEC),
     create_token_set_(NAMESPACE_VARIABLE_REF, SPECIAL_SCOPE_VARIABLE_REF, VARIABLE_REF),
     create_token_set_(COMMAND_EXPRESSION, NAMESPACE_COMMAND_EXPRESSION, SPECIAL_SCOPE_COMMAND_EXPRESSION),
     create_token_set_(LOCAL_SCOPE_VARIABLE_ASSIGNMENT, NAMESPACE_VARIABLE_ASSIGNMENT, UP_SCOPE_VARIABLE_ASSIGNMENT, VARIABLE),
     create_token_set_(BUILTIN_NAMESPACE, ENV_VAR_NAMESPACE, EXTERNALS_NAMESPACE, LOCAL_NAMESPACE,
       NAMESPACE_NAME, UP_NAMESPACE),
+    create_token_set_(ELSE_BLOCK, EL_IF_BLOCK, EXCEPT_BLOCK, FINALLY_BLOCK,
+      FOR_COMMAND, IF_COMMAND, LAMBDA, TRY_COMMAND,
+      WHILE_COMMAND),
   };
 
   /* ********************************************************** */
@@ -1336,7 +1338,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // OPEN_BRACE Chunk CLOSE_BRACE
-  public static boolean LambdaBlock(PsiBuilder builder_, int level_) {
+  static boolean LambdaBlock(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "LambdaBlock")) return false;
     if (!nextTokenIs(builder_, OPEN_BRACE)) return false;
     boolean result_;
@@ -1344,7 +1346,7 @@ public class ElvishParser implements PsiParser, LightPsiParser {
     result_ = consumeToken(builder_, OPEN_BRACE);
     result_ = result_ && Chunk(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, CLOSE_BRACE);
-    exit_section_(builder_, marker_, LAMBDA_BLOCK, result_);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 

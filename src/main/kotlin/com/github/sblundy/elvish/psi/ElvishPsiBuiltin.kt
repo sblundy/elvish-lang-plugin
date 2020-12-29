@@ -23,6 +23,7 @@ sealed class ElvishPsiBuiltin(private val manager: PsiManager, private val owner
     override fun getText() = builtin
     override fun getTextLength() = builtin.length
     override fun getName() = builtin
+    override fun getBlock(): ElvishBlock? = null
     override fun getScope(): ElvishLexicalScope? = owner
 }
 

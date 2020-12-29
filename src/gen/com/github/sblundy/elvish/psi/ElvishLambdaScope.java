@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishLambdaBlock extends ElvishPsiElement {
+public interface ElvishLambdaScope extends ElvishLexicalScope {
 
   @NotNull
   ElvishChunk getChunk();
+
+  @Nullable
+  ElvishLambdaArguments getLambdaArguments();
 
 }

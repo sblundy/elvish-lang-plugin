@@ -8,17 +8,16 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishLambdaBlockImpl extends ASTWrapperElvishPsiElement implements ElvishLambdaBlock {
+public class ElvishLambdaScopeImpl extends ElvishLexicalScopeImpl implements ElvishLambdaScope {
 
-  public ElvishLambdaBlockImpl(@NotNull ASTNode node) {
+  public ElvishLambdaScopeImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitLambdaBlock(this);
+    visitor.visitLambdaScope(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -30,6 +29,12 @@ public class ElvishLambdaBlockImpl extends ASTWrapperElvishPsiElement implements
   @NotNull
   public ElvishChunk getChunk() {
     return findNotNullChildByClass(ElvishChunk.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishLambdaArguments getLambdaArguments() {
+    return findChildByClass(ElvishLambdaArguments.class);
   }
 
 }

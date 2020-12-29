@@ -5,13 +5,13 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishElIfBlock extends ElvishPsiElement {
+public interface ElvishElIfBlock extends ElvishChunkBlock {
+
+  @Nullable
+  ElvishChunk getChunk();
 
   @NotNull
   ElvishCondition getCondition();
-
-  @Nullable
-  ElvishLambdaBlock getLambdaBlock();
 
   @Nullable
   PsiElement getEol();

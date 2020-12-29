@@ -19,8 +19,8 @@ internal abstract class ElvishSpecialScopeVariableReference<T: ElvishPsiElement>
         val declarations = when (getNamespaceIdentifier()) {
             is ElvishLocalNamespace -> {
                 val climber = object : ElvishVariableAssignmentReference.VariableFinder(getVariableName()) {
-                    override fun visitScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
-                        super.visitScope(s, ctxt)
+                    override fun visitLexicalScope(s: ElvishLexicalScope, ctxt: PsiElement): Boolean {
+                        super.visitLexicalScope(s, ctxt)
                         return false
                     }
                 }

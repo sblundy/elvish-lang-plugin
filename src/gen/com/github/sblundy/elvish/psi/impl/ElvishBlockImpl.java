@@ -8,39 +8,22 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
+import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishElIfBlockImpl extends ElvishChunkBlockImpl implements ElvishElIfBlock {
+public class ElvishBlockImpl extends ASTWrapperElvishPsiElement implements ElvishBlock {
 
-  public ElvishElIfBlockImpl(@NotNull ASTNode node) {
+  public ElvishBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitElIfBlock(this);
+    visitor.visitBlock(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public ElvishChunk getChunk() {
-    return findChildByClass(ElvishChunk.class);
-  }
-
-  @Override
-  @NotNull
-  public ElvishCondition getCondition() {
-    return findNotNullChildByClass(ElvishCondition.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getEol() {
-    return findChildByType(EOL);
   }
 
 }

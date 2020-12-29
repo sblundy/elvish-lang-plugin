@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishElseBlockImpl extends ASTWrapperElvishPsiElement implements ElvishElseBlock {
+public class ElvishElseBlockImpl extends ElvishChunkBlockImpl implements ElvishElseBlock {
 
   public ElvishElseBlockImpl(@NotNull ASTNode node) {
     super(node);
@@ -28,8 +27,8 @@ public class ElvishElseBlockImpl extends ASTWrapperElvishPsiElement implements E
 
   @Override
   @Nullable
-  public ElvishLambdaBlock getLambdaBlock() {
-    return findChildByClass(ElvishLambdaBlock.class);
+  public ElvishChunk getChunk() {
+    return findChildByClass(ElvishChunk.class);
   }
 
   @Override

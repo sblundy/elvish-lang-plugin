@@ -47,6 +47,7 @@ internal class BuiltinScope(val version: ElvishLanguageVersion, mgr: PsiManager)
     }
 
     override fun getParent(): PsiElement? = null
+    override fun getBlock(): ElvishBlock? = null
     override fun getScope(): ElvishLexicalScope? = null
     override fun exportedVariables(): Collection<ElvishVariableDeclaration> = (values + variables)
     override fun exportedFunctions(): Collection<ElvishFunctionDeclaration> = functions
@@ -69,6 +70,8 @@ internal class BuiltinScope(val version: ElvishLanguageVersion, mgr: PsiManager)
         override fun childModuleNames(): Collection<String> = childNames
 
         override fun getParent(): PsiElement? = null
+
+        override fun getBlock(): ElvishBlock? = null
 
         override fun getScope(): ElvishLexicalScope? = null
     }

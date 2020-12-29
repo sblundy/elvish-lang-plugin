@@ -5,15 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishElseBlock extends ElvishChunkBlock {
-
-  @Nullable
-  ElvishChunk getChunk();
-
-  @Nullable
-  PsiElement getEol();
-
-  @NotNull
-  PsiElement getInlineWhitespace();
+public interface ElvishBlock extends ElvishPsiElement {
 
 }

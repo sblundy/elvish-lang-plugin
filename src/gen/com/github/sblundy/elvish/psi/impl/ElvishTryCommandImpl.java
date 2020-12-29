@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishTryCommandImpl extends ASTWrapperElvishPsiElement implements ElvishTryCommand {
+public class ElvishTryCommandImpl extends ElvishChunkBlockImpl implements ElvishTryCommand {
 
   public ElvishTryCommandImpl(@NotNull ASTNode node) {
     super(node);
@@ -27,27 +26,9 @@ public class ElvishTryCommandImpl extends ASTWrapperElvishPsiElement implements 
   }
 
   @Override
-  @Nullable
-  public ElvishElseBlock getElseBlock() {
-    return findChildByClass(ElvishElseBlock.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishExceptBlock getExceptBlock() {
-    return findChildByClass(ElvishExceptBlock.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishFinallyBlock getFinallyBlock() {
-    return findChildByClass(ElvishFinallyBlock.class);
-  }
-
-  @Override
   @NotNull
-  public ElvishLambdaBlock getLambdaBlock() {
-    return findNotNullChildByClass(ElvishLambdaBlock.class);
+  public List<ElvishChunkBlock> getChunkBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishChunkBlock.class);
   }
 
 }

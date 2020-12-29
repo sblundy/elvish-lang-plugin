@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishWhileCommand extends ElvishPsiElement {
+public interface ElvishWhileCommand extends ElvishChunkBlock {
 
   @Nullable
   ElvishChunk getChunk();

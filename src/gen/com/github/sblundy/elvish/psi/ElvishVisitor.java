@@ -19,6 +19,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBlock(@NotNull ElvishBlock o) {
+    visitPsiElement(o);
+  }
+
   public void visitBraced(@NotNull ElvishBraced o) {
     visitPsiElement(o);
   }
@@ -37,6 +41,10 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitChunk(@NotNull ElvishChunk o) {
     visitPsiElement(o);
+  }
+
+  public void visitChunkBlock(@NotNull ElvishChunkBlock o) {
+    visitBlock(o);
   }
 
   public void visitCollection(@NotNull ElvishCollection o) {
@@ -72,11 +80,11 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitElIfBlock(@NotNull ElvishElIfBlock o) {
-    visitPsiElement(o);
+    visitChunkBlock(o);
   }
 
   public void visitElseBlock(@NotNull ElvishElseBlock o) {
-    visitPsiElement(o);
+    visitChunkBlock(o);
   }
 
   public void visitEnvVarNamespace(@NotNull ElvishEnvVarNamespace o) {
@@ -84,7 +92,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitExceptBlock(@NotNull ElvishExceptBlock o) {
-    visitLexicalScope(o);
+    visitChunkBlock(o);
   }
 
   public void visitExceptionCapture(@NotNull ElvishExceptionCapture o) {
@@ -104,17 +112,17 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitFinallyBlock(@NotNull ElvishFinallyBlock o) {
-    visitPsiElement(o);
+    visitChunkBlock(o);
   }
 
   public void visitFnCommand(@NotNull ElvishFnCommand o) {
     visitFunctionDeclaration(o);
-    // visitLexicalScope(o);
+    // visitLambdaScope(o);
     // visitPsiNameIdentifierOwner(o);
   }
 
   public void visitForCommand(@NotNull ElvishForCommand o) {
-    visitPsiElement(o);
+    visitChunkBlock(o);
   }
 
   public void visitFunctionDeclaration(@NotNull ElvishFunctionDeclaration o) {
@@ -122,7 +130,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitIfCommand(@NotNull ElvishIfCommand o) {
-    visitPsiElement(o);
+    visitChunkBlock(o);
   }
 
   public void visitIndexRange(@NotNull ElvishIndexRange o) {
@@ -134,19 +142,19 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitLambda(@NotNull ElvishLambda o) {
-    visitLexicalScope(o);
+    visitLambdaScope(o);
   }
 
   public void visitLambdaArguments(@NotNull ElvishLambdaArguments o) {
     visitPsiElement(o);
   }
 
-  public void visitLambdaBlock(@NotNull ElvishLambdaBlock o) {
-    visitPsiElement(o);
+  public void visitLambdaScope(@NotNull ElvishLambdaScope o) {
+    visitLexicalScope(o);
   }
 
   public void visitLexicalScope(@NotNull ElvishLexicalScope o) {
-    visitPsiElement(o);
+    visitBlock(o);
   }
 
   public void visitLibModuleSpec(@NotNull ElvishLibModuleSpec o) {
@@ -237,7 +245,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitTryCommand(@NotNull ElvishTryCommand o) {
-    visitPsiElement(o);
+    visitChunkBlock(o);
   }
 
   public void visitUpNamespace(@NotNull ElvishUpNamespace o) {
@@ -279,7 +287,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitWhileCommand(@NotNull ElvishWhileCommand o) {
-    visitPsiElement(o);
+    visitChunkBlock(o);
   }
 
   public void visitArgument(@NotNull ElvishArgument o) {

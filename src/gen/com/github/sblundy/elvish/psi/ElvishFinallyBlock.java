@@ -5,10 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishFinallyBlock extends ElvishPsiElement {
-
-  @NotNull
-  ElvishLambdaBlock getLambdaBlock();
+public interface ElvishFinallyBlock extends ElvishChunkBlock {
 
   @NotNull
   PsiElement getInlineWhitespace();

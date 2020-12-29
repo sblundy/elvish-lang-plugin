@@ -12,6 +12,7 @@ class ElvishFile(viewProvider: FileViewProvider): PsiFileBase(viewProvider, Elvi
     ElvishModule {
     override fun getFileType(): FileType = ElvishFileType.INSTANCE
     override fun toString(): String = "Elvish File"
+    override fun getBlock(): ElvishBlock? = project.getBuiltinScope()
     override fun getScope(): ElvishLexicalScope? = project.getBuiltinScope()
 
     fun topLevelAssignments(): Array<ElvishAssignment> {
