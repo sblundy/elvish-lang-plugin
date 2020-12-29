@@ -235,6 +235,18 @@ class ElvishUsageProviderTest {
             Assert.assertEquals(49, usages.drop(1).firstOrNull()?.navigationOffset)
         }
     }
+
+    @Test
+    fun testFindUsagesBundled() {
+        runTest {
+            val usages = myFixture.testFindUsages(myFullDataPath + "ElvishUsageProviderTest-bundled.elv").filter { it.file?.name == "ElvishUsageProviderTest-bundled.elv" }
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(2, usages.size)
+            Assert.assertEquals(21, usages.firstOrNull()?.navigationOffset)
+            Assert.assertEquals(39, usages.drop(1).firstOrNull()?.navigationOffset)
+        }
+    }
 }
 
 fun runTest(t : () -> Unit) {

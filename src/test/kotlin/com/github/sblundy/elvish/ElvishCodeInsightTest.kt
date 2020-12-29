@@ -196,4 +196,20 @@ class ElvishCodeInsightTest {
             Assert.assertTrue(lookupStrings.contains("completion:"))
         }
     }
+
+    @Test
+    fun testCompleteBundled() {
+        runTest {
+            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-bundled.elv")
+            myFixture.complete(CompletionType.BASIC, 1)
+
+            val lookupStrings = myFixture.lookupElementStrings?: listOf()
+
+            Assert.assertTrue(lookupStrings.contains("find"))
+            Assert.assertTrue(lookupStrings.contains("match"))
+            Assert.assertTrue(lookupStrings.contains("replace"))
+            Assert.assertTrue(lookupStrings.contains("split"))
+            Assert.assertTrue(lookupStrings.contains("quote"))
+        }
+    }
 }
