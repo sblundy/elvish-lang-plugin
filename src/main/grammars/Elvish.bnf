@@ -223,7 +223,7 @@ private SpecialCommand ::= DeleteCommand | UseCommand | LogicCommand | IfCommand
 LambdaBlock ::= OPEN_BRACE Chunk CLOSE_BRACE {
   extends="LexicalScope"
 }
-DeleteCommand ::= KEYWORD_DEL CommandSep* Variable Index*
+DeleteCommand ::= KEYWORD_DEL CommandSep* (LocalNamespace | EnvVarNamespace)? Variable Index*
 LogicCommand ::= LogicCMD (CommandSep* argument)* CommandSep*
 private LogicCMD ::= 'or' | 'and'
 private MissingLambda ::= EOL <<missingLambdaBody>>

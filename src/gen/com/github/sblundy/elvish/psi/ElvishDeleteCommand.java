@@ -13,6 +13,9 @@ public interface ElvishDeleteCommand extends ElvishPsiElement {
   @NotNull
   List<ElvishIndexSingle> getIndexSingleList();
 
+  @Nullable
+  ElvishNamespaceIdentifier getNamespaceIdentifier();
+
   @NotNull
   ElvishVariable getVariable();
 

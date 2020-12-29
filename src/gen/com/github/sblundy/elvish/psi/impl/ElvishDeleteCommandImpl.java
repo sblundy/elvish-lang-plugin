@@ -39,6 +39,12 @@ public class ElvishDeleteCommandImpl extends ASTWrapperElvishPsiElement implemen
   }
 
   @Override
+  @Nullable
+  public ElvishNamespaceIdentifier getNamespaceIdentifier() {
+    return findChildByClass(ElvishNamespaceIdentifier.class);
+  }
+
+  @Override
   @NotNull
   public ElvishVariable getVariable() {
     return findNotNullChildByClass(ElvishVariable.class);

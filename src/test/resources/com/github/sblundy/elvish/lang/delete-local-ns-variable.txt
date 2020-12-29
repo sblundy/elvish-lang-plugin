@@ -1,0 +1,11 @@
+Elvish File
+  ElvishChunkImpl(CHUNK)
+    ElvishDeleteCommandImpl(DELETE_COMMAND)
+      PsiElement(ElvishTokenType.del)('del')
+      PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
+      ElvishLocalNamespaceImpl(LOCAL_NAMESPACE)
+        PsiElement(ElvishTokenType.VARIABLE_CHAR)('local')
+        PsiElement(ElvishTokenType.:)(':')
+      ElvishVariableImpl(VARIABLE)
+        ElvishVariableNameImpl(VARIABLE_NAME)
+          PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')
