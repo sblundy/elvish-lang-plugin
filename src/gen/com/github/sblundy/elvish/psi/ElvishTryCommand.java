@@ -11,9 +11,12 @@ public interface ElvishTryCommand extends ElvishPsiElement {
   ElvishElseBlock getElseBlock();
 
   @Nullable
+  ElvishExceptBlock getExceptBlock();
+
+  @Nullable
   ElvishFinallyBlock getFinallyBlock();
 
   @NotNull
-  List<ElvishLexicalScope> getLexicalScopeList();
+  ElvishLambdaBlock getLambdaBlock();
 
 }

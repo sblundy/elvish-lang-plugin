@@ -42,6 +42,8 @@ internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInE
             val d= when (s) {
                 is ElvishFile -> s.matchingFnCommands()
                 is BuiltinScope -> s.findFnCommands(command)
+                is ElvishFnCommand -> s.chunk.matchingFnCommands()
+                is ElvishLambda -> s.chunk.matchingFnCommands()
                 is ElvishLambdaBlock -> s.chunk.matchingFnCommands()
                 else -> emptyList()
             }
@@ -65,6 +67,8 @@ internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInE
             val functions:Collection<ElvishFunctionDeclaration> = when (s) {
                 is ElvishFile -> s.topLevelFunctionsDeclarations().toList()
                 is BuiltinScope -> s.findFnCommands(null)
+                is ElvishFnCommand -> s.chunk.fnCommandList
+                is ElvishLambda -> s.chunk.fnCommandList
                 is ElvishLambdaBlock -> s.chunk.fnCommandList
                 else -> emptyList()
             }

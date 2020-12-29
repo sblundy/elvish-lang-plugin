@@ -136,6 +136,8 @@ internal class ElvishVariableAssignmentReference(element: ElvishVariableRef, ran
             val functions:Collection<ElvishFunctionDeclaration> = when (s) {
                 is ElvishFile -> s.topLevelFunctionsDeclarations().toList()
                 is BuiltinScope -> s.findFnCommands(null)
+                is ElvishFnCommand -> s.chunk.fnCommandList
+                is ElvishLambda -> s.chunk.fnCommandList
                 is ElvishLambdaBlock -> s.chunk.fnCommandList
                 else -> emptyList()
             }

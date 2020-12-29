@@ -1,5 +1,5 @@
 x = 12
-if $true {
+fn test1 {
   fn x { echo 'x' }
   local:<caret>
 }

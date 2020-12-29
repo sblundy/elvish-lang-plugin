@@ -220,9 +220,7 @@ BracedSep ::= (Space | EOL)* COMMA (Space | EOL)*
 
 private SpecialCommand ::= DeleteCommand | UseCommand | LogicCommand | IfCommand | WhileCommand | ForCommand | TryCommand | FnCommand
 
-LambdaBlock ::= OPEN_BRACE Chunk CLOSE_BRACE {
-  extends="LexicalScope"
-}
+LambdaBlock ::= OPEN_BRACE Chunk CLOSE_BRACE
 DeleteCommand ::= KEYWORD_DEL CommandSep* (LocalNamespace | EnvVarNamespace)? Variable Index*
 LogicCommand ::= LogicCMD (CommandSep* argument)* CommandSep*
 private LogicCMD ::= 'or' | 'and'

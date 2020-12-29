@@ -31,7 +31,8 @@ class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val pro
                 findMod(s.matchingUseCommands(), s.containingFile as ElvishFile)
             }
             is ElvishLambdaBlock -> {
-                findMod(s.matchingUseCommands(), s.containingFile as ElvishFile)
+                val file = (s as ElvishLambdaBlock).containingFile
+                findMod(s.matchingUseCommands(), file as ElvishFile)
             }
             else -> emptyList()
         }

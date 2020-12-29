@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishLambdaBlock extends ElvishLexicalScope {
+public interface ElvishLambdaBlock extends ElvishPsiElement {
 
   @NotNull
   ElvishChunk getChunk();

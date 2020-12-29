@@ -1,5 +1,5 @@
 x = 12
-if $true {
+fn test1 {
   local:x<caret> = 14
   echo $x $up:x
 }

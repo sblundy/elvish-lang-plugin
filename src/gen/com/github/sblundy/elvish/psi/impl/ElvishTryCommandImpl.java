@@ -34,14 +34,20 @@ public class ElvishTryCommandImpl extends ASTWrapperElvishPsiElement implements 
 
   @Override
   @Nullable
+  public ElvishExceptBlock getExceptBlock() {
+    return findChildByClass(ElvishExceptBlock.class);
+  }
+
+  @Override
+  @Nullable
   public ElvishFinallyBlock getFinallyBlock() {
     return findChildByClass(ElvishFinallyBlock.class);
   }
 
   @Override
   @NotNull
-  public List<ElvishLexicalScope> getLexicalScopeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLexicalScope.class);
+  public ElvishLambdaBlock getLambdaBlock() {
+    return findNotNullChildByClass(ElvishLambdaBlock.class);
   }
 
 }

@@ -142,7 +142,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitLambdaBlock(@NotNull ElvishLambdaBlock o) {
-    visitLexicalScope(o);
+    visitPsiElement(o);
   }
 
   public void visitLexicalScope(@NotNull ElvishLexicalScope o) {
