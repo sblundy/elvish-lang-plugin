@@ -1,0 +1,3 @@
+-ElvishStructureViewFactoryTest-nesting-function.elv
+ -test-method
+  nested-method
