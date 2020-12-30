@@ -164,7 +164,7 @@ CommandBareword ::= (VARIABLE_CHAR|BAREWORD_CHAR|COMMAND_BAREWORD_CHAR|WILDCARD|
 // Maps and lists
 Compound ::= TILDE? Indexing+
 private Indexing ::= Primary Index*
-private Index ::= OPEN_BRACKET (IndexRange | IndexSingle) CLOSE_BRACKET
+private Index ::= OPEN_BRACKET (IndexRange | IndexSingle) (Space (IndexRange | IndexSingle))* CLOSE_BRACKET
 { pin=1 }
 private IndexValue ::= VariableName | SingleQuoted | DoubleQuoted | SpecialScopeVariableRef | NamespaceVariableRef | VariableRef | ExceptionCapture | OutputCapture
 IndexSingle ::= IndexValue+
@@ -180,7 +180,7 @@ private EmptyMap ::= OPEN_BRACKET Space? AMPERSAND Space? CLOSE_BRACKET
 MapPair ::= AMPERSAND Space? Compound EQUALS Space? Compound
 
 // Commands
-Assignment ::= ((LocalScopeVariableAssignment | UpScopeVariableAssignment | NamespaceVariableAssignment | Variable) Index* Space?)+ EQUALS Space? Compound {
+Assignment ::= ((LocalScopeVariableAssignment | UpScopeVariableAssignment | NamespaceVariableAssignment | AT_SYMBOL? Variable) Index* Space?)+ EQUALS Space? Compound {
   pin=2
   methods=[value="Compound"]
 }
