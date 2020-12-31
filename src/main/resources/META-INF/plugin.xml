@@ -76,6 +76,7 @@
                          groupBundle="com.github.sblundy.elvish.ElvishBundle" groupKey="inspection.group.label"
                          bundle="com.github.sblundy.elvish.ElvishBundle" key="inspection.deprecated.label"
                          implementationClass="com.github.sblundy.elvish.codeInspections.DeprecatedInspection"/>
+        <bundledColorScheme path="/colors/ElvishTerminalDarcula"/>
     </extensions>
     <actions>
         <!-- Add your actions here -->

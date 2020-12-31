@@ -1,0 +1,71 @@
+<scheme name="Elvish Terminal Theme (Darcula)" version="142" parent_scheme="Darcula">
+  <attributes>
+    <option name="ELVISH_BRACES">
+      <value>
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="ELVISH_BRACKETS">
+      <value>
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="ELVISH_COMMAND">
+      <value>
+        <option name="FOREGROUND" value="126e00" />
+      </value>
+    </option>
+    <option name="ELVISH_COMMAND_CAPTURE">
+      <value>
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="ELVISH_COMMENT">
+      <value>
+        <option name="FOREGROUND" value="33c2c1" />
+      </value>
+    </option>
+    <option name="ELVISH_ESCAPE_SEQUENCE">
+      <value>
+        <option name="FOREGROUND" value="c2c300" />
+      </value>
+    </option>
+    <option name="ELVISH_INVALID_ESCAPE_SEQUENCE">
+      <value>
+        <option name="FOREGROUND" value="c2c300" />
+        <option name="EFFECT_COLOR" value="fa5355" />
+        <option name="EFFECT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="ELVISH_KEYWORD">
+      <value>
+        <option name="FOREGROUND" value="c2c300" />
+      </value>
+    </option>
+    <option name="ELVISH_PARENTHESES">
+      <value>
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="ELVISH_REDIRECTION">
+      <value>
+        <option name="FOREGROUND" value="126e00" />
+      </value>
+    </option>
+    <option name="ELVISH_STRING">
+      <value>
+        <option name="FOREGROUND" value="c2c300" />
+      </value>
+    </option>
+    <option name="ELVISH_VARIABLE">
+      <value>
+        <option name="FOREGROUND" value="fa54ff" />
+      </value>
+    </option>
+    <option name="ELVISH_VARIABLE_REF">
+      <value>
+        <option name="FOREGROUND" value="fa54ff" />
+      </value>
+    </option>
+  </attributes>
+</scheme>
