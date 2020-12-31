@@ -1,0 +1,1 @@
+<info textAttributesKey="ELVISH_VARIABLE">x</info> = word

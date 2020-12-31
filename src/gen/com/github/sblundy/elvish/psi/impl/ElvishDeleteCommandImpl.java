@@ -27,18 +27,6 @@ public class ElvishDeleteCommandImpl extends ASTWrapperElvishPsiElement implemen
   }
 
   @Override
-  @NotNull
-  public List<ElvishIndexRange> getIndexRangeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexRange.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishIndexSingle> getIndexSingleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexSingle.class);
-  }
-
-  @Override
   @Nullable
   public ElvishNamespaceIdentifier getNamespaceIdentifier() {
     return findChildByClass(ElvishNamespaceIdentifier.class);
@@ -46,8 +34,20 @@ public class ElvishDeleteCommandImpl extends ASTWrapperElvishPsiElement implemen
 
   @Override
   @NotNull
+  public List<ElvishVarIndex> getVarIndexList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVarIndex.class);
+  }
+
+  @Override
+  @NotNull
   public ElvishVariable getVariable() {
     return findNotNullChildByClass(ElvishVariable.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getKeyword() {
+    return findNotNullChildByType(KEYWORD_DEL);
   }
 
 }

@@ -5,15 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishUseCommand extends ElvishSpecialCommand {
+public interface ElvishVarIndex extends ElvishPsiElement {
+
+  @NotNull
+  List<ElvishIndex> getIndexList();
 
   @Nullable
-  ElvishModuleAlias getModuleAlias();
+  PsiElement getCloseBracket();
 
   @NotNull
-  ElvishModuleSpec getModuleSpec();
-
-  @NotNull
-  PsiElement getKeyword();
+  PsiElement getOpenBracket();
 
 }

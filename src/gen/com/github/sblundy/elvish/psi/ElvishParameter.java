@@ -11,6 +11,9 @@ import javax.swing.Icon;
 
 public interface ElvishParameter extends ElvishVariableDeclaration, PsiNameIdentifierOwner {
 
+  @Nullable
+  PsiElement getAtSymbol();
+
   @NotNull
   PsiElement getNameIdentifier();
 

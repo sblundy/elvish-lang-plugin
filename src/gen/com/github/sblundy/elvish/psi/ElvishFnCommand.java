@@ -9,13 +9,16 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.util.IncorrectOperationException;
 import javax.swing.Icon;
 
-public interface ElvishFnCommand extends ElvishFunctionDeclaration, ElvishLambdaScope, PsiNameIdentifierOwner {
+public interface ElvishFnCommand extends ElvishFunctionDeclaration, ElvishLambdaScope, PsiNameIdentifierOwner, ElvishSpecialCommand {
 
   @NotNull
   ElvishChunk getChunk();
 
   @Nullable
   ElvishLambdaArguments getLambdaArguments();
+
+  @NotNull
+  PsiElement getKeyword();
 
   @NotNull
   PsiElement getNameIdentifier();

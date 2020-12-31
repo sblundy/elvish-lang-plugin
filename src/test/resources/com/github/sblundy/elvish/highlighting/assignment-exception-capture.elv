@@ -1,0 +1,1 @@
+<info textAttributesKey="ELVISH_VARIABLE">err</info> = <info textAttributesKey="ELVISH_COMMAND_CAPTURE">?(</info><info textAttributesKey="ELVISH_COMMAND">fail</info> 'test'<info textAttributesKey="ELVISH_COMMAND_CAPTURE">)</info>

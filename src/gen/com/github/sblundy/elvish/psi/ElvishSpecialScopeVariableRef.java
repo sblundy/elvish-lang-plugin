@@ -9,13 +9,16 @@ import com.intellij.psi.PsiReference;
 public interface ElvishSpecialScopeVariableRef extends ElvishVariableReference {
 
   @NotNull
-  List<ElvishIndexRange> getIndexRangeList();
-
-  @NotNull
-  List<ElvishIndexSingle> getIndexSingleList();
-
-  @NotNull
   ElvishNamespaceIdentifier getNamespaceIdentifier();
+
+  @NotNull
+  List<ElvishVarIndex> getVarIndexList();
+
+  @Nullable
+  PsiElement getAtSymbol();
+
+  @NotNull
+  PsiElement getDollarSign();
 
   @NotNull
   PsiReference getReference();

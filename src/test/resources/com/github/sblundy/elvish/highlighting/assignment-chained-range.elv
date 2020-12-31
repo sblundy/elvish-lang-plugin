@@ -1,0 +1,1 @@
+<info textAttributesKey="ELVISH_VARIABLE">x</info> = <info textAttributesKey="ELVISH_VARIABLE_REF">$y</info><info descr="null" textAttributesKey="ELVISH_BRACKETS">[</info>1:2<info textAttributesKey="ELVISH_BRACKETS">]</info><info descr="null" textAttributesKey="ELVISH_BRACKETS">[</info>z<info textAttributesKey="ELVISH_BRACKETS">]</info>

@@ -1,0 +1,1 @@
+<info textAttributesKey="ELVISH_VARIABLE">x</info> = 'a '<info textAttributesKey="ELVISH_COMMAND_CAPTURE">(</info><info textAttributesKey="ELVISH_COMMAND">echo</info> y<info textAttributesKey="ELVISH_COMMAND_CAPTURE">)</info>'b'

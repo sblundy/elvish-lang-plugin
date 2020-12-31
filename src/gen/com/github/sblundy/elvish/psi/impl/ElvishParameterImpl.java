@@ -29,6 +29,12 @@ public class ElvishParameterImpl extends ElvishVariableDeclarationImpl implement
   }
 
   @Override
+  @Nullable
+  public PsiElement getAtSymbol() {
+    return findChildByType(AT_SYMBOL);
+  }
+
+  @Override
   @NotNull
   public PsiElement getNameIdentifier() {
     return ElvishPsiImplUtil.getNameIdentifier(this);

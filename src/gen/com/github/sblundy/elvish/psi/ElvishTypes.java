@@ -67,6 +67,7 @@ public interface ElvishTypes {
   IElementType VARIABLE = new ElvishElementType("VARIABLE");
   IElementType VARIABLE_NAME = new ElvishElementType("VARIABLE_NAME");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
+  IElementType VAR_INDEX = new ElvishElementType("VAR_INDEX");
   IElementType WHILE_COMMAND = new ElvishElementType("WHILE_COMMAND");
 
   IElementType AMPERSAND = new ElvishTokenType("&");
@@ -290,6 +291,9 @@ public interface ElvishTypes {
       }
       else if (type == VARIABLE_REF) {
         return new ElvishVariableRefImpl(node);
+      }
+      else if (type == VAR_INDEX) {
+        return new ElvishVarIndexImpl(node);
       }
       else if (type == WHILE_COMMAND) {
         return new ElvishWhileCommandImpl(node);

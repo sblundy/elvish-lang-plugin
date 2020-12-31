@@ -11,37 +11,19 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishUseCommandImpl extends ASTWrapperElvishPsiElement implements ElvishUseCommand {
+public class ElvishIndexImpl extends ASTWrapperElvishPsiElement implements ElvishIndex {
 
-  public ElvishUseCommandImpl(@NotNull ASTNode node) {
+  public ElvishIndexImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitUseCommand(this);
+    visitor.visitIndex(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public ElvishModuleAlias getModuleAlias() {
-    return findChildByClass(ElvishModuleAlias.class);
-  }
-
-  @Override
-  @NotNull
-  public ElvishModuleSpec getModuleSpec() {
-    return findNotNullChildByClass(ElvishModuleSpec.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getKeyword() {
-    return findNotNullChildByType(KEYWORD_USE);
   }
 
 }

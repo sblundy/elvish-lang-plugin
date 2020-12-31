@@ -20,12 +20,6 @@ public interface ElvishCompound extends ElvishPsiElement {
   List<ElvishExceptionCapture> getExceptionCaptureList();
 
   @NotNull
-  List<ElvishIndexRange> getIndexRangeList();
-
-  @NotNull
-  List<ElvishIndexSingle> getIndexSingleList();
-
-  @NotNull
   List<ElvishLambda> getLambdaList();
 
   @NotNull
@@ -39,6 +33,9 @@ public interface ElvishCompound extends ElvishPsiElement {
 
   @NotNull
   List<ElvishSingleQuoted> getSingleQuotedList();
+
+  @NotNull
+  List<ElvishVarIndex> getVarIndexList();
 
   @NotNull
   List<ElvishVariableReference> getVariableReferenceList();

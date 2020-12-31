@@ -11,14 +11,14 @@ import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishUseCommandImpl extends ASTWrapperElvishPsiElement implements ElvishUseCommand {
+public class ElvishVarIndexImpl extends ASTWrapperElvishPsiElement implements ElvishVarIndex {
 
-  public ElvishUseCommandImpl(@NotNull ASTNode node) {
+  public ElvishVarIndexImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitUseCommand(this);
+    visitor.visitVarIndex(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,21 +27,21 @@ public class ElvishUseCommandImpl extends ASTWrapperElvishPsiElement implements 
   }
 
   @Override
+  @NotNull
+  public List<ElvishIndex> getIndexList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndex.class);
+  }
+
+  @Override
   @Nullable
-  public ElvishModuleAlias getModuleAlias() {
-    return findChildByClass(ElvishModuleAlias.class);
+  public PsiElement getCloseBracket() {
+    return findChildByType(CLOSE_BRACKET);
   }
 
   @Override
   @NotNull
-  public ElvishModuleSpec getModuleSpec() {
-    return findNotNullChildByClass(ElvishModuleSpec.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getKeyword() {
-    return findNotNullChildByType(KEYWORD_USE);
+  public PsiElement getOpenBracket() {
+    return findNotNullChildByType(OPEN_BRACKET);
   }
 
 }

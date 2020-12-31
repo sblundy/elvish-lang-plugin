@@ -28,14 +28,8 @@ public class ElvishAssignmentImpl extends ASTWrapperElvishPsiElement implements 
 
   @Override
   @NotNull
-  public List<ElvishIndexRange> getIndexRangeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexRange.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishIndexSingle> getIndexSingleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexSingle.class);
+  public List<ElvishVarIndex> getVarIndexList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVarIndex.class);
   }
 
   @Override

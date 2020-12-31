@@ -55,4 +55,10 @@ public class ElvishForCommandImpl extends ElvishChunkBlockImpl implements Elvish
     return findChildByType(EOL);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getKeyword() {
+    return findNotNullChildByType(KEYWORD_FOR);
+  }
+
 }

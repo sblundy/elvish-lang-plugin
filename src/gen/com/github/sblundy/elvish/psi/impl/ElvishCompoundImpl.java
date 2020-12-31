@@ -52,18 +52,6 @@ public class ElvishCompoundImpl extends ASTWrapperElvishPsiElement implements El
 
   @Override
   @NotNull
-  public List<ElvishIndexRange> getIndexRangeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexRange.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishIndexSingle> getIndexSingleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexSingle.class);
-  }
-
-  @Override
-  @NotNull
   public List<ElvishLambda> getLambdaList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLambda.class);
   }
@@ -90,6 +78,12 @@ public class ElvishCompoundImpl extends ASTWrapperElvishPsiElement implements El
   @NotNull
   public List<ElvishSingleQuoted> getSingleQuotedList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishSingleQuoted.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishVarIndex> getVarIndexList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVarIndex.class);
   }
 
   @Override

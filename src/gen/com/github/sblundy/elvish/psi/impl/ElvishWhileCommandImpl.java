@@ -49,4 +49,10 @@ public class ElvishWhileCommandImpl extends ElvishChunkBlockImpl implements Elvi
     return findChildByType(EOL);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getKeyword() {
+    return findNotNullChildByType(KEYWORD_WHILE);
+  }
+
 }

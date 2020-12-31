@@ -1,0 +1,1 @@
+<info textAttributesKey="ELVISH_COMMAND">fn</info> x [<info textAttributesKey="ELVISH_PARAMETER">y</info> <info textAttributesKey="ELVISH_PARAMETER">@y</info>]{ <info textAttributesKey="ELVISH_COMMAND">echo</info> <info textAttributesKey="ELVISH_VARIABLE_REF">$y</info> <info textAttributesKey="ELVISH_VARIABLE_REF">$@z</info> }

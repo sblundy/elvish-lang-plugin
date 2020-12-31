@@ -42,6 +42,12 @@ public class ElvishFnCommandImpl extends ElvishFunctionDeclarationImpl implement
 
   @Override
   @NotNull
+  public PsiElement getKeyword() {
+    return findNotNullChildByType(KEYWORD_FN);
+  }
+
+  @Override
+  @NotNull
   public PsiElement getNameIdentifier() {
     return ElvishPsiImplUtil.getNameIdentifier(this);
   }

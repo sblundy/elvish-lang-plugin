@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishIndexRangeImpl extends ASTWrapperElvishPsiElement implements ElvishIndexRange {
+public class ElvishIndexRangeImpl extends ElvishIndexImpl implements ElvishIndexRange {
 
   public ElvishIndexRangeImpl(@NotNull ASTNode node) {
     super(node);

@@ -9,10 +9,10 @@ import com.intellij.psi.PsiReference;
 public interface ElvishNamespaceVariableRef extends ElvishExternalVariableReference {
 
   @NotNull
-  List<ElvishIndexRange> getIndexRangeList();
+  List<ElvishVarIndex> getVarIndexList();
 
   @NotNull
-  List<ElvishIndexSingle> getIndexSingleList();
+  PsiElement getDollarSign();
 
   @NotNull
   PsiReference getReference();

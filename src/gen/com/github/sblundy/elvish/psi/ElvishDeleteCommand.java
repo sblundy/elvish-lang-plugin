@@ -5,18 +5,18 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishDeleteCommand extends ElvishPsiElement {
-
-  @NotNull
-  List<ElvishIndexRange> getIndexRangeList();
-
-  @NotNull
-  List<ElvishIndexSingle> getIndexSingleList();
+public interface ElvishDeleteCommand extends ElvishSpecialCommand {
 
   @Nullable
   ElvishNamespaceIdentifier getNamespaceIdentifier();
 
   @NotNull
+  List<ElvishVarIndex> getVarIndexList();
+
+  @NotNull
   ElvishVariable getVariable();
+
+  @NotNull
+  PsiElement getKeyword();
 
 }

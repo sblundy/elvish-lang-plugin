@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishIndexSingle extends ElvishPsiElement {
+public interface ElvishIndexSingle extends ElvishIndex {
 
   @NotNull
   List<ElvishDoubleQuoted> getDoubleQuotedList();

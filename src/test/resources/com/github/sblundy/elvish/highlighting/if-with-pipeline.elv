@@ -1,0 +1,3 @@
+<info textAttributesKey="ELVISH_COMMAND">if</info> <info textAttributesKey="ELVISH_COMMAND_CAPTURE">(</info><info textAttributesKey="ELVISH_COMMAND">cat</info> <info textAttributesKey="ELVISH_VARIABLE_REF">$fname</info> | <info textAttributesKey="ELVISH_COMMAND">grep</info> go<info textAttributesKey="ELVISH_COMMAND_CAPTURE">)</info> {
+    <info textAttributesKey="ELVISH_COMMAND">echo</info> <info textAttributesKey="ELVISH_VARIABLE_REF">$fname</info>
+}

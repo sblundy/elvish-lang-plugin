@@ -28,20 +28,26 @@ public class ElvishSpecialScopeVariableRefImpl extends ElvishVariableReferenceIm
 
   @Override
   @NotNull
-  public List<ElvishIndexRange> getIndexRangeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexRange.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishIndexSingle> getIndexSingleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexSingle.class);
-  }
-
-  @Override
-  @NotNull
   public ElvishNamespaceIdentifier getNamespaceIdentifier() {
     return findNotNullChildByClass(ElvishNamespaceIdentifier.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishVarIndex> getVarIndexList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVarIndex.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getAtSymbol() {
+    return findChildByType(AT_SYMBOL);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getDollarSign() {
+    return findNotNullChildByType(DOLLAR_SIGN);
   }
 
   @Override

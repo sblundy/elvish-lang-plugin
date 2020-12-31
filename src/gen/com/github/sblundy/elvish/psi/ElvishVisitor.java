@@ -72,7 +72,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitDeleteCommand(@NotNull ElvishDeleteCommand o) {
-    visitPsiElement(o);
+    visitSpecialCommand(o);
   }
 
   public void visitDoubleQuoted(@NotNull ElvishDoubleQuoted o) {
@@ -119,10 +119,12 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitFunctionDeclaration(o);
     // visitLambdaScope(o);
     // visitPsiNameIdentifierOwner(o);
+    // visitSpecialCommand(o);
   }
 
   public void visitForCommand(@NotNull ElvishForCommand o) {
     visitChunkBlock(o);
+    // visitSpecialCommand(o);
   }
 
   public void visitFunctionDeclaration(@NotNull ElvishFunctionDeclaration o) {
@@ -131,14 +133,19 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitIfCommand(@NotNull ElvishIfCommand o) {
     visitChunkBlock(o);
+    // visitSpecialCommand(o);
+  }
+
+  public void visitIndex(@NotNull ElvishIndex o) {
+    visitPsiElement(o);
   }
 
   public void visitIndexRange(@NotNull ElvishIndexRange o) {
-    visitPsiElement(o);
+    visitIndex(o);
   }
 
   public void visitIndexSingle(@NotNull ElvishIndexSingle o) {
-    visitPsiElement(o);
+    visitIndex(o);
   }
 
   public void visitLambda(@NotNull ElvishLambda o) {
@@ -246,6 +253,7 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitTryCommand(@NotNull ElvishTryCommand o) {
     visitChunkBlock(o);
+    // visitSpecialCommand(o);
   }
 
   public void visitUpNamespace(@NotNull ElvishUpNamespace o) {
@@ -257,6 +265,10 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitUseCommand(@NotNull ElvishUseCommand o) {
+    visitSpecialCommand(o);
+  }
+
+  public void visitVarIndex(@NotNull ElvishVarIndex o) {
     visitPsiElement(o);
   }
 
@@ -288,6 +300,7 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitWhileCommand(@NotNull ElvishWhileCommand o) {
     visitChunkBlock(o);
+    // visitSpecialCommand(o);
   }
 
   public void visitArgument(@NotNull ElvishArgument o) {
@@ -301,6 +314,10 @@ public class ElvishVisitor extends PsiElementVisitor {
   public void visitParameter(@NotNull ElvishParameter o) {
     visitVariableDeclaration(o);
     // visitPsiNameIdentifierOwner(o);
+  }
+
+  public void visitSpecialCommand(@NotNull ElvishSpecialCommand o) {
+    visitPsiElement(o);
   }
 
   public void visitPsiElement(@NotNull ElvishPsiElement o) {

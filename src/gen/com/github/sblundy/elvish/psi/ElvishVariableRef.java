@@ -9,10 +9,13 @@ import com.intellij.psi.PsiReference;
 public interface ElvishVariableRef extends ElvishVariableReference {
 
   @NotNull
-  List<ElvishIndexRange> getIndexRangeList();
+  List<ElvishVarIndex> getVarIndexList();
+
+  @Nullable
+  PsiElement getAtSymbol();
 
   @NotNull
-  List<ElvishIndexSingle> getIndexSingleList();
+  PsiElement getDollarSign();
 
   @NotNull
   PsiReference getReference();

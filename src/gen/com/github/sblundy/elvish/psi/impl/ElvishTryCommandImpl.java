@@ -31,4 +31,10 @@ public class ElvishTryCommandImpl extends ElvishChunkBlockImpl implements Elvish
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishChunkBlock.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getKeyword() {
+    return findNotNullChildByType(KEYWORD_TRY);
+  }
+
 }

@@ -8,10 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface ElvishAssignment extends ElvishPsiElement {
 
   @NotNull
-  List<ElvishIndexRange> getIndexRangeList();
-
-  @NotNull
-  List<ElvishIndexSingle> getIndexSingleList();
+  List<ElvishVarIndex> getVarIndexList();
 
   @NotNull
   List<ElvishVariableAssignment> getVariableAssignmentList();

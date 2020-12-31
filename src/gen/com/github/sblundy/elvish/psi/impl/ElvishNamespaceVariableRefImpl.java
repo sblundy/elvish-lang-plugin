@@ -28,14 +28,14 @@ public class ElvishNamespaceVariableRefImpl extends ElvishExternalVariableRefere
 
   @Override
   @NotNull
-  public List<ElvishIndexRange> getIndexRangeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexRange.class);
+  public List<ElvishVarIndex> getVarIndexList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVarIndex.class);
   }
 
   @Override
   @NotNull
-  public List<ElvishIndexSingle> getIndexSingleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishIndexSingle.class);
+  public PsiElement getDollarSign() {
+    return findNotNullChildByType(DOLLAR_SIGN);
   }
 
   @Override
