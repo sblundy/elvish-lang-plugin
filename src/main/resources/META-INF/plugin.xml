@@ -9,6 +9,15 @@
 
     <change-notes><![CDATA[
     <div>
+        <h4>1.2.0</h4>
+        <ul>
+            <li>Initial module support, including completion and navigation</li>
+            <li>Improved syntax highlighting</li>
+            <li>Improved Find Usages</li>
+            <li>Numerous PSI improvements</li>
+            <li>Color scheme that matches the theme the Elvish editor uses</li>
+            <li>Bug fixes</li>
+        </ul>
         <h4>1.1.1</h4>
         <ul>
             <li>Fix plugin reload to not require a restart</li>
