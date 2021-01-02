@@ -22,7 +22,7 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
                 val climber = NamespaceModuleFinder(element.namespaceIdentifier as ElvishNamespaceName, element.project)
                 climber.climb(element)
                 climber.declarations.mapNotNull {
-                    it?.exportedFunction(element.commandName)
+                    it.exportedFunction(element.commandName)
                 }
             }
             else -> emptyList()//TODO handle?
@@ -55,17 +55,20 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
 
                 climber.climb(element)
                 climber.declarations.flatMap {
-                    it?.exportedFunctions()?: emptyList()
+                    it.exportedFunctions()
                 }.mapNotNull {
                     when(it) {
                         is ElvishFnCommand -> it.toLookupElement()
                         is ElvishPsiBuiltinCommand -> it.toLookupElement()
                         else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
                     }
-                } + climber.declarations.flatMap { it?.childModuleNames()?.map { name -> toNSLookupElement(name) }?: emptyList() }
+                } + climber.declarations.flatMap { it.childModuleNames().map { name -> toNSLookupElement(name) } }
             }
             else -> emptyList() //TODO handle?
         }
-        return variants.toTypedArray()
+
+        val nsClimber = namespaceModuleFinder(element.namespaceIdentifier)
+        nsClimber.climb(element)
+        return (variants + nsClimber.modules).toTypedArray()
     }
 }

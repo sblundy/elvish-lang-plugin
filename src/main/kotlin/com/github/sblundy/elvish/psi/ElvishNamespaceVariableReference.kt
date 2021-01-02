@@ -23,7 +23,7 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
             is ElvishNamespaceName -> {
                 val climber = NamespaceModuleFinder(element.namespaceIdentifier as ElvishNamespaceName, element.project)
                 climber.climb(element)
-                climber.declarations.mapNotNull { it?.exportedVariable(element.variableName) }
+                climber.declarations.mapNotNull { it.exportedVariable(element.variableName) }
             }
             else -> emptyList()//TODO handle?
         }
@@ -65,7 +65,7 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
 
                 climber.climb(element)
                 climber.declarations.flatMap {
-                    it?.exportedVariables() ?: emptyList()
+                    it.exportedVariables()
                 }.mapNotNull {
                     when (it) {
                         is ElvishVariable -> it.toLookupElement()
@@ -74,17 +74,19 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
                         else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
                     }
                 } + climber.declarations.flatMap {
-                    it?.exportedFunctions() ?: emptyList()
+                    it.exportedFunctions()
                 }.mapNotNull {
                     when (it) {
                         is ElvishFnCommand -> it.toVariableLookupElement()
                         is ElvishPsiBuiltinCommand -> it.toVariableLookupElement()
                         else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
                     }
-                } + climber.declarations.flatMap { it?.childModuleNames()?.map { name -> toNSLookupElement(name) }?: emptyList() }
+                } + climber.declarations.flatMap { it.childModuleNames().map { name -> toNSLookupElement(name) } }
             }
             else -> emptyList() //TODO handle?
         }
-        return variants.toTypedArray()
+        val nsClimber = namespaceModuleFinder(element.namespaceIdentifier)
+        nsClimber.climb(element)
+        return (variants + nsClimber.modules).toTypedArray()
     }
 }

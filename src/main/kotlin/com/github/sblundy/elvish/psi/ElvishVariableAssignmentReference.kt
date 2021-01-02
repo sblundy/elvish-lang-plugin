@@ -35,7 +35,9 @@ internal class ElvishVariableAssignmentReference(element: ElvishVariableRef, ran
     override fun getVariants(): Array<Any> {
         val climber = VariableVariantFinder()
         climber.climb(element)
-        return climber.variants.toTypedArray()
+        val nsClimber = allNamespaceModuleFinder()
+        nsClimber.climb(element)
+        return (climber.variants + nsClimber.modules).toTypedArray()
     }
 
     internal open class VariableFinder(private val name: ElvishVariableName) : ElvishBlockClimber() {

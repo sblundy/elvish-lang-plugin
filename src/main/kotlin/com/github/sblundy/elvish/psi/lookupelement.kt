@@ -41,3 +41,11 @@ internal fun ElvishPsiBuiltinValue.toLookupElement(): LookupElement {
 internal fun toNSLookupElement(name: String): LookupElement {
     return LookupElementBuilder.create("$name:").withIcon(AllIcons.Nodes.Module)
 }
+
+internal fun ElvishLibModuleSpec.toLookupElement(trim: Int=0): LookupElement {
+    return toNSLookupElement(variableNameList.drop(trim).joinToString(":") { it.text })
+}
+
+internal fun ElvishRelativeModuleSpec.toLookupElement(trim: Int=0): LookupElement {
+    return toNSLookupElement(variableNameList.drop(trim).joinToString(":") { it.text })
+}

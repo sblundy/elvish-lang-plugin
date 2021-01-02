@@ -33,7 +33,9 @@ internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInE
     override fun getVariants(): Array<Any> {
         val climber = CommandVariantFinder()
         climber.climb(element)
-        return climber.variants.toTypedArray()
+        val nsClimber = allNamespaceModuleFinder()
+        nsClimber.climb(element)
+        return (climber.variants + nsClimber.modules).toTypedArray()
     }
 
     internal open class CommandFinder(val command: ElvishCommandBareword) : ElvishBlockClimber() {

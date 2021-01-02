@@ -212,4 +212,54 @@ class ElvishCodeInsightTest {
             Assert.assertTrue(lookupStrings.contains("quote"))
         }
     }
+
+    @Test
+    fun testCompleteImportedNSCommand() {
+        runTest {
+            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-imported-ns-command.elv")
+            myFixture.complete(CompletionType.BASIC, 1)
+
+            val lookupStrings = myFixture.lookupElementStrings?: listOf()
+
+            Assert.assertTrue(lookupStrings.contains("yy:"))
+        }
+    }
+
+    @Test
+    fun testCompleteImportedNSSubNSCommand() {
+        runTest {
+            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-imported-ns-sub-ns-command.elv", myFullDataPath + "yy.elv", myFullDataPath + "yy/xx.elv")
+            myFixture.complete(CompletionType.BASIC, 1)
+
+            val lookupStrings = myFixture.lookupElementStrings?: listOf()
+
+            Assert.assertTrue(lookupStrings.contains("xx:"))
+            Assert.assertTrue(lookupStrings.contains("yy"))
+        }
+    }
+
+    @Test
+    fun testCompleteImportedNSSubNSVariable() {
+        runTest {
+            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-imported-ns-sub-ns-var.elv", myFullDataPath + "yy.elv", myFullDataPath + "yy/xx.elv")
+            myFixture.complete(CompletionType.BASIC, 1)
+
+            val lookupStrings = myFixture.lookupElementStrings?: listOf()
+
+            Assert.assertTrue(lookupStrings.contains("xx:"))
+            Assert.assertTrue(lookupStrings.contains("xx"))
+        }
+    }
+
+    @Test
+    fun testCompleteImportedNSVarRef() {
+        runTest {
+            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-imported-ns-var-ref.elv", myFullDataPath + "yy.elv")
+            myFixture.complete(CompletionType.BASIC, 1)
+
+            val lookupStrings = myFixture.lookupElementStrings?: listOf()
+
+            Assert.assertTrue(lookupStrings.contains("yy:"))
+        }
+    }
 }
