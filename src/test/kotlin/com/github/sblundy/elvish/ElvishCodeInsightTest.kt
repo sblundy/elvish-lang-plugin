@@ -3,6 +3,7 @@ package com.github.sblundy.elvish
 import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.io.FileUtil
 import com.intellij.testFramework.*
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory
@@ -12,6 +13,10 @@ import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
+import java.io.File
+import java.util.regex.Pattern
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestDataPath("\$CONTENT_ROOT/src/test/resources/")
@@ -46,220 +51,21 @@ class ElvishCodeInsightTest {
         myFixture.tearDown()
     }
 
-    @Test
-    fun testCompleteVariable() {
+    @Suppress("unused")
+    fun completionFileLister(): List<String> =
+        FileUtil.findFilesByMask(Pattern.compile("ElvishCodeInsightTest-completion-.*\\.elv"), File(myFixture.testDataPath, myFullDataPath))
+            .map { it.nameWithoutExtension.substring(33) }
+            .filterNot { it == "for-invalid" }.sorted()
+
+    @ParameterizedTest
+    @MethodSource("completionFileLister")
+    fun testCompletion(basename: String) {
         runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-variable.elv")
+            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-$basename.elv", myFullDataPath + "yy.elv", myFullDataPath + "yy/xx.elv")
             myFixture.complete(CompletionType.BASIC, 1)
 
             val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("x"))
-        }
-    }
-
-    @Test
-    fun testCompleteFunction() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-function.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("laa"))
-        }
-    }
-
-    @Test
-    fun testCompleteBuiltinCommand() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-builtin-command.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("each"))
-        }
-    }
-
-    @Test
-    fun testCompleteBuiltinVarRef() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-builtin-var-ref.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("paths"))
-            Assert.assertTrue(lookupStrings.contains("peach~"))
-        }
-    }
-
-    @Test
-    fun testCompleteNamespaceVariable() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-ns-var-ref.elv", myFullDataPath + "yy.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("xx"))
-            Assert.assertTrue(lookupStrings.contains("yy~"))
-        }
-    }
-
-    @Test
-    fun testCompleteNamespaceCommand() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-ns-command.elv", myFullDataPath + "yy.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("yy"))
-        }
-    }
-
-    @Test
-    fun testCompleteLocalVariable() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-local-ns-var-ref.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("x"))
-            Assert.assertTrue(lookupStrings.contains("yy~"))
-        }
-    }
-
-    @Test
-    fun testCompleteLocalCommand() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-local-ns-command.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("x"))
-        }
-    }
-
-    @Test
-    fun testCompleteUpVariableRef() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-up-ns-var-ref.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("x"))
-            Assert.assertTrue(lookupStrings.contains("yy~"))
-        }
-    }
-
-    @Test
-    fun testCompleteUpCommand() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-up-ns-command.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("x"))
-        }
-    }
-
-    @Test
-    fun testCompleteEditVariableRef() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-edit-ns-var-ref.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("prompt"))
-            Assert.assertTrue(lookupStrings.contains("complex-candidate~"))
-            Assert.assertTrue(lookupStrings.contains("completion:"))
-        }
-    }
-
-    @Test
-    fun testCompleteEditCommand() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-edit-ns-command.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("complex-candidate"))
-            Assert.assertTrue(lookupStrings.contains("completion:"))
-        }
-    }
-
-    @Test
-    fun testCompleteBundled() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-bundled.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("find"))
-            Assert.assertTrue(lookupStrings.contains("match"))
-            Assert.assertTrue(lookupStrings.contains("replace"))
-            Assert.assertTrue(lookupStrings.contains("split"))
-            Assert.assertTrue(lookupStrings.contains("quote"))
-        }
-    }
-
-    @Test
-    fun testCompleteImportedNSCommand() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-imported-ns-command.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("yy:"))
-        }
-    }
-
-    @Test
-    fun testCompleteImportedNSSubNSCommand() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-imported-ns-sub-ns-command.elv", myFullDataPath + "yy.elv", myFullDataPath + "yy/xx.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("xx:"))
-            Assert.assertTrue(lookupStrings.contains("yy"))
-        }
-    }
-
-    @Test
-    fun testCompleteImportedNSSubNSVariable() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-imported-ns-sub-ns-var.elv", myFullDataPath + "yy.elv", myFullDataPath + "yy/xx.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("xx:"))
-            Assert.assertTrue(lookupStrings.contains("xx"))
-        }
-    }
-
-    @Test
-    fun testCompleteImportedNSVarRef() {
-        runTest {
-            myFixture.configureByFiles(myFullDataPath + "ElvishCodeInsightTest-completion-imported-ns-var-ref.elv", myFullDataPath + "yy.elv")
-            myFixture.complete(CompletionType.BASIC, 1)
-
-            val lookupStrings = myFixture.lookupElementStrings?: listOf()
-
-            Assert.assertTrue(lookupStrings.contains("yy:"))
+            UsefulTestCase.assertSameLinesWithFile(myFixture.testDataPath + myFullDataPath + "ElvishCodeInsightTest-completion-$basename.txt", lookupStrings.sorted().joinToString("\n"))
         }
     }
 }
