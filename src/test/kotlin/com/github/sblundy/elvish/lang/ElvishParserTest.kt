@@ -1,6 +1,7 @@
 package com.github.sblundy.elvish.lang
 
 import com.github.sblundy.elvish.ElvishLanguage
+import com.github.sblundy.elvish.LightProjectTestBase
 import com.github.sblundy.elvish.settings.ElvishSettings
 import com.intellij.mock.MockPsiManager
 import com.intellij.openapi.module.Module
@@ -11,7 +12,7 @@ import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import com.intellij.psi.impl.PsiFileFactoryImpl
 import com.intellij.testFramework.*
-import com.intellij.testFramework.fixtures.IdeaProjectTestFixture
+import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory
 import com.intellij.testFramework.fixtures.impl.LightTempDirTestFixtureImpl
 import org.jetbrains.annotations.NonNls
@@ -20,18 +21,18 @@ import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ArgumentsSource
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.File
 import java.util.regex.Pattern
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestDataPath("\$CONTENT_ROOT/src/test/resources/")
+@TestDataPath("src/test/resources/com/github/sblundy/elvish/lang/")
 class ElvishParserTest {
     private lateinit var myPsiManager: MockPsiManager
     private lateinit var myFileFactory: PsiFileFactoryImpl
-    private var myFullDataPath: String = "src/test/resources/com/github/sblundy/elvish/lang"
 
-    private lateinit var myFixture: IdeaProjectTestFixture
+    private lateinit var myFixture: CodeInsightTestFixture
 
     private lateinit var myModule: Module
 
@@ -44,7 +45,7 @@ class ElvishParserTest {
         val fixture = fixtureBuilder.fixture
         myFixture = IdeaTestFixtureFactory.getFixtureFactory()
             .createCodeInsightFixture(fixture, LightTempDirTestFixtureImpl(true))
-
+        myFixture.testDataPath = javaClass.getAnnotation(TestDataPath::class.java).value
         myFixture.setUp()
 
         myProject = myFixture.project
@@ -61,12 +62,7 @@ class ElvishParserTest {
 
     @Suppress("unused")
     fun tokensFileLister(): List<String> =
-        FileUtil.findFilesByMask(Pattern.compile(".*\\.tokens.txt"), File(myFullDataPath)).map { it.name.removeSuffix(".tokens.txt") }
-
-    @Suppress("unused")
-    fun fileLister(): List<String> = //listOf("compound-expression-with-slash", "assignment-chained-range")
-        FileUtil.findFilesByMask(Pattern.compile(".*\\.elv"), File(myFullDataPath)).map { it.nameWithoutExtension }
-            .filterNot { it == "for-invalid" }
+        FileUtil.findFilesByMask(Pattern.compile(".*\\.tokens.txt"), File(myFixture.testDataPath)).map { it.name.removeSuffix(".tokens.txt") }
 
 
     @ParameterizedTest
@@ -78,7 +74,8 @@ class ElvishParserTest {
     }
 
     @ParameterizedTest
-    @MethodSource("fileLister")
+    @ArgumentsSource(LightProjectTestBase.FileBasenameProvider::class)
+    @LightProjectTestBase.FilePattern(filePattern = ".*\\.elv", filter = ["for-invalid"])
     fun parseTest(baseName: String) {
         val text = loadFile("$baseName.elv")
         val output = createFile("$baseName.elv", text)
@@ -88,14 +85,14 @@ class ElvishParserTest {
         Assert.assertEquals(text, output.text)
 
         runInEdtAndWait {
-            ParsingTestCase.doCheckResult(myFullDataPath, output, true, baseName, false, false)
+            ParsingTestCase.doCheckResult(myFixture.testDataPath, output, true, baseName, false, false)
         }
     }
 
     private fun checkLexer(baseName: String, text: String) {
         val lexer = ElvishLexerAdapter(myProject.currentVersionParseFlags())
         val actual = LexerTestCase.printTokens(text, 0, lexer)
-        UsefulTestCase.assertSameLinesWithFile("$myFullDataPath/$baseName.tokens.txt", actual)
+        UsefulTestCase.assertSameLinesWithFile("${myFixture.testDataPath}/$baseName.tokens.txt", actual)
     }
 
     private fun createFile(name: String, text: String): PsiFile? {
@@ -112,7 +109,7 @@ class ElvishParserTest {
     }
 
     private fun loadFile(@NonNls @TestDataFile name: String): String {
-        return loadFileDefault(myFullDataPath, name)
+        return loadFileDefault(myFixture.testDataPath, name)
     }
 
     private fun loadFileDefault(dir: String, name: String): String {
