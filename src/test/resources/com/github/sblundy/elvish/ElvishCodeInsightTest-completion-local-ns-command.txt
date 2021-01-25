@@ -34,6 +34,7 @@ chr
 constantly
 continue
 count
+deprecate
 dir-history
 dissoc
 drop
@@ -42,6 +43,7 @@ eawk
 echo
 eq
 esleep
+eval
 eval-symlinks
 exec
 exit
@@ -102,6 +104,7 @@ run-parallel
 search-external
 set-env
 show
+sleep
 slurp
 splits
 src

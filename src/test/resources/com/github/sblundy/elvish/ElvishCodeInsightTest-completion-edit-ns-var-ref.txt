@@ -5,6 +5,8 @@
 -rprompt-eagerness
 abbr
 add-cmd-filters
+add-vars~
+add-var~
 after-readline
 before-readline
 binding-table~

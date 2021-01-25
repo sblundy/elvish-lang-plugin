@@ -3,6 +3,7 @@ all
 bool
 constantly
 esleep
+eval
 eval-symlinks
 explode
 external
@@ -24,6 +25,7 @@ replaces
 resolve
 run-parallel
 search-external
+sleep
 slurp
 splits
 styled

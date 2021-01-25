@@ -1,5 +1,7 @@
 -dump-buf
 -instant:
+add-var
+add-vars
 binding-table
 close-listing
 command-history

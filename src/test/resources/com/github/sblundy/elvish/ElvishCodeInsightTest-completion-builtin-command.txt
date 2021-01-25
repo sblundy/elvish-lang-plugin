@@ -4,11 +4,13 @@
 base
 break
 continue
+deprecate
 each
 eawk
 echo
 eq
 esleep
+eval
 eval-symlinks
 exec
 exit
@@ -49,6 +51,7 @@ return
 run-parallel
 search-external
 set-env
+sleep
 styled
 styled-segment
 take

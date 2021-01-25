@@ -38,6 +38,7 @@ chr~
 constantly~
 continue~
 count~
+deprecate~
 dir-history~
 dissoc~
 drop~
@@ -47,6 +48,7 @@ echo~
 eq~
 esleep~
 eval-symlinks~
+eval~
 exec~
 exit~
 explode~
@@ -114,6 +116,7 @@ run-parallel~
 search-external~
 set-env~
 show~
+sleep~
 slurp~
 splits~
 src~

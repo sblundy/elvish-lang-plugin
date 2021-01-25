@@ -1,3 +1,4 @@
+deprecate~
 drop~
 esleep~
 explode~
@@ -25,5 +26,6 @@ repeat~
 replaces~
 repr~
 run-parallel~
+sleep~
 slurp~
 splits~
