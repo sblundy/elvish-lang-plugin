@@ -40,6 +40,7 @@ public interface ElvishTypes {
   IElementType INDEX_SINGLE = new ElvishElementType("INDEX_SINGLE");
   IElementType LAMBDA = new ElvishElementType("LAMBDA");
   IElementType LAMBDA_ARGUMENTS = new ElvishElementType("LAMBDA_ARGUMENTS");
+  IElementType LEGACY_VARIABLE_ASSIGNMENT = new ElvishElementType("LEGACY_VARIABLE_ASSIGNMENT");
   IElementType LIB_MODULE_SPEC = new ElvishElementType("LIB_MODULE_SPEC");
   IElementType LIST = new ElvishElementType("LIST");
   IElementType LOCAL_NAMESPACE = new ElvishElementType("LOCAL_NAMESPACE");
@@ -57,6 +58,8 @@ public interface ElvishTypes {
   IElementType PIPELINE_SEP = new ElvishElementType("PIPELINE_SEP");
   IElementType REDIR = new ElvishElementType("REDIR");
   IElementType RELATIVE_MODULE_SPEC = new ElvishElementType("RELATIVE_MODULE_SPEC");
+  IElementType SET_COMMAND = new ElvishElementType("SET_COMMAND");
+  IElementType SET_L_VALUE = new ElvishElementType("SET_L_VALUE");
   IElementType SINGLE_QUOTED = new ElvishElementType("SINGLE_QUOTED");
   IElementType SPECIAL_SCOPE_COMMAND_EXPRESSION = new ElvishElementType("SPECIAL_SCOPE_COMMAND_EXPRESSION");
   IElementType SPECIAL_SCOPE_VARIABLE_REF = new ElvishElementType("SPECIAL_SCOPE_VARIABLE_REF");
@@ -64,10 +67,11 @@ public interface ElvishTypes {
   IElementType UP_NAMESPACE = new ElvishElementType("UP_NAMESPACE");
   IElementType UP_SCOPE_VARIABLE_ASSIGNMENT = new ElvishElementType("UP_SCOPE_VARIABLE_ASSIGNMENT");
   IElementType USE_COMMAND = new ElvishElementType("USE_COMMAND");
-  IElementType VARIABLE = new ElvishElementType("VARIABLE");
   IElementType VARIABLE_NAME = new ElvishElementType("VARIABLE_NAME");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
+  IElementType VAR_COMMAND = new ElvishElementType("VAR_COMMAND");
   IElementType VAR_INDEX = new ElvishElementType("VAR_INDEX");
+  IElementType VAR_L_VALUE = new ElvishElementType("VAR_L_VALUE");
   IElementType WHILE_COMMAND = new ElvishElementType("WHILE_COMMAND");
 
   IElementType AMPERSAND = new ElvishTokenType("&");
@@ -97,8 +101,10 @@ public interface ElvishTypes {
   IElementType KEYWORD_FN = new ElvishTokenType("fn");
   IElementType KEYWORD_FOR = new ElvishTokenType("for");
   IElementType KEYWORD_IF = new ElvishTokenType("if");
+  IElementType KEYWORD_SET = new ElvishTokenType("set");
   IElementType KEYWORD_TRY = new ElvishTokenType("try");
   IElementType KEYWORD_USE = new ElvishTokenType("use");
+  IElementType KEYWORD_VAR = new ElvishTokenType("var");
   IElementType KEYWORD_WHILE = new ElvishTokenType("while");
   IElementType OPEN_BRACE = new ElvishTokenType("{");
   IElementType OPEN_BRACKET = new ElvishTokenType("[");
@@ -211,6 +217,9 @@ public interface ElvishTypes {
       else if (type == LAMBDA_ARGUMENTS) {
         return new ElvishLambdaArgumentsImpl(node);
       }
+      else if (type == LEGACY_VARIABLE_ASSIGNMENT) {
+        return new ElvishLegacyVariableAssignmentImpl(node);
+      }
       else if (type == LIB_MODULE_SPEC) {
         return new ElvishLibModuleSpecImpl(node);
       }
@@ -262,6 +271,12 @@ public interface ElvishTypes {
       else if (type == RELATIVE_MODULE_SPEC) {
         return new ElvishRelativeModuleSpecImpl(node);
       }
+      else if (type == SET_COMMAND) {
+        return new ElvishSetCommandImpl(node);
+      }
+      else if (type == SET_L_VALUE) {
+        return new ElvishSetLValueImpl(node);
+      }
       else if (type == SINGLE_QUOTED) {
         return new ElvishSingleQuotedImpl(node);
       }
@@ -283,17 +298,20 @@ public interface ElvishTypes {
       else if (type == USE_COMMAND) {
         return new ElvishUseCommandImpl(node);
       }
-      else if (type == VARIABLE) {
-        return new ElvishVariableImpl(node);
-      }
       else if (type == VARIABLE_NAME) {
         return new ElvishVariableNameImpl(node);
       }
       else if (type == VARIABLE_REF) {
         return new ElvishVariableRefImpl(node);
       }
+      else if (type == VAR_COMMAND) {
+        return new ElvishVarCommandImpl(node);
+      }
       else if (type == VAR_INDEX) {
         return new ElvishVarIndexImpl(node);
+      }
+      else if (type == VAR_L_VALUE) {
+        return new ElvishVarLValueImpl(node);
       }
       else if (type == WHILE_COMMAND) {
         return new ElvishWhileCommandImpl(node);

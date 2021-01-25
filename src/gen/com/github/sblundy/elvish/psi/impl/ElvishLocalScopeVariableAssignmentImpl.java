@@ -13,7 +13,7 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.util.IncorrectOperationException;
 import javax.swing.Icon;
 
-public class ElvishLocalScopeVariableAssignmentImpl extends ElvishVariableAssignmentImpl implements ElvishLocalScopeVariableAssignment {
+public class ElvishLocalScopeVariableAssignmentImpl extends ElvishVariableDeclarationImpl implements ElvishLocalScopeVariableAssignment {
 
   public ElvishLocalScopeVariableAssignmentImpl(@NotNull ASTNode node) {
     super(node);
@@ -26,6 +26,12 @@ public class ElvishLocalScopeVariableAssignmentImpl extends ElvishVariableAssign
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishVarIndex> getVarIndexList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVarIndex.class);
   }
 
   @Override

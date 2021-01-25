@@ -44,17 +44,10 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
         val variants = when (element.namespaceIdentifier) {
             is ElvishBuiltinNamespace -> {
                 element.project.getBuiltinScope()?.let { builtin ->
-                    builtin.findVariables(null).mapNotNull {
-                        when (it) {
-                            is ElvishPsiBuiltinVariable -> it.toLookupElement()
-                            is ElvishPsiBuiltinValue -> it.toLookupElement()
-                            else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
-                        }
-                    } + builtin.findFnCommands(null).mapNotNull {
-                        when (it) {
-                            is ElvishPsiBuiltinCommand -> it.toVariableLookupElement()
-                            else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
-                        }
+                    builtin.findVariables(null).map {
+                        it.toVariableLookupElement()
+                    } + builtin.findFnCommands(null).map {
+                        it.toVariableLookupElement()
                     }
 
                 }?: emptyList()
@@ -66,21 +59,12 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
                 climber.climb(element)
                 climber.declarations.flatMap {
                     it.exportedVariables()
-                }.mapNotNull {
-                    when (it) {
-                        is ElvishVariable -> it.toLookupElement()
-                        is ElvishPsiBuiltinValue -> it.toLookupElement()
-                        is ElvishPsiBuiltinVariable -> it.toLookupElement()
-                        else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
-                    }
+                }.map {
+                    it.toVariableLookupElement()
                 } + climber.declarations.flatMap {
                     it.exportedFunctions()
-                }.mapNotNull {
-                    when (it) {
-                        is ElvishFnCommand -> it.toVariableLookupElement()
-                        is ElvishPsiBuiltinCommand -> it.toVariableLookupElement()
-                        else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
-                    }
+                }.map {
+                    it.toVariableLookupElement()
                 } + climber.declarations.flatMap { it.childModuleNames().map { name -> toNSLookupElement(name) } }
             }
             else -> emptyList() //TODO handle?

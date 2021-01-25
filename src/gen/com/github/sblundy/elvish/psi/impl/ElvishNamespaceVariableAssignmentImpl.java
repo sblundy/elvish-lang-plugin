@@ -36,6 +36,12 @@ public class ElvishNamespaceVariableAssignmentImpl extends ElvishVariableAssignm
 
   @Override
   @NotNull
+  public List<ElvishVarIndex> getVarIndexList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVarIndex.class);
+  }
+
+  @Override
+  @NotNull
   public String getName() {
     return ElvishPsiImplUtil.getName(this);
   }

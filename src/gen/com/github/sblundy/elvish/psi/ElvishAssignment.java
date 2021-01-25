@@ -8,12 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ElvishAssignment extends ElvishPsiElement {
 
   @NotNull
-  List<ElvishVarIndex> getVarIndexList();
+  List<ElvishCompound> getValue();
 
   @NotNull
-  List<ElvishVariableAssignment> getVariableAssignmentList();
-
-  @Nullable
-  ElvishCompound getValue();
+  List<ElvishLValueVariable> getLValues();
 
 }

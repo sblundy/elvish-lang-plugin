@@ -9,7 +9,10 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.util.IncorrectOperationException;
 import javax.swing.Icon;
 
-public interface ElvishLocalScopeVariableAssignment extends ElvishVariableAssignment, ElvishVariableDeclaration, PsiNameIdentifierOwner {
+public interface ElvishLocalScopeVariableAssignment extends ElvishVariableDeclaration, ElvishLValue, ElvishVariableAssignment, PsiNameIdentifierOwner {
+
+  @NotNull
+  List<ElvishVarIndex> getVarIndexList();
 
   @NotNull
   ElvishLocalNamespace getNamespaceIdentifier();

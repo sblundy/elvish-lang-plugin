@@ -30,6 +30,12 @@ public class ElvishUpScopeVariableAssignmentImpl extends ElvishVariableAssignmen
 
   @Override
   @NotNull
+  public List<ElvishVarIndex> getVarIndexList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVarIndex.class);
+  }
+
+  @Override
+  @NotNull
   public ElvishUpNamespace getNamespaceIdentifier() {
     return findNotNullChildByClass(ElvishUpNamespace.class);
   }

@@ -61,7 +61,7 @@ Elvish File
     ElvishPipelineSepImpl(PIPELINE_SEP)
       PsiElement(ElvishTokenType.EOL)('\n')
     ElvishAssignmentImpl(ASSIGNMENT)
-      ElvishVariableImpl(VARIABLE)
+      ElvishLegacyVariableAssignmentImpl(LEGACY_VARIABLE_ASSIGNMENT)
         ElvishVariableNameImpl(VARIABLE_NAME)
           PsiElement(ElvishTokenType.VARIABLE_CHAR)('index')
       PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')

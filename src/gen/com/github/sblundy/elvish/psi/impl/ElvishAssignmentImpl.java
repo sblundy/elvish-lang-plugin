@@ -28,20 +28,14 @@ public class ElvishAssignmentImpl extends ASTWrapperElvishPsiElement implements 
 
   @Override
   @NotNull
-  public List<ElvishVarIndex> getVarIndexList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVarIndex.class);
+  public List<ElvishCompound> getValue() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishCompound.class);
   }
 
   @Override
   @NotNull
-  public List<ElvishVariableAssignment> getVariableAssignmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableAssignment.class);
-  }
-
-  @Override
-  @Nullable
-  public ElvishCompound getValue() {
-    return findChildByClass(ElvishCompound.class);
+  public List<ElvishLValueVariable> getLValues() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishLValueVariable.class);
   }
 
 }

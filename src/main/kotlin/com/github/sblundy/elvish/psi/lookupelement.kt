@@ -6,46 +6,61 @@ import com.intellij.icons.AllIcons
 import icons.ElvishIcons
 
 
-internal fun ElvishFnCommand.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, this.commandName.text).withIcon(AllIcons.Nodes.Function)
+internal fun ElvishFunctionDeclaration.toCommandLookupElement(): LookupElement {
+    return when (this) {
+        is ElvishPsiBuiltinCommand -> toCommandLookupElement()
+        else -> LookupElementBuilder.create(this, commandName.text).withIcon(AllIcons.Nodes.Function)
+    }
 }
 
-internal fun ElvishPsiBuiltinCommand.toLookupElement(): LookupElement {
+internal fun ElvishPsiBuiltinCommand.toCommandLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, this.name).withIcon(ElvishIcons.BUILTIN_FUNCTION)
 }
 
-internal fun ElvishFnCommand.toVariableLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, "${commandName.text}~").withIcon(AllIcons.Nodes.Function)
+internal fun ElvishFunctionDeclaration.toVariableLookupElement(): LookupElement {
+    return when (this) {
+        is ElvishPsiBuiltinCommand -> toVariableLookupElement()
+        else ->  LookupElementBuilder.create(this, "${commandName.text}~").withIcon(AllIcons.Nodes.Function)
+    }
 }
 
 internal fun ElvishPsiBuiltinCommand.toVariableLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, "$name~").withIcon(ElvishIcons.BUILTIN_FUNCTION)
 }
 
-internal fun ElvishParameter.toLookupElement(): LookupElement {
+internal fun ElvishVariableDeclaration.toVariableLookupElement(): LookupElement {
+    return when (this) {
+        is ElvishParameter -> toVariableLookupElement()
+        is ElvishPsiBuiltinVariable -> toVariableLookupElement()
+        is ElvishPsiBuiltinValue -> toVariableLookupElement()
+        else -> LookupElementBuilder.create(this, variableName.text).withIcon(AllIcons.Nodes.Variable)
+    }
+}
+
+internal fun ElvishParameter.toVariableLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, variableName.text).withIcon(AllIcons.Nodes.Parameter)
 }
 
-internal fun ElvishVariable.toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(this, variableName.text).withIcon(AllIcons.Nodes.Variable)
-}
-
-internal fun ElvishPsiBuiltinVariable.toLookupElement(): LookupElement {
+internal fun ElvishPsiBuiltinVariable.toVariableLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.BUILTIN_VARIABLE)
 }
 
-internal fun ElvishPsiBuiltinValue.toLookupElement(): LookupElement {
+internal fun ElvishPsiBuiltinValue.toVariableLookupElement(): LookupElement {
     return LookupElementBuilder.create(this, name).withIcon(ElvishIcons.BUILTIN_VALUE)
+}
+
+internal fun ElvishLValueVariable.toVariableLookupElement(): LookupElement {
+    return LookupElementBuilder.create(this, variableName.text).withIcon(AllIcons.Nodes.Parameter)
 }
 
 internal fun toNSLookupElement(name: String): LookupElement {
     return LookupElementBuilder.create("$name:").withIcon(AllIcons.Nodes.Module)
 }
 
-internal fun ElvishLibModuleSpec.toLookupElement(trim: Int=0): LookupElement {
+internal fun ElvishLibModuleSpec.toNSLookupElement(trim: Int=0): LookupElement {
     return toNSLookupElement(variableNameList.drop(trim).joinToString(":") { it.text })
 }
 
-internal fun ElvishRelativeModuleSpec.toLookupElement(trim: Int=0): LookupElement {
+internal fun ElvishRelativeModuleSpec.toNSLookupElement(trim: Int=0): LookupElement {
     return toNSLookupElement(variableNameList.drop(trim).joinToString(":") { it.text })
 }

@@ -45,7 +45,7 @@ class ElvishAnnotator : Annotator {
             is ElvishNamespaceCommandExpression -> holder.annotateRanges(COMMAND, element.namespaceIdentifier, element.commandName)
             is ElvishSpecialScopeCommandExpression -> holder.annotateRanges(COMMAND, element.namespaceIdentifier, element.commandName)
             is ElvishPsiBuiltinCommand -> holder.annotateRanges(BUILTIN, element.commandName)
-            is ElvishVariable -> holder.annotateRanges(VARIABLE, element.variableName)
+            is ElvishLegacyVariableAssignment -> holder.annotateRanges(VARIABLE, element.variableName)
             is ElvishUpScopeVariableAssignment -> holder.annotateRanges(VARIABLE, element.namespaceIdentifier, element.variableName)
             is ElvishLocalScopeVariableAssignment -> holder.annotateRanges(VARIABLE, element.namespaceIdentifier, element.variableName)
             is ElvishParameter -> {

@@ -14,7 +14,7 @@ public interface ElvishDeleteCommand extends ElvishSpecialCommand {
   List<ElvishVarIndex> getVarIndexList();
 
   @NotNull
-  ElvishVariable getVariable();
+  ElvishVariableName getVariableName();
 
   @NotNull
   PsiElement getKeyword();

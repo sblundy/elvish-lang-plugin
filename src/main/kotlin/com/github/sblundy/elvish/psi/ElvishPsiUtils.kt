@@ -9,7 +9,7 @@ object ElvishPsiUtils {
     fun newNameElement(name: String, myProject: Project): ElvishVariableName {
         val file = createDummyFile("$name = 1", myProject)
         val chunk = file.firstChild as ElvishChunk
-        return chunk.assignmentList[0].variableAssignmentList[0].variableName
+        return chunk.assignmentList[0].lValues[0].variableName
     }
 
 

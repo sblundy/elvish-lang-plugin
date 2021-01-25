@@ -26,12 +26,21 @@ public interface ElvishChunk extends ElvishPsiElement {
   List<ElvishPipelineSep> getPipelineSepList();
 
   @NotNull
+  List<ElvishSetCommand> getSetCommandList();
+
+  @NotNull
   List<ElvishUseCommand> getUseCommandList();
+
+  @NotNull
+  List<ElvishVarCommand> getVarCommandList();
 
   @NotNull
   List<ElvishArgument> getArgumentList();
 
   @NotNull
   List<ElvishHead> getHeadList();
+
+  @NotNull
+  List<ElvishVariableDeclaration> getVariableDeclarations();
 
 }

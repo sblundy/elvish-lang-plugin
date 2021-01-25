@@ -8,8 +8,8 @@ import java.lang.UnsupportedOperationException
 fun allNamespaceModuleFinder(): ImportedModulesFinder {
     return object : ImportedModulesFinder() {
         override fun toLookupElement(alias: ElvishModuleAlias): LookupElement = toNSLookupElement(alias.variableName.text)
-        override fun toLookupElement(spec: ElvishLibModuleSpec): LookupElement = spec.toLookupElement()
-        override fun toLookupElement(spec: ElvishRelativeModuleSpec): LookupElement = spec.toLookupElement()
+        override fun toLookupElement(spec: ElvishLibModuleSpec): LookupElement = spec.toNSLookupElement()
+        override fun toLookupElement(spec: ElvishRelativeModuleSpec): LookupElement = spec.toNSLookupElement()
     }
 }
 
@@ -21,7 +21,7 @@ abstract class ImportedModulesFinder() : ElvishBlockClimber() {
     val log = logger<ElvishNamespaceVariableReference>()
     val modules = mutableSetOf<LookupElement>()
     override fun visitElvishFile(s: ElvishFile, ctxt: PsiElement): Boolean {
-        modules += s.topLevelUseCommands().mapNotNull { toLookupElement(it) }
+        modules += s.chunk.useCommandList.mapNotNull { toLookupElement(it) }
         return false
     }
 
@@ -81,13 +81,13 @@ private class SubImportedModulesFinder(val prefix: ElvishNamespaceIdentifier?): 
     override fun toLookupElement(alias: ElvishModuleAlias): LookupElement? = null
 
     override fun toLookupElement(spec: ElvishLibModuleSpec): LookupElement? = if (prefixMatches(spec.variableNameList)) {
-        spec.toLookupElement(prefixLen)
+        spec.toNSLookupElement(prefixLen)
     } else {
         null
     }
 
     override fun toLookupElement(spec: ElvishRelativeModuleSpec): LookupElement? = if (prefixMatches(spec.variableNameList)) {
-        spec.toLookupElement(prefixLen)
+        spec.toNSLookupElement(prefixLen)
     } else {
         null
     }

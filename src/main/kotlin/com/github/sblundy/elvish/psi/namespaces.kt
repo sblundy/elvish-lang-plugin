@@ -51,14 +51,10 @@ class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val pro
     }
 
     private fun ElvishFile.matchingUseCommands(): Collection<ElvishUseCommand> {
-        return topLevelUseCommands().filter { it.matches(ns) }
-    }
-
-    private fun ElvishLambdaScope.matchingUseCommands(): Collection<ElvishUseCommand> {
         return chunk.useCommandList.filter { it.matches(ns) }
     }
 
-    private fun ElvishLambda.matchingUseCommands(): Collection<ElvishUseCommand> {
+    private fun ElvishLambdaScope.matchingUseCommands(): Collection<ElvishUseCommand> {
         return chunk.useCommandList.filter { it.matches(ns) }
     }
 

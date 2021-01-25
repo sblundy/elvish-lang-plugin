@@ -31,7 +31,7 @@ Elvish File
           PsiElement(ElvishTokenType.EOL)('\n')
         PsiElement(ElvishTokenType.INLINE_WHITESPACE)('    ')
         ElvishAssignmentImpl(ASSIGNMENT)
-          ElvishVariableImpl(VARIABLE)
+          ElvishLegacyVariableAssignmentImpl(LEGACY_VARIABLE_ASSIGNMENT)
             ElvishVariableNameImpl(VARIABLE_NAME)
               PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')
           PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')

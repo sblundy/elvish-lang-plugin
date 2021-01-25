@@ -13,19 +13,31 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.util.IncorrectOperationException;
 import javax.swing.Icon;
 
-public class ElvishVariableImpl extends ElvishVariableAssignmentImpl implements ElvishVariable {
+public class ElvishLegacyVariableAssignmentImpl extends ElvishVariableAssignmentImpl implements ElvishLegacyVariableAssignment {
 
-  public ElvishVariableImpl(@NotNull ASTNode node) {
+  public ElvishLegacyVariableAssignmentImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ElvishVisitor visitor) {
-    visitor.visitVariable(this);
+    visitor.visitLegacyVariableAssignment(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public List<ElvishVarIndex> getVarIndexList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVarIndex.class);
+  }
+
+  @Override
+  @Nullable
+  public ElvishNamespaceIdentifier getNamespaceIdentifier() {
+    return ElvishPsiImplUtil.getNamespaceIdentifier(this);
   }
 
   @Override

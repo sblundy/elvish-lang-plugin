@@ -28,5 +28,5 @@
       }
     }
   },
-  "parseFlags": {"added": ["NewSliceIndex"]}
+  "parseFlags": {"added": ["NewSliceIndex", "ExplicitVariableDeclarationAndSet"]}
 }

@@ -8,10 +8,13 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiReference;
 import javax.swing.Icon;
 
-public interface ElvishNamespaceVariableAssignment extends ElvishVariableAssignment, ElvishExternalVariableReference {
+public interface ElvishNamespaceVariableAssignment extends ElvishVariableAssignment, ElvishLValue, ElvishExternalVariableReference {
 
   @NotNull
   ElvishNamespaceIdentifier getNamespaceIdentifier();
+
+  @NotNull
+  List<ElvishVarIndex> getVarIndexList();
 
   @NotNull
   String getName();

@@ -6,6 +6,5 @@ Elvish File
       ElvishLocalNamespaceImpl(LOCAL_NAMESPACE)
         PsiElement(ElvishTokenType.VARIABLE_CHAR)('local')
         PsiElement(ElvishTokenType.:)(':')
-      ElvishVariableImpl(VARIABLE)
-        ElvishVariableNameImpl(VARIABLE_NAME)
-          PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')
+      ElvishVariableNameImpl(VARIABLE_NAME)
+        PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')

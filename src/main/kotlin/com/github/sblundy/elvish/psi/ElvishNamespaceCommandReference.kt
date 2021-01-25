@@ -42,11 +42,8 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
     override fun getVariants(): Array<Any> {
         val variants = when (element.namespaceIdentifier) {
             is ElvishBuiltinNamespace -> {
-                element.project.getBuiltinScope()?.findFnCommands(null)?.mapNotNull {
-                    when (it) {
-                        is ElvishPsiBuiltinCommand -> it.toLookupElement()
-                        else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
-                    }
+                element.project.getBuiltinScope()?.findFnCommands(null)?.map {
+                    it.toCommandLookupElement()
                 } ?: emptyList()
             }
             is ElvishNamespaceName -> {
@@ -57,11 +54,7 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
                 climber.declarations.flatMap {
                     it.exportedFunctions()
                 }.mapNotNull {
-                    when(it) {
-                        is ElvishFnCommand -> it.toLookupElement()
-                        is ElvishPsiBuiltinCommand -> it.toLookupElement()
-                        else -> {log.warn("unrecognized:"+ it.javaClass.name); null}
-                    }
+                    it.toCommandLookupElement()
                 } + climber.declarations.flatMap { it.childModuleNames().map { name -> toNSLookupElement(name) } }
             }
             else -> emptyList() //TODO handle?

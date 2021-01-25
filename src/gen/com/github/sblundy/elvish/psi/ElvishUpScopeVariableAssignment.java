@@ -8,7 +8,10 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiReference;
 import javax.swing.Icon;
 
-public interface ElvishUpScopeVariableAssignment extends ElvishVariableAssignment {
+public interface ElvishUpScopeVariableAssignment extends ElvishVariableAssignment, ElvishLValue {
+
+  @NotNull
+  List<ElvishVarIndex> getVarIndexList();
 
   @NotNull
   ElvishUpNamespace getNamespaceIdentifier();

@@ -33,9 +33,9 @@ class ElvishStructureViewFactory : PsiStructureViewFactory {
     private class ElvishStructureViewFile(psiFile: ElvishFile) : PsiTreeElementBase<ElvishFile>(psiFile) {
         override fun getChildrenBase(): Collection<StructureViewTreeElement> {
             return element?.let { element ->
-                element.topLevelFunctionsDeclarations().map {
+                element.chunk.fnCommandList.map {
                     ElvishStructureViewFunction(it)
-                } + element.topLevelAssignments().flatMap { it.variableAssignmentList }.map {
+                } + element.exportedVariables().map {
                     ElvishStructureViewVariable(it)
                 }
             } ?: listOf()
@@ -56,8 +56,8 @@ class ElvishStructureViewFactory : PsiStructureViewFactory {
         override fun getPresentableText(): String? = element?.commandName?.text
     }
 
-    private class ElvishStructureViewVariable(a: ElvishVariableAssignment) :
-        PsiTreeElementBase<ElvishVariableAssignment>(a) {
+    private class ElvishStructureViewVariable(a: ElvishVariableDeclaration) :
+        PsiTreeElementBase<ElvishVariableDeclaration>(a) {
         override fun getChildrenBase(): Collection<StructureViewTreeElement> = emptyList()
         override fun getPresentableText(): String? = element?.variableName?.text
     }

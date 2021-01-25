@@ -8,30 +8,22 @@ import com.intellij.openapi.fileTypes.FileType
 import com.intellij.psi.FileViewProvider
 
 
-class ElvishFile(viewProvider: FileViewProvider): PsiFileBase(viewProvider, ElvishLanguage.INSTANCE), ElvishLexicalScope,
+class ElvishFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, ElvishLanguage.INSTANCE),
+    ElvishLexicalScope,
     ElvishModule {
     override fun getFileType(): FileType = ElvishFileType.INSTANCE
     override fun toString(): String = "Elvish File"
     override fun getBlock(): ElvishBlock? = project.getBuiltinScope()
     override fun getScope(): ElvishLexicalScope? = project.getBuiltinScope()
 
-    fun topLevelAssignments(): Array<ElvishAssignment> {
-        return findChildrenByClass(ElvishChunk::class.java).flatMap { it.assignmentList }.toTypedArray()
-    }
-
-    fun topLevelFunctionsDeclarations(): Array<ElvishFnCommand> {
-        return findChildrenByClass(ElvishChunk::class.java).flatMap { it.fnCommandList }.toTypedArray()
-    }
-
-    fun topLevelUseCommands(): Array<ElvishUseCommand> {
-        return findChildrenByClass(ElvishChunk::class.java).flatMap { it.useCommandList }.toTypedArray()
-    }
+    val chunk: ElvishChunk
+        get() = findChildByClass(ElvishChunk::class.java)!!
 
     override fun exportedVariables(): Collection<ElvishVariableDeclaration> {
-        return topLevelAssignments().flatMap { it.variableAssignmentList }.filterIsInstance(ElvishVariable::class.java)
+        return chunk.variableDeclarations
     }
 
     override fun exportedFunctions(): Collection<ElvishFunctionDeclaration> {
-        return topLevelFunctionsDeclarations().map { it }
+        return chunk.fnCommandList
     }
 }

@@ -40,6 +40,20 @@ import java.util.EnumSet;
         yypushback(1);
         return ElvishTypes.COMMAND_BAREWORD_CHAR;
     }
+    private IElementType yyCheckVarKeyword() {
+        if (parseFlags.contains(LanguageParseFlag.ExplicitVariableDeclarationAndSet)) {
+            return ElvishTypes.KEYWORD_VAR;
+        }
+        yypushback(1);
+        return ElvishTypes.VARIABLE_CHAR;
+    }
+    private IElementType yyCheckSetKeyword() {
+        if (parseFlags.contains(LanguageParseFlag.ExplicitVariableDeclarationAndSet)) {
+            return ElvishTypes.KEYWORD_SET;
+        }
+        yypushback(1);
+        return ElvishTypes.VARIABLE_CHAR;
+    }
 %}
 
 LINE =                          [^\n]*
@@ -67,6 +81,8 @@ KEYWORD_TRY = try
 KEYWORD_DEL = del
 KEYWORD_FN = fn
 KEYWORD_USE = use
+KEYWORD_VAR = var
+KEYWORD_SET = set
 STRING_CMP_BUILTINS=(([<>=!]=)|[<>])s
 NUMERIC_CMP_BUILTINS=(([<>=!]=)|[<>])
 VARIABLE_CHAR=[[0-9a-zA-Z\-_~]||[[\u0080-\uFFFF]&&\p{Print}]] // see parse/parse.go:713 (allowedInVariableName())
@@ -129,6 +145,8 @@ WHITESPACE=({INLINE_WHITESPACE_CHAR}|{EOL})+
   {KEYWORD_TRY}             { return ElvishTypes.KEYWORD_TRY; }
   {KEYWORD_DEL}             { return ElvishTypes.KEYWORD_DEL; }
   {KEYWORD_USE}             { return ElvishTypes.KEYWORD_USE; }
+  {KEYWORD_VAR}             { return yyCheckVarKeyword(); }
+  {KEYWORD_SET}             { return yyCheckSetKeyword(); }
   {VARIABLE_CHAR}+          { return ElvishTypes.VARIABLE_CHAR; }
   {BAREWORD_CHAR}+          { return ElvishTypes.BAREWORD_CHAR; }
   {BRACED_BAREWORD_CHAR}    { return ElvishTypes.COMMA; }

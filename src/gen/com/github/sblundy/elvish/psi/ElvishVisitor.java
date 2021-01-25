@@ -93,6 +93,7 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitExceptBlock(@NotNull ElvishExceptBlock o) {
     visitChunkBlock(o);
+    // visitVariableDeclaration(o);
   }
 
   public void visitExceptionCapture(@NotNull ElvishExceptionCapture o) {
@@ -125,6 +126,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   public void visitForCommand(@NotNull ElvishForCommand o) {
     visitChunkBlock(o);
     // visitSpecialCommand(o);
+    // visitVariableDeclaration(o);
   }
 
   public void visitFunctionDeclaration(@NotNull ElvishFunctionDeclaration o) {
@@ -148,6 +150,14 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitIndex(o);
   }
 
+  public void visitLValue(@NotNull ElvishLValue o) {
+    visitLValueVariable(o);
+  }
+
+  public void visitLValueVariable(@NotNull ElvishLValueVariable o) {
+    visitPsiElement(o);
+  }
+
   public void visitLambda(@NotNull ElvishLambda o) {
     visitLambdaScope(o);
   }
@@ -158,6 +168,13 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitLambdaScope(@NotNull ElvishLambdaScope o) {
     visitLexicalScope(o);
+  }
+
+  public void visitLegacyVariableAssignment(@NotNull ElvishLegacyVariableAssignment o) {
+    visitVariableAssignment(o);
+    // visitLValue(o);
+    // visitVariableDeclaration(o);
+    // visitPsiNameIdentifierOwner(o);
   }
 
   public void visitLexicalScope(@NotNull ElvishLexicalScope o) {
@@ -177,8 +194,9 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitLocalScopeVariableAssignment(@NotNull ElvishLocalScopeVariableAssignment o) {
-    visitVariableAssignment(o);
-    // visitVariableDeclaration(o);
+    visitVariableDeclaration(o);
+    // visitLValue(o);
+    // visitVariableAssignment(o);
     // visitPsiNameIdentifierOwner(o);
   }
 
@@ -216,6 +234,7 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitNamespaceVariableAssignment(@NotNull ElvishNamespaceVariableAssignment o) {
     visitVariableAssignment(o);
+    // visitLValue(o);
     // visitExternalVariableReference(o);
   }
 
@@ -237,6 +256,15 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitRelativeModuleSpec(@NotNull ElvishRelativeModuleSpec o) {
     visitModuleSpec(o);
+  }
+
+  public void visitSetCommand(@NotNull ElvishSetCommand o) {
+    visitSpecialCommand(o);
+  }
+
+  public void visitSetLValue(@NotNull ElvishSetLValue o) {
+    visitVariableAssignment(o);
+    // visitLValue(o);
   }
 
   public void visitSingleQuoted(@NotNull ElvishSingleQuoted o) {
@@ -262,9 +290,14 @@ public class ElvishVisitor extends PsiElementVisitor {
 
   public void visitUpScopeVariableAssignment(@NotNull ElvishUpScopeVariableAssignment o) {
     visitVariableAssignment(o);
+    // visitLValue(o);
   }
 
   public void visitUseCommand(@NotNull ElvishUseCommand o) {
+    visitSpecialCommand(o);
+  }
+
+  public void visitVarCommand(@NotNull ElvishVarCommand o) {
     visitSpecialCommand(o);
   }
 
@@ -272,18 +305,19 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitVariable(@NotNull ElvishVariable o) {
+  public void visitVarLValue(@NotNull ElvishVarLValue o) {
     visitVariableAssignment(o);
+    // visitLValue(o);
     // visitVariableDeclaration(o);
     // visitPsiNameIdentifierOwner(o);
   }
 
   public void visitVariableAssignment(@NotNull ElvishVariableAssignment o) {
-    visitPsiElement(o);
+    visitLValueVariable(o);
   }
 
   public void visitVariableDeclaration(@NotNull ElvishVariableDeclaration o) {
-    visitPsiElement(o);
+    visitLValueVariable(o);
   }
 
   public void visitVariableName(@NotNull ElvishVariableName o) {

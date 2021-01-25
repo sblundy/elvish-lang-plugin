@@ -28,6 +28,8 @@ class ElvishSyntaxHighlighter(private val parseFlags: EnumSet<LanguageParseFlag>
                 ElvishTypes.KEYWORD_IF,
                 ElvishTypes.KEYWORD_TRY,
                 ElvishTypes.KEYWORD_USE,
+                ElvishTypes.KEYWORD_VAR,
+                ElvishTypes.KEYWORD_SET,
                 ElvishTypes.KEYWORD_WHILE -> KEYWORD_KEYS
             ElvishTypes.KEYWORD_ELIF,
                 ElvishTypes.KEYWORD_ELSE,

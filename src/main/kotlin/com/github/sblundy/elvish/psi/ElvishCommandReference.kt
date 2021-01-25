@@ -77,10 +77,10 @@ internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInE
             return d.isEmpty() && super.visitChunkBlock(s, ctxt)
         }
 
-        fun ElvishFile.matchingFnCommands(): Collection<ElvishFunctionDeclaration> =
-            topLevelFunctionsDeclarations().filter { it.commandName.textMatches(command) }
+        private fun ElvishFile.matchingFnCommands(): Collection<ElvishFunctionDeclaration> =
+            chunk.matchingFnCommands()
 
-        fun ElvishChunk.matchingFnCommands(): Collection<ElvishFunctionDeclaration> =
+        private fun ElvishChunk.matchingFnCommands(): Collection<ElvishFunctionDeclaration> =
             fnCommandList.filter { it.commandName.textMatches(command) }
     }
 
@@ -88,7 +88,7 @@ internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInE
         private val log = logger<CommandVariantFinder>()
         val variants = mutableListOf<LookupElement>()
         override fun visitElvishFile(s: ElvishFile, ctxt: PsiElement): Boolean {
-            val functions = s.topLevelFunctionsDeclarations().toList()
+            val functions = s.exportedFunctions()
             addAll(functions)
             return super.visitElvishFile(s, ctxt)
         }
@@ -112,15 +112,7 @@ internal class ElvishCommandReference(element: ElvishCommandExpression, rangeInE
         }
 
         private fun addAll(functions: Collection<ElvishFunctionDeclaration>) {
-            variants += functions.mapNotNull {
-                when (it) {
-                    is ElvishFnCommand -> it.toLookupElement()
-                    is ElvishPsiBuiltinCommand -> it.toLookupElement()
-                    else -> {
-                        log.warn("unrecognized:" + it.javaClass.name); null
-                    }
-                }
-            }
+            variants += functions.map { it.toCommandLookupElement() }
         }
     }
 }

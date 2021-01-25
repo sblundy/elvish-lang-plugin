@@ -1,0 +1,8 @@
+Elvish File
+  ElvishChunkImpl(CHUNK)
+    ElvishVarCommandImpl(VAR_COMMAND)
+      PsiElement(ElvishTokenType.var)('var')
+      PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
+      ElvishVarLValueImpl(VAR_L_VALUE)
+        ElvishVariableNameImpl(VARIABLE_NAME)
+          PsiElement(ElvishTokenType.VARIABLE_CHAR)('a')
