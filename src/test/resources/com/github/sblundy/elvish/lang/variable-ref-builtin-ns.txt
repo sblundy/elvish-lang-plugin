@@ -12,5 +12,5 @@ Elvish File
           ElvishBuiltinNamespaceImpl(BUILTIN_NAMESPACE)
             PsiElement(ElvishTokenType.VARIABLE_CHAR)('builtin')
             PsiElement(ElvishTokenType.:)(':')
-          ElvishVariableNameImpl(VARIABLE_NAME)
+          ElvishUnquotedVariableNameImpl(UNQUOTED_VARIABLE_NAME)
             PsiElement(ElvishTokenType.VARIABLE_CHAR)('args')

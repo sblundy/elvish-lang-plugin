@@ -17,10 +17,12 @@ public class ElvishNamespaceVariableRefImpl extends ElvishExternalVariableRefere
     super(node);
   }
 
+  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitNamespaceVariableRef(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

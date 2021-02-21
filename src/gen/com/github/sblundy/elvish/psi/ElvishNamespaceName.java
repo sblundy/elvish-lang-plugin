@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ElvishNamespaceName extends ElvishNamespaceIdentifier {
 
   @NotNull
-  List<ElvishVariableName> getVariableNameList();
+  List<ElvishUnquotedVariableName> getVariableNameList();
 
 }

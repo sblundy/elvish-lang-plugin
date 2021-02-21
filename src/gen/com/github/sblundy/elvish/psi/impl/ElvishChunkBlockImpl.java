@@ -16,10 +16,12 @@ public class ElvishChunkBlockImpl extends ElvishBlockImpl implements ElvishChunk
     super(node);
   }
 
+  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitChunkBlock(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

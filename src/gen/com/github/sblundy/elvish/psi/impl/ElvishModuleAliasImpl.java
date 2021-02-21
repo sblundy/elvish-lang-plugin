@@ -21,6 +21,7 @@ public class ElvishModuleAliasImpl extends ASTWrapperElvishPsiElement implements
     visitor.visitModuleAlias(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

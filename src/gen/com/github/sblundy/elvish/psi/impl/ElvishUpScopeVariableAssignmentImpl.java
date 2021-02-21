@@ -19,10 +19,12 @@ public class ElvishUpScopeVariableAssignmentImpl extends ElvishVariableAssignmen
     super(node);
   }
 
+  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitUpScopeVariableAssignment(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

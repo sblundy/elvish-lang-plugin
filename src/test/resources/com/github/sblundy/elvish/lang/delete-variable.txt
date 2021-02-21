@@ -3,5 +3,5 @@ Elvish File
     ElvishDeleteCommandImpl(DELETE_COMMAND)
       PsiElement(ElvishTokenType.del)('del')
       PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
-      ElvishVariableNameImpl(VARIABLE_NAME)
+      ElvishUnquotedVariableNameImpl(UNQUOTED_VARIABLE_NAME)
         PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')

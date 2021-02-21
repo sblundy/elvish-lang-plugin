@@ -56,6 +56,7 @@ data class ElvishFunction(val deprecated: Boolean = false)
 
 enum class LanguageParseFlag {
     ExplicitVariableDeclarationAndSet,
+    QuoteVariableNames,
     UseWithOptionalRename,
     UseRelativeModules,
     NewSliceIndex,

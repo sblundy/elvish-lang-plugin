@@ -16,10 +16,12 @@ public class ElvishTryCommandImpl extends ElvishChunkBlockImpl implements Elvish
     super(node);
   }
 
+  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitTryCommand(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

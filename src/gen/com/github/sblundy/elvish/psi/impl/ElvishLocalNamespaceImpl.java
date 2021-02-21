@@ -16,10 +16,12 @@ public class ElvishLocalNamespaceImpl extends ElvishNamespaceIdentifierImpl impl
     super(node);
   }
 
+  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitLocalNamespace(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

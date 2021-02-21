@@ -19,10 +19,12 @@ public class ElvishLocalScopeVariableAssignmentImpl extends ElvishVariableDeclar
     super(node);
   }
 
+  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitLocalScopeVariableAssignment(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

@@ -16,7 +16,7 @@ Elvish File
               ElvishCompoundImpl(COMPOUND)
                 ElvishVariableRefImpl(VARIABLE_REF)
                   PsiElement(ElvishTokenType.$)('$')
-                  ElvishVariableNameImpl(VARIABLE_NAME)
+                  ElvishUnquotedVariableNameImpl(UNQUOTED_VARIABLE_NAME)
                     PsiElement(ElvishTokenType.VARIABLE_CHAR)('fname')
             PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
             ElvishArgumentImpl(ARGUMENT)

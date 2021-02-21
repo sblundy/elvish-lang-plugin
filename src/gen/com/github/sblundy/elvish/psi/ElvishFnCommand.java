@@ -21,6 +21,9 @@ public interface ElvishFnCommand extends ElvishFunctionDeclaration, ElvishLambda
   PsiElement getKeyword();
 
   @NotNull
+  ElvishUnquotedVariableName getCommandName();
+
+  @NotNull
   PsiElement getNameIdentifier();
 
   @NotNull

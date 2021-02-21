@@ -12,5 +12,5 @@ Elvish File
           ElvishUpNamespaceImpl(UP_NAMESPACE)
             PsiElement(ElvishTokenType.VARIABLE_CHAR)('up')
             PsiElement(ElvishTokenType.:)(':')
-          ElvishVariableNameImpl(VARIABLE_NAME)
+          ElvishUnquotedVariableNameImpl(UNQUOTED_VARIABLE_NAME)
             PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')

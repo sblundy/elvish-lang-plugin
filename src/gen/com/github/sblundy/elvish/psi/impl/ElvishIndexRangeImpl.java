@@ -16,10 +16,12 @@ public class ElvishIndexRangeImpl extends ElvishIndexImpl implements ElvishIndex
     super(node);
   }
 
+  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitIndexRange(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
@@ -47,12 +49,6 @@ public class ElvishIndexRangeImpl extends ElvishIndexImpl implements ElvishIndex
   @NotNull
   public List<ElvishSingleQuoted> getSingleQuotedList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishSingleQuoted.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishVariableName> getVariableNameList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableName.class);
   }
 
   @Override

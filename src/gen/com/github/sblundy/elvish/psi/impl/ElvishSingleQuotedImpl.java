@@ -21,6 +21,7 @@ public class ElvishSingleQuotedImpl extends ASTWrapperElvishPsiElement implement
     visitor.visitSingleQuoted(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

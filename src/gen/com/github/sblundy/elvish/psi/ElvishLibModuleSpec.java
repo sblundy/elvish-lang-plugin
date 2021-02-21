@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ElvishLibModuleSpec extends ElvishModuleSpec {
 
   @NotNull
-  List<ElvishVariableName> getVariableNameList();
+  List<ElvishUnquotedVariableName> getVariableNameList();
 
 }

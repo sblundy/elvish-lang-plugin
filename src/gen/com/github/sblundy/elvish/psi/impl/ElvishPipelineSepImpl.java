@@ -21,6 +21,7 @@ public class ElvishPipelineSepImpl extends ASTWrapperElvishPsiElement implements
     visitor.visitPipelineSep(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

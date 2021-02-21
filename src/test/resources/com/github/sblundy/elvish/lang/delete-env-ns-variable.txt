@@ -6,5 +6,5 @@ Elvish File
       ElvishEnvVarNamespaceImpl(ENV_VAR_NAMESPACE)
         PsiElement(ElvishTokenType.VARIABLE_CHAR)('E')
         PsiElement(ElvishTokenType.:)(':')
-      ElvishVariableNameImpl(VARIABLE_NAME)
+      ElvishUnquotedVariableNameImpl(UNQUOTED_VARIABLE_NAME)
         PsiElement(ElvishTokenType.VARIABLE_CHAR)('X')

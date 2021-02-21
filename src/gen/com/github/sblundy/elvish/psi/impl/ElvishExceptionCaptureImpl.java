@@ -21,6 +21,7 @@ public class ElvishExceptionCaptureImpl extends ASTWrapperElvishPsiElement imple
     visitor.visitExceptionCapture(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

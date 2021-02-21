@@ -24,6 +24,7 @@ public interface ElvishTypes {
   IElementType CONDITION = new ElvishElementType("CONDITION");
   IElementType DELETE_COMMAND = new ElvishElementType("DELETE_COMMAND");
   IElementType DOUBLE_QUOTED = new ElvishElementType("DOUBLE_QUOTED");
+  IElementType DOUBLE_QUOTED_VARIABLE_NAME = new ElvishElementType("DOUBLE_QUOTED_VARIABLE_NAME");
   IElementType ELSE_BLOCK = new ElvishElementType("ELSE_BLOCK");
   IElementType EL_IF_BLOCK = new ElvishElementType("EL_IF_BLOCK");
   IElementType ENV_VAR_NAMESPACE = new ElvishElementType("ENV_VAR_NAMESPACE");
@@ -61,13 +62,14 @@ public interface ElvishTypes {
   IElementType SET_COMMAND = new ElvishElementType("SET_COMMAND");
   IElementType SET_L_VALUE = new ElvishElementType("SET_L_VALUE");
   IElementType SINGLE_QUOTED = new ElvishElementType("SINGLE_QUOTED");
+  IElementType SINGLE_QUOTED_VARIABLE_NAME = new ElvishElementType("SINGLE_QUOTED_VARIABLE_NAME");
   IElementType SPECIAL_SCOPE_COMMAND_EXPRESSION = new ElvishElementType("SPECIAL_SCOPE_COMMAND_EXPRESSION");
   IElementType SPECIAL_SCOPE_VARIABLE_REF = new ElvishElementType("SPECIAL_SCOPE_VARIABLE_REF");
   IElementType TRY_COMMAND = new ElvishElementType("TRY_COMMAND");
+  IElementType UNQUOTED_VARIABLE_NAME = new ElvishElementType("UNQUOTED_VARIABLE_NAME");
   IElementType UP_NAMESPACE = new ElvishElementType("UP_NAMESPACE");
   IElementType UP_SCOPE_VARIABLE_ASSIGNMENT = new ElvishElementType("UP_SCOPE_VARIABLE_ASSIGNMENT");
   IElementType USE_COMMAND = new ElvishElementType("USE_COMMAND");
-  IElementType VARIABLE_NAME = new ElvishElementType("VARIABLE_NAME");
   IElementType VARIABLE_REF = new ElvishElementType("VARIABLE_REF");
   IElementType VAR_COMMAND = new ElvishElementType("VAR_COMMAND");
   IElementType VAR_INDEX = new ElvishElementType("VAR_INDEX");
@@ -168,6 +170,9 @@ public interface ElvishTypes {
       }
       else if (type == DOUBLE_QUOTED) {
         return new ElvishDoubleQuotedImpl(node);
+      }
+      else if (type == DOUBLE_QUOTED_VARIABLE_NAME) {
+        return new ElvishDoubleQuotedVariableNameImpl(node);
       }
       else if (type == ELSE_BLOCK) {
         return new ElvishElseBlockImpl(node);
@@ -280,6 +285,9 @@ public interface ElvishTypes {
       else if (type == SINGLE_QUOTED) {
         return new ElvishSingleQuotedImpl(node);
       }
+      else if (type == SINGLE_QUOTED_VARIABLE_NAME) {
+        return new ElvishSingleQuotedVariableNameImpl(node);
+      }
       else if (type == SPECIAL_SCOPE_COMMAND_EXPRESSION) {
         return new ElvishSpecialScopeCommandExpressionImpl(node);
       }
@@ -289,6 +297,9 @@ public interface ElvishTypes {
       else if (type == TRY_COMMAND) {
         return new ElvishTryCommandImpl(node);
       }
+      else if (type == UNQUOTED_VARIABLE_NAME) {
+        return new ElvishUnquotedVariableNameImpl(node);
+      }
       else if (type == UP_NAMESPACE) {
         return new ElvishUpNamespaceImpl(node);
       }
@@ -297,9 +308,6 @@ public interface ElvishTypes {
       }
       else if (type == USE_COMMAND) {
         return new ElvishUseCommandImpl(node);
-      }
-      else if (type == VARIABLE_NAME) {
-        return new ElvishVariableNameImpl(node);
       }
       else if (type == VARIABLE_REF) {
         return new ElvishVariableRefImpl(node);

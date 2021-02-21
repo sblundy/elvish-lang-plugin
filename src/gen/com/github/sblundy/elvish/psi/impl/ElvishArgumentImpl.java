@@ -21,6 +21,7 @@ public class ElvishArgumentImpl extends ASTWrapperElvishPsiElement implements El
     visitor.visitArgument(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

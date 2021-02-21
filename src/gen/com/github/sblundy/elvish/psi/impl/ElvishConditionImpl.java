@@ -21,6 +21,7 @@ public class ElvishConditionImpl extends ASTWrapperElvishPsiElement implements E
     visitor.visitCondition(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

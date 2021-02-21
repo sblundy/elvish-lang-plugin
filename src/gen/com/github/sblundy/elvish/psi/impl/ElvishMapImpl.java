@@ -21,6 +21,7 @@ public class ElvishMapImpl extends ASTWrapperElvishPsiElement implements ElvishM
     visitor.visitMap(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

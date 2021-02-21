@@ -16,10 +16,12 @@ public class ElvishRelativeModuleSpecImpl extends ElvishModuleSpecImpl implement
     super(node);
   }
 
+  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitRelativeModuleSpec(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
@@ -27,8 +29,8 @@ public class ElvishRelativeModuleSpecImpl extends ElvishModuleSpecImpl implement
 
   @Override
   @NotNull
-  public List<ElvishVariableName> getVariableNameList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableName.class);
+  public List<ElvishUnquotedVariableName> getVariableNameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishUnquotedVariableName.class);
   }
 
 }

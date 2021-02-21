@@ -21,6 +21,7 @@ public class ElvishCollectionImpl extends ASTWrapperElvishPsiElement implements 
     visitor.visitCollection(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

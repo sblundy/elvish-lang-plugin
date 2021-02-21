@@ -19,10 +19,12 @@ public class ElvishFnCommandImpl extends ElvishFunctionDeclarationImpl implement
     super(node);
   }
 
+  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitFnCommand(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
@@ -44,6 +46,12 @@ public class ElvishFnCommandImpl extends ElvishFunctionDeclarationImpl implement
   @NotNull
   public PsiElement getKeyword() {
     return findNotNullChildByType(KEYWORD_FN);
+  }
+
+  @Override
+  @NotNull
+  public ElvishUnquotedVariableName getCommandName() {
+    return findNotNullChildByClass(ElvishUnquotedVariableName.class);
   }
 
   @Override

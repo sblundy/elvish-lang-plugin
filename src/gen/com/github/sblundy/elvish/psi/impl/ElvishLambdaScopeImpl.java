@@ -16,10 +16,12 @@ public class ElvishLambdaScopeImpl extends ElvishLexicalScopeImpl implements Elv
     super(node);
   }
 
+  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitLambdaScope(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

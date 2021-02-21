@@ -2,7 +2,7 @@ Elvish File
   ElvishChunkImpl(CHUNK)
     ElvishAssignmentImpl(ASSIGNMENT)
       ElvishLegacyVariableAssignmentImpl(LEGACY_VARIABLE_ASSIGNMENT)
-        ElvishVariableNameImpl(VARIABLE_NAME)
+        ElvishUnquotedVariableNameImpl(UNQUOTED_VARIABLE_NAME)
           PsiElement(ElvishTokenType.VARIABLE_CHAR)('dir')
       PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
       PsiElement(ElvishTokenType.=)('=')

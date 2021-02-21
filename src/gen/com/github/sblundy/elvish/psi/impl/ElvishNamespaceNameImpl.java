@@ -16,10 +16,12 @@ public class ElvishNamespaceNameImpl extends ElvishNamespaceIdentifierImpl imple
     super(node);
   }
 
+  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitNamespaceName(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);
@@ -27,8 +29,8 @@ public class ElvishNamespaceNameImpl extends ElvishNamespaceIdentifierImpl imple
 
   @Override
   @NotNull
-  public List<ElvishVariableName> getVariableNameList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishVariableName.class);
+  public List<ElvishUnquotedVariableName> getVariableNameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishUnquotedVariableName.class);
   }
 
 }

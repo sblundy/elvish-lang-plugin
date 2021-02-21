@@ -79,6 +79,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDoubleQuotedVariableName(@NotNull ElvishDoubleQuotedVariableName o) {
+    visitVariableName(o);
+  }
+
   public void visitElIfBlock(@NotNull ElvishElIfBlock o) {
     visitChunkBlock(o);
   }
@@ -271,6 +275,10 @@ public class ElvishVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitSingleQuotedVariableName(@NotNull ElvishSingleQuotedVariableName o) {
+    visitVariableName(o);
+  }
+
   public void visitSpecialScopeCommandExpression(@NotNull ElvishSpecialScopeCommandExpression o) {
     visitCommand(o);
   }
@@ -282,6 +290,10 @@ public class ElvishVisitor extends PsiElementVisitor {
   public void visitTryCommand(@NotNull ElvishTryCommand o) {
     visitChunkBlock(o);
     // visitSpecialCommand(o);
+  }
+
+  public void visitUnquotedVariableName(@NotNull ElvishUnquotedVariableName o) {
+    visitVariableName(o);
   }
 
   public void visitUpNamespace(@NotNull ElvishUpNamespace o) {

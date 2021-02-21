@@ -89,6 +89,7 @@ fake LambdaScope ::= LambdaArguments? Chunk {
 fake ChunkBlock ::= Chunk {
   extends=Block
 }
+fake VariableName ::= {}
 fake NamespaceIdentifier ::= {}
 fake VariableReference ::= VariableName
 fake ExternalVariableReference ::= NamespaceIdentifier VariableName {
@@ -114,7 +115,7 @@ fake Index ::= {}
 SingleQuoted ::= SINGLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* SINGLE_QUOTE
 DoubleQuoted ::= DOUBLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* DOUBLE_QUOTE
 private Primary ::= Bareword | SingleQuoted | DoubleQuoted | SpecialScopeVariableRef | NamespaceVariableRef | VariableRef | WILDCARD | TILDE | ExceptionCapture | OutputCapture | Lambda | List | Map | Braced
-LegacyVariableAssignment ::= AT_SYMBOL? VariableName VarIndex* {
+LegacyVariableAssignment ::= AT_SYMBOL? VarName VarIndex* {
   extends="VariableAssignment"
   implements=[
    "LValue"
@@ -123,7 +124,7 @@ LegacyVariableAssignment ::= AT_SYMBOL? VariableName VarIndex* {
   ]
   methods=[getNamespaceIdentifier getNameIdentifier getName setName getTextOffset getIcon getPresentation]
 }
-LocalScopeVariableAssignment ::= AT_SYMBOL? LocalNamespace VariableName VarIndex* {
+LocalScopeVariableAssignment ::= AT_SYMBOL? LocalNamespace VarName VarIndex* {
   extends="VariableDeclaration"
   implements=[
    "LValue"
@@ -132,12 +133,12 @@ LocalScopeVariableAssignment ::= AT_SYMBOL? LocalNamespace VariableName VarIndex
   ]
   methods=[NamespaceIdentifier="LocalNamespace" getNameIdentifier getName setName getTextOffset getIcon getPresentation]
 }
-UpScopeVariableAssignment ::= AT_SYMBOL? UpNamespace VariableName VarIndex* {
+UpScopeVariableAssignment ::= AT_SYMBOL? UpNamespace VarName VarIndex* {
   extends="VariableAssignment"
   implements=["LValue"]
   methods=[NamespaceIdentifier="UpNamespace" getName getTextOffset getIcon getPresentation getReference]
 }
-NamespaceVariableAssignment ::= AT_SYMBOL? (EnvVarNamespace | BuiltinNamespace | NamespaceName) VariableName VarIndex* {
+NamespaceVariableAssignment ::= AT_SYMBOL? (EnvVarNamespace | BuiltinNamespace | NamespaceName) VarName VarIndex* {
   extends="VariableAssignment"
   implements=[
    "LValue"
@@ -145,8 +146,9 @@ NamespaceVariableAssignment ::= AT_SYMBOL? (EnvVarNamespace | BuiltinNamespace |
   ]
   methods=[getName isWritable getTextOffset getIcon getPresentation getReference]
 }
-NamespaceName ::= (VariableName COLON)+ {
+NamespaceName ::= (UnquotedVariableName COLON)+ {
   extends="NamespaceIdentifier"
+  methods=[VariableNameList="UnquotedVariableName"]
 }
 LocalNamespace ::= 'local:' {
   extends="NamespaceIdentifier"
@@ -163,18 +165,28 @@ EnvVarNamespace ::= 'E:' {
 BuiltinNamespace ::= 'builtin:' {
   extends="NamespaceIdentifier"
 }
-VariableName ::= VARIABLE_CHAR+
-VariableRef ::= DOLLAR_SIGN AT_SYMBOL? VariableName VarIndex* {
+private VarName ::= UnquotedVariableName | DoubleQuotedVariableName | SingleQuotedVariableName
+UnquotedVariableName ::= VARIABLE_CHAR+ {
+  extends=VariableName
+}
+DoubleQuotedVariableName ::= DOUBLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* DOUBLE_QUOTE {
+  extends=VariableName
+}
+SingleQuotedVariableName ::= SINGLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_TEXT)* SINGLE_QUOTE {
+  extends=VariableName
+}
+
+VariableRef ::= DOLLAR_SIGN AT_SYMBOL? VarName VarIndex* {
   extends=VariableReference
   methods=[getReference]
   generateTokenAccessors=true
 }
-SpecialScopeVariableRef ::= DOLLAR_SIGN AT_SYMBOL? (LocalNamespace | UpNamespace) VariableName VarIndex* {
+SpecialScopeVariableRef ::= DOLLAR_SIGN AT_SYMBOL? (LocalNamespace | UpNamespace) VarName VarIndex* {
   extends=VariableReference
   methods=[getReference]
   generateTokenAccessors=true
 }
-NamespaceVariableRef ::= DOLLAR_SIGN (EnvVarNamespace | BuiltinNamespace | NamespaceName) VariableName VarIndex* {
+NamespaceVariableRef ::= DOLLAR_SIGN (EnvVarNamespace | BuiltinNamespace | NamespaceName) VarName VarIndex* {
   extends="ExternalVariableReference"
   methods=[getReference]
   generateTokenAccessors=true
@@ -191,7 +203,8 @@ VarIndex ::= OPEN_BRACKET (IndexRange | IndexSingle) (Space (IndexRange | IndexS
   pin=1
   generateTokenAccessors=true
 }
-private IndexValue ::= VariableName | SingleQuoted | DoubleQuoted | SpecialScopeVariableRef | NamespaceVariableRef | VariableRef | ExceptionCapture | OutputCapture
+private IndexBareword ::= (VARIABLE_CHAR|'@'|'%'|'+'|'!'|BACKSLASH|COMMA|<<parseKeywordAsBareword>>)+
+private IndexValue ::= IndexBareword | SingleQuoted | DoubleQuoted | SpecialScopeVariableRef | NamespaceVariableRef | VariableRef | ExceptionCapture | OutputCapture
 IndexSingle ::= IndexValue+ {
   extends=Index
 }
@@ -246,7 +259,7 @@ Lambda ::= LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
   extends="LambdaScope"
 }
 LambdaArguments ::=OPEN_BRACKET Space? ((parameter | MapPair) Space?)* CLOSE_BRACKET
-parameter ::= AT_SYMBOL? VariableName {
+parameter ::= AT_SYMBOL? VarName {
   extends="VariableDeclaration"
   implements=["com.intellij.psi.PsiNameIdentifierOwner"]
   generateTokenAccessors=true
@@ -257,7 +270,7 @@ BracedSep ::= (Space | EOL)* COMMA (Space | EOL)*
 
 // Special Commands
 
-VarLValue ::= AT_SYMBOL? VariableName VarIndex* {
+VarLValue ::= AT_SYMBOL? VarName VarIndex* {
   extends="VariableAssignment"
   implements=[
    "LValue"
@@ -271,7 +284,7 @@ VarCommand ::= &ExplicitVariableDeclarationAndSetFlag KEYWORD_VAR (Space+ VarLVa
   implements="ElvishSpecialCommand"
   methods=[Keyword="KEYWORD_VAR" LValues="VarLValue"]
 }
-SetLValue ::= AT_SYMBOL? VariableName VarIndex* {
+SetLValue ::= AT_SYMBOL? VarName VarIndex* {
   extends="VariableAssignment"
   implements=[
    "LValue"
@@ -287,7 +300,7 @@ SetCommand ::= &ExplicitVariableDeclarationAndSetFlag KEYWORD_SET (Space+ SetLVa
 private AllSpecialCommand ::= DeleteCommand | UseCommand | LogicCommand | IfCommand | WhileCommand | ForCommand | TryCommand | FnCommand
 
 private LambdaBlock ::= OPEN_BRACE Chunk CLOSE_BRACE
-DeleteCommand ::= KEYWORD_DEL CommandSep* (LocalNamespace | EnvVarNamespace)? VariableName VarIndex* {
+DeleteCommand ::= KEYWORD_DEL CommandSep* (LocalNamespace | EnvVarNamespace)? VarName VarIndex* {
   implements="ElvishSpecialCommand"
   methods=[Keyword="KEYWORD_DEL"]
 }
@@ -314,7 +327,7 @@ WhileCommand ::= KEYWORD_WHILE Space Condition Space (WhileCommandBody | Missing
   methods=[Keyword="KEYWORD_WHILE"]
 }
 private WhileCommandBody ::= OPEN_BRACE Chunk CLOSE_BRACE (Space ElseBlock)?
-ForCommand ::= KEYWORD_FOR Space VariableName Space Collection Space (ForCommandBody | MissingLambda) {
+ForCommand ::= KEYWORD_FOR Space VarName Space Collection Space (ForCommandBody | MissingLambda) {
   extends=ChunkBlock
   implements=["ElvishSpecialCommand" "VariableDeclaration"]
   methods=[Keyword="KEYWORD_FOR"]
@@ -326,17 +339,17 @@ TryCommand ::= KEYWORD_TRY Space LambdaBlock (Space ExceptBlock)? (Space ElseBlo
   implements="ElvishSpecialCommand"
   methods=[Keyword="KEYWORD_TRY"]
 }
-ExceptBlock ::= KEYWORD_EXCEPT Space VariableName Space OPEN_BRACE Chunk CLOSE_BRACE {
+ExceptBlock ::= KEYWORD_EXCEPT Space VarName Space OPEN_BRACE Chunk CLOSE_BRACE {
   extends=ChunkBlock
   implements=VariableDeclaration
 }
 FinallyBlock ::= KEYWORD_FINALLY Space LambdaBlock {
   extends=ChunkBlock
 }
-FnCommand ::= KEYWORD_FN Space VariableName Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
+FnCommand ::= KEYWORD_FN Space UnquotedVariableName Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
   extends="FunctionDeclaration"
   implements=["LambdaScope" "com.intellij.psi.PsiNameIdentifierOwner" "ElvishSpecialCommand" ]
-  methods=[Keyword="KEYWORD_FN" commandName="VariableName" getNameIdentifier getName setName getTextOffset getIcon getPresentation]
+  methods=[Keyword="KEYWORD_FN" commandName="UnquotedVariableName" getNameIdentifier getName setName getTextOffset getIcon getPresentation]
 }
 UseCommand ::= KEYWORD_USE Space (RelativeModuleSpec | LibModuleSpec) (Space ModuleAlias)? {
   implements="ElvishSpecialCommand"
@@ -344,15 +357,17 @@ UseCommand ::= KEYWORD_USE Space (RelativeModuleSpec | LibModuleSpec) (Space Mod
 }
 fake ModuleSpec ::= {}
 
-LibModuleSpec ::= (VARIABLE_CHAR+'.')* ModulePathSegment* (VariableName COLON)* VariableName {
+LibModuleSpec ::= (VARIABLE_CHAR+'.')* ModulePathSegment* (UnquotedVariableName COLON)* UnquotedVariableName {
   extends="ModuleSpec"
+  methods=[VariableNameList="UnquotedVariableName"]
 }
 RelativeModuleSpec ::= &UseRelativeModulesFlag RelativeModuleSpecInner {
   extends="ModuleSpec"
+  methods=[VariableNameList="UnquotedVariableName"]
 }
-private RelativeModuleSpecInner ::= ('./' | '../') (ModulePathSegment | './' | '../')* (VariableName COLON)* VariableName
+private RelativeModuleSpecInner ::= ('./' | '../') (ModulePathSegment | './' | '../')* (UnquotedVariableName COLON)* UnquotedVariableName
 private ModulePathSegment ::= VARIABLE_CHAR+ BACKSLASH
-ModuleAlias ::= &UseWithOptionalRenameFlag VariableName
+ModuleAlias ::= &UseWithOptionalRenameFlag VarName
 
 private external ExplicitVariableDeclarationAndSetFlag ::= ifFlag "ExplicitVariableDeclarationAndSet"
 private external UseWithOptionalRenameFlag ::= ifFlag "UseWithOptionalRename"

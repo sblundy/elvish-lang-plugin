@@ -8,5 +8,5 @@ Elvish File
         PsiElement(ElvishTokenType./)('/')
         PsiElement(ElvishTokenType.VARIABLE_CHAR)('y')
         PsiElement(ElvishTokenType./)('/')
-        ElvishVariableNameImpl(VARIABLE_NAME)
+        ElvishUnquotedVariableNameImpl(UNQUOTED_VARIABLE_NAME)
           PsiElement(ElvishTokenType.VARIABLE_CHAR)('z')

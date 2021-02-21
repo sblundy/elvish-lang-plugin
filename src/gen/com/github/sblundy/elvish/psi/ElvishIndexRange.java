@@ -20,9 +20,6 @@ public interface ElvishIndexRange extends ElvishIndex {
   List<ElvishSingleQuoted> getSingleQuotedList();
 
   @NotNull
-  List<ElvishVariableName> getVariableNameList();
-
-  @NotNull
   List<ElvishVariableReference> getVariableReferenceList();
 
 }

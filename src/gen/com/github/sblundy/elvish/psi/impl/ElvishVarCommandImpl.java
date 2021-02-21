@@ -21,6 +21,7 @@ public class ElvishVarCommandImpl extends ASTWrapperElvishPsiElement implements 
     visitor.visitVarCommand(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ElvishVisitor) accept((ElvishVisitor)visitor);
     else super.accept(visitor);

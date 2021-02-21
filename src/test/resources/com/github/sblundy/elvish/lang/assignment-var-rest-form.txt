@@ -5,7 +5,7 @@ Elvish File
       PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
       ElvishVarLValueImpl(VAR_L_VALUE)
         PsiElement(ElvishTokenType.@)('@')
-        ElvishVariableNameImpl(VARIABLE_NAME)
+        ElvishUnquotedVariableNameImpl(UNQUOTED_VARIABLE_NAME)
           PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')
       PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
       PsiElement(ElvishTokenType.=)('=')
