@@ -25,6 +25,11 @@ fun missingLambdaBody(builder: PsiBuilder, level: Int): Boolean {
     return true
 }
 
+fun missingSpaceInVarOrSet(builder: PsiBuilder, level: Int): Boolean {
+    builder.error(ElvishBundle.message("psi.error.variable.space.missing"))
+    return true
+}
+
 fun invalidQuotedVariableName(builder: PsiBuilder, level: Int): Boolean {
     builder.error(ElvishBundle.message("psi.error.variable.invalid"))
     return true

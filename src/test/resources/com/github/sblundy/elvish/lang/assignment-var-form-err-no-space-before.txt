@@ -1,0 +1,15 @@
+Elvish File
+  ElvishChunkImpl(CHUNK)
+    ElvishVarCommandImpl(VAR_COMMAND)
+      PsiElement(ElvishTokenType.var)('var')
+      PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
+      ElvishVarLValueImpl(VAR_L_VALUE)
+        ElvishUnquotedVariableNameImpl(UNQUOTED_VARIABLE_NAME)
+          PsiElement(ElvishTokenType.VARIABLE_CHAR)('x')
+      PsiErrorElement:Space required
+        <empty list>
+      PsiElement(ElvishTokenType.=)('=')
+      PsiElement(ElvishTokenType.INLINE_WHITESPACE)(' ')
+      ElvishCompoundImpl(COMPOUND)
+        ElvishBarewordImpl(BAREWORD)
+          PsiElement(ElvishTokenType.VARIABLE_CHAR)('foo')

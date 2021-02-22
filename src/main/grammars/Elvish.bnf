@@ -279,7 +279,7 @@ VarLValue ::= AT_SYMBOL? VarName VarIndex* {
   ]
   methods=[getNamespaceIdentifier getNameIdentifier getName setName getTextOffset getIcon getPresentation]
 }
-VarCommand ::= &ExplicitVariableDeclarationAndSetFlag KEYWORD_VAR (Space+ VarLValue)+ (Space? EQUALS Space? Compound (Space+ Compound)*)? {
+VarCommand ::= &ExplicitVariableDeclarationAndSetFlag KEYWORD_VAR (Space+ VarLValue)+ ((Space+|<<missingSpaceInVarOrSet>>) EQUALS (Space+|<<missingSpaceInVarOrSet>>) Compound (Space+ Compound)*)? {
   pin=2
   implements="ElvishSpecialCommand"
   methods=[Keyword="KEYWORD_VAR" LValues="VarLValue"]
@@ -292,7 +292,7 @@ SetLValue ::= AT_SYMBOL? VarName VarIndex* {
   methods=[getNamespaceIdentifier getName isWritable getTextOffset getIcon getPresentation getReference]
 }
 private SetLValues ::= (LocalScopeVariableAssignment | UpScopeVariableAssignment | NamespaceVariableAssignment | SetLValue)
-SetCommand ::= &ExplicitVariableDeclarationAndSetFlag KEYWORD_SET (Space+ SetLValues)+ Space? EQUALS Space? Compound (Space+ Compound)* {
+SetCommand ::= &ExplicitVariableDeclarationAndSetFlag KEYWORD_SET (Space+ SetLValues)+ (Space+|<<missingSpaceInVarOrSet>>) EQUALS (Space+|<<missingSpaceInVarOrSet>>) Compound (Space+ Compound)* {
   pin=2
   implements="ElvishSpecialCommand"
   methods=[Keyword="KEYWORD_SET" LValues="LValueVariable"]
