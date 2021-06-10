@@ -1,6 +1,6 @@
 package com.github.sblundy.elvish.lang
 
-import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
 
@@ -10,7 +10,7 @@ class ElvishGlobalLibraryManager {
     companion object {
         @JvmStatic
         fun getInstance(): ElvishGlobalLibraryManager {
-            return ServiceManager.getService(ElvishGlobalLibraryManager::class.java)
+            return ApplicationManager.getApplication().getService(ElvishGlobalLibraryManager::class.java)
         }
     }
 

@@ -2,7 +2,6 @@ package com.github.sblundy.elvish.settings
 
 import com.intellij.openapi.components.BaseState
 import com.intellij.openapi.components.PersistentStateComponent
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.project.Project
 import com.intellij.util.messages.Topic
@@ -24,7 +23,7 @@ class ElvishSettings(private val project: Project) : PersistentStateComponent<El
 
         @JvmStatic
         fun getInstance(project: Project): ElvishSettings {
-            return ServiceManager.getService(project, ElvishSettings::class.java)
+            return project.getService(ElvishSettings::class.java)
         }
     }
 

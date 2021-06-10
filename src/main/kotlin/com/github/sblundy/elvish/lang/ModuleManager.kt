@@ -1,7 +1,6 @@
 package com.github.sblundy.elvish.lang
 
 import com.github.sblundy.elvish.psi.*
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.psi.PsiManager
@@ -10,7 +9,7 @@ class ModuleManager(val project: Project) {
     companion object {
         @JvmStatic
         fun getInstance(project: Project): ModuleManager {
-            return ServiceManager.getService(project, ModuleManager::class.java)
+            return project.getService(ModuleManager::class.java)
         }
     }
 

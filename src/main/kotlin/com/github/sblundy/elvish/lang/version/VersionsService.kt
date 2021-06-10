@@ -1,7 +1,7 @@
 package com.github.sblundy.elvish.lang.version
 
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.PluginPathManager
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.diagnostic.debug
 import com.intellij.util.PathUtil
@@ -67,7 +67,7 @@ class VersionsService {
     companion object {
         @JvmStatic
         fun getInstance(): VersionsService {
-            return ServiceManager.getService(VersionsService::class.java)
+            return ApplicationManager.getApplication().getService(VersionsService::class.java)
         }
     }
 

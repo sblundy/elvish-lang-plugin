@@ -1,14 +1,14 @@
 package com.github.sblundy.elvish.lang.version
 
 import com.github.sblundy.elvish.settings.ElvishSettings
-import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 
 class ElvishBundledService {
     companion object {
         @JvmStatic
         fun getInstance(): ElvishBundledService {
-            return ServiceManager.getService(ElvishBundledService::class.java)
+            return ApplicationManager.getApplication().getService(ElvishBundledService::class.java)
         }
     }
 

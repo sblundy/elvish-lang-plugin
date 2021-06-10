@@ -4,7 +4,6 @@ import com.github.sblundy.elvish.lang.version.ElvishBundledService
 import com.github.sblundy.elvish.psi.BuiltinScope
 import com.github.sblundy.elvish.settings.ElvishSettings
 import com.intellij.openapi.Disposable
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiManager
 
@@ -14,7 +13,7 @@ class BaseScopeHolder(private val project: Project) : Disposable {
     companion object {
         @JvmStatic
         fun getInstance(project: Project): BaseScopeHolder {
-            return ServiceManager.getService(project, BaseScopeHolder::class.java)
+            return project.getService(BaseScopeHolder::class.java)
         }
     }
 
