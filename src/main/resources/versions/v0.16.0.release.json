@@ -1,0 +1,82 @@
+{
+  "name": "v0.16.0",
+  "previous": "v0.15.0",
+  "release": false,
+  "builtin": {
+    "functions": {
+      "deprecated": [
+        "fopen",
+        "fclose",
+        "prclose",
+        "pwclose"
+      ]
+    },
+    "modules": {
+      "edit": {
+        "variables": {
+          "added": [
+            "after-command",
+            "command-duration",
+            "global-binding"
+          ]
+        },
+        "functions": {
+          "added": [
+            "clear",
+            "close-mode"
+          ],
+          "removed": [
+            "close-listing"
+          ]
+        },
+        "modules": {
+          "completion": {
+            "functions": {
+              "removed": ["close"]
+            }
+          },
+          "histlist": {
+            "functions": {
+              "removed": ["toggle-case-sensitivity"]
+            }
+          },
+          "history": {
+            "functions": {
+              "removed": ["close"]
+            }
+          },
+          "listing": {
+            "functions": {
+              "removed": ["close"]
+            }
+          }
+        }
+      },
+      "file": {
+        "functions": {
+          "added": [
+            "close",
+            "open",
+            "pipe",
+            "truncate"
+          ]
+        }
+      },
+      "math": {
+        "functions": {
+          "deprecated": [
+            "pow10"
+          ]
+        }
+      },
+      "path": {
+        "functions": {
+          "added": [
+            "temp-file",
+            "temp-dir"
+          ]
+        }
+      }
+    }
+  }
+}
