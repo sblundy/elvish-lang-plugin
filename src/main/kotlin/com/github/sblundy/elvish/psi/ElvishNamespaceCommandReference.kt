@@ -19,11 +19,8 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
                 element.project.getBuiltinScope()?.findFnCommands(element.commandName) ?: emptyList()
             }
             is ElvishNamespaceName -> {
-                val climber = NamespaceModuleFinder(element.namespaceIdentifier as ElvishNamespaceName, element.project)
-                climber.climb(element)
-                climber.declarations.mapNotNull {
-                    it.exportedFunction(element.commandName)
-                }
+                val ns = element.namespaceIdentifier as ElvishNamespaceName
+                ns.resolveModule()?.exportedFunction(element.commandName)?.let { listOf(it) }?: emptyList()
             }
             else -> emptyList()//TODO handle?
         }
@@ -48,14 +45,10 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
             }
             is ElvishNamespaceName -> {
                 val ns = element.namespaceIdentifier as ElvishNamespaceName
-                val climber = NamespaceModuleFinder(ns, element.project)
-
-                climber.climb(element)
-                climber.declarations.flatMap {
-                    it.exportedFunctions()
-                }.mapNotNull {
-                    it.toCommandLookupElement()
-                } + climber.declarations.flatMap { it.childModuleNames().map { name -> toNSLookupElement(name) } }
+                ns.resolveModule()?.let { mod ->
+                    mod.exportedFunctions().map { it.toCommandLookupElement() } + mod.childModuleNames()
+                        .map { name -> toNSLookupElement(name) }
+                } ?: emptyList()
             }
             else -> emptyList() //TODO handle?
         }

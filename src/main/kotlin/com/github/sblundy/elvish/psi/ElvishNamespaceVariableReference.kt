@@ -21,9 +21,8 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
                 element.project.getBuiltinScope()?.findVariables(element.variableName) ?: emptyList()
             }
             is ElvishNamespaceName -> {
-                val climber = NamespaceModuleFinder(element.namespaceIdentifier as ElvishNamespaceName, element.project)
-                climber.climb(element)
-                climber.declarations.mapNotNull { it.exportedVariable(element.variableName) }
+                val ns = element.namespaceIdentifier as ElvishNamespaceName
+                ns.resolveModule()?.exportedVariable(element.variableName)?.let { listOf(it) }?: emptyList()
             }
             else -> emptyList()//TODO handle?
         }
@@ -54,18 +53,11 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
             }
             is ElvishNamespaceName -> {
                 val ns = element.namespaceIdentifier as ElvishNamespaceName
-                val climber = NamespaceModuleFinder(ns, element.project)
-
-                climber.climb(element)
-                climber.declarations.flatMap {
-                    it.exportedVariables()
-                }.map {
-                    it.toVariableLookupElement()
-                } + climber.declarations.flatMap {
-                    it.exportedFunctions()
-                }.map {
-                    it.toVariableLookupElement()
-                } + climber.declarations.flatMap { it.childModuleNames().map { name -> toNSLookupElement(name) } }
+                ns.resolveModule()?.let { mod ->
+                    mod.exportedVariables().map { it.toVariableLookupElement() } +
+                            mod.exportedFunctions().map { it.toVariableLookupElement() } +
+                            mod.childModuleNames().map {  name -> toNSLookupElement(name) }
+                } ?: emptyList()
             }
             else -> emptyList() //TODO handle?
         }

@@ -2,86 +2,10 @@ package com.github.sblundy.elvish.psi
 
 import com.github.sblundy.elvish.lang.ElvishModule
 import com.github.sblundy.elvish.lang.ModuleManager
-import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 
-class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val project: Project): ElvishBlockClimber() {
-    val declarations = mutableListOf<ElvishModule>()
-    var found: Boolean = false
-
-    override fun visitElvishFile(s: ElvishFile, ctxt: PsiElement): Boolean {
-        val m = s.matchingUseCommands()
-        if (m.isNotEmpty()) {
-            found = true
-            val mgr = ModuleManager.getInstance(project)
-            m.map { cmd ->
-                when (val spec = cmd.moduleSpec) {
-                    is ElvishLibModuleSpec -> {
-                        mgr.findModule(spec)?.let {declarations += it; return false}
-                    }
-                    is ElvishRelativeModuleSpec -> {
-                        mgr.findModule(s, spec)?.let {declarations += it; return false}
-                    }
-                    else -> {}
-                }
-            }
-        } else if (ns.variableNameList.isNotEmpty() && ns.variableNameList[0].textMatches("edit")) {
-            found = true
-            project.getBuiltinScope()?.findModule(ns)?.let {declarations += it; return false}
-        }
-
-        return super.visitElvishFile(s, ctxt)
-    }
-
-    override fun visitLambdaScope(s: ElvishLambdaScope, ctxt: PsiElement): Boolean {
-        val d = findMod(s.matchingUseCommands(), s.containingFile as ElvishFile).filterNotNull()
-
-        if (d.isNotEmpty()) {
-            found = true
-            declarations += d
-            return false
-        }
-        return super.visitLambdaScope(s, ctxt)
-    }
-
-    override fun visitChunkBlock(s: ElvishChunkBlock, ctxt: PsiElement): Boolean {
-        val file = s.containingFile
-        val d = findMod(s.matchingUseCommands(), file as ElvishFile).filterNotNull()
-        if (d.isNotEmpty()) {
-            found = true
-            declarations += d
-            return false
-        }
-        return super.visitChunkBlock(s, ctxt)
-    }
-
-    private fun ElvishFile.matchingUseCommands(): Collection<ElvishUseCommand> {
-        return chunk.useCommandList.filter { it.matches(ns) }
-    }
-
-    private fun ElvishLambdaScope.matchingUseCommands(): Collection<ElvishUseCommand> {
-        return chunk.useCommandList.filter { it.matches(ns) }
-    }
-
-    private fun ElvishChunkBlock.matchingUseCommands(): Collection<ElvishUseCommand> {
-        return chunk.useCommandList.filter { it.matches(ns) }
-    }
-
-    private fun findMod(m :Collection<ElvishUseCommand>, file: ElvishFile): List<ElvishModule?> {
-        return if (m.isNotEmpty()) {
-            val mgr = ModuleManager.getInstance(project)
-            m.map {
-                when(val spec = it.moduleSpec) {
-                    is ElvishLibModuleSpec -> mgr.findModule(spec)
-                    is ElvishRelativeModuleSpec -> mgr.findModule(file, spec)
-                    else -> null
-                }
-            }
-        } else {
-            emptyList()
-        }
-    }
-}
+const val editNSName = "edit"
+const val builtinNSName = "builtin"
 
 fun ElvishUseCommand.matches(ns: ElvishNamespaceName): Boolean {
     return moduleAlias?.matches(ns)?:when (val spec = moduleSpec) {
@@ -120,8 +44,43 @@ fun ElvishEnvVarNamespace.isInScope(): Boolean = true
 fun ElvishExternalsNamespace.isInScope(): Boolean = true
 fun ElvishLocalNamespace.isInScope(): Boolean = true
 fun ElvishUpNamespace.isInScope(): Boolean = true
-fun ElvishNamespaceName.isInScope(): Boolean {
-    val climber = NamespaceModuleFinder(this, this.project)
-    climber.climb(this.parent as ElvishPsiElement)
-    return climber.found
+fun ElvishNamespaceName.isInScope(): Boolean = (variableNameList.isNotEmpty() && variableNameList[0].textMatches(editNSName)) || this.resolveUseCommand() != null
+
+fun ElvishNamespaceName.resolveUseCommand(): ElvishUseCommand? {
+    val ns = this
+    val useCommandAccum = object: ElvishBlockClimber() {
+        var useCommand: ElvishUseCommand? = null
+        override fun visitElvishFile(s: ElvishFile, ctxt: PsiElement): Boolean {
+            useCommand = s.chunk.useCommandList.find { it.matches(ns) }
+            return useCommand == null
+        }
+
+        override fun visitLambdaScope(s: ElvishLambdaScope, ctxt: PsiElement): Boolean {
+            useCommand = s.chunk.useCommandList.find { it.matches(ns) }
+            return useCommand == null
+        }
+
+        override fun visitChunkBlock(s: ElvishChunkBlock, ctxt: PsiElement): Boolean {
+            useCommand = s.chunk.useCommandList.find { it.matches(ns) }
+            return useCommand == null
+        }
+    }
+
+    useCommandAccum.climb(this.parent as ElvishPsiElement)
+    return useCommandAccum.useCommand
+}
+
+fun ElvishNamespaceName.resolveModule(): ElvishModule? {
+    if (variableNameList.isNotEmpty() && variableNameList[0].textMatches(editNSName)) {
+        return project.getBuiltinScope()?.findModule(this)
+    }
+    val cmd = resolveUseCommand()
+    return cmd?.let {
+        val mgr = ModuleManager.getInstance(project)
+        when (val spec = cmd.moduleSpec) {
+            is ElvishLibModuleSpec -> mgr.findModule(spec)
+            is ElvishRelativeModuleSpec -> mgr.findModule(this.containingFile as ElvishFile, spec)
+            else -> null
+        }
+    }
 }

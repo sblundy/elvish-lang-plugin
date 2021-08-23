@@ -68,7 +68,7 @@ private class SubImportedModulesFinder(val prefix: ElvishNamespaceIdentifier?): 
 
 
     fun filter(ns: List<ElvishVariableName>): Boolean {
-        return ns.size > 1 && ns[0].textMatches("builtin")
+        return ns.size > 1 && ns[0].textMatches(builtinNSName)
     }
 
     fun filter(spec: ElvishNamespaceName, ns: List<ElvishVariableName>): Boolean {
