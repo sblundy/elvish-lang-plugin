@@ -7,10 +7,12 @@ import com.intellij.psi.PsiElement
 
 class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val project: Project): ElvishBlockClimber() {
     val declarations = mutableListOf<ElvishModule>()
+    var found: Boolean = false
 
     override fun visitElvishFile(s: ElvishFile, ctxt: PsiElement): Boolean {
         val m = s.matchingUseCommands()
         if (m.isNotEmpty()) {
+            found = true
             val mgr = ModuleManager.getInstance(project)
             m.map { cmd ->
                 when (val spec = cmd.moduleSpec) {
@@ -24,6 +26,7 @@ class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val pro
                 }
             }
         } else if (ns.variableNameList.isNotEmpty() && ns.variableNameList[0].textMatches("edit")) {
+            found = true
             project.getBuiltinScope()?.findModule(ns)?.let {declarations += it; return false}
         }
 
@@ -34,6 +37,7 @@ class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val pro
         val d = findMod(s.matchingUseCommands(), s.containingFile as ElvishFile).filterNotNull()
 
         if (d.isNotEmpty()) {
+            found = true
             declarations += d
             return false
         }
@@ -44,6 +48,7 @@ class NamespaceModuleFinder(private val ns: ElvishNamespaceName, private val pro
         val file = s.containingFile
         val d = findMod(s.matchingUseCommands(), file as ElvishFile).filterNotNull()
         if (d.isNotEmpty()) {
+            found = true
             declarations += d
             return false
         }
@@ -96,4 +101,27 @@ fun ElvishRelativeModuleSpec.matches(ns: ElvishNamespaceName): Boolean {
 
 fun ElvishModuleAlias.matches(ns: ElvishNamespaceName): Boolean {
     return ns.variableNameList.size == 1 && textMatches(ns.variableNameList[0])
+}
+
+fun ElvishNamespaceIdentifier.isInScope(): Boolean {
+    return when(this) {
+        is ElvishBuiltinNamespace -> this.isInScope()
+        is ElvishEnvVarNamespace -> this.isInScope()
+        is ElvishExternalsNamespace -> this.isInScope()
+        is ElvishLocalNamespace -> this.isInScope()
+        is ElvishUpNamespace -> this.isInScope()
+        is ElvishNamespaceName -> this.isInScope()
+        else -> false
+    }
+}
+
+fun ElvishBuiltinNamespace.isInScope(): Boolean = true
+fun ElvishEnvVarNamespace.isInScope(): Boolean = true
+fun ElvishExternalsNamespace.isInScope(): Boolean = true
+fun ElvishLocalNamespace.isInScope(): Boolean = true
+fun ElvishUpNamespace.isInScope(): Boolean = true
+fun ElvishNamespaceName.isInScope(): Boolean {
+    val climber = NamespaceModuleFinder(this, this.project)
+    climber.climb(this.parent as ElvishPsiElement)
+    return climber.found
 }

@@ -1,0 +1,1 @@
+<error descr="Namespace 'str:' is not imported">str:</error>join "-" ["x" "y"]

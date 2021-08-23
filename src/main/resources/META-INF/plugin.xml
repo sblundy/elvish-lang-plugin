@@ -59,6 +59,7 @@
         <lang.parserDefinition language="Elvish" implementationClass="com.github.sblundy.elvish.lang.ElvishParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishSyntaxHighlighterFactory"/>
         <annotator language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishAnnotator"/>
+        <annotator language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishNamespaceAnnotator"/>
         <weigher key="completion" implementationClass="com.github.sblundy.elvish.ElvishCompletionWeigher" order="first"/>
         <colorSettingsPage implementation="com.github.sblundy.elvish.ElvishColorSettingsPage"/>
         <lang.braceMatcher language="Elvish" implementationClass="com.github.sblundy.elvish.ElvishPairBraceMatcher"/>
