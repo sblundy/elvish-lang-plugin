@@ -39,8 +39,8 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
             Assert.assertNotNull(usages)
             usages = usages.filter { it.file?.name == "ElvishUsageProviderTest-builtin-ns.elv" }//HACK usages from other files are being returned
             Assert.assertEquals(2, usages.size)
-            Assert.assertEquals(0, usages.firstOrNull()?.navigationOffset)
-            Assert.assertEquals(20, usages.drop(1).firstOrNull()?.navigationOffset)
+            Assert.assertEquals(13, usages.firstOrNull()?.navigationOffset)
+            Assert.assertEquals(33, usages.drop(1).firstOrNull()?.navigationOffset)
         }
     }
 

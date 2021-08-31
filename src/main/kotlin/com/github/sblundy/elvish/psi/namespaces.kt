@@ -70,6 +70,12 @@ fun ElvishNamespaceName.resolveUseCommand(): ElvishUseCommand? {
     return useCommandAccum.useCommand
 }
 
+fun ElvishBuiltinNamespace.resolveModule(): ElvishModule? = this.resolveBuiltinScope()
+
+internal fun ElvishBuiltinNamespace.resolveBuiltinScope(): BuiltinScope? {
+    return this.project.getBuiltinScope()
+}
+
 fun ElvishNamespaceName.resolveModule(): ElvishModule? {
     if (variableNameList.isNotEmpty() && variableNameList[0].textMatches(editNSName)) {
         return project.getBuiltinScope()?.findModule(this)

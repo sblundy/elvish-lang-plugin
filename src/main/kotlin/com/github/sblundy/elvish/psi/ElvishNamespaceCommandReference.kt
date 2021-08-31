@@ -14,14 +14,9 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
     }
 
     private fun multiResolve(): Array<ResolveResult> {
-        val declarations = when (element.namespaceIdentifier) {
-            is ElvishBuiltinNamespace -> {
-                element.project.getBuiltinScope()?.findFnCommands(element.commandName) ?: emptyList()
-            }
-            is ElvishNamespaceName -> {
-                val ns = element.namespaceIdentifier as ElvishNamespaceName
-                ns.resolveModule()?.exportedFunction(element.commandName)?.let { listOf(it) }?: emptyList()
-            }
+        val declarations = when (val ns = element.namespaceIdentifier) {
+            is ElvishBuiltinNamespace -> ns.resolveBuiltinScope()?.exportedFunction(element.commandName)?.let { listOf(it) } ?: emptyList()
+            is ElvishNamespaceName -> ns.resolveModule()?.exportedFunction(element.commandName)?.let { listOf(it) } ?: emptyList()
             else -> emptyList()//TODO handle?
         }
 
@@ -37,19 +32,14 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
     }
 
     override fun getVariants(): Array<Any> {
-        val variants = when (element.namespaceIdentifier) {
-            is ElvishBuiltinNamespace -> {
-                element.project.getBuiltinScope()?.findFnCommands(null)?.map {
-                    it.toCommandLookupElement()
-                } ?: emptyList()
-            }
-            is ElvishNamespaceName -> {
-                val ns = element.namespaceIdentifier as ElvishNamespaceName
-                ns.resolveModule()?.let { mod ->
-                    mod.exportedFunctions().map { it.toCommandLookupElement() } + mod.childModuleNames()
-                        .map { name -> toNSLookupElement(name) }
-                } ?: emptyList()
-            }
+        val variants = when (val ns = element.namespaceIdentifier) {
+            is ElvishBuiltinNamespace -> ns.resolveBuiltinScope()?.exportedFunctions()?.map {
+                it.toCommandLookupElement()
+            } ?: emptyList()
+            is ElvishNamespaceName -> ns.resolveModule()?.let { mod ->
+                mod.exportedFunctions().map { it.toCommandLookupElement() } + mod.childModuleNames()
+                    .map { name -> toNSLookupElement(name) }
+            } ?: emptyList()
             else -> emptyList() //TODO handle?
         }
 

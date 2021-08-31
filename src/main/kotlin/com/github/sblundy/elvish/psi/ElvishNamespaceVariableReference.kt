@@ -18,7 +18,8 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
     override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
         val declarations = when (element.namespaceIdentifier) {
             is ElvishBuiltinNamespace -> {
-                element.project.getBuiltinScope()?.findVariables(element.variableName) ?: emptyList()
+                val ns = element.namespaceIdentifier as ElvishBuiltinNamespace
+                ns.resolveBuiltinScope()?.findVariables(element.variableName) ?: emptyList()
             }
             is ElvishNamespaceName -> {
                 val ns = element.namespaceIdentifier as ElvishNamespaceName
@@ -40,9 +41,9 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
     }
 
     override fun getVariants(): Array<Any> {
-        val variants = when (element.namespaceIdentifier) {
+        val variants = when (val ns = element.namespaceIdentifier) {
             is ElvishBuiltinNamespace -> {
-                element.project.getBuiltinScope()?.let { builtin ->
+                ns.resolveBuiltinScope()?.let { builtin ->
                     builtin.findVariables(null).map {
                         it.toVariableLookupElement()
                     } + builtin.findFnCommands(null).map {
@@ -52,7 +53,6 @@ internal class ElvishNamespaceVariableReference(element: ElvishExternalVariableR
                 }?: emptyList()
             }
             is ElvishNamespaceName -> {
-                val ns = element.namespaceIdentifier as ElvishNamespaceName
                 ns.resolveModule()?.let { mod ->
                     mod.exportedVariables().map { it.toVariableLookupElement() } +
                             mod.exportedFunctions().map { it.toVariableLookupElement() } +
