@@ -10,7 +10,7 @@ internal class ElvishNamespaceCommandReference(element: ElvishNamespaceCommandEx
 
     override fun resolve(): PsiElement? {
         val results = multiResolve()
-        return if (results.size == 1) results[0].element else null
+        return results.firstOrNull()?.element
     }
 
     private fun multiResolve(): Array<ResolveResult> {

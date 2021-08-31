@@ -19,6 +19,18 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
     }
 
     @Test
+    fun testFindUsagesLocalVariableMultipleAssignment() {
+        runTest {
+            val usages = myFixture.testFindUsages("ElvishUsageProviderTest-local-var-multi-assign.elv")
+
+            Assert.assertNotNull(usages)
+            Assert.assertEquals(1, usages.size)
+            Assert.assertEquals(16, usages.firstOrNull()?.navigationOffset)
+//            Assert.assertEquals(21, usages.drop(1).firstOrNull()?.navigationOffset)
+        }
+    }
+
+    @Test
     fun testFindUsagesBuiltin() {
         runTest {
             var usages = myFixture.testFindUsages("ElvishUsageProviderTest-builtin.elv")
