@@ -3,7 +3,8 @@
 add-var
 add-vars
 binding-table
-close-listing
+clear
+close-mode
 command-history
 command:
 complete-filename

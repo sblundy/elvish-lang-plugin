@@ -7,10 +7,13 @@ abbr
 add-cmd-filters
 add-vars~
 add-var~
+after-command
 after-readline
 before-readline
 binding-table~
-close-listing~
+clear~
+close-mode~
+command-duration
 command-history~
 command:
 complete-filename~
@@ -21,6 +24,7 @@ complex-candidate~
 current-command
 end-of-history~
 exceptions
+global-binding
 histlist:
 history:
 insert-at-dot~
