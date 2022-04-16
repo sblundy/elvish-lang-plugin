@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishExceptionCaptureImpl extends ASTWrapperElvishPsiElement implements ElvishExceptionCapture {
 
-  public ElvishExceptionCaptureImpl(@NotNull ASTNode node) {
+  public ElvishExceptionCaptureImpl(ASTNode node) {
     super(node);
   }
 

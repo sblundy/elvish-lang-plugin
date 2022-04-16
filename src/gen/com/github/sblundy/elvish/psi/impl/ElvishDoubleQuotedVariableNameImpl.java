@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishDoubleQuotedVariableNameImpl extends ElvishVariableNameImpl implements ElvishDoubleQuotedVariableName {
 
-  public ElvishDoubleQuotedVariableNameImpl(@NotNull ASTNode node) {
+  public ElvishDoubleQuotedVariableNameImpl(ASTNode node) {
     super(node);
   }
 

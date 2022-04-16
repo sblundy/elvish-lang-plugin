@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishUnquotedVariableNameImpl extends ElvishVariableNameImpl implements ElvishUnquotedVariableName {
 
-  public ElvishUnquotedVariableNameImpl(@NotNull ASTNode node) {
+  public ElvishUnquotedVariableNameImpl(ASTNode node) {
     super(node);
   }
 

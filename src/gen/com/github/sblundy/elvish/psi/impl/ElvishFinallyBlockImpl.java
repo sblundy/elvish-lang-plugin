@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishFinallyBlockImpl extends ElvishChunkBlockImpl implements ElvishFinallyBlock {
 
-  public ElvishFinallyBlockImpl(@NotNull ASTNode node) {
+  public ElvishFinallyBlockImpl(ASTNode node) {
     super(node);
   }
 

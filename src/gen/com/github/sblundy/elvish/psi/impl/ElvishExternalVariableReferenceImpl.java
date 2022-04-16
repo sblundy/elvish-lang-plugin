@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishExternalVariableReferenceImpl extends ElvishVariableReferenceImpl implements ElvishExternalVariableReference {
 
-  public ElvishExternalVariableReferenceImpl(@NotNull ASTNode node) {
+  public ElvishExternalVariableReferenceImpl(ASTNode node) {
     super(node);
   }
 

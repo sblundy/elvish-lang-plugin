@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ElvishChunk extends ElvishPsiElement {
+public interface ElvishChunk extends ElvishVariableDeclarationsContainer {
 
   @NotNull
   List<ElvishAssignment> getAssignmentList();
@@ -39,8 +39,5 @@ public interface ElvishChunk extends ElvishPsiElement {
 
   @NotNull
   List<ElvishHead> getHeadList();
-
-  @NotNull
-  List<ElvishVariableDeclaration> getVariableDeclarations();
 
 }

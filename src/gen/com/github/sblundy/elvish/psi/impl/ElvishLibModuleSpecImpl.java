@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishLibModuleSpecImpl extends ElvishModuleSpecImpl implements ElvishLibModuleSpec {
 
-  public ElvishLibModuleSpecImpl(@NotNull ASTNode node) {
+  public ElvishLibModuleSpecImpl(ASTNode node) {
     super(node);
   }
 

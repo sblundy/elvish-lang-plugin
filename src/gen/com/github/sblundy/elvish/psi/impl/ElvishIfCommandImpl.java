@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishIfCommandImpl extends ElvishChunkBlockImpl implements ElvishIfCommand {
 
-  public ElvishIfCommandImpl(@NotNull ASTNode node) {
+  public ElvishIfCommandImpl(ASTNode node) {
     super(node);
   }
 

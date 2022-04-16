@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishNamespaceNameImpl extends ElvishNamespaceIdentifierImpl implements ElvishNamespaceName {
 
-  public ElvishNamespaceNameImpl(@NotNull ASTNode node) {
+  public ElvishNamespaceNameImpl(ASTNode node) {
     super(node);
   }
 

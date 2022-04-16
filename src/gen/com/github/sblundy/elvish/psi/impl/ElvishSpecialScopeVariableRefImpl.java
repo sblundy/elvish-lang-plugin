@@ -9,15 +9,13 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.github.sblundy.elvish.psi.*;
-import com.intellij.psi.PsiReference;
 
-public class ElvishSpecialScopeVariableRefImpl extends ElvishVariableReferenceImpl implements ElvishSpecialScopeVariableRef {
+public class ElvishSpecialScopeVariableRefImpl extends ElvishSpecialScopeVariableRefMixin implements ElvishSpecialScopeVariableRef {
 
-  public ElvishSpecialScopeVariableRefImpl(@NotNull ASTNode node) {
+  public ElvishSpecialScopeVariableRefImpl(ASTNode node) {
     super(node);
   }
 
-  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitSpecialScopeVariableRef(this);
   }
@@ -50,12 +48,6 @@ public class ElvishSpecialScopeVariableRefImpl extends ElvishVariableReferenceIm
   @NotNull
   public PsiElement getDollarSign() {
     return findNotNullChildByType(DOLLAR_SIGN);
-  }
-
-  @Override
-  @NotNull
-  public PsiReference getReference() {
-    return ElvishPsiImplUtil.getReference(this);
   }
 
 }

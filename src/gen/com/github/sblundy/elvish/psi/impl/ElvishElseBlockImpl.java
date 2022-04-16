@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishElseBlockImpl extends ElvishChunkBlockImpl implements ElvishElseBlock {
 
-  public ElvishElseBlockImpl(@NotNull ASTNode node) {
+  public ElvishElseBlockImpl(ASTNode node) {
     super(node);
   }
 

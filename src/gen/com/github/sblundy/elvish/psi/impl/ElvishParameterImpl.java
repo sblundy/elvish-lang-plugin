@@ -9,17 +9,13 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
 import com.github.sblundy.elvish.psi.*;
-import com.intellij.navigation.ItemPresentation;
-import com.intellij.util.IncorrectOperationException;
-import javax.swing.Icon;
 
-public class ElvishParameterImpl extends ElvishVariableDeclarationImpl implements ElvishParameter {
+public class ElvishParameterImpl extends ElvishParameterMixin implements ElvishParameter {
 
-  public ElvishParameterImpl(@NotNull ASTNode node) {
+  public ElvishParameterImpl(ASTNode node) {
     super(node);
   }
 
-  @Override
   public void accept(@NotNull ElvishVisitor visitor) {
     visitor.visitParameter(this);
   }
@@ -34,36 +30,6 @@ public class ElvishParameterImpl extends ElvishVariableDeclarationImpl implement
   @Nullable
   public PsiElement getAtSymbol() {
     return findChildByType(AT_SYMBOL);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getNameIdentifier() {
-    return ElvishPsiImplUtil.getNameIdentifier(this);
-  }
-
-  @Override
-  @NotNull
-  public String getName() {
-    return ElvishPsiImplUtil.getName(this);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement setName(@NotNull String p1) throws IncorrectOperationException {
-    return ElvishPsiImplUtil.setName(this, p1);
-  }
-
-  @Override
-  @NotNull
-  public Icon getIcon(int p1) {
-    return ElvishPsiImplUtil.getIcon(this, p1);
-  }
-
-  @Override
-  @NotNull
-  public ItemPresentation getPresentation() {
-    return ElvishPsiImplUtil.getPresentation(this);
   }
 
 }

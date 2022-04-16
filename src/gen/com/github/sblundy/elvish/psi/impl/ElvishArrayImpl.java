@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishArrayImpl extends ASTWrapperElvishPsiElement implements ElvishArray {
 
-  public ElvishArrayImpl(@NotNull ASTNode node) {
+  public ElvishArrayImpl(ASTNode node) {
     super(node);
   }
 

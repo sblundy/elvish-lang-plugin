@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishExitusRedirImpl extends ASTWrapperElvishPsiElement implements ElvishExitusRedir {
 
-  public ElvishExitusRedirImpl(@NotNull ASTNode node) {
+  public ElvishExitusRedirImpl(ASTNode node) {
     super(node);
   }
 

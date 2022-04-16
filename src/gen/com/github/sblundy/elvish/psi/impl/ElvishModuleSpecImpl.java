@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishModuleSpecImpl extends ASTWrapperElvishPsiElement implements ElvishModuleSpec {
 
-  public ElvishModuleSpecImpl(@NotNull ASTNode node) {
+  public ElvishModuleSpecImpl(ASTNode node) {
     super(node);
   }
 

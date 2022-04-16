@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishConditionImpl extends ASTWrapperElvishPsiElement implements ElvishCondition {
 
-  public ElvishConditionImpl(@NotNull ASTNode node) {
+  public ElvishConditionImpl(ASTNode node) {
     super(node);
   }
 

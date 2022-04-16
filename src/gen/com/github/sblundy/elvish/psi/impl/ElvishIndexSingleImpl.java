@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishIndexSingleImpl extends ElvishIndexImpl implements ElvishIndexSingle {
 
-  public ElvishIndexSingleImpl(@NotNull ASTNode node) {
+  public ElvishIndexSingleImpl(ASTNode node) {
     super(node);
   }
 

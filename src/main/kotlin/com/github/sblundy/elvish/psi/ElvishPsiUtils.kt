@@ -6,6 +6,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileFactory
 
 object ElvishPsiUtils {
+    @JvmStatic
     fun newNameElement(name: String, myProject: Project): ElvishVariableName {
         val file = createDummyFile("$name = 1", myProject)
         val chunk = file.firstChild as ElvishChunk

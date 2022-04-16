@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishSingleQuotedImpl extends ASTWrapperElvishPsiElement implements ElvishSingleQuoted {
 
-  public ElvishSingleQuotedImpl(@NotNull ASTNode node) {
+  public ElvishSingleQuotedImpl(ASTNode node) {
     super(node);
   }
 

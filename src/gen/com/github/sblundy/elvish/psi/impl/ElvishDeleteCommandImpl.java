@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishDeleteCommandImpl extends ASTWrapperElvishPsiElement implements ElvishDeleteCommand {
 
-  public ElvishDeleteCommandImpl(@NotNull ASTNode node) {
+  public ElvishDeleteCommandImpl(ASTNode node) {
     super(node);
   }
 

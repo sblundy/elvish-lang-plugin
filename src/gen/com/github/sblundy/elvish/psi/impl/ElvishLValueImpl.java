@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishLValueImpl extends ElvishLValueVariableImpl implements ElvishLValue {
 
-  public ElvishLValueImpl(@NotNull ASTNode node) {
+  public ElvishLValueImpl(ASTNode node) {
     super(node);
   }
 

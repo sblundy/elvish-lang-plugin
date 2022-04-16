@@ -5,33 +5,10 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
-import com.intellij.navigation.ItemPresentation;
-import com.intellij.util.IncorrectOperationException;
-import javax.swing.Icon;
 
 public interface ElvishVarLValue extends ElvishVariableAssignment, ElvishLValue, ElvishVariableDeclaration, PsiNameIdentifierOwner {
 
   @NotNull
   List<ElvishVarIndex> getVarIndexList();
-
-  @Nullable
-  ElvishNamespaceIdentifier getNamespaceIdentifier();
-
-  @NotNull
-  PsiElement getNameIdentifier();
-
-  @NotNull
-  String getName();
-
-  @NotNull
-  PsiElement setName(@NotNull String p1) throws IncorrectOperationException;
-
-  int getTextOffset();
-
-  @NotNull
-  Icon getIcon(int p1);
-
-  @NotNull
-  ItemPresentation getPresentation();
 
 }

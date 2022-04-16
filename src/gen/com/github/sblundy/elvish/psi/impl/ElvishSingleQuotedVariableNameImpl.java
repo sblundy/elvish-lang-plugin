@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishSingleQuotedVariableNameImpl extends ElvishVariableNameImpl implements ElvishSingleQuotedVariableName {
 
-  public ElvishSingleQuotedVariableNameImpl(@NotNull ASTNode node) {
+  public ElvishSingleQuotedVariableNameImpl(ASTNode node) {
     super(node);
   }
 

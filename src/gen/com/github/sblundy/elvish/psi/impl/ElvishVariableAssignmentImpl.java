@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishVariableAssignmentImpl extends ElvishLValueVariableImpl implements ElvishVariableAssignment {
 
-  public ElvishVariableAssignmentImpl(@NotNull ASTNode node) {
+  public ElvishVariableAssignmentImpl(ASTNode node) {
     super(node);
   }
 

@@ -13,7 +13,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishOutputCaptureImpl extends ASTWrapperElvishPsiElement implements ElvishOutputCapture {
 
-  public ElvishOutputCaptureImpl(@NotNull ASTNode node) {
+  public ElvishOutputCaptureImpl(ASTNode node) {
     super(node);
   }
 

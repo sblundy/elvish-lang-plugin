@@ -4,7 +4,6 @@ package com.github.sblundy.elvish.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
 
 public interface ElvishNamespaceVariableRef extends ElvishExternalVariableReference {
 
@@ -13,8 +12,5 @@ public interface ElvishNamespaceVariableRef extends ElvishExternalVariableRefere
 
   @NotNull
   PsiElement getDollarSign();
-
-  @NotNull
-  PsiReference getReference();
 
 }

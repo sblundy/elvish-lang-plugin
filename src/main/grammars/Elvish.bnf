@@ -10,7 +10,6 @@
 
   psiClassPrefix="Elvish"
   psiImplClassSuffix="Impl"
-  psiImplUtilClass="com.github.sblundy.elvish.psi.ElvishPsiImplUtil"
   psiPackage="com.github.sblundy.elvish.psi"
   psiImplPackage="com.github.sblundy.elvish.psi.impl"
 
@@ -69,7 +68,10 @@
 }
 script ::= Chunk
 Chunk ::= ChuckSep* ( Pipeline ChuckSep* )* {
-  methods=[getVariableDeclarations]
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishChunkMixin"
+  implements=[
+    "ElvishVariableDeclarationsContainer"
+  ]
 }
 private ChuckSep ::= PipelineSep | Space
 PipelineSep ::= EOL | SEMICOLON
@@ -117,34 +119,36 @@ DoubleQuoted ::= DOUBLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCAPED_QUOTED_T
 private Primary ::= Bareword | SingleQuoted | DoubleQuoted | SpecialScopeVariableRef | NamespaceVariableRef | VariableRef | WILDCARD | TILDE | ExceptionCapture | OutputCapture | Lambda | List | Map | Braced
 LegacyVariableAssignment ::= AT_SYMBOL? VarName VarIndex* {
   extends="VariableAssignment"
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishVarLValueMixin"
   implements=[
    "LValue"
    "VariableDeclaration"
    "com.intellij.psi.PsiNameIdentifierOwner"
   ]
-  methods=[getNamespaceIdentifier getNameIdentifier getName setName getTextOffset getIcon getPresentation]
 }
 LocalScopeVariableAssignment ::= AT_SYMBOL? LocalNamespace VarName VarIndex* {
   extends="VariableDeclaration"
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishLocalScopeVariableAssignmentMixin"
   implements=[
    "LValue"
    "VariableAssignment"
    "com.intellij.psi.PsiNameIdentifierOwner"
   ]
-  methods=[NamespaceIdentifier="LocalNamespace" getNameIdentifier getName setName getTextOffset getIcon getPresentation]
+  methods=[NamespaceIdentifier="LocalNamespace" ]
 }
 UpScopeVariableAssignment ::= AT_SYMBOL? UpNamespace VarName VarIndex* {
   extends="VariableAssignment"
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishUpScopeVariableAssignmentMixin"
   implements=["LValue"]
-  methods=[NamespaceIdentifier="UpNamespace" getName getTextOffset getIcon getPresentation getReference]
+  methods=[NamespaceIdentifier="UpNamespace" ]
 }
 NamespaceVariableAssignment ::= AT_SYMBOL? (EnvVarNamespace | BuiltinNamespace | NamespaceName) VarName VarIndex* {
   extends="VariableAssignment"
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishNamespaceVariableAssignmentMixin"
   implements=[
    "LValue"
    "ExternalVariableReference"
   ]
-  methods=[getName isWritable getTextOffset getIcon getPresentation getReference]
 }
 NamespaceName ::= (UnquotedVariableName COLON)+ {
   extends="NamespaceIdentifier"
@@ -178,17 +182,17 @@ SingleQuotedVariableName ::= SINGLE_QUOTE (TEXT|ESCAPED_QUOTED_TEXT|INVALID_ESCA
 
 VariableRef ::= DOLLAR_SIGN AT_SYMBOL? VarName VarIndex* {
   extends=VariableReference
-  methods=[getReference]
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishVariableRefMixin"
   generateTokenAccessors=true
 }
 SpecialScopeVariableRef ::= DOLLAR_SIGN AT_SYMBOL? (LocalNamespace | UpNamespace) VarName VarIndex* {
   extends=VariableReference
-  methods=[getReference]
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishSpecialScopeVariableRefMixin"
   generateTokenAccessors=true
 }
 NamespaceVariableRef ::= DOLLAR_SIGN (EnvVarNamespace | BuiltinNamespace | NamespaceName) VarName VarIndex* {
   extends="ExternalVariableReference"
-  methods=[getReference]
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishNamespaceVariableRefMixin"
   generateTokenAccessors=true
 }
 
@@ -236,15 +240,18 @@ fake Command ::= CommandBareword {
 }
 CommandExpression ::= CommandBareword {
   extends="Command"
-  methods=[commandName="CommandBareword" getReference]
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishCommandExpressionMixin"
+  methods=[commandName="CommandBareword"]
 }
 SpecialScopeCommandExpression ::= (LocalNamespace | UpNamespace) CommandBareword {
   extends="Command"
-  methods=[commandName="CommandBareword" getReference]
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishSpecialScopeCommandExpressionMixin"
+  methods=[commandName="CommandBareword"]
 }
 NamespaceCommandExpression ::= (ExternalsNamespace | BuiltinNamespace | NamespaceName)  CommandBareword {
   extends="Command"
-  methods=[commandName="CommandBareword" getReference]
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishNamespaceCommandExpressionMixin"
+  methods=[commandName="CommandBareword"]
 }
 
 ExitusRedir ::= QUESTION '>' Space? Compound
@@ -261,9 +268,9 @@ Lambda ::= LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
 LambdaArguments ::=OPEN_BRACKET Space? ((parameter | MapPair) Space?)* CLOSE_BRACKET
 parameter ::= AT_SYMBOL? VarName {
   extends="VariableDeclaration"
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishParameterMixin"
   implements=["com.intellij.psi.PsiNameIdentifierOwner"]
   generateTokenAccessors=true
-  methods=[getNameIdentifier getName setName getIcon getPresentation]
 }
 Braced ::= OPEN_BRACE (Space | EOL)* BracedBareword (BracedSep* BracedBareword)* (Space | EOL)* CLOSE_BRACE
 BracedSep ::= (Space | EOL)* COMMA (Space | EOL)*
@@ -272,12 +279,12 @@ BracedSep ::= (Space | EOL)* COMMA (Space | EOL)*
 
 VarLValue ::= AT_SYMBOL? VarName VarIndex* {
   extends="VariableAssignment"
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishVarLValueMixin"
   implements=[
    "LValue"
    "VariableDeclaration"
    "com.intellij.psi.PsiNameIdentifierOwner"
   ]
-  methods=[getNamespaceIdentifier getNameIdentifier getName setName getTextOffset getIcon getPresentation]
 }
 VarCommand ::= &ExplicitVariableDeclarationAndSetFlag KEYWORD_VAR (Space+ VarLValue)+ ((Space+|<<missingSpaceInVarOrSet>>) EQUALS (Space+|<<missingSpaceInVarOrSet>>) Compound (Space+ Compound)*)? {
   pin=2
@@ -286,10 +293,10 @@ VarCommand ::= &ExplicitVariableDeclarationAndSetFlag KEYWORD_VAR (Space+ VarLVa
 }
 SetLValue ::= AT_SYMBOL? VarName VarIndex* {
   extends="VariableAssignment"
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishSetLValueMixin"
   implements=[
    "LValue"
   ]
-  methods=[getNamespaceIdentifier getName isWritable getTextOffset getIcon getPresentation getReference]
 }
 private SetLValues ::= (LocalScopeVariableAssignment | UpScopeVariableAssignment | NamespaceVariableAssignment | SetLValue)
 SetCommand ::= &ExplicitVariableDeclarationAndSetFlag KEYWORD_SET (Space+ SetLValues)+ (Space+|<<missingSpaceInVarOrSet>>) EQUALS (Space+|<<missingSpaceInVarOrSet>>) Compound (Space+ Compound)* {
@@ -348,8 +355,9 @@ FinallyBlock ::= KEYWORD_FINALLY Space LambdaBlock {
 }
 FnCommand ::= KEYWORD_FN Space UnquotedVariableName Space LambdaArguments? OPEN_BRACE Chunk CLOSE_BRACE {
   extends="FunctionDeclaration"
+  mixin="com.github.sblundy.elvish.psi.impl.ElvishFnCommandMixin"
   implements=["LambdaScope" "com.intellij.psi.PsiNameIdentifierOwner" "ElvishSpecialCommand" ]
-  methods=[Keyword="KEYWORD_FN" commandName="UnquotedVariableName" getNameIdentifier getName setName getTextOffset getIcon getPresentation]
+  methods=[Keyword="KEYWORD_FN" commandName="UnquotedVariableName"]
 }
 UseCommand ::= KEYWORD_USE Space (RelativeModuleSpec | LibModuleSpec) (Space ModuleAlias)? {
   implements="ElvishSpecialCommand"

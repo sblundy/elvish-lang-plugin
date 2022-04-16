@@ -12,7 +12,7 @@ import com.github.sblundy.elvish.psi.*;
 
 public class ElvishLambdaScopeImpl extends ElvishLexicalScopeImpl implements ElvishLambdaScope {
 
-  public ElvishLambdaScopeImpl(@NotNull ASTNode node) {
+  public ElvishLambdaScopeImpl(ASTNode node) {
     super(node);
   }
 

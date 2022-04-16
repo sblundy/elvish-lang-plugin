@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.sblundy.elvish.psi.ElvishTypes.*;
-import com.github.sblundy.elvish.psi.ASTWrapperElvishPsiElement;
 import com.github.sblundy.elvish.psi.*;
 
-public class ElvishChunkImpl extends ASTWrapperElvishPsiElement implements ElvishChunk {
+public class ElvishChunkImpl extends ElvishChunkMixin implements ElvishChunk {
 
-  public ElvishChunkImpl(@NotNull ASTNode node) {
+  public ElvishChunkImpl(ASTNode node) {
     super(node);
   }
 
@@ -91,12 +90,6 @@ public class ElvishChunkImpl extends ASTWrapperElvishPsiElement implements Elvis
   @NotNull
   public List<ElvishHead> getHeadList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ElvishHead.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ElvishVariableDeclaration> getVariableDeclarations() {
-    return ElvishPsiImplUtil.getVariableDeclarations(this);
   }
 
 }

@@ -40,7 +40,7 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitChunk(@NotNull ElvishChunk o) {
-    visitPsiElement(o);
+    visitVariableDeclarationsContainer(o);
   }
 
   public void visitChunkBlock(@NotNull ElvishChunkBlock o) {
@@ -363,6 +363,10 @@ public class ElvishVisitor extends PsiElementVisitor {
   }
 
   public void visitSpecialCommand(@NotNull ElvishSpecialCommand o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariableDeclarationsContainer(@NotNull ElvishVariableDeclarationsContainer o) {
     visitPsiElement(o);
   }
 
