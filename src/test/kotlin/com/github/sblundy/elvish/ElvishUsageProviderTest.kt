@@ -1,7 +1,7 @@
 package com.github.sblundy.elvish
 
 import com.intellij.testFramework.TestDataPath
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -13,8 +13,8 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-local-var.elv")
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(1, usages.size)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(1, usages.size)
         }
     }
 
@@ -23,11 +23,11 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             var usages = myFixture.testFindUsages("ElvishUsageProviderTest-builtin.elv")
 
-            Assert.assertNotNull(usages)
+            Assertions.assertNotNull(usages)
             usages = usages.filter { it.file?.name == "ElvishUsageProviderTest-builtin.elv" }//HACK usages from other files are being returned
-            Assert.assertEquals(2, usages.size)
-            Assert.assertEquals(0, usages.firstOrNull()?.navigationOffset)
-            Assert.assertEquals(12, usages.drop(1).firstOrNull()?.navigationOffset)
+            Assertions.assertEquals(2, usages.size)
+            Assertions.assertEquals(0, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertEquals(12, usages.drop(1).firstOrNull()?.navigationOffset)
         }
     }
 
@@ -36,11 +36,11 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             var usages = myFixture.testFindUsages("ElvishUsageProviderTest-builtin-ns.elv")
 
-            Assert.assertNotNull(usages)
+            Assertions.assertNotNull(usages)
             usages = usages.filter { it.file?.name == "ElvishUsageProviderTest-builtin-ns.elv" }//HACK usages from other files are being returned
-            Assert.assertEquals(2, usages.size)
-            Assert.assertEquals(0, usages.firstOrNull()?.navigationOffset)
-            Assert.assertEquals(20, usages.drop(1).firstOrNull()?.navigationOffset)
+            Assertions.assertEquals(2, usages.size)
+            Assertions.assertEquals(0, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertEquals(20, usages.drop(1).firstOrNull()?.navigationOffset)
         }
     }
 
@@ -49,9 +49,9 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-lambda-parameter.elv")
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(1, usages.size)
-            Assert.assertEquals(18, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(1, usages.size)
+            Assertions.assertEquals(18, usages.firstOrNull()?.navigationOffset)
         }
     }
 
@@ -60,9 +60,9 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-lambda-parameter-1st.elv")
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(1, usages.size)
-            Assert.assertEquals(21, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(1, usages.size)
+            Assertions.assertEquals(21, usages.firstOrNull()?.navigationOffset)
         }
     }
 
@@ -71,9 +71,9 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-lambda-parameter-2nd.elv")
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(1, usages.size)
-            Assert.assertEquals(21, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(1, usages.size)
+            Assertions.assertEquals(21, usages.firstOrNull()?.navigationOffset)
         }
     }
 
@@ -82,8 +82,8 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-local-var-scope.elv")
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(1, usages.size)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(1, usages.size)
         }
     }
 
@@ -92,8 +92,8 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-lambda-parameter-scope.elv")
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(1, usages.size)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(1, usages.size)
         }
     }
 
@@ -102,8 +102,8 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-ns-var.elv", "yy.elv")
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(2, usages.size)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(2, usages.size)
         }
     }
 
@@ -112,9 +112,9 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-local-scope.elv", "yy.elv").filter { it.file?.name == "ElvishUsageProviderTest-local-scope.elv" }
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(1, usages.size)
-            Assert.assertEquals(41, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(1, usages.size)
+            Assertions.assertEquals(41, usages.firstOrNull()?.navigationOffset)
         }
     }
 
@@ -123,9 +123,9 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-local-scope-ref.elv", "yy.elv").filter { it.file?.name == "ElvishUsageProviderTest-local-scope-ref.elv" }
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(usages.mapNotNull { it.element?.text + "<${it.navigationOffset}>" }.joinToString(","), 1, usages.size)
-            Assert.assertEquals(41, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(1, usages.size, usages.mapNotNull { it.element?.text + "<${it.navigationOffset}>" }.joinToString(","))
+            Assertions.assertEquals(41, usages.firstOrNull()?.navigationOffset)
         }
     }
 
@@ -134,9 +134,9 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-up-scope.elv").filter { it.file?.name == "ElvishUsageProviderTest-up-scope.elv" }
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(usages.mapNotNull { it.element?.text }.joinToString(","), 1, usages.size)
-            Assert.assertEquals(47, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(1, usages.size, usages.mapNotNull { it.element?.text }.joinToString(","))
+            Assertions.assertEquals(47, usages.firstOrNull()?.navigationOffset)
         }
     }
 
@@ -145,9 +145,9 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-fn.elv")
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(1, usages.size)
-            Assert.assertEquals(26, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(1, usages.size)
+            Assertions.assertEquals(26, usages.firstOrNull()?.navigationOffset)
         }
     }
 
@@ -156,9 +156,9 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-museli-git.elv")
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(1, usages.size)
-            Assert.assertEquals(127, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(1, usages.size)
+            Assertions.assertEquals(127, usages.firstOrNull()?.navigationOffset)
         }
     }
 
@@ -167,10 +167,10 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-edit-command.elv")
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(usages.mapNotNull { it.element?.text }.joinToString(","), 2, usages.size)
-            Assert.assertEquals(5, usages.firstOrNull()?.navigationOffset)
-            Assert.assertEquals(46, usages.drop(1).firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(2, usages.size, usages.mapNotNull { it.element?.text }.joinToString(","))
+            Assertions.assertEquals(5, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertEquals(46, usages.drop(1).firstOrNull()?.navigationOffset)
         }
     }
 
@@ -179,10 +179,10 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-edit-var-ref.elv")
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(2, usages.size)
-            Assert.assertEquals(11, usages.firstOrNull()?.navigationOffset)
-            Assert.assertEquals(42, usages.drop(1).firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(2, usages.size)
+            Assertions.assertEquals(11, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertEquals(42, usages.drop(1).firstOrNull()?.navigationOffset)
         }
     }
 
@@ -191,10 +191,10 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-use-in-fn-body.elv", "yy.elv").filter { it.file?.name == "ElvishUsageProviderTest-use-in-fn-body.elv" }
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(2, usages.size)
-            Assert.assertEquals(29, usages.firstOrNull()?.navigationOffset)
-            Assert.assertEquals(49, usages.drop(1).firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(2, usages.size)
+            Assertions.assertEquals(29, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertEquals(49, usages.drop(1).firstOrNull()?.navigationOffset)
         }
     }
 
@@ -203,10 +203,10 @@ class ElvishUsageProviderTest: LightProjectTestBase() {
         runTest {
             val usages = myFixture.testFindUsages("ElvishUsageProviderTest-bundled.elv").filter { it.file?.name == "ElvishUsageProviderTest-bundled.elv" }
 
-            Assert.assertNotNull(usages)
-            Assert.assertEquals(2, usages.size)
-            Assert.assertEquals(21, usages.firstOrNull()?.navigationOffset)
-            Assert.assertEquals(39, usages.drop(1).firstOrNull()?.navigationOffset)
+            Assertions.assertNotNull(usages)
+            Assertions.assertEquals(2, usages.size)
+            Assertions.assertEquals(21, usages.firstOrNull()?.navigationOffset)
+            Assertions.assertEquals(39, usages.drop(1).firstOrNull()?.navigationOffset)
         }
     }
 }
